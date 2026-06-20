@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>jstats Quick Start – jstats</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#before-you-begin" id="toc-before-you-begin" class="nav-link active" data-scroll-target="#before-you-begin">Before you begin</a>
+  <ul class="collapse">
+  <li><a href="#what-youll-get" id="toc-what-youll-get" class="nav-link" data-scroll-target="#what-youll-get">What you’ll get</a></li>
+  <li><a href="#the-pieces-r-rstudio-rtools-and-a-package" id="toc-the-pieces-r-rstudio-rtools-and-a-package" class="nav-link" data-scroll-target="#the-pieces-r-rstudio-rtools-and-a-package">The pieces: R, RStudio, Rtools, and a package</a></li>
+  <li><a href="#why-jstats" id="toc-why-jstats" class="nav-link" data-scroll-target="#why-jstats">Why jstats</a></li>
+  <li><a href="#what-to-expect-as-an-early-user" id="toc-what-to-expect-as-an-early-user" class="nav-link" data-scroll-target="#what-to-expect-as-an-early-user">What to expect as an early user</a></li>
+  <li><a href="#how-to-use-this-guide-and-what-you-can-skip" id="toc-how-to-use-this-guide-and-what-you-can-skip" class="nav-link" data-scroll-target="#how-to-use-this-guide-and-what-you-can-skip">How to use this guide — and what you can skip</a></li>
+  </ul></li>
+  <li><a href="#part-1-install-set-up" id="toc-part-1-install-set-up" class="nav-link" data-scroll-target="#part-1-install-set-up">Part 1 — Install &amp; set up</a>
+  <ul class="collapse">
+  <li><a href="#install-r" id="toc-install-r" class="nav-link" data-scroll-target="#install-r">Install R</a></li>
+  <li><a href="#install-rstudio" id="toc-install-rstudio" class="nav-link" data-scroll-target="#install-rstudio">Install RStudio</a></li>
+  <li><a href="#start-a-project" id="toc-start-a-project" class="nav-link" data-scroll-target="#start-a-project">Start a Project</a></li>
+  <li><a href="#the-rstudio-panes" id="toc-the-rstudio-panes" class="nav-link" data-scroll-target="#the-rstudio-panes">The RStudio panes</a></li>
+  <li><a href="#try-the-console" id="toc-try-the-console" class="nav-link" data-scroll-target="#try-the-console">Try the console</a></li>
+  <li><a href="#install-jstats" id="toc-install-jstats" class="nav-link" data-scroll-target="#install-jstats">Install jstats</a></li>
+  <li><a href="#getting-help" id="toc-getting-help" class="nav-link" data-scroll-target="#getting-help">Getting help</a></li>
+  <li><a href="#make-startup-automatic-optional-but-strongly-recommended" id="toc-make-startup-automatic-optional-but-strongly-recommended" class="nav-link" data-scroll-target="#make-startup-automatic-optional-but-strongly-recommended">Make startup automatic (optional, but strongly recommended)</a></li>
+  </ul></li>
+  <li><a href="#part-2-quick-start" id="toc-part-2-quick-start" class="nav-link" data-scroll-target="#part-2-quick-start">Part 2 — Quick Start</a>
+  <ul class="collapse">
+  <li><a href="#meet-community" id="toc-meet-community" class="nav-link" data-scroll-target="#meet-community">Meet <code>community</code></a></li>
+  <li><a href="#your-first-jstats-command" id="toc-your-first-jstats-command" class="nav-link" data-scroll-target="#your-first-jstats-command">Your first jstats command</a></li>
+  <li><a href="#the-examples-just-run" id="toc-the-examples-just-run" class="nav-link" data-scroll-target="#the-examples-just-run">The examples just run</a></li>
+  <li><a href="#what-a-data-frame-is" id="toc-what-a-data-frame-is" class="nav-link" data-scroll-target="#what-a-data-frame-is">What a data frame is</a></li>
+  <li><a href="#set-a-default-dataset" id="toc-set-a-default-dataset" class="nav-link" data-scroll-target="#set-a-default-dataset">Set a default dataset</a></li>
+  <li><a href="#describe-the-numeric-variables" id="toc-describe-the-numeric-variables" class="nav-link" data-scroll-target="#describe-the-numeric-variables">Describe the numeric variables</a></li>
+  <li><a href="#screen-the-whole-dataset-at-once" id="toc-screen-the-whole-dataset-at-once" class="nav-link" data-scroll-target="#screen-the-whole-dataset-at-once">Screen the whole dataset at once</a></li>
+  <li><a href="#your-first-analysis-a-regression" id="toc-your-first-analysis-a-regression" class="nav-link" data-scroll-target="#your-first-analysis-a-regression">Your first analysis: a regression</a></li>
+  <li><a href="#read-the-output" id="toc-read-the-output" class="nav-link" data-scroll-target="#read-the-output">Read the output</a></li>
+  </ul></li>
+  <li><a href="#part-3-working-with-your-own-data" id="toc-part-3-working-with-your-own-data" class="nav-link" data-scroll-target="#part-3-working-with-your-own-data">Part 3 — Working with your own data</a></li>
+  <li><a href="#part-4-working-comfortably" id="toc-part-4-working-comfortably" class="nav-link" data-scroll-target="#part-4-working-comfortably">Part 4 — Working comfortably</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">jstats Quick Start</h1>
+<p class="subtitle lead">A guided first hour with the jstats package — from a fresh install to your first regression.</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><strong>Demo draft v1.</strong> “Before you begin,” “Install &amp; set up,” and “Quick Start” are fully drafted. “Working with your own data” and “Working comfortably” are shown as a skeleton (headings and intent only) and will be drafted next.</p>
+<p><em>A note on the side-boxes below:</em> throughout this guide you’ll see labeled asides — <strong>For experienced R users</strong>, <strong>Coming from SPSS or Stata?</strong>, <strong>If you’re new to statistics</strong>, <strong>Aside</strong>, and <strong>Going deeper</strong> — each written for some readers and safely skipped by the rest. The main text reads straight through without them. (When this guide is published online, these will become tidy boxes you can fold open or closed.)</p>
+</blockquote>
+<hr>
+<section id="before-you-begin" class="level2">
+<h2 class="anchored" data-anchor-id="before-you-begin">Before you begin</h2>
+<section id="what-youll-get" class="level3">
+<h3 class="anchored" data-anchor-id="what-youll-get">What you’ll get</h3>
+<p>This guide takes you from nothing installed to your first real statistical result — an actual regression — in about an hour. You’ll do a little setup once, then spend most of your time getting results.</p>
+</section>
+<section id="the-pieces-r-rstudio-rtools-and-a-package" class="level3">
+<h3 class="anchored" data-anchor-id="the-pieces-r-rstudio-rtools-and-a-package">The pieces: R, RStudio, Rtools, and a package</h3>
+<p>Four words come up right away. Here’s what each one is, and how they stack:</p>
+<ul>
+<li><strong>R</strong> is the engine — the free program that actually does the statistics.</li>
+<li><strong>RStudio</strong> is the dashboard you drive it from — a friendlier window onto R, with a place to write your commands, see your results, and view your data. You install R first, then RStudio on top of it.</li>
+<li><strong>Rtools</strong> (Windows only) is a small free toolkit R uses to build certain add-ons from source. You install it once and then forget it exists; you’ll only need it for the jstats install step below. (Mac has an equivalent it usually already has.)</li>
+<li>A <strong>package</strong> is an add-on that teaches R new tricks — extra commands bundled together and shared. <strong>jstats</strong> is one of these.</li>
+</ul>
+<p>So the order is: install R, install RStudio, then add the jstats package (with Rtools along for the ride on Windows). The next part walks you through each step.</p>
+<blockquote class="blockquote">
+<p><strong>Aside.</strong> The best-known example of a friendlier layer over R is the <strong>tidyverse</strong> — actually a <em>meta-package</em>, a single package whose only job is to install and load a whole family of related packages at once. It became enormously popular by smoothing R for everyday data work. jstats shares that goal of smoothing the path, though it takes a different route: where the tidyverse introduces its own style of doing things, jstats deliberately stays close to ordinary R — more on why that matters just below.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Aside — where the names come from.</strong> R is the successor to an older language called <strong>S</strong>; its own name plays on that <strong>S</strong> while also nodding to the initials of R’s two creators. <strong>jstats</strong> quietly continues that little naming tradition — the <em>j</em> is its author’s initial. Nothing rides on this; it’s just a bit of lineage you can enjoy and skip.</p>
+</blockquote>
+</section>
+<section id="why-jstats" class="level3">
+<h3 class="anchored" data-anchor-id="why-jstats">Why jstats</h3>
+<p>jstats began as a teaching tool — a way to smooth over some of R’s rougher edges for people meeting statistics and code at the same time. But the same design turned out to help experienced users too, so it grew into a fuller package. Two short pitches, depending on where you’re starting.</p>
+<p><strong>If you’re new to R:</strong> jstats gives you a small set of commands that are consistent and predictable, with output that’s easy to read, and it protects you from a few of R’s confusing default behaviors. You get results quickly — and, importantly, <strong>you’re still learning real R the whole time.</strong> jstats stays close to ordinary R rather than walling you off in a private dialect, so every skill you build here transfers.</p>
+<p><strong>If you already know R:</strong> the payoff is friction removed, not capability hidden. jstats handles labelled survey data directly — the value labels, variable labels, and user-defined missing values that come out of commercial statistical software (SPSS, Stata, SAS) — with no manual conversion. It loads and saves across formats through a single command. And it gives you one consistent, presentation-ready style of output across every function. Crucially, <strong>it doesn’t reinvent the statistics</strong>: under the hood it calls R’s own long-tested routines (<code>jlm</code> runs <code>lm</code>, <code>jt</code> runs <code>t.test</code>, and so on), so you’re trusting the same calculations you already trust. In other words it’s a <em>wrapper</em> — a simpler, consistent command that sits on top of R’s existing functions and passes the real work through to them, just as R’s own <code>read.csv()</code> is really its more general <code>read.table()</code> with the common settings already filled in for you.</p>
+<p>One feature worth singling out, because it helps both audiences: <strong>non-destructive handling of things like dummy variables.</strong> When you tell jstats to treat a variable as a dummy (a yes/no or category indicator used in a regression), it <em>registers</em> that intention without altering or overwriting the variable itself — so you cannot accidentally damage your data by classifying it.</p>
+<blockquote class="blockquote">
+<p><strong>For experienced R users.</strong> That non-destructive handling means you don’t convert the column to a factor, with the in-place change and downstream surprises that can bring. The registration is a note about how to treat the variable, not an edit to it — and it’s easily undone or changed.</p>
+</blockquote>
+<p><strong>What it covers today — and what’s coming.</strong> Right now jstats handles the core of applied social-science analysis: frequency tables and descriptive statistics, data screening, group comparisons (t-tests and ANOVA), correlation, scale reliability (Cronbach’s alpha), cross-tabulations, and both linear and logistic regression. On the near-term roadmap are Poisson and negative-binomial models for count outcomes, and built-in export of presentation-ready tables to Word — APA style among them — with no separate package to install or learn.</p>
+<p>And jstats is more than a single package. Around it is a growing set of free online guides (you’re reading one), a planned two-book series — <em>Statistics in R, Made Accessible</em>, for readers meeting statistics and R together, and <em>From SPSS and Stata to R</em>, for researchers who already know the statistics — a video channel, and ready-to-use teaching datasets. It follows a long tradition of teaching-focused statistics packages that began in the classroom and grew into something larger — Danielle Navarro’s <code>lsr</code> package, the companion to her widely used <em>Learning Statistics with R</em>, is one well-loved example — and the aim here is the same.</p>
+</section>
+<section id="what-to-expect-as-an-early-user" class="level3">
+<h3 class="anchored" data-anchor-id="what-to-expect-as-an-early-user">What to expect as an early user</h3>
+<p>Using jstats at this early stage comes with a simple, honest trade. The costs are small and real: a few extra steps to install during this pre-release phase, the occasional error message that reads more cryptically than it should, and now and then a feature you wish were there but isn’t yet. The benefit: results fast, and a direct line to shape the package — options and analyses you ask for can often be added (see the note in the install section).</p>
+<p>And there’s a safety net that makes the trade an easy one. jstats is a convenience layer, not a cage. Anything it doesn’t do, plain R still does — you can always drop back to base R, or reach for another package, right alongside jstats in the very same script. In fact that’s the intended path: use jstats for the common social-science tasks it’s built for, pick up a little real R painlessly as you go, and when you eventually need something specialized that jstats doesn’t cover, you’ll have learned enough to add the package that does. You’re never stuck, and you’re never learning a dead end.</p>
+<blockquote class="blockquote">
+<p><strong>For experienced R users.</strong> A concrete example of feature-by-request: a researcher wanted to see <em>which cells</em> drive a significant chi-square, so adjusted standardized residuals were added to the cross-tabs function — <code>jcrosstab(Education ~ Volunteer, data = community, residuals = "adjusted")</code>. That kind of targeted addition is exactly what this phase is for.</p>
+</blockquote>
+</section>
+<section id="how-to-use-this-guide-and-what-you-can-skip" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-use-this-guide-and-what-you-can-skip">How to use this guide — and what you can skip</h3>
+<p>This is a sprint with optional scenery. If you’re keen to get going, move quickly; the labeled asides (like the ones above) are always skippable.</p>
+<ul>
+<li><strong>Already have R and RStudio installed?</strong> Skip ahead to <strong>Install jstats</strong>.</li>
+<li><strong>Already have jstats working inside an RStudio Project?</strong> Jump straight to the <strong>Quick Start</strong>.</li>
+<li><strong>Starting from scratch?</strong> Read on — the next part installs everything.</li>
+</ul>
+<p>One last idea to carry with you, because it makes the rest click: in R you mostly <strong>call functions</strong> (a name, then inputs in parentheses), and a function both shows you a result <em>and</em> can hand back an <strong>object</strong> you keep and reuse. You’ll see what that means at your first real command, and again when you save your first analysis.</p>
+<hr>
+</section>
+</section>
+<section id="part-1-install-set-up" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-install-set-up">Part 1 — Install &amp; set up</h2>
+<p><em>The hands-on part. You do this once; every future session picks up where you left off.</em></p>
+<section id="install-r" class="level3">
+<h3 class="anchored" data-anchor-id="install-r">Install R</h3>
+<p>R is free. Go to <strong>CRAN</strong> — the official archive of R, at <a href="https://cran.r-project.org" class="uri">https://cran.r-project.org</a> — choose the download for your system (Windows, Mac, or Linux), and run the installer with its default settings. That’s it; you won’t open R directly — RStudio will.</p>
+</section>
+<section id="install-rstudio" class="level3">
+<h3 class="anchored" data-anchor-id="install-rstudio">Install RStudio</h3>
+<p>RStudio is also free. Download <strong>RStudio Desktop</strong> from <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a> and install it. (Install R first; RStudio needs it.) From now on, RStudio is the program you open to work.</p>
+</section>
+<section id="start-a-project" class="level3">
+<h3 class="anchored" data-anchor-id="start-a-project">Start a Project</h3>
+<p>Before installing the package or loading any data, create an RStudio <strong>Project</strong>.</p>
+<p>Without a Project, R needs to be told where your files live (its “working directory”), and that quickly drags in folder paths, the difference between <code>\</code> and <code>/</code>, and the fact that Windows and Mac write paths differently. A Project sidesteps all of it: it ties a folder, your data, and your work together, so R always knows where it is.</p>
+<p>To create one, in RStudio choose <strong>File → New Project → New Directory → New Project</strong>, give it a name (for example <code>jstats-practice</code>), pick where it should live, and click <strong>Create Project</strong>. RStudio opens your new Project.</p>
+<p>From now on, you reopen this Project by double-clicking its <code>.Rproj</code> file (the small file RStudio created inside your Project folder). That one habit — always work inside a Project — saves more beginner headaches than any other.</p>
+</section>
+<section id="the-rstudio-panes" class="level3">
+<h3 class="anchored" data-anchor-id="the-rstudio-panes">The RStudio panes</h3>
+<p>With your Project open you’ll see three panes. Open a script — <strong>File → New File → R Script</strong> — and a fourth appears in the top-left. Here’s what each is for:</p>
+<ul>
+<li><strong>Editor</strong> (top-left, the script you just opened) — where you write and save your code. This is your reusable list of commands.</li>
+<li><strong>Console</strong> (bottom-left) — where code runs and results print.</li>
+<li><strong>Environment</strong> (top-right) — lists the data and objects currently loaded. Importantly, what lives here is a <em>working copy</em> of your data, held in memory. Mistakes hit the copy, never the original file on disk.</li>
+<li><strong>Files / Plots / Help</strong> (bottom-right) — your folder contents, any charts you make, and help pages.</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>Coming from SPSS or Stata?</strong> A rough map if you’ve mostly used SPSS through its menus: the <strong>Console</strong> is like the <strong>output/viewer window</strong> where results appear; the <strong>Environment</strong> is like seeing your open dataset in <strong>Data View</strong> (the data currently loaded and being worked on); and the <strong>Plots</strong> area is where charts show up, much as they appear in the SPSS output. The <strong>Editor</strong> is the one piece without a close menu-equivalent — it’s your saved list of typed commands (nearest to the SPSS syntax window, which menu users rarely open).</p>
+</blockquote>
+<p>You’ll also notice <strong>Terminal</strong> and <strong>Background Jobs</strong> tabs near the Console. These are for more advanced use — the Terminal is a direct line to your computer’s command prompt (PowerShell on Windows, the old DOS-style window) — and you can ignore them for now.</p>
+<p>One small thing that trips up newcomers: <strong>R is case-sensitive.</strong> <code>Income</code> and <code>income</code> are two different names to R. When something doesn’t work, a stray capital is a common culprit.</p>
+</section>
+<section id="try-the-console" class="level3">
+<h3 class="anchored" data-anchor-id="try-the-console">Try the console</h3>
+<p>Before installing anything, let’s make the <strong>Console</strong> feel real, since it’s where everything ultimately runs. Click in the Console (bottom-left), type a sum, and press Enter:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>R answers straight back:</p>
+<pre><code>[1] 4</code></pre>
+<p>The console is a calculator that talks back. Now try a <strong>function</strong> — a named command that takes some input in parentheses and hands you a result. This one finds a square root:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">144</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>[1] 12</code></pre>
+<p>That’s the shape of nearly everything you’ll do in R: a function name, inputs in parentheses, a result back. (And yes, <code>sqrt</code> is plain R — you’re already learning the real thing.)</p>
+<p>So what’s the <strong>script</strong> (the Editor) for, if the console can do everything? Just this: <strong>the console is for doing, the script is for keeping.</strong> Anything you type in the console runs and then scrolls away — perfect for quick, one-off jobs like a fast calculation or installing a package. When you’re doing analysis you’ll want to <em>keep</em> — and re-run, and share — you type those commands in the script and save the file. We’ll start doing exactly that once there’s something worth saving.</p>
+</section>
+<section id="install-jstats" class="level3">
+<h3 class="anchored" data-anchor-id="install-jstats">Install jstats</h3>
+<blockquote class="blockquote">
+<p>jstats is currently distributed through <strong>GitHub</strong> — a website where software is shared and developed. Later it will also be on <strong>CRAN</strong> (the same archive you downloaded R from), at which point installing it gets simpler. These instructions cover the current GitHub phase. You install once; after that, the package tells you whenever an update is available (see the note at the end of this section).</p>
+</blockquote>
+<p><strong>Windows users.</strong> You need two things first. The first is <strong>Rtools</strong>, the free build toolkit introduced earlier. Download it from <a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a>, choose the version matching your R (for example Rtools45 for R 4.5.x), and run the installer with its defaults. You do this once, unless you update R later. The second is the <strong>remotes</strong> package, which handles installing from GitHub. Type this in the console and run it — these are one-off commands you won’t need to save — and here’s what that looks like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then install and load jstats:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"JMA61/jstats"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Mac users.</strong> You may already have the build tools you need. If you hit a build error during installation, open the <strong>Terminal</strong> app and run the following:</p>
+<pre><code>xcode-select --install</code></pre>
+<p>Follow the prompts, then try again. The remotes and install commands are the same as for Windows.</p>
+<p><strong>If something goes wrong</strong>, the simplest fix is usually to remove and reinstall, like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">remove.packages</span>(<span class="st">"jstats"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"JMA61/jstats"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Staying up to date.</strong> Because jstats is updated often during this phase, it checks for a newer version each time you load it with <code>library(jstats)</code>. When one is available, it prints a short message with three lines of code — you simply copy those three lines into the console and run them, and jstats updates itself. You don’t have to track releases or hunt anything down; just watch for the message when the package loads and copy what it gives you. (This all gets simpler once jstats reaches CRAN; we’ll update these instructions when it does.)</p>
+<blockquote class="blockquote">
+<p><strong>This is a beta, and your input shapes it.</strong> While jstats is in this pre-release phase, it’s still actively growing — which makes now the best time to ask for things. If a function is missing an option your work needs, or you’d like an analysis it doesn’t yet cover, say so: open an issue on the package’s GitHub page (the built-in spot for reporting problems and requesting features). If you hit an error, paste the <strong>full error message</strong> into the issue, along with what you ran and which versions of R and jstats you’re on — that detail makes a fix far quicker. Changes are far easier to fold in now than after the package reaches its stable release, where keeping existing code working limits what can change.</p>
+</blockquote>
+</section>
+<section id="getting-help" class="level3">
+<h3 class="anchored" data-anchor-id="getting-help">Getting help</h3>
+<p>Every jstats function has a help page. Two ways to reach it. Type a question mark and the function name, and here’s how that looks:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>?jfreq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Or, in your script, click on a function’s name and press <strong>F1</strong> (Windows) or <strong>Fn+F1</strong> (Mac). The help page opens in the bottom-right pane, with a description, the available options, and worked examples you can run.</p>
+</section>
+<section id="make-startup-automatic-optional-but-strongly-recommended" class="level3">
+<h3 class="anchored" data-anchor-id="make-startup-automatic-optional-but-strongly-recommended">Make startup automatic (optional, but strongly recommended)</h3>
+<p>You can tell your Project to load jstats for you every time it opens, so you never have to type <code>library(jstats)</code> again. It’s optional, but worth doing: besides saving the keystrokes, it means the package’s automatic update check runs every time you start work — so you’re always told when a new version is available — and you open each session ready to go. This uses a small setup file called an <strong>.Rprofile</strong> (a file R reads automatically when it starts).</p>
+<p>Create a plain text file named <code>.Rprofile</code> in your Project folder containing one line:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Save it, then restart R (<strong>Session → Restart R</strong>). From now on, every session in this Project starts with jstats already loaded.</p>
+<p>We’re keeping this minimal for now. Later you’ll add a line or two more — where your data lives, and how many digits to show in output — but one line is plenty to start.</p>
+<blockquote class="blockquote">
+<p><strong>Going deeper (optional).</strong> This <code>.Rprofile</code> lives inside your Project and applies only to this Project. That’s deliberate — it’s self-contained and safe to edit. There’s also a global, all-Projects version, but it’s better left until you’re juggling several Projects at once; the books cover it.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="part-2-quick-start" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-quick-start">Part 2 — Quick Start</h2>
+<p><em>From here on, jstats is loaded and you’re working in your Project.</em></p>
+<section id="meet-community" class="level3">
+<h3 class="anchored" data-anchor-id="meet-community">Meet <code>community</code></h3>
+<p>jstats ships with a small practice dataset called <strong><code>community</code></strong> — 100 made-up community-survey respondents, with income, education, age, a wellbeing score, a few yes/no items, a region, and a five-item attitude scale. It’s already available the moment the package is loaded; you don’t have to open or import anything. That zero-setup convenience is the point of a shipped dataset, and it’s what lets these examples just work.</p>
+<p>A quick note on wording you’ll see throughout: <strong>the data are</strong> plural here (we say “the data are clean,” not “the data is”), and <strong>dataset</strong> is the word for one collection of data, <strong>datasets</strong> for several. It’s a small habit, but a useful one to pick up.</p>
+</section>
+<section id="your-first-jstats-command" class="level3">
+<h3 class="anchored" data-anchor-id="your-first-jstats-command">Your first jstats command</h3>
+<p>You met functions in the console earlier with <code>sqrt()</code>. jstats functions work the same way — same shape, same parentheses. Let’s look at how respondents are spread across regions. This is analysis you’ll want to keep, so type it in your <strong>script</strong> (the Editor) this time, then run it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(community, Region)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That’s the same function-and-object idea as before, now doing real work. You named the function (<code>jfreq</code>, for <em>frequencies</em>), and inside the parentheses you gave it two things: the dataset (<code>community</code>) and the variable you want counted (<code>Region</code>). jstats prints a tidy frequency table — how many respondents fall in each region, with percentages.</p>
+<p>(Remember R is case-sensitive: it’s <code>Region</code>, not <code>region</code>.)</p>
+</section>
+<section id="the-examples-just-run" class="level3">
+<h3 class="anchored" data-anchor-id="the-examples-just-run">The examples just run</h3>
+<p>Open the help page for this function, and here it is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>?jfreq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Scroll to the bottom and you’ll find worked <strong>examples</strong>. Copy one, paste it into your console, and it runs immediately — because the data it uses are already loaded. No file to open, no path to set.</p>
+<p>A fair word on this, especially if you’re coming from commercial software: runnable help examples aren’t unique to R. Stata and SAS ship practice data too. What’s genuinely worth knowing is this. First, R’s documentation examples are <strong>build-verified</strong> — every example is actually executed when the package is checked, so they can’t quietly go stale. Second, there’s truly <strong>zero setup</strong>: <code>community</code> is simply <em>there</em>. Third, <strong>one source</strong> produces all three — the function, its help page, and its runnable example all come from the same place, so they can’t drift apart. The practical effect: when you’re learning a new function, you can always try it instantly on data that’s already in front of you.</p>
+</section>
+<section id="what-a-data-frame-is" class="level3">
+<h3 class="anchored" data-anchor-id="what-a-data-frame-is">What a data frame is</h3>
+<p><code>community</code> is a <strong>data frame</strong> — R’s name for a rectangle of data: rows are cases (here, respondents) and columns are variables (income, age, and so on). It’s the everyday shape your data take in R.</p>
+<p>Here’s something important about how R handles it. When <code>community</code> is in use, R is working with a <strong>copy held in memory</strong> — the version listed in your Environment pane — not the file on disk. You can recode, trim, and experiment freely, and the original file is never touched. The flip side is that changes you make live only in that working copy until you deliberately save them — which is exactly what “Working with your own data” covers.</p>
+<blockquote class="blockquote">
+<p><strong>Coming from SPSS or Stata?</strong> This is a real difference worth pausing on. In SPSS, the data you see in Data View <em>is</em> the working dataset, and saving writes back to that file. R instead keeps a working copy in memory and leaves your original file alone until you explicitly save. The upside is freedom to experiment without fear; the thing to remember is that your changes aren’t on disk until you save them.</p>
+</blockquote>
+</section>
+<section id="set-a-default-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="set-a-default-dataset">Set a default dataset</h3>
+<p>You named <code>community</code> explicitly in your <code>jfreq</code> call. If you’re going to work with one dataset for a while, you can set it as the default so you don’t have to name it every time. Do that with <code>juse</code> (for <em>use this dataset</em>):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">juse</span>(community)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now rerun the frequency table without naming the dataset:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(Region)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Same result. jstats fills in <code>community</code> for you. (Your Environment can hold several datasets at once; <code>juse</code> just picks which one is the current default — no risk to any original.)</p>
+</section>
+<section id="describe-the-numeric-variables" class="level3">
+<h3 class="anchored" data-anchor-id="describe-the-numeric-variables">Describe the numeric variables</h3>
+<p>For numeric variables, you usually want means, standard deviations, and the like rather than a full frequency table. That’s <code>jdesc</code> (for <em>describe</em>). Since we’ve set a default with <code>juse</code>, we can name just the variables:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(Age, WellbeingScore, Income)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>jstats prints a compact table of descriptive statistics — one row per variable.</p>
+</section>
+<section id="screen-the-whole-dataset-at-once" class="level3">
+<h3 class="anchored" data-anchor-id="screen-the-whole-dataset-at-once">Screen the whole dataset at once</h3>
+<p>Before any serious analysis, it’s good practice to look the whole dataset over — its ranges, possible outliers, skew, missing values, and what <em>kind</em> each variable seems to be. <code>jscreen</code> (for <em>screen</em>) does all of that in one call:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jscreen</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>With the <code>juse</code> default set, a bare <code>jscreen()</code> screens every variable in <code>community</code> and gives you a fast first read on the data’s health. We’re keeping this light here; there’s much more <code>jscreen</code> can tell you, and we come back to it later. (The full depth lives in the help page and the books.)</p>
+</section>
+<section id="your-first-analysis-a-regression" class="level3">
+<h3 class="anchored" data-anchor-id="your-first-analysis-a-regression">Your first analysis: a regression</h3>
+<p>This is the destination of the Quick Start — a working regression.</p>
+<p>Let’s ask whether age predicts wellbeing in these data. The function is <code>jlm</code> (for <em>linear model</em> — the technical name for ordinary regression). Notice something new on the left:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Results <span class="ot">&lt;-</span> <span class="fu">jlm</span>(WellbeingScore <span class="sc">~</span> Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><strong>If you’re new to statistics.</strong> A regression asks a simple question: as one thing changes, does another tend to change along with it, and by how much? Here we’re asking whether wellbeing tends to rise (or fall) as age goes up. The output puts a number on that tendency, and on how confident we can be that it’s a real pattern rather than chance.</p>
+</blockquote>
+<p>Two new things in that command.</p>
+<p>The <code>~</code> (tilde) is how R writes a model: <strong>outcome on the left, predictor on the right</strong>. Read <code>WellbeingScore ~ Age</code> as “wellbeing explained by age.” (We didn’t name the dataset because <code>juse(community)</code> is still in effect; jstats notes which dataset it used at the top of the output.)</p>
+<p>The <code>&lt;-</code> (typed as a less-than sign and a hyphen) is the <strong>assignment operator</strong> — it means “store the result in a name.” Here it saves the whole analysis into an object called <code>Results</code>. This is the function-and-object idea finally paying off: you’ll hand <code>Results</code> to other jstats functions later — for formatted tables, for example — without re-running the regression.</p>
+<p>A reassurance, because it’s a common worry: saving the result with <code>&lt;-</code> does <strong>not</strong> hide your output. jstats analysis functions always print their results to the console <em>and</em> return the object. You get the full table on screen <em>and</em> a saved <code>Results</code> to reuse. Nothing is suppressed.</p>
+</section>
+<section id="read-the-output" class="level3">
+<h3 class="anchored" data-anchor-id="read-the-output">Read the output</h3>
+<p>Look at the printed output. The key pieces:</p>
+<ul>
+<li>The <strong>coefficient for Age</strong> — how much wellbeing changes for each additional year of age. A positive number means older respondents tend to score higher.</li>
+<li>Its <strong>p-value</strong> — whether that relationship is statistically distinguishable from zero.</li>
+<li><strong>R-squared</strong> — the share of the variation in wellbeing this one predictor accounts for.</li>
+</ul>
+<p>In these data, age is a modest but real predictor of wellbeing. That’s your first regression — run, read, and saved.</p>
+<blockquote class="blockquote">
+<p><strong>Where to go next.</strong> Age is only a gentle predictor here. A stronger story in these data is income and wellbeing — but income has some respondents who declined to answer, which is exactly the kind of missing-value handling the next part is about. That’s our natural next step.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="part-3-working-with-your-own-data" class="level2">
+<h2 class="anchored" data-anchor-id="part-3-working-with-your-own-data">Part 3 — Working with your own data</h2>
+<p><em>Skeleton — to be drafted. Past the first win; ordered from simplest to most involved.</em></p>
+<ul>
+<li><strong>Revisit the Project <code>.Rprofile</code>:</strong> add <code>joptions(data.dir = "Data")</code>; mention other optional lines such as <code>joutput(digits = 3)</code>.</li>
+<li><strong>Simplest load:</strong> <code>jload("community")</code> brings in the shipped dataset; the “get a clean copy back” move with <code>overwrite = TRUE</code>.</li>
+<li><strong>Save and reload your own work:</strong> <code>jsave</code> and <code>jload</code> with a bare filename; the auto-created data folder.</li>
+<li><strong>Foreign formats:</strong> the shipped SPSS/Stata/Excel copies of <code>community</code>, reached with base R’s <code>system.file()</code> (a “jstats integrates with real R” example).</li>
+<li><strong>The payoff:</strong> one <code>jload</code> versus a different package and syntax per format.</li>
+<li><strong>Missing values:</strong> user-defined missing values and plain <code>NA</code>s; how SPSS, Stata, and Excel files differ; per-platform sections (read the one that’s yours).</li>
+<li><strong>The SPSS-to-Stata convention switch:</strong> why, and when each is preferable.</li>
+<li><em>(Optional)</em> a second regression on a loaded copy, to close the loop.</li>
+</ul>
+<hr>
+</section>
+<section id="part-4-working-comfortably" class="level2">
+<h2 class="anchored" data-anchor-id="part-4-working-comfortably">Part 4 — Working comfortably</h2>
+<p><em>Skeleton — to be drafted. Power features, all past the first win.</em></p>
+<ul>
+<li><strong><code>jdummy()</code> registrations</strong> — quick to create; non-destructive, fixing a classification without touching the data.</li>
+<li><strong>Resetting options</strong> and clearing registrations.</li>
+<li><strong><code>jcomplete()</code></strong> — controlling the set of cases an analysis uses.</li>
+</ul>
+<hr>
+<p><em>Want the full treatment — every option, the deeper statistics, and the design reasoning? That’s what the books are for.</em></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

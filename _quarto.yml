@@ -1,0 +1,12 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "jstats"
+
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
