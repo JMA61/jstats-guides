@@ -1,0 +1,124 @@
+---
+title: "RStudio Orientation"
+subtitle: "Make a Project, get to know the panes, and see what your data looks like once it's loaded."
+---
+
+Before installing the package, it's worth a few minutes getting comfortable with
+RStudio itself — where things are, and how your data looks once it's loaded. If
+you already work in RStudio day to day, you can skim this and move on to
+[Install jstats](install-jstats.qmd).
+
+## Start a Project
+
+Before installing the package or loading any data, create an RStudio **Project**.
+
+Without a Project, R needs to be told where your files live (its "working
+directory"), and that quickly drags in folder paths, the difference between `\`
+and `/`, and the fact that Windows and Mac write paths differently. A Project
+sidesteps all of it: it ties a folder, your data, and your work together, so R
+always knows where it is.
+
+To create one, in RStudio choose **File → New Project → New Directory → New
+Project**, give it a name (for example `jstats-practice`), pick where it should
+live, and click **Create Project**. RStudio opens your new Project.
+
+From now on, you reopen this Project by double-clicking its `.Rproj` file (the
+small file RStudio created inside your Project folder). That one habit — always
+work inside a Project — saves more beginner headaches than any other.
+
+## The RStudio panes
+
+With your Project open, you'll see three panes to begin with. A fourth — the
+**source pane**, in the top-left — appears the first time you open a script or
+view a dataset. Here's what each is for:
+
+- **Editor / source** (top-left) — where you write and save your code, and where a
+  dataset opens as a grid when you click it to view. This is your reusable list of
+  commands.
+- **Console** (bottom-left) — where code runs and results print.
+- **Environment** (top-right) — lists the data and objects currently loaded, by
+  **name and size** (not the data itself). Importantly, what lives here is a
+  *working copy* of your data, held in memory. Mistakes hit the copy, never the
+  original file on disk.
+- **Files / Plots / Help** (bottom-right) — your folder contents, any charts you
+  make, and help pages.
+
+<!-- TO DRAFT (Session 131 decision): the mtcars / iris data-viewer demo goes here.
+Beats, in order:
+  - Load a built-in dataset: data(mtcars). Point out it appears in the Environment
+    showing name + dimensions ONLY (32 obs. of 11 variables) -- not the data grid.
+    This is the corrected Environment-vs-Data-View point.
+  - Click mtcars in the Environment -> a viewer tab opens in the top-left SOURCE
+    pane (the 4th pane). Read-only grid. Note the source pane is also where script
+    files live, which we open shortly. (Viewer first, then script -- "one after
+    the other".)
+  - Load a second built-in: data(iris). Environment now lists BOTH. iris has a
+    grouping column (Species) -> a first, light glimpse of a categorical variable.
+  - Frame: built-in datasets are the ones R's own help pages use; opening YOUR OWN
+    data is slightly different (you tell R where to find it) and is covered later.
+  - DEFER the "you can't edit cells in the viewer" point to "jstats with your own
+    data" (it sits next to the working-copy-in-memory idea there).
+  - Do NOT include the clunky-base-R-vs-jstats contrast here; that opens Quick Start.
+-->
+
+::: {.callout-tip collapse="true" title="Coming from SPSS or Stata?"}
+A rough map if you've mostly used SPSS through its menus: the **Console** is like
+the **output/viewer window** where results appear, and the **Plots** area is where
+charts show up, much as they do in SPSS output. The closest thing to **Data View**
+is the read-only grid that opens when you click a dataset in the Environment — but
+note the **Environment** pane itself is *not* Data View: it only lists what's
+loaded, by name and size. The **Editor** is the one piece without a close
+menu-equivalent — it's your saved list of typed commands (nearest to the SPSS
+syntax window, which menu users rarely open).
+:::
+
+You'll also notice **Terminal** and **Background Jobs** tabs near the Console.
+These are for more advanced use — the Terminal is a direct line to your computer's
+command prompt (PowerShell on Windows, the old DOS-style window) — and you can
+ignore them for now.
+
+One small thing that trips up newcomers: **R is case-sensitive.** `Income` and
+`income` are two different names to R. When something doesn't work, a stray
+capital is a common culprit.
+
+## Try the console
+
+Let's make the **Console** feel real, since it's where everything ultimately runs.
+Click in the Console (bottom-left), type a sum, and press Enter:
+
+```r
+2 + 2
+```
+
+R answers straight back:
+
+```
+[1] 4
+```
+
+The console is a calculator that talks back. Now try a **function** — a named
+command that takes some input in parentheses and hands you a result. This one
+finds a square root:
+
+```r
+sqrt(144)
+```
+
+```
+[1] 12
+```
+
+That's the shape of nearly everything you'll do in R: a function name, inputs in
+parentheses, a result back. (And yes, `sqrt` is plain R — you're already learning
+the real thing.)
+
+So what's the **script** (the Editor) for, if the console can do everything? Just
+this: **the console is for doing, the script is for keeping.** Anything you type
+in the console runs and then scrolls away — perfect for quick, one-off jobs like a
+fast calculation or installing a package. When you're doing analysis you'll want
+to *keep* — and re-run, and share — you type those commands in the script and save
+the file. We'll start doing exactly that once there's something worth saving.
+
+---
+
+With RStudio mapped out, the next page adds the jstats package itself.

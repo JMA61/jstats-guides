@@ -1,0 +1,30 @@
+---
+title: "Install R and RStudio"
+subtitle: "Two free downloads, in order: the engine, then the dashboard."
+---
+
+These are the two pieces everything else sits on: **R** (the engine that does the
+statistics) and **RStudio** (the friendlier window you drive it from). Both are
+free. Install R first, then RStudio on top of it.
+
+You only do this once per computer. If you need to set up a second machine later,
+this page is the one to come back to.
+
+## Install R
+
+Go to **CRAN** — the official archive of R, at <https://cran.r-project.org> —
+choose the download for your system (Windows, Mac, or Linux), and run the
+installer with its default settings. That's it; you won't open R directly —
+RStudio will.
+
+## Install RStudio
+
+Download **RStudio Desktop** from
+<https://posit.co/download/rstudio-desktop/> and install it. (Install R first;
+RStudio needs it.) From now on, RStudio is the program you open to work.
+
+---
+
+With both installed, the next page gives you a quick tour of RStudio — the panes,
+the console, and how your data looks once it's loaded — before you add the jstats
+package itself.

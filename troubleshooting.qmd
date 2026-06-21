@@ -1,0 +1,80 @@
+---
+title: "Troubleshooting"
+subtitle: "Common problems and their fixes. Scan the titles, open the one that matches."
+---
+
+Most problems during setup and early use are one of a handful of things. Find the
+symptom that matches yours below and open it for the fix. This page grows over time;
+if your problem isn't here, the *Install jstats* page has the install-specific ones
+close at hand, and you can always report a new one as a GitHub issue (see *Keep
+jstats up to date* on the [Install jstats](install-jstats.qmd) page).
+
+## Installing jstats
+
+::: {.callout-warning collapse="true" title="API rate limit exceeded"}
+GitHub limits how many requests it answers from one internet connection per hour.
+A single install is well under the limit, but two situations can trip it: retrying
+a failing install many times in quick succession, or several people on the **same
+network** (a campus or office connection) all installing within the same hour and
+hitting the shared limit together. The fix is to **wait an hour and try again**, and
+to avoid rapid repeated retries. This limit goes away entirely once jstats reaches
+CRAN, because CRAN installs don't use the GitHub interface at all.
+:::
+
+::: {.callout-warning collapse="true" title="there is no package called 'remotes'"}
+Installing from GitHub needs the **remotes** package, and it isn't installed yet.
+Run this first, then retry the install:
+
+```r
+install.packages("remotes")
+```
+:::
+
+::: {.callout-warning collapse="true" title="A build or compilation error"}
+On **Windows**, this usually means **Rtools** is missing or doesn't match your R
+version. Install the matching Rtools from
+<https://cran.r-project.org/bin/windows/Rtools/> (for example Rtools45 for R 4.5.x),
+then **restart RStudio** (Session menu, Restart R) and try the install again. On a
+**Mac**, open the Terminal app and run `xcode-select --install`, follow the prompts,
+then retry.
+:::
+
+::: {.callout-warning collapse="true" title="The install seems half-done or broken"}
+The simplest fix is to remove jstats and install it fresh:
+
+```r
+remove.packages("jstats")
+remotes::install_github("JMA61/jstats")
+library(jstats)
+```
+:::
+
+## Starting RStudio and loading jstats
+
+::: {.callout-warning collapse="true" title="RStudio hangs or loops every time it starts"}
+This almost always means an **install command was put in your `.Rprofile`**. That
+file runs *every time R starts*, so an install line tries to reinstall on every
+startup and can loop. Your `.Rprofile` should only ever hold lightweight startup
+lines like `library(jstats)` — never an install command. To recover: close RStudio,
+open your Project folder in your computer's file manager, open the `.Rprofile` file
+in a plain text editor (Notepad on Windows, TextEdit on Mac), delete the install
+line so only the `library(jstats)` line remains, save, and reopen RStudio.
+:::
+
+::: {.callout-warning collapse="true" title="could not find function 'jfreq' (or another jstats function)"}
+jstats probably isn't loaded in this session. Run:
+
+```r
+library(jstats)
+```
+
+If it still isn't found, check spelling and capitalization — R is case-sensitive,
+so `jfreq` and `jFreq` are different names.
+:::
+
+::: {.callout-warning collapse="true" title="object 'community' not found"}
+The shipped datasets become available once the package is loaded. Run
+`library(jstats)` first, then try again. (If you're working with your own data
+instead, make sure you've loaded it — see
+[jstats with your own data](your-data.qmd).)
+:::

@@ -1,0 +1,13 @@
+---
+title: "Guides"
+subtitle: "Topic guides and how-to articles — coming soon."
+---
+
+::: {.callout-note title="Coming soon"}
+This section will hold longer how-to articles on specific themes — working with
+data from commercial software, building and checking a scale, handling missing
+values across platforms, and more. They go beyond the [Get Started](index.qmd)
+on-ramp and point toward the fuller treatment in the books.
+:::
+
+For now, the [Get Started](index.qmd) guide is the place to begin.

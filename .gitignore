@@ -5,3 +5,10 @@
 /.quarto/
 
 **/*.quarto_ipynb
+
+site_tools.R
+site_bundle.txt
+site_bundle_out.txt
+_received_backup/
+
+NOTES.R

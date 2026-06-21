@@ -1,0 +1,11 @@
+---
+title: "Videos"
+subtitle: "The jstats video channel — coming soon."
+---
+
+::: {.callout-note title="Coming soon"}
+Short, focused video walkthroughs — one narrow topic each — will be linked here as
+they're published.
+:::
+
+For now, the [Get Started](index.qmd) guide covers the essentials in written form.

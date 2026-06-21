@@ -1,0 +1,13 @@
+---
+title: "Reference"
+subtitle: "Function reference — coming soon."
+---
+
+::: {.callout-note title="Coming soon"}
+This section will be a task- and function-indexed reference — a place to look up
+how to do a specific thing while you work. It complements the package's built-in
+help pages with friendlier, web-linkable entries.
+:::
+
+In the meantime, every jstats function has a built-in help page: type `?` followed
+by the function name in the console (for example `?jfreq`).

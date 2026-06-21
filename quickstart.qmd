@@ -1,0 +1,202 @@
+---
+title: "jstats Quick Start"
+subtitle: "From a loaded package to your first regression — worth a look even if you already know R."
+---
+
+*From here on, jstats is loaded and you're working in your Project.* This page
+assumes you've installed jstats (see [Install jstats](install-jstats.qmd)) and
+loaded it with `library(jstats)`.
+
+<!-- TO DRAFT (Session 131 decision): the "hard way vs. jstats" opener goes here, at
+the TOP for maximum contrast.
+  - Show the clunky base-R way of describing a variable first: several separate
+    calls (e.g. mean(...), sd(...), range(...)) with untidy, scattered output.
+  - Use a BUILT-IN dataset directly for the clunky version (e.g. mtcars, already
+    met in Orientation) -- NO Excel round-trip needed to make the point.
+  - Then land the jstats way (jdesc) immediately after, as the payoff.
+  - Keep it short and punchy; it sets up the rest of the page.
+-->
+
+## Meet `community`
+
+jstats ships with a small practice dataset called **`community`** — 100 made-up
+community-survey respondents, with income, education, age, a wellbeing score, a
+few yes/no items, a region, and a five-item attitude scale. It's already available
+the moment the package is loaded; you don't have to open or import anything. That
+zero-setup convenience is the point of a shipped dataset, and it's what lets these
+examples just work.
+
+## Your first jstats command
+
+You met functions in the console earlier with `sqrt()`. jstats functions work the
+same way — same shape, same parentheses. Let's look at how respondents are spread
+across regions. This is analysis you'll want to keep, so type it in your **script**
+(the Editor) this time, then run it:
+
+```r
+jfreq(community, Region)
+```
+
+That's the same function-and-object idea as before, now doing real work. You named
+the function (`jfreq`, for *frequencies*), and inside the parentheses you gave it
+two things: the dataset (`community`) and the variable you want counted
+(`Region`). jstats prints a tidy frequency table — how many respondents fall in
+each region, with percentages.
+
+(Remember R is case-sensitive: it's `Region`, not `region`.)
+
+## The examples just run
+
+Open the help page for this function, and here it is:
+
+```r
+?jfreq
+```
+
+Scroll to the bottom and you'll find worked **examples**. Copy one, paste it into
+your console, and it runs immediately — because the data it uses are already
+loaded. No file to open, no path to set.
+
+A fair word on this, especially if you're coming from commercial software:
+runnable help examples aren't unique to R. Stata and SAS ship practice data too.
+What's genuinely worth knowing is this. First, R's documentation examples are
+**build-verified** — every example is actually executed when the package is
+checked, so they can't quietly go stale. Second, there's truly **zero setup**:
+`community` is simply *there*. Third, **one source** produces all three — the
+function, its help page, and its runnable example all come from the same place, so
+they can't drift apart. The practical effect: when you're learning a new function,
+you can always try it instantly on data that's already in front of you.
+
+## Getting help on any function
+
+You just used `?jfreq` to open a help page. That works for every jstats function —
+type `?` and the function's name. There's also a shortcut: in your script, click
+on a function's name and press **F1** (Windows) or **Fn+F1** (Mac). Either way,
+the help page opens in the bottom-right pane, with a description, the available
+options, and worked examples you can run.
+
+## What a data frame is
+
+`community` is a **data frame** — R's name for a rectangle of data: rows are cases
+(here, respondents) and columns are variables (income, age, and so on). It's the
+everyday shape your data take in R.
+
+Here's something important about how R handles it. When `community` is in use, R is
+working with a **copy held in memory** — the version listed in your Environment
+pane — not the file on disk. You can recode, trim, and experiment freely, and the
+original file is never touched. The flip side is that changes you make live only in
+that working copy until you deliberately save them — which is exactly what *jstats
+with your own data* covers.
+
+::: {.callout-tip collapse="true" title="Coming from SPSS or Stata?"}
+This is a real difference worth pausing on. In SPSS, the data you see in Data View
+*is* the working dataset, and saving writes back to that file. R instead keeps a
+working copy in memory and leaves your original file alone until you explicitly
+save. The upside is freedom to experiment without fear; the thing to remember is
+that your changes aren't on disk until you save them.
+:::
+
+## Set a default dataset
+
+You named `community` explicitly in your `jfreq` call. If you're going to work with
+one dataset for a while, you can set it as the default so you don't have to name it
+every time. Do that with `juse` (for *use this dataset*):
+
+```r
+juse(community)
+```
+
+Now rerun the frequency table without naming the dataset:
+
+```r
+jfreq(Region)
+```
+
+Same result. jstats fills in `community` for you. (Your Environment can hold
+several datasets at once; `juse` just picks which one is the current default — no
+risk to any original.)
+
+## Describe the numeric variables
+
+For numeric variables, you usually want means, standard deviations, and the like
+rather than a full frequency table. That's `jdesc` (for *describe*). Since we've
+set a default with `juse`, we can name just the variables:
+
+```r
+jdesc(Age, WellbeingScore, Income)
+```
+
+jstats prints a compact table of descriptive statistics — one row per variable.
+
+## Screen the whole dataset at once
+
+Before any serious analysis, it's good practice to look the whole dataset over —
+its ranges, possible outliers, skew, missing values, and what *kind* each variable
+seems to be. `jscreen` (for *screen*) does all of that in one call:
+
+```r
+jscreen()
+```
+
+With the `juse` default set, a bare `jscreen()` screens every variable in
+`community` and gives you a fast first read on the data's health. We're keeping
+this light here; there's much more `jscreen` can tell you, and we come back to it
+later. (The full depth lives in the help page and the books.)
+
+## Your first analysis: a regression
+
+This is the destination of the Quick Start — a working regression.
+
+Let's ask whether age predicts wellbeing in these data. The function is `jlm` (for
+*linear model* — the technical name for ordinary regression). Notice something new
+on the left:
+
+```r
+Results <- jlm(WellbeingScore ~ Age)
+```
+
+::: {.callout-tip collapse="true" title="If you're new to statistics"}
+A regression asks a simple question: as one thing changes, does another tend to
+change along with it, and by how much? Here we're asking whether wellbeing tends to
+rise (or fall) as age goes up. The output puts a number on that tendency, and on
+how confident we can be that it's a real pattern rather than chance.
+:::
+
+Two new things in that command.
+
+The `~` (tilde) is how R writes a model: **outcome on the left, predictor on the
+right**. Read `WellbeingScore ~ Age` as "wellbeing explained by age." (We didn't
+name the dataset because `juse(community)` is still in effect; jstats notes which
+dataset it used at the top of the output.)
+
+The `<-` (typed as a less-than sign and a hyphen) is the **assignment operator** —
+it means "store the result in a name." Here it saves the whole analysis into an
+object called `Results`. This is the function-and-object idea finally paying off:
+you'll hand `Results` to other jstats functions later — for formatted tables, for
+example — without re-running the regression.
+
+A reassurance, because it's a common worry: saving the result with `<-` does
+**not** hide your output. jstats analysis functions always print their results to
+the console *and* return the object. You get the full table on screen *and* a saved
+`Results` to reuse. Nothing is suppressed.
+
+## Read the output
+
+Look at the printed output. The key pieces:
+
+- The **coefficient for Age** — how much wellbeing changes for each additional year
+  of age. A positive number means older respondents tend to score higher.
+- Its **p-value** — whether that relationship is statistically distinguishable from
+  zero.
+- **R-squared** — the share of the variation in wellbeing this one predictor
+  accounts for.
+
+In these data, age is a modest but real predictor of wellbeing. That's your first
+regression — run, read, and saved.
+
+::: {.callout-note title="Where to go next"}
+Age is only a gentle predictor here. A stronger story in these data is income and
+wellbeing — but income has some respondents who declined to answer, which is
+exactly the kind of missing-value handling the next part is about. That's our
+natural next step: [jstats with your own data](your-data.qmd).
+:::

@@ -4,6 +4,39 @@ project:
 
 website:
   title: "jstats"
+  page-navigation: true
+  navbar:
+    left:
+      - text: "Get Started"
+        href: index.qmd
+      - text: "Guides"
+        href: guides.qmd
+      - text: "Reference"
+        href: reference.qmd
+      - text: "Books"
+        href: books.qmd
+      - text: "Videos"
+        href: videos.qmd
+      - text: "Troubleshooting"
+        href: troubleshooting.qmd
+  sidebar:
+    - title: "Get Started"
+      style: "floating"
+      contents:
+        - text: "Start here (everyone)"
+          href: index.qmd
+        - text: "Install R and RStudio"
+          href: install-r-and-rstudio.qmd
+        - text: "RStudio Orientation"
+          href: rstudio-orientation.qmd
+        - text: "Install jstats"
+          href: install-jstats.qmd
+        - text: "jstats Quick Start"
+          href: quickstart.qmd
+        - text: "jstats with your own data"
+          href: your-data.qmd
+        - text: "A typical jstats workflow"
+          href: workflow.qmd
 
 format:
   html:

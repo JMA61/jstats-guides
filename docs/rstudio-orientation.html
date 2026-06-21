@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Getting started with jstats – jstats</title>
+<title>RStudio Orientation – jstats</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -33,7 +68,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./install-r-and-rstudio.html" rel="next">
+<link href="./install-jstats.html" rel="next">
+<link href="./install-r-and-rstudio.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -127,7 +163,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Start here (everyone)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rstudio-orientation.html">RStudio Orientation</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -141,7 +177,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Start here (everyone)</span></a>
   </div>
 </li>
@@ -153,7 +189,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rstudio-orientation.html" class="sidebar-item-text sidebar-link">
+  <a href="./rstudio-orientation.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">RStudio Orientation</span></a>
   </div>
 </li>
@@ -191,11 +227,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-youll-get" id="toc-what-youll-get" class="nav-link active" data-scroll-target="#what-youll-get">What you’ll get</a></li>
-  <li><a href="#the-pieces-r-rstudio-and-a-package" id="toc-the-pieces-r-rstudio-and-a-package" class="nav-link" data-scroll-target="#the-pieces-r-rstudio-and-a-package">The pieces: R, RStudio, and a package</a></li>
-  <li><a href="#why-jstats" id="toc-why-jstats" class="nav-link" data-scroll-target="#why-jstats">Why jstats</a></li>
-  <li><a href="#what-to-expect-as-an-early-user" id="toc-what-to-expect-as-an-early-user" class="nav-link" data-scroll-target="#what-to-expect-as-an-early-user">What to expect as an early user</a></li>
-  <li><a href="#where-to-go-next" id="toc-where-to-go-next" class="nav-link" data-scroll-target="#where-to-go-next">Where to go next</a></li>
+  <li><a href="#start-a-project" id="toc-start-a-project" class="nav-link active" data-scroll-target="#start-a-project">Start a Project</a></li>
+  <li><a href="#the-rstudio-panes" id="toc-the-rstudio-panes" class="nav-link" data-scroll-target="#the-rstudio-panes">The RStudio panes</a></li>
+  <li><a href="#try-the-console" id="toc-try-the-console" class="nav-link" data-scroll-target="#try-the-console">Try the console</a></li>
   </ul>
 </nav>
     </div>
@@ -204,8 +238,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Getting started with jstats</h1>
-<p class="subtitle lead">Start here — whether you’re brand new to R or an experienced user.</p>
+<h1 class="title">RStudio Orientation</h1>
+<p class="subtitle lead">Make a Project, get to know the panes, and see what your data looks like once it’s loaded.</p>
 </div>
 
 
@@ -222,122 +256,72 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled" title="Demo draft v1">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Demo draft v1
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This is an early cut for colleague review. Some pages are complete and others are still skeletons. The labeled side-boxes throughout — <strong>For experienced R users</strong>, <strong>Coming from SPSS or Stata?</strong>, <strong>If you’re new to statistics</strong>, <strong>Aside</strong>, and <strong>Going deeper</strong> — are optional: each is written for some readers and safely skipped by the rest. The main text reads straight through without them, and you can fold each box open or closed.</p>
-</div>
-</div>
-<p>This short page orients everyone — new and experienced alike — and then points you to the right starting place. <strong>Read it first</strong>, then follow the link that matches your situation (the choices are at the bottom).</p>
-<section id="what-youll-get" class="level2">
-<h2 class="anchored" data-anchor-id="what-youll-get">What you’ll get</h2>
-<p>This guide takes you from nothing installed to your first real statistical result — an actual regression — in about an hour. You’ll do a little setup once, then spend most of your time getting results.</p>
+<p>Before installing the package, it’s worth a few minutes getting comfortable with RStudio itself — where things are, and how your data looks once it’s loaded. If you already work in RStudio day to day, you can skim this and move on to <a href="./install-jstats.html">Install jstats</a>.</p>
+<section id="start-a-project" class="level2">
+<h2 class="anchored" data-anchor-id="start-a-project">Start a Project</h2>
+<p>Before installing the package or loading any data, create an RStudio <strong>Project</strong>.</p>
+<p>Without a Project, R needs to be told where your files live (its “working directory”), and that quickly drags in folder paths, the difference between <code>\</code> and <code>/</code>, and the fact that Windows and Mac write paths differently. A Project sidesteps all of it: it ties a folder, your data, and your work together, so R always knows where it is.</p>
+<p>To create one, in RStudio choose <strong>File → New Project → New Directory → New Project</strong>, give it a name (for example <code>jstats-practice</code>), pick where it should live, and click <strong>Create Project</strong>. RStudio opens your new Project.</p>
+<p>From now on, you reopen this Project by double-clicking its <code>.Rproj</code> file (the small file RStudio created inside your Project folder). That one habit — always work inside a Project — saves more beginner headaches than any other.</p>
 </section>
-<section id="the-pieces-r-rstudio-and-a-package" class="level2">
-<h2 class="anchored" data-anchor-id="the-pieces-r-rstudio-and-a-package">The pieces: R, RStudio, and a package</h2>
-<p>A few words come up right away. Here’s what each one is, and how they stack:</p>
+<section id="the-rstudio-panes" class="level2">
+<h2 class="anchored" data-anchor-id="the-rstudio-panes">The RStudio panes</h2>
+<p>With your Project open, you’ll see three panes to begin with. A fourth — the <strong>source pane</strong>, in the top-left — appears the first time you open a script or view a dataset. Here’s what each is for:</p>
 <ul>
-<li><strong>R</strong> is the engine — the free program that actually does the statistics.</li>
-<li><strong>RStudio</strong> is the dashboard you drive it from — a friendlier window onto R, with a place to write your commands, see your results, and view your data. You install R first, then RStudio on top of it.</li>
-<li>A <strong>package</strong> is an add-on that teaches R new tricks — extra commands bundled together and shared. <strong>jstats</strong> is one of these.</li>
-<li><strong>Rtools</strong> (Windows only) is a small free toolkit R uses to build certain add-ons. You install it once and then forget it exists; it’s needed only for the jstats install step, and the <em>Install jstats</em> page covers it. (Mac has an equivalent it usually already has.)</li>
+<li><strong>Editor / source</strong> (top-left) — where you write and save your code, and where a dataset opens as a grid when you click it to view. This is your reusable list of commands.</li>
+<li><strong>Console</strong> (bottom-left) — where code runs and results print.</li>
+<li><strong>Environment</strong> (top-right) — lists the data and objects currently loaded, by <strong>name and size</strong> (not the data itself). Importantly, what lives here is a <em>working copy</em> of your data, held in memory. Mistakes hit the copy, never the original file on disk.</li>
+<li><strong>Files / Plots / Help</strong> (bottom-right) — your folder contents, any charts you make, and help pages.</li>
 </ul>
-<p>So the order is: install R, install RStudio, then add the jstats package (with Rtools along for the ride on Windows). The pages that follow walk you through each step.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Aside">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<!-- TO DRAFT (Session 131 decision): the mtcars / iris data-viewer demo goes here.
+Beats, in order:
+  - Load a built-in dataset: data(mtcars). Point out it appears in the Environment
+    showing name + dimensions ONLY (32 obs. of 11 variables) -- not the data grid.
+    This is the corrected Environment-vs-Data-View point.
+  - Click mtcars in the Environment -> a viewer tab opens in the top-left SOURCE
+    pane (the 4th pane). Read-only grid. Note the source pane is also where script
+    files live, which we open shortly. (Viewer first, then script -- "one after
+    the other".)
+  - Load a second built-in: data(iris). Environment now lists BOTH. iris has a
+    grouping column (Species) -> a first, light glimpse of a categorical variable.
+  - Frame: built-in datasets are the ones R's own help pages use; opening YOUR OWN
+    data is slightly different (you tell R where to find it) and is covered later.
+  - DEFER the "you can't edit cells in the viewer" point to "jstats with your own
+    data" (it sits next to the working-copy-in-memory idea there).
+  - Do NOT include the clunky-base-R-vs-jstats contrast here; that opens Quick Start.
+-->
+<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS or Stata?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Aside
+<span class="screen-reader-only">Tip</span>Coming from SPSS or Stata?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The best-known example of a friendlier layer over R is the <strong>tidyverse</strong> — actually a <em>meta-package</em>, a single package whose only job is to install and load a whole family of related packages at once. It became enormously popular by smoothing R for everyday data work. jstats shares that goal of smoothing the path, though it takes a different route: where the tidyverse introduces its own style of doing things, jstats deliberately stays close to ordinary R — more on why that matters just below.</p>
+<p>A rough map if you’ve mostly used SPSS through its menus: the <strong>Console</strong> is like the <strong>output/viewer window</strong> where results appear, and the <strong>Plots</strong> area is where charts show up, much as they do in SPSS output. The closest thing to <strong>Data View</strong> is the read-only grid that opens when you click a dataset in the Environment — but note the <strong>Environment</strong> pane itself is <em>not</em> Data View: it only lists what’s loaded, by name and size. The <strong>Editor</strong> is the one piece without a close menu-equivalent — it’s your saved list of typed commands (nearest to the SPSS syntax window, which menu users rarely open).</p>
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Aside — where the names come from">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Aside — where the names come from
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>R is the successor to an older language called <strong>S</strong>; its own name plays on that <strong>S</strong> while also nodding to the initials of R’s two creators. <strong>jstats</strong> quietly continues that little naming tradition — the <em>j</em> is its author’s initial. Nothing rides on this; it’s just a bit of lineage you can enjoy and skip.</p>
-</div>
-</div>
-</div>
+<p>You’ll also notice <strong>Terminal</strong> and <strong>Background Jobs</strong> tabs near the Console. These are for more advanced use — the Terminal is a direct line to your computer’s command prompt (PowerShell on Windows, the old DOS-style window) — and you can ignore them for now.</p>
+<p>One small thing that trips up newcomers: <strong>R is case-sensitive.</strong> <code>Income</code> and <code>income</code> are two different names to R. When something doesn’t work, a stray capital is a common culprit.</p>
 </section>
-<section id="why-jstats" class="level2">
-<h2 class="anchored" data-anchor-id="why-jstats">Why jstats</h2>
-<p>jstats began as a teaching tool — a way to smooth over some of R’s rougher edges for people meeting statistics and code at the same time. But the same design turned out to help experienced users too, so it grew into a fuller package. Two short pitches, depending on where you’re starting.</p>
-<p><strong>If you’re new to R:</strong> jstats gives you a small set of commands that are consistent and predictable, with output that’s easy to read, and it protects you from a few of R’s confusing default behaviors. You get results quickly — and, importantly, <strong>you’re still learning real R the whole time.</strong> jstats stays close to ordinary R rather than walling you off in a private dialect, so every skill you build here transfers.</p>
-<p><strong>If you already know R:</strong> the payoff is friction removed, not capability hidden. jstats handles labelled survey data directly — the value labels, variable labels, and user-defined missing values that come out of commercial statistical software (SPSS, Stata, SAS) — with no manual conversion. It loads and saves across formats through a single command. And it gives you one consistent, presentation-ready style of output across every function. Crucially, <strong>it doesn’t reinvent the statistics</strong>: under the hood it calls R’s own long-tested routines (<code>jlm</code> runs <code>lm</code>, <code>jt</code> runs <code>t.test</code>, and so on), so you’re trusting the same calculations you already trust. In other words it’s a <em>wrapper</em> — a simpler, consistent command that sits on top of R’s existing functions and passes the real work through to them, just as R’s own <code>read.csv()</code> is really its more general <code>read.table()</code> with the common settings already filled in for you.</p>
-<p>One feature worth singling out, because it helps both audiences: <strong>non-destructive handling of things like dummy variables.</strong> When you tell jstats to treat a variable as a dummy (a yes/no or category indicator used in a regression), it <em>registers</em> that intention without altering or overwriting the variable itself — so you cannot accidentally damage your data by classifying it.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="For experienced R users">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>For experienced R users
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>That non-destructive handling means you don’t convert the column to a factor, with the in-place change and downstream surprises that can bring. The registration is a note about how to treat the variable, not an edit to it — and it’s easily undone or changed.</p>
-</div>
-</div>
-</div>
-<p><strong>What it covers today — and what’s coming.</strong> Right now jstats handles the core of applied social-science analysis: frequency tables and descriptive statistics, data screening, group comparisons (t-tests and ANOVA), correlation, scale reliability (Cronbach’s alpha), cross-tabulations, and both linear and logistic regression. On the near-term roadmap are Poisson and negative-binomial models for count outcomes, and built-in export of presentation-ready tables to Word — APA style among them — with no separate package to install or learn.</p>
-<p>And jstats is more than a single package. Around it is a growing set of free online guides (you’re reading one), a planned two-book series — <em>Statistics in R, Made Accessible</em>, for readers meeting statistics and R together, and <em>From SPSS and Stata to R</em>, for researchers who already know the statistics — a video channel, and ready-to-use teaching datasets. It follows a long tradition of teaching-focused statistics packages that began in the classroom and grew into something larger — Danielle Navarro’s <code>lsr</code> package, the companion to her widely used <em>Learning Statistics with R</em>, is one well-loved example — and the aim here is the same.</p>
-</section>
-<section id="what-to-expect-as-an-early-user" class="level2">
-<h2 class="anchored" data-anchor-id="what-to-expect-as-an-early-user">What to expect as an early user</h2>
-<p>Using jstats at this early stage comes with a simple, honest trade. The costs are small and real: a few extra steps to install during this pre-release phase, the occasional error message that reads more cryptically than it should, and now and then a feature you wish were there but isn’t yet. The benefit: results fast, and a direct line to shape the package — options and analyses you ask for can often be added (see the note on the <em>Install jstats</em> page).</p>
-<p>And there’s a safety net that makes the trade an easy one. jstats is a convenience layer, not a cage. Anything it doesn’t do, plain R still does — you can always drop back to base R, or reach for another package, right alongside jstats in the very same script. In fact that’s the intended path: use jstats for the common social-science tasks it’s built for, pick up a little real R painlessly as you go, and when you eventually need something specialized that jstats doesn’t cover, you’ll have learned enough to add the package that does. You’re never stuck, and you’re never learning a dead end.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="For experienced R users">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>For experienced R users
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>A concrete example of feature-by-request: a researcher wanted to see <em>which cells</em> drive a significant chi-square, so adjusted standardized residuals were added to the cross-tabs function — <code>jcrosstab(Education ~ Volunteer, data = community, residuals = "adjusted")</code>. That kind of targeted addition is exactly what this phase is for.</p>
-</div>
-</div>
-</div>
-<p>One last idea to carry with you, because it makes the rest click: in R you mostly <strong>call functions</strong> (a name, then inputs in parentheses), and a function both shows you a result <em>and</em> can hand back an <strong>object</strong> you keep and reuse. You’ll see what that means at your first real command, and again when you save your first analysis.</p>
-</section>
-<section id="where-to-go-next" class="level2">
-<h2 class="anchored" data-anchor-id="where-to-go-next">Where to go next</h2>
-<p>Pick the line that matches where you’re starting:</p>
-<ul>
-<li><strong>Starting from scratch?</strong> Begin with <a href="./install-r-and-rstudio.html">Install R and RStudio</a> — the next page installs everything.</li>
-<li><strong>Already have R and RStudio?</strong> Skip ahead to <a href="./install-jstats.html">Install jstats</a>.</li>
-<li><strong>Already have jstats working inside an RStudio Project?</strong> Jump straight to the <a href="./quickstart.html">jstats Quick Start</a> — it’s worth a look even for seasoned R users, since it’s where the jstats way of working becomes clear.</li>
-</ul>
+<section id="try-the-console" class="level2">
+<h2 class="anchored" data-anchor-id="try-the-console">Try the console</h2>
+<p>Let’s make the <strong>Console</strong> feel real, since it’s where everything ultimately runs. Click in the Console (bottom-left), type a sum, and press Enter:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>R answers straight back:</p>
+<pre><code>[1] 4</code></pre>
+<p>The console is a calculator that talks back. Now try a <strong>function</strong> — a named command that takes some input in parentheses and hands you a result. This one finds a square root:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">144</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>[1] 12</code></pre>
+<p>That’s the shape of nearly everything you’ll do in R: a function name, inputs in parentheses, a result back. (And yes, <code>sqrt</code> is plain R — you’re already learning the real thing.)</p>
+<p>So what’s the <strong>script</strong> (the Editor) for, if the console can do everything? Just this: <strong>the console is for doing, the script is for keeping.</strong> Anything you type in the console runs and then scrolls away — perfect for quick, one-off jobs like a fast calculation or installing a package. When you’re doing analysis you’ll want to <em>keep</em> — and re-run, and share — you type those commands in the script and save the file. We’ll start doing exactly that once there’s something worth saving.</p>
+<hr>
+<p>With RStudio mapped out, the next page adds the jstats package itself.</p>
 
 
 </section>
@@ -745,10 +729,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./install-r-and-rstudio.html" class="pagination-link" aria-label="Install R and RStudio">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Install R and RStudio</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./install-r-and-rstudio.html" class="pagination-link" aria-label="Install R and RStudio">
-        <span class="nav-page-text">Install R and RStudio</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./install-jstats.html" class="pagination-link" aria-label="Install jstats">
+        <span class="nav-page-text">Install jstats</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

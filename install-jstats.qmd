@@ -1,0 +1,195 @@
+---
+title: "Install jstats"
+subtitle: "Getting the package onto your computer — the current GitHub-phase steps, plus what to do if an install stalls."
+---
+
+This page gets the jstats package installed and loaded, ready to use. It assumes
+you've already installed R and RStudio and have an RStudio Project open. If you
+haven't, start with [Install R and RStudio](install-r-and-rstudio.qmd) and
+[RStudio Orientation](rstudio-orientation.qmd), then come back here.
+
+::: {.callout-note collapse="true" title="For experienced R users"}
+If you've installed R packages before, only a few things here are specific to
+jstats. It currently installs from **GitHub** rather than CRAN, so you need the
+**remotes** package and — on Windows — **Rtools**; and it checks for a newer
+version each time it loads. Jump to the two install commands below; the rest is
+ordinary install-and-load you already know.
+:::
+
+::: {.callout-note}
+jstats is currently distributed through **GitHub** — a website where software is
+shared and developed. Later it will also be on **CRAN** (the same archive you
+downloaded R from), at which point installing it gets simpler. These instructions
+cover the current GitHub phase. You install once; after that, the package tells
+you whenever an update is available (see *Keep jstats up to date*, below).
+:::
+
+Using any R package is really two steps that are easy to blur together.
+**Installing** downloads the package onto your computer — you do this once.
+**Loading** switches it on for your current session — you do this each time you
+start R, with `library()`. (Think of installing as buying a book for your shelf,
+and loading as taking it down to read.) jstats works the same way: the steps
+below do the one-time install, and the last section sets up the loading to happen
+on its own.
+
+## What you need first
+
+- **R and RStudio installed** — see [Install R and RStudio](install-r-and-rstudio.qmd).
+- **An RStudio Project open** — [RStudio Orientation](rstudio-orientation.qmd)
+  covers creating one. The automatic-loading step at the end of this page uses a
+  small file that lives *inside* your Project, so it helps to have one ready.
+
+## Install Rtools (Windows only)
+
+To install a package from GitHub, Windows needs **Rtools**, a free build toolkit.
+Download it from <https://cran.r-project.org/bin/windows/Rtools/>, choose the
+version that matches your R (for example **Rtools45** for R 4.5.x), and run the
+installer with its defaults. You do this once, unless you update R later.
+
+(On a Mac you don't need Rtools — but you may need Apple's command line tools; see
+the Mac note just below the install commands.)
+
+## Install the remotes helper
+
+The **remotes** package is what handles installing from GitHub. Click in the
+**Console** (bottom-left pane) and run the line below. This is a one-off command
+you won't need to save in a script:
+
+```r
+install.packages("remotes")
+```
+
+## Install jstats and load it
+
+Now install jstats from GitHub, then load it:
+
+```r
+remotes::install_github("JMA61/jstats")
+library(jstats)
+```
+
+If it loaded cleanly, you'll see a short jstats startup message — and, if a newer
+version is already out, a note with the exact lines to update (more on that
+below). That message is how you know jstats is loaded and ready.
+
+**Mac users.** You may already have the build tools you need. If you hit a build
+error during installation, open the **Terminal** app and run:
+
+```
+xcode-select --install
+```
+
+Follow the prompts, then run the install command again. The `remotes` and install
+lines are the same as above.
+
+### If the install fails
+
+Most install problems are one of a handful of things. Scan the titles below and
+open the one that matches your error. If yours isn't here, the full
+[Troubleshooting](troubleshooting.qmd) page has more.
+
+::: {.callout-warning collapse="true" title="API rate limit exceeded"}
+GitHub limits how many requests it answers from one internet connection per hour.
+A single install is well under the limit, but two situations can trip it: retrying
+a failing install many times in quick succession, or several people on the **same
+network** (a campus or office connection) all installing within the same hour and
+hitting the shared limit together. The fix is simply to **wait an hour and try
+again**, and to avoid rapid repeated retries. This limit goes away entirely once
+jstats reaches CRAN.
+:::
+
+::: {.callout-warning collapse="true" title="there is no package called 'remotes'"}
+The install-from-GitHub command needs the **remotes** package, and it isn't
+installed yet. Run this first, then retry the install:
+
+```r
+install.packages("remotes")
+```
+:::
+
+::: {.callout-warning collapse="true" title="A build or compilation error"}
+On **Windows**, this usually means **Rtools** is missing or doesn't match your R
+version. Install the matching Rtools (see *Install Rtools*, above), then
+**restart RStudio** (Session menu, Restart R) and try the install again. On a
+**Mac**, open Terminal and run `xcode-select --install`, follow the prompts, then
+retry.
+:::
+
+::: {.callout-warning collapse="true" title="The install seems half-done or broken"}
+The simplest fix is to remove jstats and install it fresh:
+
+```r
+remove.packages("jstats")
+remotes::install_github("JMA61/jstats")
+library(jstats)
+```
+:::
+
+::: {.callout-warning collapse="true" title="RStudio hangs or loops every time it starts"}
+This almost always means an **install command was put in your `.Rprofile`**. That
+file runs *every time R starts*, so an install line tries to reinstall on every
+startup and can loop. Your `.Rprofile` should only ever hold lightweight startup
+lines like `library(jstats)` — never an install command. To recover: close
+RStudio, open your Project folder in your computer's file manager, open the
+`.Rprofile` file in a plain text editor (Notepad on Windows, TextEdit on Mac),
+delete the install line so only the `library(jstats)` line remains, save, and
+reopen RStudio.
+:::
+
+## Keep jstats up to date
+
+Because jstats is updated often during this phase, it checks for a newer version
+each time you load it with `library(jstats)`. When one is available, it prints a
+short message with a few lines of code — you simply copy those lines into the
+Console and run them, and jstats updates itself. You don't have to track releases
+or hunt anything down; just watch for the message when the package loads and copy
+what it gives you. (This all gets simpler once jstats reaches CRAN; we'll update
+these instructions when it does.)
+
+::: {.callout-important title="This is a beta, and your input shapes it"}
+While jstats is in this pre-release phase, it's still actively growing — which
+makes now the best time to ask for things. If a function is missing an option
+your work needs, or you'd like an analysis it doesn't yet cover, say so: open an
+issue on the package's GitHub page (the built-in spot for reporting problems and
+requesting features). If you hit an error, paste the **full error message** into
+the issue, along with what you ran and which versions of R and jstats you're on —
+that detail makes a fix far quicker. Changes are far easier to fold in now than
+after the package reaches its stable release, where keeping existing code working
+limits what can change.
+:::
+
+## Load jstats automatically (recommended)
+
+You can tell your Project to load jstats for you every time it opens, so you never
+have to type `library(jstats)` again. It's optional, but worth doing: besides
+saving the keystrokes, it means the package's automatic update check runs every
+time you start work — so you're always told when a new version is available — and
+you open each session ready to go. This uses a small setup file called an
+**`.Rprofile`** (a file R reads automatically when it starts).
+
+Create a plain text file named `.Rprofile` in your Project folder containing one
+line:
+
+```r
+library(jstats)
+```
+
+Save it, then restart R (**Session menu, Restart R**). From now on, every session
+in this Project starts with jstats already loaded.
+
+Keep this to lightweight startup lines — loading a package, and later a setting or
+two. Do **not** put an install command (like `remotes::install_github(...)`) in
+`.Rprofile`: because the file runs on every startup, an install line there tries
+to reinstall each time and can send RStudio into a loop. Installing is a one-off
+you run by hand; loading is the repeatable step that belongs in startup.
+
+We're keeping this minimal for now. Later you'll add a line or two more — where
+your data lives, and how many digits to show in output — but one line is plenty to
+start.
+
+::: {.callout-note collapse="true" title="Going deeper (optional)"}
+This `.Rprofile` lives inside your Project and applies only to this Project.
+That's deliberate — it's self-contained and safe to edit. There's also a global,
+all-Projects version, but it's better left until you're juggling several Projects
+at once; the books cover it.
+:::
