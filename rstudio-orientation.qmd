@@ -43,23 +43,52 @@ view a dataset. Here's what each is for:
 - **Files / Plots / Help** (bottom-right) — your folder contents, any charts you
   make, and help pages.
 
-<!-- TO DRAFT (Session 131 decision): the mtcars / iris data-viewer demo goes here.
-Beats, in order:
-  - Load a built-in dataset: data(mtcars). Point out it appears in the Environment
-    showing name + dimensions ONLY (32 obs. of 11 variables) -- not the data grid.
-    This is the corrected Environment-vs-Data-View point.
-  - Click mtcars in the Environment -> a viewer tab opens in the top-left SOURCE
-    pane (the 4th pane). Read-only grid. Note the source pane is also where script
-    files live, which we open shortly. (Viewer first, then script -- "one after
-    the other".)
-  - Load a second built-in: data(iris). Environment now lists BOTH. iris has a
-    grouping column (Species) -> a first, light glimpse of a categorical variable.
-  - Frame: built-in datasets are the ones R's own help pages use; opening YOUR OWN
-    data is slightly different (you tell R where to find it) and is covered later.
-  - DEFER the "you can't edit cells in the viewer" point to "jstats with your own
-    data" (it sits next to the working-copy-in-memory idea there).
-  - Do NOT include the clunky-base-R-vs-jstats contrast here; that opens Quick Start.
--->
+Let's make the panes concrete with a dataset that already comes with R. R ships
+with several built-in datasets for practice and examples; one is `mtcars` (data on
+some classic car models). You can copy it into a name of your own choosing using
+R's **assignment operator**, `<-`, which means "put what's on the right into the
+name on the left":
+
+```r
+cars <- mtcars
+```
+
+You now have a dataset called `cars` — the same data, under a name you picked. Look
+at the **Environment** pane (top-right): `cars` appears, described as *32 obs. of 11
+variables*. That's its name and size — the Environment lists what you've loaded, not
+the data themselves. To see the data, click `cars` in the **Environment**. A tab
+opens in the **source pane** (top-left) showing a grid — rows of cars down the side,
+variables across the top. This is the same top-left pane where your scripts will
+open shortly; RStudio uses it for both.
+
+<!-- screenshot: Environment showing `cars` as "32 obs. of 11 variables", viewer grid open in source pane -->
+
+`iris` is another built-in dataset (measurements of flowers). Because it's built in,
+it's already available by its own name — you don't have to copy it first. To take a
+quick look, run:
+
+```r
+View(iris)
+```
+
+Note the capital **V** — `View` is one of a handful of base-R functions that breaks
+the usual all-lowercase habit (a leftover from R's long, many-handed history rather
+than any real reason), so `view(iris)` won't work; R distinguishes capitals from
+lowercase. jstats keeps its own functions lowercase, in step with the base-R
+majority.
+
+The same kind of grid opens. Notice one column, `Species`, holds group names
+(setosa, versicolor, virginica) instead of numbers — your first glimpse of a
+**categorical variable**: a column that sorts cases into groups. You'll meet these
+properly later.
+
+<!-- screenshot: View(iris) grid open, Species column visible -->
+
+You'll see `mtcars` and `iris` again and again in R's help pages and in other
+packages' examples — now you know what they are, so they won't catch you off guard.
+jstats brings its own example dataset too, `community`, which becomes available by
+name once you install and load the package — we'll use it from the Quick Start
+onward.
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS or Stata?"}
 A rough map if you've mostly used SPSS through its menus: the **Console** is like

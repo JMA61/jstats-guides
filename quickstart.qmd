@@ -7,24 +7,48 @@ subtitle: "From a loaded package to your first regression — worth a look even 
 assumes you've installed jstats (see [Install jstats](install-jstats.qmd)) and
 loaded it with `library(jstats)`.
 
-<!-- TO DRAFT (Session 131 decision): the "hard way vs. jstats" opener goes here, at
-the TOP for maximum contrast.
-  - Show the clunky base-R way of describing a variable first: several separate
-    calls (e.g. mean(...), sd(...), range(...)) with untidy, scattered output.
-  - Use a BUILT-IN dataset directly for the clunky version (e.g. mtcars, already
-    met in Orientation) -- NO Excel round-trip needed to make the point.
-  - Then land the jstats way (jdesc) immediately after, as the payoff.
-  - Keep it short and punchy; it sets up the rest of the page.
--->
+Before the tour, one quick contrast. jstats ships with a practice dataset called
+`community`; suppose you just want to describe the respondents' ages. In base R
+you'd reach for a handful of separate commands:
+
+```r
+mean(community$Age)
+sd(community$Age)
+range(community$Age)
+```
+
+```
+[1] 34.62
+[1] 9.183
+[1] 18 71
+```
+
+Each prints on its own — bare, unlabeled numbers you have to keep straight in your
+head — and you still don't know how many respondents there are, or whether any ages
+are missing. jstats does the whole thing in one:
+
+```r
+jdesc(community, Age)
+```
+
+<pre class="jstats-output"><span class="jstats-title">Descriptive Statistics</span>
+
+Variable  Total  Non_missing  Min  Max   Mean     SD
+--------  -----  -----------  ---  ---  -----  -----
+Age         100          100   18   71  34.62  9.183
+</pre>
+
+One command, one tidy table — count, missing, range, center, and spread together,
+in a layout you'll recognize if you've used commercial statistical software. That's
+the whole idea behind jstats, and the rest of this page builds on it.
 
 ## Meet `community`
 
-jstats ships with a small practice dataset called **`community`** — 100 made-up
-community-survey respondents, with income, education, age, a wellbeing score, a
-few yes/no items, a region, and a five-item attitude scale. It's already available
-the moment the package is loaded; you don't have to open or import anything. That
-zero-setup convenience is the point of a shipped dataset, and it's what lets these
-examples just work.
+That practice dataset, **`community`**, holds 100 made-up community-survey
+respondents, with income, education, age, a wellbeing score, a few yes/no items, a
+region, and a five-item attitude scale. It's available the moment the package is
+loaded — you don't have to open or import anything — which is the point of a shipped
+dataset and what lets these examples just work.
 
 ## Your first jstats command
 

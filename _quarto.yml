@@ -5,7 +5,14 @@ project:
 website:
   title: "jstats"
   page-navigation: true
+  favicon: images/avatar.png
+  site-url: https://jma61.github.io/jstats-guides
+  open-graph: true
+  twitter-card: true
+  image: images/thumbnail.png
   navbar:
+    logo: images/avatar.png
+    logo-alt: "jstats"
     left:
       - text: "Get Started"
         href: index.qmd
@@ -42,4 +49,4 @@ format:
   html:
     toc: true
     toc-depth: 3
-    theme: cosmo
+    theme: [cosmo, custom.scss]

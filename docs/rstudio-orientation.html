@@ -70,6 +70,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="./">
 <link href="./install-jstats.html" rel="next">
 <link href="./install-r-and-rstudio.html" rel="prev">
+<link href="./images/avatar.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -79,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-a107cb7a810e1031a9b4270ffd07db67.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -109,6 +110,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<meta property="og:title" content="RStudio Orientation – jstats">
+<meta property="og:description" content="Make a Project, get to know the panes, and see what your data looks like once it’s loaded.">
+<meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
+<meta property="og:site_name" content="jstats">
+<meta property="og:image:height" content="720">
+<meta property="og:image:width" content="1280">
+<meta name="twitter:title" content="RStudio Orientation – jstats">
+<meta name="twitter:description" content="Make a Project, get to know the panes, and see what your data looks like once it’s loaded.">
+<meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
+<meta name="twitter:image-height" content="720">
+<meta name="twitter:image-width" content="1280">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light">
@@ -118,6 +131,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/avatar.png" alt="jstats" class="navbar-logo light-content">
+    <img src="./images/avatar.png" alt="jstats" class="navbar-logo dark-content">
+    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">jstats</span>
     </a>
@@ -273,23 +290,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Environment</strong> (top-right) — lists the data and objects currently loaded, by <strong>name and size</strong> (not the data itself). Importantly, what lives here is a <em>working copy</em> of your data, held in memory. Mistakes hit the copy, never the original file on disk.</li>
 <li><strong>Files / Plots / Help</strong> (bottom-right) — your folder contents, any charts you make, and help pages.</li>
 </ul>
-<!-- TO DRAFT (Session 131 decision): the mtcars / iris data-viewer demo goes here.
-Beats, in order:
-  - Load a built-in dataset: data(mtcars). Point out it appears in the Environment
-    showing name + dimensions ONLY (32 obs. of 11 variables) -- not the data grid.
-    This is the corrected Environment-vs-Data-View point.
-  - Click mtcars in the Environment -> a viewer tab opens in the top-left SOURCE
-    pane (the 4th pane). Read-only grid. Note the source pane is also where script
-    files live, which we open shortly. (Viewer first, then script -- "one after
-    the other".)
-  - Load a second built-in: data(iris). Environment now lists BOTH. iris has a
-    grouping column (Species) -> a first, light glimpse of a categorical variable.
-  - Frame: built-in datasets are the ones R's own help pages use; opening YOUR OWN
-    data is slightly different (you tell R where to find it) and is covered later.
-  - DEFER the "you can't edit cells in the viewer" point to "jstats with your own
-    data" (it sits next to the working-copy-in-memory idea there).
-  - Do NOT include the clunky-base-R-vs-jstats contrast here; that opens Quick Start.
--->
+<p>Let’s make the panes concrete with a dataset that already comes with R. R ships with several built-in datasets for practice and examples; one is <code>mtcars</code> (data on some classic car models). You can copy it into a name of your own choosing using R’s <strong>assignment operator</strong>, <code>&lt;-</code>, which means “put what’s on the right into the name on the left”:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cars <span class="ot">&lt;-</span> mtcars</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You now have a dataset called <code>cars</code> — the same data, under a name you picked. Look at the <strong>Environment</strong> pane (top-right): <code>cars</code> appears, described as <em>32 obs. of 11 variables</em>. That’s its name and size — the Environment lists what you’ve loaded, not the data themselves. To see the data, click <code>cars</code> in the <strong>Environment</strong>. A tab opens in the <strong>source pane</strong> (top-left) showing a grid — rows of cars down the side, variables across the top. This is the same top-left pane where your scripts will open shortly; RStudio uses it for both.</p>
+<!-- screenshot: Environment showing `cars` as "32 obs. of 11 variables", viewer grid open in source pane -->
+<p><code>iris</code> is another built-in dataset (measurements of flowers). Because it’s built in, it’s already available by its own name — you don’t have to copy it first. To take a quick look, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Note the capital <strong>V</strong> — <code>View</code> is one of a handful of base-R functions that breaks the usual all-lowercase habit (a leftover from R’s long, many-handed history rather than any real reason), so <code>view(iris)</code> won’t work; R distinguishes capitals from lowercase. jstats keeps its own functions lowercase, in step with the base-R majority.</p>
+<p>The same kind of grid opens. Notice one column, <code>Species</code>, holds group names (setosa, versicolor, virginica) instead of numbers — your first glimpse of a <strong>categorical variable</strong>: a column that sorts cases into groups. You’ll meet these properly later.</p>
+<!-- screenshot: View(iris) grid open, Species column visible -->
+<p>You’ll see <code>mtcars</code> and <code>iris</code> again and again in R’s help pages and in other packages’ examples — now you know what they are, so they won’t catch you off guard. jstats brings its own example dataset too, <code>community</code>, which becomes available by name once you install and load the package — we’ll use it from the Quick Start onward.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS or Stata?">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -312,11 +322,11 @@ Beats, in order:
 <section id="try-the-console" class="level2">
 <h2 class="anchored" data-anchor-id="try-the-console">Try the console</h2>
 <p>Let’s make the <strong>Console</strong> feel real, since it’s where everything ultimately runs. Click in the Console (bottom-left), type a sum, and press Enter:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>R answers straight back:</p>
 <pre><code>[1] 4</code></pre>
 <p>The console is a calculator that talks back. Now try a <strong>function</strong> — a named command that takes some input in parentheses and hands you a result. This one finds a square root:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">144</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">144</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] 12</code></pre>
 <p>That’s the shape of nearly everything you’ll do in R: a function name, inputs in parentheses, a result back. (And yes, <code>sqrt</code> is plain R — you’re already learning the real thing.)</p>
 <p>So what’s the <strong>script</strong> (the Editor) for, if the console can do everything? Just this: <strong>the console is for doing, the script is for keeping.</strong> Anything you type in the console runs and then scrolls away — perfect for quick, one-off jobs like a fast calculation or installing a package. When you’re doing analysis you’ll want to <em>keep</em> — and re-run, and share — you type those commands in the script and save the file. We’ll start doing exactly that once there’s something worth saving.</p>
@@ -400,7 +410,7 @@ Beats, in order:
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/jma61\.github\.io\/jstats-guides");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

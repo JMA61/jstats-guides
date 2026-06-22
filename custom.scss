@@ -1,0 +1,22 @@
+/*-- scss:defaults --*/
+$output-title-red: #C0392B;
+
+/*-- scss:rules --*/
+// jstats console output blocks (static representation of the package's
+// colored console output: red section titles over a monospace table).
+.jstats-output {
+  background-color: #FBFAF8;
+  border: 1px solid #E7E5DE;
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin: 0 0 1rem;
+  font-family: var(--bs-font-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  overflow-x: auto;
+  white-space: pre;
+}
+.jstats-output .jstats-title {
+  color: $output-title-red;
+  font-weight: 600;
+}

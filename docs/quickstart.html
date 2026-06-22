@@ -70,6 +70,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="./">
 <link href="./your-data.html" rel="next">
 <link href="./install-jstats.html" rel="prev">
+<link href="./images/avatar.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -79,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-a107cb7a810e1031a9b4270ffd07db67.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -109,6 +110,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<meta property="og:title" content="jstats Quick Start – jstats">
+<meta property="og:description" content="From a loaded package to your first regression — worth a look even if you already know R.">
+<meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
+<meta property="og:site_name" content="jstats">
+<meta property="og:image:height" content="720">
+<meta property="og:image:width" content="1280">
+<meta name="twitter:title" content="jstats Quick Start – jstats">
+<meta name="twitter:description" content="From a loaded package to your first regression — worth a look even if you already know R.">
+<meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
+<meta name="twitter:image-height" content="720">
+<meta name="twitter:image-width" content="1280">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light">
@@ -118,6 +131,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/avatar.png" alt="jstats" class="navbar-logo light-content">
+    <img src="./images/avatar.png" alt="jstats" class="navbar-logo dark-content">
+    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">jstats</span>
     </a>
@@ -264,30 +281,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><em>From here on, jstats is loaded and you’re working in your Project.</em> This page assumes you’ve installed jstats (see <a href="./install-jstats.html">Install jstats</a>) and loaded it with <code>library(jstats)</code>.</p>
-<!-- TO DRAFT (Session 131 decision): the "hard way vs. jstats" opener goes here, at
-the TOP for maximum contrast.
-  - Show the clunky base-R way of describing a variable first: several separate
-    calls (e.g. mean(...), sd(...), range(...)) with untidy, scattered output.
-  - Use a BUILT-IN dataset directly for the clunky version (e.g. mtcars, already
-    met in Orientation) -- NO Excel round-trip needed to make the point.
-  - Then land the jstats way (jdesc) immediately after, as the payoff.
-  - Keep it short and punchy; it sets up the rest of the page.
--->
+<p>Before the tour, one quick contrast. jstats ships with a practice dataset called <code>community</code>; suppose you just want to describe the respondents’ ages. In base R you’d reach for a handful of separate commands:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(community<span class="sc">$</span>Age)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(community<span class="sc">$</span>Age)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(community<span class="sc">$</span>Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>[1] 34.62
+[1] 9.183
+[1] 18 71</code></pre>
+<p>Each prints on its own — bare, unlabeled numbers you have to keep straight in your head — and you still don’t know how many respondents there are, or whether any ages are missing. jstats does the whole thing in one:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(community, Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="jstats-output"><span class="jstats-title">Descriptive Statistics</span>
+
+Variable  Total  Non_missing  Min  Max   Mean     SD
+--------  -----  -----------  ---  ---  -----  -----
+Age         100          100   18   71  34.62  9.183
+</pre>
+<p>One command, one tidy table — count, missing, range, center, and spread together, in a layout you’ll recognize if you’ve used commercial statistical software. That’s the whole idea behind jstats, and the rest of this page builds on it.</p>
 <section id="meet-community" class="level2">
 <h2 class="anchored" data-anchor-id="meet-community">Meet <code>community</code></h2>
-<p>jstats ships with a small practice dataset called <strong><code>community</code></strong> — 100 made-up community-survey respondents, with income, education, age, a wellbeing score, a few yes/no items, a region, and a five-item attitude scale. It’s already available the moment the package is loaded; you don’t have to open or import anything. That zero-setup convenience is the point of a shipped dataset, and it’s what lets these examples just work.</p>
+<p>That practice dataset, <strong><code>community</code></strong>, holds 100 made-up community-survey respondents, with income, education, age, a wellbeing score, a few yes/no items, a region, and a five-item attitude scale. It’s available the moment the package is loaded — you don’t have to open or import anything — which is the point of a shipped dataset and what lets these examples just work.</p>
 </section>
 <section id="your-first-jstats-command" class="level2">
 <h2 class="anchored" data-anchor-id="your-first-jstats-command">Your first jstats command</h2>
 <p>You met functions in the console earlier with <code>sqrt()</code>. jstats functions work the same way — same shape, same parentheses. Let’s look at how respondents are spread across regions. This is analysis you’ll want to keep, so type it in your <strong>script</strong> (the Editor) this time, then run it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(community, Region)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(community, Region)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>That’s the same function-and-object idea as before, now doing real work. You named the function (<code>jfreq</code>, for <em>frequencies</em>), and inside the parentheses you gave it two things: the dataset (<code>community</code>) and the variable you want counted (<code>Region</code>). jstats prints a tidy frequency table — how many respondents fall in each region, with percentages.</p>
 <p>(Remember R is case-sensitive: it’s <code>Region</code>, not <code>region</code>.)</p>
 </section>
 <section id="the-examples-just-run" class="level2">
 <h2 class="anchored" data-anchor-id="the-examples-just-run">The examples just run</h2>
 <p>Open the help page for this function, and here it is:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>?jfreq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>?jfreq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Scroll to the bottom and you’ll find worked <strong>examples</strong>. Copy one, paste it into your console, and it runs immediately — because the data it uses are already loaded. No file to open, no path to set.</p>
 <p>A fair word on this, especially if you’re coming from commercial software: runnable help examples aren’t unique to R. Stata and SAS ship practice data too. What’s genuinely worth knowing is this. First, R’s documentation examples are <strong>build-verified</strong> — every example is actually executed when the package is checked, so they can’t quietly go stale. Second, there’s truly <strong>zero setup</strong>: <code>community</code> is simply <em>there</em>. Third, <strong>one source</strong> produces all three — the function, its help page, and its runnable example all come from the same place, so they can’t drift apart. The practical effect: when you’re learning a new function, you can always try it instantly on data that’s already in front of you.</p>
 </section>
@@ -319,28 +343,28 @@ the TOP for maximum contrast.
 <section id="set-a-default-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="set-a-default-dataset">Set a default dataset</h2>
 <p>You named <code>community</code> explicitly in your <code>jfreq</code> call. If you’re going to work with one dataset for a while, you can set it as the default so you don’t have to name it every time. Do that with <code>juse</code> (for <em>use this dataset</em>):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">juse</span>(community)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">juse</span>(community)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now rerun the frequency table without naming the dataset:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(Region)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(Region)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Same result. jstats fills in <code>community</code> for you. (Your Environment can hold several datasets at once; <code>juse</code> just picks which one is the current default — no risk to any original.)</p>
 </section>
 <section id="describe-the-numeric-variables" class="level2">
 <h2 class="anchored" data-anchor-id="describe-the-numeric-variables">Describe the numeric variables</h2>
 <p>For numeric variables, you usually want means, standard deviations, and the like rather than a full frequency table. That’s <code>jdesc</code> (for <em>describe</em>). Since we’ve set a default with <code>juse</code>, we can name just the variables:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(Age, WellbeingScore, Income)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(Age, WellbeingScore, Income)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>jstats prints a compact table of descriptive statistics — one row per variable.</p>
 </section>
 <section id="screen-the-whole-dataset-at-once" class="level2">
 <h2 class="anchored" data-anchor-id="screen-the-whole-dataset-at-once">Screen the whole dataset at once</h2>
 <p>Before any serious analysis, it’s good practice to look the whole dataset over — its ranges, possible outliers, skew, missing values, and what <em>kind</em> each variable seems to be. <code>jscreen</code> (for <em>screen</em>) does all of that in one call:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jscreen</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jscreen</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>With the <code>juse</code> default set, a bare <code>jscreen()</code> screens every variable in <code>community</code> and gives you a fast first read on the data’s health. We’re keeping this light here; there’s much more <code>jscreen</code> can tell you, and we come back to it later. (The full depth lives in the help page and the books.)</p>
 </section>
 <section id="your-first-analysis-a-regression" class="level2">
 <h2 class="anchored" data-anchor-id="your-first-analysis-a-regression">Your first analysis: a regression</h2>
 <p>This is the destination of the Quick Start — a working regression.</p>
 <p>Let’s ask whether age predicts wellbeing in these data. The function is <code>jlm</code> (for <em>linear model</em> — the technical name for ordinary regression). Notice something new on the left:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Results <span class="ot">&lt;-</span> <span class="fu">jlm</span>(WellbeingScore <span class="sc">~</span> Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Results <span class="ot">&lt;-</span> <span class="fu">jlm</span>(WellbeingScore <span class="sc">~</span> Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-tip callout-titled" title="If you're new to statistics">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -462,7 +486,7 @@ the TOP for maximum contrast.
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/jma61\.github\.io\/jstats-guides");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
