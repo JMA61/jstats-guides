@@ -99,6 +99,20 @@ format:
     font-size: 0.875rem;
     line-height: 1.5;
   }
+  /* THIS PAGE ONLY: hide the navbar's menu links so this landing page shows a
+     clean branded bar -- logo and search only, no tabs. The body links in
+     "Setting up" below are the only navigation a visitor needs here, and they
+     open in new tabs so this page stays put behind them. The site-wide navbar
+     is untouched on every other page (this style block loads only on this
+     page). The target is the LEFT menu list (.navbar-nav.me-auto = Get Started /
+     Guides / Reference / Books / Videos / Troubleshooting); the logo
+     (.navbar-brand-container) and search (#quarto-search) are separate elements
+     and stay visible. */
+  .navbar-nav.me-auto { display: none !important; }
+  /* OPTIONAL: for a barer bar, also hide the GitHub icon (right side) and the
+     narrow-screen menu button. Uncomment both lines to enable. */
+  /* .navbar-nav.ms-auto { display: none !important; } */
+  /* .navbar-toggler      { display: none !important; } */
 </style>
 ```
 
@@ -152,16 +166,21 @@ yet. We'll cover all of that during the trimester.
 
 ## Setting up R, RStudio, and jstats
 
-The Get Started menu at the top of this site walks you through everything you
-need to set up the software applications:
+Work through these pages in order to get everything installed. Each one opens in
+a new tab, so this page stays open behind it -- just switch back to this tab
+whenever you like.
 
-- **R** and **RStudio**
-- the **jstats** package
-- a **Quick Start** that runs your first analysis *(optional)*
+1. [**Install R and RStudio**](install-r-and-rstudio.qmd){target="_blank" rel="noopener"} -- two free downloads: the engine, then the dashboard
+2. [**RStudio Orientation**](rstudio-orientation.qmd){target="_blank" rel="noopener"} -- a quick tour of the workspace
+3. [**Install jstats**](install-jstats.qmd){target="_blank" rel="noopener"} -- adding the package itself
+4. [**jstats Quick Start**](quickstart.qmd){target="_blank" rel="noopener"} -- run your first analysis *(optional)*
 
-The Quick Start is optional -- we'll go through it together, so if you aren't sure
-of something, or hit a problem you can't solve after checking the
-**Troubleshooting** section, we'll sort it out live.
+Already have R and RStudio? Skip straight to [**Install jstats**](install-jstats.qmd){target="_blank" rel="noopener"}.
+
+The Quick Start is optional -- we'll go through it together in our Teams session,
+so don't worry if anything isn't clear yet. If you hit a problem you can't get
+past, have a look at [**Troubleshooting**](troubleshooting.qmd){target="_blank" rel="noopener"}
+first, and we'll sort out anything that's left live.
 
 ## Using jstats in your own teaching?
 
