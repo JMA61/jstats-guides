@@ -1,13 +1,10 @@
 ---
 title: "Getting started with jstats"
 subtitle: "Start here — whether you're brand new to R or an experienced user."
+pagetitle: "jstats — Get Started"
+title-prefix: ""
 ---
 
-<!--
-::: {.column-page}
-![](images/banner.png){fig-alt="JStats — Statistics in R, Made Accessible"}
-:::
--->
 
 ::: {.callout-warning title="Demo draft v1"}
 This is an early cut for colleague review. Some pages are complete and others are

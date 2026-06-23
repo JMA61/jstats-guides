@@ -63,3 +63,47 @@ $navbar-active-color: $jstats-cyan;
 }
 .nav-footer-left { text-align: left; }
 .nav-footer-right { text-align: right; }
+
+// Developer bio block (Griffith front door)
+.jbio {
+  margin: 1.25rem 0 2rem;
+}
+.jbio::after {            // clearfix: contains the floated photo
+  content: "";
+  display: block;
+  clear: both;
+}
+.jbio-name {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+.jbio-photo {
+  position: relative;
+  float: right;          // text now wraps around the photo
+  width: 168px;
+  height: 168px;
+  margin: 0.3rem 0 0.75rem 1.6rem;   // gap below + left of the photo
+  border-radius: 50%;
+}
+.jbio-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+}
+.jbio-photo::after {     // soft vignette overlay
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 45%, transparent 52%, rgba(15, 25, 35, 0.5) 100%);
+}
+@media (max-width: 575.98px) {   // on phones, unfloat and center the photo
+  .jbio-photo {
+    float: none;
+    margin: 0 auto 1rem;
+  }
+}

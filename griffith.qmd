@@ -1,7 +1,10 @@
 ---
-pagetitle: "jstats for 7036CCJ — Griffith University"
+pagetitle: "jstats at Griffith"
+title-prefix: ""
 search: false
-toc: false
+toc: true
+toc-title: "On this page"
+toc-location: right
 format:
   html:
     include-in-header:
@@ -19,6 +22,8 @@ format:
     https://jma61.github.io/jstats-guides/griffith
   - search: false keeps it out of the site search; the robots noindex tag asks
     Google/Bing to skip it. Not locked down -- anyone with the URL can open it.
+  - toc: true adds the right-hand "On this page" menu (the page's section
+    headings). The bio heading is in a raw-HTML block, so it is not listed.
 
   HERO IMAGE: save the Griffith building photo into images/ as
   griffith-banner.jpg (the renamed copy is provided alongside this file).
@@ -71,6 +76,18 @@ format:
     line-height: 1.15;
     padding: 0.4rem 0.95rem;
   }
+  /* THIS PAGE ONLY: make every section heading match the bio heading's smaller
+     size. Scoped to the main content column so it hits the section headings and
+     the bio name, but NOT the "On this page" menu title in the right margin. */
+  #quarto-document-content h2 {
+    font-size: 1.4rem;
+  }
+  /* THIS PAGE ONLY: push the "On this page" menu down so its header aligns with
+     the top of the banner (the content column has top spacing the menu column
+     lacks). Tweak this value if the header sits slightly above/below the banner. */
+  #quarto-margin-sidebar {
+    margin-top: 1.8rem;
+  }
   /* THIS PAGE ONLY: keep the real site footer (so its width, height, and
      bottom-of-page position all stay native and correct), but swap its center
      text to the Griffith-specific disclaimer. The copyright on the left is the
@@ -94,39 +111,67 @@ format:
 </div>
 ```
 
-Welcome. This is my personal site for the **jstats** R package -- statistical
-analysis tools for R, styled to feel familiar to anyone coming from commercial
-statistical software. I'm **Jeff Ackerman**, the package's developer. This site
-is mine, not Griffith's and not Canvas; it is hosted independently (note the
-address above), and it began as a teaching tool for my Griffith course.
+```{=html}
+<div class="jbio">
+  <div class="jbio-photo">
+    <img src="images/jeff-headshot.jpg" alt="Jeff Ackerman">
+  </div>
+  <h2 class="jbio-name">About the developer: Jeff Ackerman</h2>
+  <p>I'm a social scientist who teaches quantitative methods at Griffith University. I grew up in Pennsylvania, in the United States, and moved to Australia in 2013 to join Griffith; I'm now an Australian citizen. I studied statistics and research methods under several well-known methodologists, including C. R. Rao &mdash; himself a student of Ronald Fisher, the statistician who developed Analysis of Variance (ANOVA).</p>
+  <p>I built jstats to make statistical analysis in R approachable for social-science researchers and students. R is powerful, but its learning curve and rough edges can make the move from commercial statistical software like SPSS, Stata, or SAS intimidating. jstats smooths that path: shorter, more consistent syntax; sensible defaults; protection from some of base R's more confusing behaviours; and output styled after the conventions the expensive commercial platforms use, so results look familiar from the first run.</p>
+  <p>It stays close enough to base R that the skills you build transfer to the wider R world rather than locking you into a private dialect. jstats grew out of teaching statistics to social-science students who wanted to learn the methods, but not complex computer programming. Alongside statistics, I trained in computer programming at the university level decades ago, and that combination &mdash; now paired with modern AI-assisted software engineering and careful testing &mdash; is what makes it practical for one person to build and maintain a package this size. It's continuously being shaped by what students and colleagues run into when they put it to work.</p>
+</div>
+```
 
-<!-- ABOUT/DEVELOPER: optional short bio, mirroring a teaching-staff entry.
-     Replace the placeholder line below with as much or as little as you like. -->
-*(Placeholder: a sentence or two about you -- role, background, and that you
-develop and maintain jstats.)*
+## Griffith CCJ Honours supervisors and other guests
 
-## Students in 7036CCJ
+Welcome, and thank you for taking a look at jstats. This site is a hands-on tour
+of the tools your Honours and Masters students began using in my class -- though
+jstats has been refined substantially since then. By following the short setup
+steps on this site, you'll be ready to follow along during our Teams session on
+Thursday 9 July, where I'll lead you through the Quick Start. By the end of the
+hour, I expect you'll be able to open a dataset in R and run analyses including
+linear regression, with no prior R experience needed. If you're not yet sure what
+an R "package" is, the Quick Start will give you a feel for it. In short, a
+package is an add-on toolset you install into R, and jstats is currently more
+than 23,000 lines of computer code -- including its extensive help files --
+working behind the scenes, so that the commands you're required to type stay
+short and intuitive, and the output looks more like what you'd see in SPSS or
+Stata. Please set up R, RStudio, and jstats before we meet (see "Setting up"
+below). I look forward to seeing you on Teams at 10.00 am on Thursday 9 July.
 
-Start here at the **beginning of the trimester**. This site walks you through
-everything you need before class:
+## Students in 7036CCJ/CCJ736
 
-- installing **R** and **RStudio**,
-- installing the **jstats** package, and
-- a **Quick Start** that runs your first analysis.
+This site is only for getting the software installed -- R, RStudio, and jstats
+(see "Setting up" below). Your course materials live on the Canvas course site,
+so before our first class please also finish the rest of the Welcome module and
+Module 1 there. We'll go through the Quick Start together in that first online
+session; if you'd like a preview, you're welcome to try the Quick Start on your
+own, but don't be intimidated if the terms or output don't mean anything to you
+yet. We'll cover all of that during the trimester.
 
-Once you're set up, head back to Canvas for regular course instruction.
+## Setting up R, RStudio, and jstats
 
-[Start here &rarr;](index.qmd){.btn .btn-primary .btn-lg}
-&nbsp;
-[Open Canvas (Griffith login)](https://lms.griffith.edu.au/){.btn .btn-outline-secondary}
+The Get Started menu at the top of this site walks you through everything you
+need to set up the software applications:
 
-> Current Griffith students and staff can reach Canvas at the link above (you'll
-> sign in with your Griffith account). The link is intentionally generic, so it
-> doesn't need updating each year.
+- **R** and **RStudio**
+- the **jstats** package
+- a **Quick Start** that runs your first analysis *(optional)*
+
+The Quick Start is optional -- we'll go through it together, so if you aren't sure
+of something, or hit a problem you can't solve after checking the
+**Troubleshooting** section, we'll sort it out live.
 
 ## Using jstats in your own teaching?
 
-You're welcome to. If you're using jstats in a course -- at Griffith or anywhere
+You're welcome to. jstats is under continuous development -- I'm regularly adding
+and refining functions. My current focus is the set of analyses I cover in my
+course, but I plan to expand it with additional functions for other data-analysis
+tasks common in social-science research and publishing. For now it installs from
+GitHub, where the project lives during early development; before long I expect to
+move it to CRAN -- R's central package archive -- so installation becomes simpler
+and more routine. If you're using jstats in a course -- at Griffith or anywhere
 else -- I'd be glad to hear about it, purely out of interest and so I can get a
 sense of where the package is being used. Email me at
 [SurveyCentre@griffith.edu.au](mailto:SurveyCentre@griffith.edu.au).

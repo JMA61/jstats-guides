@@ -80,20 +80,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a107cb7a810e1031a9b4270ffd07db67.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-a0fc744874e982218772448a426a01bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
-  "type": "overlay",
+  "type": "textbox",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
     "/",
     "s"
   ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -168,6 +167,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li class="nav-item">
     <a class="nav-link" href="./troubleshooting.html"> 
 <span class="menu-text">Troubleshooting</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/jma61/jstats-guides"> <i class="bi bi-github" role="img" aria-label="jstats guides on GitHub">
+</i> 
+<span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -826,6 +832,37 @@ Age         100          100   18   71  34.62  9.183
   </div>
 </nav>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Jeff Ackerman</p>
+</div>   
+    <div class="nav-footer-center">
+<p>jstats is an independent project that I develop and maintain in my own time; it began as a teaching tool in a university setting. Views expressed and any errors are my own.</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  function syncFooter(){
+    var c = document.querySelector('main.content')
+         || document.querySelector('#quarto-document-content');
+    var f = document.querySelector('.nav-footer-center');
+    if (c && f) {
+      var w = Math.round(c.getBoundingClientRect().width);
+      f.style.flexGrow = '0';
+      f.style.flexShrink = '0';
+      f.style.flexBasis = w + 'px';
+    }
+  }
+  window.addEventListener('DOMContentLoaded', syncFooter);
+  window.addEventListener('load', syncFooter);
+  window.addEventListener('resize', syncFooter);
+})();
+</script>
 
 
 
