@@ -1,7 +1,9 @@
 project:
   type: website
   output-dir: docs
-
+  preview:
+    port: 4321
+    browser: true
 website:
   title: "jstats"
   page-navigation: true
@@ -10,6 +12,9 @@ website:
   open-graph: true
   twitter-card: true
   image: images/thumbnail.png
+  search:
+    location: navbar
+    type: textbox
   navbar:
     logo: images/avatar.png
     logo-alt: "jstats"
@@ -26,6 +31,24 @@ website:
         href: videos.qmd
       - text: "Troubleshooting"
         href: troubleshooting.qmd
+    # ---------------------------------------------------------------
+    # FUTURE SOCIAL ICONS (designed-in slot; nothing shows until you
+    # uncomment this block). These sit on the right of the navbar,
+    # just to the LEFT of the search field -- exactly Field's layout.
+    # Icons come from Bootstrap Icons (https://icons.getbootstrap.com/);
+    # the name after `icon:` is that page's icon id. Edit hrefs, then
+    # uncomment from `right:` down. Add or remove lines freely.
+    # ---------------------------------------------------------------
+    right:
+    #   - icon: twitter-x
+    #     href: https://x.com/yourhandle
+    #     aria-label: "jstats on X"
+    #   - icon: linkedin
+    #     href: https://www.linkedin.com/in/yourprofile
+    #     aria-label: "jstats on LinkedIn"
+      - icon: github
+        href: https://github.com/jma61/jstats-guides
+        aria-label: "jstats guides on GitHub"
   sidebar:
     - title: "Get Started"
       style: "floating"
@@ -44,9 +67,35 @@ website:
           href: your-data.qmd
         - text: "A typical jstats workflow"
           href: workflow.qmd
-
+  page-footer:
+    border: true
+    left: "© 2026 Jeff Ackerman"
+    center: >-
+      jstats is an independent project that I develop and maintain in my own
+      time; it began as a teaching tool in a university setting. Views
+      expressed and any errors are my own.
 format:
   html:
     toc: true
     toc-depth: 3
     theme: [cosmo, custom.scss]
+    include-after-body:
+      text: |
+        <script>
+        (function(){
+          function syncFooter(){
+            var c = document.querySelector('main.content')
+                 || document.querySelector('#quarto-document-content');
+            var f = document.querySelector('.nav-footer-center');
+            if (c && f) {
+              var w = Math.round(c.getBoundingClientRect().width);
+              f.style.flexGrow = '0';
+              f.style.flexShrink = '0';
+              f.style.flexBasis = w + 'px';
+            }
+          }
+          window.addEventListener('DOMContentLoaded', syncFooter);
+          window.addEventListener('load', syncFooter);
+          window.addEventListener('resize', syncFooter);
+        })();
+        </script>

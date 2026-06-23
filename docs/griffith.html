@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>RStudio Orientation – jstats</title>
+<title>jstats for 7036CCJ — Griffith University – jstats</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -68,8 +33,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./install-jstats.html" rel="next">
-<link href="./install-r-and-rstudio.html" rel="prev">
 <link href="./images/avatar.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -80,7 +43,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-18e0ea8f1cb1da096330246a622a346e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-03540579d5dc984d809b16f6ea8b3099.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -107,23 +70,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&amp;display=swap" rel="stylesheet">
 
 
-<meta property="og:title" content="RStudio Orientation – jstats">
-<meta property="og:description" content="Make a Project, get to know the panes, and see what your data looks like once it’s loaded.">
+<meta property="og:title" content="jstats for 7036CCJ — Griffith University">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta property="og:site_name" content="jstats">
 <meta property="og:image:height" content="720">
 <meta property="og:image:width" content="1280">
-<meta name="twitter:title" content="RStudio Orientation – jstats">
-<meta name="twitter:description" content="Make a Project, get to know the panes, and see what your data looks like once it’s loaded.">
+<meta name="twitter:title" content="jstats for 7036CCJ — Griffith University">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta name="twitter:image-height" content="720">
 <meta name="twitter:image-width" content="1280">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-sidebar floating nav-fixed quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -145,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
@@ -181,163 +148,114 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rstudio-orientation.html">RStudio Orientation</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-    </div>
-  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Start here (everyone)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./install-r-and-rstudio.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Install R and RStudio</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./rstudio-orientation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">RStudio Orientation</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./install-jstats.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Install jstats</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./quickstart.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">jstats Quick Start</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./your-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">jstats with your own data</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./workflow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">A typical jstats workflow</span></a>
-  </div>
-</li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#start-a-project" id="toc-start-a-project" class="nav-link active" data-scroll-target="#start-a-project">Start a Project</a></li>
-  <li><a href="#the-rstudio-panes" id="toc-the-rstudio-panes" class="nav-link" data-scroll-target="#the-rstudio-panes">The RStudio panes</a></li>
-  <li><a href="#try-the-console" id="toc-try-the-console" class="nav-link" data-scroll-target="#try-the-console">Try the console</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">RStudio Orientation</h1>
-<p class="subtitle lead">Make a Project, get to know the panes, and see what your data looks like once it’s loaded.</p>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
+<!--
+  UNLISTED COURSE / COLLEAGUE FRONT DOOR.
+  - Absent from the navbar and sidebar (not listed in _quarto.yml), so it never
+    shows in a menu. Reachable only by URL:
+    https://jma61.github.io/jstats-guides/griffith
+  - search: false keeps it out of the site search; the robots noindex tag asks
+    Google/Bing to skip it. Not locked down -- anyone with the URL can open it.
+
+  HERO IMAGE: save the Griffith building photo into images/ as
+  griffith-banner.jpg (the renamed copy is provided alongside this file).
+
+  GRIFFITH RED: the title box uses #C8102E as a PLACEHOLDER -- one value, in the
+  .gh-title rule below. Replace with the exact Griffith brand red when you have
+  it.
+
+  LAYOUT: the banner sits in the normal content column, so it is the same width
+  as the text/tables below it -- full width on narrow windows, growing as the
+  window widens, then capping and staying centered (Quarto's content column
+  does this). To make the banner wider/narrower than the body text, wrap it in
+  ::: {.column-page} (wider) or set a max-width on .griffith-hero. Navbar stays
+  navy.
+-->
+<style>
+  .griffith-hero {
+    aspect-ratio: 4 / 1;
+    min-height: 160px;
+    background-image: url("images/griffith-banner.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+  }
+  .gh-overlay { padding: 0 0 0.9rem 0; }
+  .gh-label {
+    display: block;
+    width: fit-content;
+    margin: 0;
+    background: rgba(38, 38, 38, 0.88);
+    color: #fff;
+    font-family: "Lato Extended", Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.02em;
+    padding: 0.28rem 0.8rem;
+  }
+  .gh-title {
+    display: block;
+    width: fit-content;
+    margin: 0;
+    background: #E51F30;            /* Griffith Canvas red */
+    color: #fff;
+    font-family: "Lato Extended", Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 2.05rem;            /* constant size -- boxes do not scale; only the photo does */
+    line-height: 1.15;
+    padding: 0.4rem 0.95rem;
+  }
+  /* THIS PAGE ONLY: keep the real site footer (so its width, height, and
+     bottom-of-page position all stay native and correct), but swap its center
+     text to the Griffith-specific disclaimer. The copyright on the left is the
+     same on every page, so it is left untouched. */
+  .nav-footer-center > * { display: none; }
+  .nav-footer-center { font-size: 0; }
+  .nav-footer-center::after {
+    content: "jstats is an independent project that I develop and maintain in my own time. It is used in teaching at Griffith University but is not an official Griffith University publication. Views expressed and any errors are my own.";
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+</style>
+<div class="griffith-hero" role="img" aria-label="Griffith University building">
+  <div class="gh-overlay">
+    <span class="gh-label">jstats</span>
+    <span class="gh-title">Statistics in R, Made Accessible</span>
   </div>
-  
-
-
-</header>
-
-
-<p>Before installing the package, it’s worth a few minutes getting comfortable with RStudio itself — where things are, and how your data looks once it’s loaded. If you already work in RStudio day to day, you can skim this and move on to <a href="./install-jstats.html">Install jstats</a>.</p>
-<section id="start-a-project" class="level2">
-<h2 class="anchored" data-anchor-id="start-a-project">Start a Project</h2>
-<p>Before installing the package or loading any data, create an RStudio <strong>Project</strong>.</p>
-<p>Without a Project, R needs to be told where your files live (its “working directory”), and that quickly drags in folder paths, the difference between <code>\</code> and <code>/</code>, and the fact that Windows and Mac write paths differently. A Project sidesteps all of it: it ties a folder, your data, and your work together, so R always knows where it is.</p>
-<p>To create one, in RStudio choose <strong>File → New Project → New Directory → New Project</strong>, give it a name (for example <code>jstats-practice</code>), pick where it should live, and click <strong>Create Project</strong>. RStudio opens your new Project.</p>
-<p>From now on, you reopen this Project by double-clicking its <code>.Rproj</code> file (the small file RStudio created inside your Project folder). That one habit — always work inside a Project — saves more beginner headaches than any other.</p>
-</section>
-<section id="the-rstudio-panes" class="level2">
-<h2 class="anchored" data-anchor-id="the-rstudio-panes">The RStudio panes</h2>
-<p>With your Project open, you’ll see three panes to begin with. A fourth — the <strong>source pane</strong>, in the top-left — appears the first time you open a script or view a dataset. Here’s what each is for:</p>
+</div>
+<p>Welcome. This is my personal site for the <strong>jstats</strong> R package – statistical analysis tools for R, styled to feel familiar to anyone coming from commercial statistical software. I’m <strong>Jeff Ackerman</strong>, the package’s developer. This site is mine, not Griffith’s and not Canvas; it is hosted independently (note the address above), and it began as a teaching tool for my Griffith course.</p>
+<!-- ABOUT/DEVELOPER: optional short bio, mirroring a teaching-staff entry.
+     Replace the placeholder line below with as much or as little as you like. -->
+<p><em>(Placeholder: a sentence or two about you – role, background, and that you develop and maintain jstats.)</em></p>
+<section id="students-in-7036ccj" class="level2">
+<h2 class="anchored" data-anchor-id="students-in-7036ccj">Students in 7036CCJ</h2>
+<p>Start here at the <strong>beginning of the trimester</strong>. This site walks you through everything you need before class:</p>
 <ul>
-<li><strong>Editor / source</strong> (top-left) — where you write and save your code, and where a dataset opens as a grid when you click it to view. This is your reusable list of commands.</li>
-<li><strong>Console</strong> (bottom-left) — where code runs and results print.</li>
-<li><strong>Environment</strong> (top-right) — lists the data and objects currently loaded, by <strong>name and size</strong> (not the data itself). Importantly, what lives here is a <em>working copy</em> of your data, held in memory. Mistakes hit the copy, never the original file on disk.</li>
-<li><strong>Files / Plots / Help</strong> (bottom-right) — your folder contents, any charts you make, and help pages.</li>
+<li>installing <strong>R</strong> and <strong>RStudio</strong>,</li>
+<li>installing the <strong>jstats</strong> package, and</li>
+<li>a <strong>Quick Start</strong> that runs your first analysis.</li>
 </ul>
-<p>Let’s make the panes concrete with a dataset that already comes with R. R ships with several built-in datasets for practice and examples; one is <code>mtcars</code> (data on some classic car models). You can copy it into a name of your own choosing using R’s <strong>assignment operator</strong>, <code>&lt;-</code>, which means “put what’s on the right into the name on the left”:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cars <span class="ot">&lt;-</span> mtcars</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You now have a dataset called <code>cars</code> — the same data, under a name you picked. Look at the <strong>Environment</strong> pane (top-right): <code>cars</code> appears, described as <em>32 obs. of 11 variables</em>. That’s its name and size — the Environment lists what you’ve loaded, not the data themselves. To see the data, click <code>cars</code> in the <strong>Environment</strong>. A tab opens in the <strong>source pane</strong> (top-left) showing a grid — rows of cars down the side, variables across the top. This is the same top-left pane where your scripts will open shortly; RStudio uses it for both.</p>
-<!-- screenshot: Environment showing `cars` as "32 obs. of 11 variables", viewer grid open in source pane -->
-<p><code>iris</code> is another built-in dataset (measurements of flowers). Because it’s built in, it’s already available by its own name — you don’t have to copy it first. To take a quick look, run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Note the capital <strong>V</strong> — <code>View</code> is one of a handful of base-R functions that breaks the usual all-lowercase habit (a leftover from R’s long, many-handed history rather than any real reason), so <code>view(iris)</code> won’t work; R distinguishes capitals from lowercase. jstats keeps its own functions lowercase, in step with the base-R majority.</p>
-<p>The same kind of grid opens. Notice one column, <code>Species</code>, holds group names (setosa, versicolor, virginica) instead of numbers — your first glimpse of a <strong>categorical variable</strong>: a column that sorts cases into groups. You’ll meet these properly later.</p>
-<!-- screenshot: View(iris) grid open, Species column visible -->
-<p>You’ll see <code>mtcars</code> and <code>iris</code> again and again in R’s help pages and in other packages’ examples — now you know what they are, so they won’t catch you off guard. jstats brings its own example dataset too, <code>community</code>, which becomes available by name once you install and load the package — we’ll use it from the Quick Start onward.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS or Stata?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Coming from SPSS or Stata?
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>A rough map if you’ve mostly used SPSS through its menus: the <strong>Console</strong> is like the <strong>output/viewer window</strong> where results appear, and the <strong>Plots</strong> area is where charts show up, much as they do in SPSS output. The closest thing to <strong>Data View</strong> is the read-only grid that opens when you click a dataset in the Environment — but note the <strong>Environment</strong> pane itself is <em>not</em> Data View: it only lists what’s loaded, by name and size. The <strong>Editor</strong> is the one piece without a close menu-equivalent — it’s your saved list of typed commands (nearest to the SPSS syntax window, which menu users rarely open).</p>
-</div>
-</div>
-</div>
-<p>You’ll also notice <strong>Terminal</strong> and <strong>Background Jobs</strong> tabs near the Console. These are for more advanced use — the Terminal is a direct line to your computer’s command prompt (PowerShell on Windows, the old DOS-style window) — and you can ignore them for now.</p>
-<p>One small thing that trips up newcomers: <strong>R is case-sensitive.</strong> <code>Income</code> and <code>income</code> are two different names to R. When something doesn’t work, a stray capital is a common culprit.</p>
+<p>Once you’re set up, head back to Canvas for regular course instruction.</p>
+<p><a href="./index.html" class="btn btn-primary btn-lg">Start here →</a> &nbsp; <a href="https://lms.griffith.edu.au/" class="btn btn-outline-secondary">Open Canvas (Griffith login)</a></p>
+<blockquote class="blockquote">
+<p>Current Griffith students and staff can reach Canvas at the link above (you’ll sign in with your Griffith account). The link is intentionally generic, so it doesn’t need updating each year.</p>
+</blockquote>
 </section>
-<section id="try-the-console" class="level2">
-<h2 class="anchored" data-anchor-id="try-the-console">Try the console</h2>
-<p>Let’s make the <strong>Console</strong> feel real, since it’s where everything ultimately runs. Click in the Console (bottom-left), type a sum, and press Enter:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>R answers straight back:</p>
-<pre><code>[1] 4</code></pre>
-<p>The console is a calculator that talks back. Now try a <strong>function</strong> — a named command that takes some input in parentheses and hands you a result. This one finds a square root:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">144</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>[1] 12</code></pre>
-<p>That’s the shape of nearly everything you’ll do in R: a function name, inputs in parentheses, a result back. (And yes, <code>sqrt</code> is plain R — you’re already learning the real thing.)</p>
-<p>So what’s the <strong>script</strong> (the Editor) for, if the console can do everything? Just this: <strong>the console is for doing, the script is for keeping.</strong> Anything you type in the console runs and then scrolls away — perfect for quick, one-off jobs like a fast calculation or installing a package. When you’re doing analysis you’ll want to <em>keep</em> — and re-run, and share — you type those commands in the script and save the file. We’ll start doing exactly that once there’s something worth saving.</p>
-<hr>
-<p>With RStudio mapped out, the next page adds the jstats package itself.</p>
+<section id="using-jstats-in-your-own-teaching" class="level2">
+<h2 class="anchored" data-anchor-id="using-jstats-in-your-own-teaching">Using jstats in your own teaching?</h2>
+<p>You’re welcome to. If you’re using jstats in a course – at Griffith or anywhere else – I’d be glad to hear about it, purely out of interest and so I can get a sense of where the package is being used. Email me at <a href="mailto:SurveyCentre@griffith.edu.au">SurveyCentre@griffith.edu.au</a>.</p>
 
 
 </section>
@@ -743,19 +661,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="./install-r-and-rstudio.html" class="pagination-link" aria-label="Install R and RStudio">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Install R and RStudio</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="./install-jstats.html" class="pagination-link" aria-label="Install jstats">
-        <span class="nav-page-text">Install jstats</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Jeff Ackerman</p>
+</div>   
+    <div class="nav-footer-center">
+<p>jstats is an independent project that I develop and maintain in my own time; it began as a teaching tool in a university setting. Views expressed and any errors are my own.</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  function syncFooter(){
+    var c = document.querySelector('main.content')
+         || document.querySelector('#quarto-document-content');
+    var f = document.querySelector('.nav-footer-center');
+    if (c && f) {
+      var w = Math.round(c.getBoundingClientRect().width);
+      f.style.flexGrow = '0';
+      f.style.flexShrink = '0';
+      f.style.flexBasis = w + 'px';
+    }
+  }
+  window.addEventListener('DOMContentLoaded', syncFooter);
+  window.addEventListener('load', syncFooter);
+  window.addEventListener('resize', syncFooter);
+})();
+</script>
 
 
 

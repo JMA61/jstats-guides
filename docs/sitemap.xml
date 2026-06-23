@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jma61.github.io/jstats-guides/index.html</loc>
-    <lastmod>2026-06-22T10:31:43.108Z</lastmod>
+    <lastmod>2026-06-22T21:31:43.113Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/rstudio-orientation.html</loc>
@@ -35,5 +35,9 @@
   <url>
     <loc>https://jma61.github.io/jstats-guides/guides.html</loc>
     <lastmod>2026-06-21T00:25:46.886Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/griffith.html</loc>
+    <lastmod>2026-06-23T05:21:18.067Z</lastmod>
   </url>
 </urlset>

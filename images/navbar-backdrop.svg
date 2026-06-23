@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 72" preserveAspectRatio="xMidYMax slice">
+  <!-- Transparent background. The navy radial gradient is applied in CSS,
+       beneath this artwork, so this file has no internal id references. -->
+
+  <!-- bottom waves (subtle; read as a shimmer at this height) -->
+  <path d="M0,57 C 220,49 420,65 640,57 S 1080,49 1300,57 1600,59 1600,57 L1600,72 L0,72 Z"
+        fill="#1C4C7A" opacity="0.45"/>
+  <path d="M0,62 C 260,56 470,68 760,62 S 1240,56 1600,63 L1600,72 L0,72 Z"
+        fill="#5BE0F0" opacity="0.10"/>
+</svg>

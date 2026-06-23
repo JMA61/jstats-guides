@@ -1,7 +1,33 @@
 /*-- scss:defaults --*/
 $output-title-red: #C0392B;
 
+// jstats brand palette (from JStats_Brand_Assets.txt)
+$jstats-navy-dark:  #0A1C35;
+$jstats-navy:       #0D2642;
+$jstats-cyan:       #5BE0F0;
+$jstats-near-white: #F2FAFD;
+
+// Navbar text/link colors. $navbar-bg is the solid fallback.
+$navbar-bg:           $jstats-navy;
+$navbar-fg:           $jstats-near-white;
+$navbar-hover-color:  $jstats-cyan;
+$navbar-active-color: $jstats-cyan;
+
 /*-- scss:rules --*/
+// Navbar backdrop, layered top to bottom:
+//   1. the artwork in images/navbar-backdrop.svg (faint watermark R + bottom
+//      waves) -- edit THAT file to move/fade/recolor the R or the waves.
+//   2. a navy radial gradient (lighter center, darker edges), done in CSS.
+//   3. a solid navy fallback.
+// Backgrounds add NO height. Delete this whole rule for a plain flat navy bar.
+.navbar {
+  background:
+    url("images/navbar-backdrop.svg") bottom center / cover no-repeat,
+    radial-gradient(ellipse 75% 130% at 50% 35%,
+      #163A60 0%, $jstats-navy 55%, $jstats-navy-dark 100%),
+    $jstats-navy;
+}
+
 // jstats console output blocks (static representation of the package's
 // colored console output: red section titles over a monospace table).
 .jstats-output {
@@ -20,3 +46,20 @@ $output-title-red: #C0392B;
   color: $output-title-red;
   font-weight: 600;
 }
+
+// Footer: the disclaimer is centered (equal side regions keep it centered), and
+// its WIDTH is set by a small script (include-after-body in _quarto.yml) to match
+// each page's main content width -- so it lines up on every page and tracks
+// window resizing, instead of a fixed pixel width that only fits one window size.
+// The basis below is just a fallback used for the instant before the script runs.
+.nav-footer-center {
+  flex: 0 1 700px;
+  text-align: center;
+}
+.nav-footer-left,
+.nav-footer-right {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.nav-footer-left { text-align: left; }
+.nav-footer-right { text-align: right; }
