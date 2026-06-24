@@ -19,8 +19,10 @@ website:
     logo: images/avatar.png
     logo-alt: "jstats"
     left:
-      - text: "Get Started"
+      - text: "Home"
         href: index.qmd
+      - text: "Get Started"
+        href: start-here.qmd
       - text: "Guides"
         href: guides.qmd
       - text: "Reference"
@@ -54,7 +56,7 @@ website:
       style: "floating"
       contents:
         - text: "Start here (everyone)"
-          href: index.qmd
+          href: start-here.qmd
         - text: "Install R and RStudio"
           href: install-r-and-rstudio.qmd
         - text: "RStudio Orientation"

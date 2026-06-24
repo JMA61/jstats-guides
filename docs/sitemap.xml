@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jma61.github.io/jstats-guides/index.html</loc>
-    <lastmod>2026-06-23T06:07:19.568Z</lastmod>
+    <lastmod>2026-06-24T00:24:46.180Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/rstudio-orientation.html</loc>
@@ -22,11 +22,11 @@
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/videos.html</loc>
-    <lastmod>2026-06-21T00:25:46.887Z</lastmod>
+    <lastmod>2026-06-23T22:56:42.354Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/books.html</loc>
-    <lastmod>2026-06-21T00:25:46.886Z</lastmod>
+    <lastmod>2026-06-23T22:56:42.356Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/reference.html</loc>
@@ -34,14 +34,18 @@
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/guides.html</loc>
-    <lastmod>2026-06-21T00:25:46.886Z</lastmod>
+    <lastmod>2026-06-23T22:56:42.354Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/griffith.html</loc>
-    <lastmod>2026-06-23T19:48:05.319Z</lastmod>
+    <lastmod>2026-06-23T22:56:42.352Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/install-jstats.html</loc>
     <lastmod>2026-06-21T00:25:46.885Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/start-here.html</loc>
+    <lastmod>2026-06-23T22:56:42.352Z</lastmod>
   </url>
 </urlset>

@@ -125,17 +125,7 @@ format:
 </div>
 ```
 
-```{=html}
-<div class="jbio">
-  <div class="jbio-photo">
-    <img src="images/jeff-headshot.jpg" alt="Jeff Ackerman">
-  </div>
-  <h2 class="jbio-name">About the developer: Jeff Ackerman</h2>
-  <p>I'm a social scientist who teaches quantitative methods at Griffith University. I grew up in Pennsylvania, in the United States, and moved to Australia in 2013 to join Griffith; I'm now an Australian citizen. I studied statistics and research methods under several well-known methodologists, including C. R. Rao &mdash; himself a student of Ronald Fisher, the statistician who developed Analysis of Variance (ANOVA).</p>
-  <p>I built jstats to make statistical analysis in R approachable for social-science researchers and students. R is powerful, but its learning curve and rough edges can make the move from commercial statistical software like SPSS, Stata, or SAS intimidating. jstats smooths that path: shorter, more consistent syntax; sensible defaults; protection from some of base R's more confusing behaviours; and output styled after the conventions the expensive commercial platforms use, so results look familiar from the first run.</p>
-  <p>It stays close enough to base R that the skills you build transfer to the wider R world rather than locking you into a private dialect. jstats grew out of teaching statistics to social-science students who wanted to learn the methods, but not complex computer programming. Alongside statistics, I trained in computer programming at the university level decades ago, and that combination &mdash; now paired with modern AI-assisted software engineering and careful testing &mdash; is what makes it practical for one person to build and maintain a package this size. It's continuously being shaped by what students and colleagues run into when they put it to work.</p>
-</div>
-```
+{{< include _developer-bio.qmd >}}
 
 ## Griffith CCJ Honours supervisors and other guests
 

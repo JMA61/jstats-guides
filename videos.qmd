@@ -8,4 +8,4 @@ Short, focused video walkthroughs — one narrow topic each — will be linked h
 they're published.
 :::
 
-For now, the [Get Started](index.qmd) guide covers the essentials in written form.
+For now, the [Get Started](start-here.qmd) guide covers the essentials in written form.
