@@ -158,6 +158,14 @@ after the package reaches its stable release, where keeping existing code workin
 limits what can change.
 :::
 
+::: {.callout-note collapse="true" title="For experienced R users"}
+A concrete example of feature-by-request: a researcher wanted to see *which cells*
+drive a significant chi-square, so adjusted standardized residuals were added to
+the cross-tabs function — `jcrosstab(Education ~ Volunteer, data = community,
+residuals = "adjusted")`. That kind of targeted addition is exactly what this
+phase is for.
+:::
+
 ## Load jstats automatically (recommended)
 
 You can tell your Project to load jstats for you every time it opens, so you never
@@ -193,3 +201,22 @@ That's deliberate — it's self-contained and safe to edit. There's also a globa
 all-Projects version, but it's better left until you're juggling several Projects
 at once; the books cover it.
 :::
+
+## What to expect at this early stage
+
+Using jstats during its pre-release phase comes with a simple, honest trade. The
+costs are small and real: a few extra steps to install while it's distributed
+through GitHub rather than CRAN, the occasional error message that reads more
+cryptically than it should, and now and then a feature you wish were there but
+isn't yet. The benefit is results fast — and, as the note above says, a direct
+line to shape what gets built next.
+
+There's also a safety net that makes the trade an easy one. jstats is a
+convenience layer, not a cage. Anything it doesn't do, plain R still does — you can
+always drop back to base R, or reach for another package, right alongside jstats in
+the very same script. That's the intended path: use jstats for the common
+social-science tasks it's built for, pick up a little real R painlessly as you go,
+and when you eventually need something specialized it doesn't cover, you'll have
+learned enough to add the package that does. You're never stuck, and you're never
+learning a dead end.
+

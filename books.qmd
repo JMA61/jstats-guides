@@ -19,3 +19,11 @@ Two books are planned:
 The free [Get Started](start-here.qmd) guide and the [Guides](guides.qmd) section are a
 reduced version of the books' material; the books are the deeper, complete
 treatment.
+
+jstats is more than a single package. Around it is a growing set of free online
+guides, this book series, a video channel, and ready-to-use teaching datasets. It
+follows a long tradition of teaching-focused statistics packages that began in the
+classroom and grew into something larger — Danielle Navarro's `lsr`, the companion
+to her widely used *Learning Statistics with R*, is one well-loved example — and
+the aim here is the same.
+

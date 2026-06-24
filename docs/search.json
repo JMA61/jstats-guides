@@ -137,7 +137,7 @@
     "text": "Before installing the package, it’s worth a few minutes getting comfortable with RStudio itself — where things are, and how your data looks once it’s loaded. If you already work in RStudio day to day, you can skim this and move on to Install jstats.",
     "crumbs": [
       "Get Started",
-      "RStudio Orientation"
+      "Step 3 — RStudio Orientation"
     ]
   },
   {
@@ -148,7 +148,7 @@
     "text": "Start a Project\nBefore installing the package or loading any data, create an RStudio Project.\nWithout a Project, R needs to be told where your files live (its “working directory”), and that quickly drags in folder paths, the difference between \\ and /, and the fact that Windows and Mac write paths differently. A Project sidesteps all of it: it ties a folder, your data, and your work together, so R always knows where it is.\nTo create one, in RStudio choose File → New Project → New Directory → New Project, give it a name (for example jstats-practice), pick where it should live, and click Create Project. RStudio opens your new Project.\nFrom now on, you reopen this Project by double-clicking its .Rproj file (the small file RStudio created inside your Project folder). That one habit — always work inside a Project — saves more beginner headaches than any other.",
     "crumbs": [
       "Get Started",
-      "RStudio Orientation"
+      "Step 3 — RStudio Orientation"
     ]
   },
   {
@@ -159,7 +159,7 @@
     "text": "The RStudio panes\nWith your Project open, you’ll see three panes to begin with. A fourth — the source pane, in the top-left — appears the first time you open a script or view a dataset. Here’s what each is for:\n\nEditor / source (top-left) — where you write and save your code, and where a dataset opens as a grid when you click it to view. This is your reusable list of commands.\nConsole (bottom-left) — where code runs and results print.\nEnvironment (top-right) — lists the data and objects currently loaded, by name and size (not the data itself). Importantly, what lives here is a working copy of your data, held in memory. Mistakes hit the copy, never the original file on disk.\nFiles / Plots / Help (bottom-right) — your folder contents, any charts you make, and help pages.\n\nLet’s make the panes concrete with a dataset that already comes with R. R ships with several built-in datasets for practice and examples; one is mtcars (data on some classic car models). You can copy it into a name of your own choosing using R’s assignment operator, &lt;-, which means “put what’s on the right into the name on the left”:\ncars &lt;- mtcars\nYou now have a dataset called cars — the same data, under a name you picked. Look at the Environment pane (top-right): cars appears, described as 32 obs. of 11 variables. That’s its name and size — the Environment lists what you’ve loaded, not the data themselves. To see the data, click cars in the Environment. A tab opens in the source pane (top-left) showing a grid — rows of cars down the side, variables across the top. This is the same top-left pane where your scripts will open shortly; RStudio uses it for both.\n\niris is another built-in dataset (measurements of flowers). Because it’s built in, it’s already available by its own name — you don’t have to copy it first. To take a quick look, run:\nView(iris)\nNote the capital V — View is one of a handful of base-R functions that breaks the usual all-lowercase habit (a leftover from R’s long, many-handed history rather than any real reason), so view(iris) won’t work; R distinguishes capitals from lowercase. jstats keeps its own functions lowercase, in step with the base-R majority.\nThe same kind of grid opens. Notice one column, Species, holds group names (setosa, versicolor, virginica) instead of numbers — your first glimpse of a categorical variable: a column that sorts cases into groups. You’ll meet these properly later.\n\nYou’ll see mtcars and iris again and again in R’s help pages and in other packages’ examples — now you know what they are, so they won’t catch you off guard. jstats brings its own example dataset too, community, which becomes available by name once you install and load the package — we’ll use it from the Quick Start onward.\n\n\n\n\n\n\nTipComing from SPSS or Stata?\n\n\n\n\n\nA rough map if you’ve mostly used SPSS through its menus: the Console is like the output/viewer window where results appear, and the Plots area is where charts show up, much as they do in SPSS output. The closest thing to Data View is the read-only grid that opens when you click a dataset in the Environment — but note the Environment pane itself is not Data View: it only lists what’s loaded, by name and size. The Editor is the one piece without a close menu-equivalent — it’s your saved list of typed commands (nearest to the SPSS syntax window, which menu users rarely open).\n\n\n\nYou’ll also notice Terminal and Background Jobs tabs near the Console. These are for more advanced use — the Terminal is a direct line to your computer’s command prompt (PowerShell on Windows, the old DOS-style window) — and you can ignore them for now.\nOne small thing that trips up newcomers: R is case-sensitive. Income and income are two different names to R. When something doesn’t work, a stray capital is a common culprit.",
     "crumbs": [
       "Get Started",
-      "RStudio Orientation"
+      "Step 3 — RStudio Orientation"
     ]
   },
   {
@@ -170,7 +170,7 @@
     "text": "Try the console\nLet’s make the Console feel real, since it’s where everything ultimately runs. Click in the Console (bottom-left), type a sum, and press Enter:\n2 + 2\nR answers straight back:\n[1] 4\nThe console is a calculator that talks back. Now try a function — a named command that takes some input in parentheses and hands you a result. This one finds a square root:\nsqrt(144)\n[1] 12\nThat’s the shape of nearly everything you’ll do in R: a function name, inputs in parentheses, a result back. (And yes, sqrt is plain R — you’re already learning the real thing.)\nSo what’s the script (the Editor) for, if the console can do everything? Just this: the console is for doing, the script is for keeping. Anything you type in the console runs and then scrolls away — perfect for quick, one-off jobs like a fast calculation or installing a package. When you’re doing analysis you’ll want to keep — and re-run, and share — you type those commands in the script and save the file. We’ll start doing exactly that once there’s something worth saving.\n\nWith RStudio mapped out, the next page adds the jstats package itself.",
     "crumbs": [
       "Get Started",
-      "RStudio Orientation"
+      "Step 3 — RStudio Orientation"
     ]
   },
   {
@@ -302,7 +302,7 @@
     "text": "This page gets the jstats package installed and loaded, ready to use. It assumes you’ve already installed R and RStudio and have an RStudio Project open. If you haven’t, start with Install R and RStudio and RStudio Orientation, then come back here.\nUsing any R package is really two steps that are easy to blur together. Installing downloads the package onto your computer — you do this once. Loading switches it on for your current session — you do this each time you start R, with library(). (Think of installing as buying a book for your shelf, and loading as taking it down to read.) jstats works the same way: the steps below do the one-time install, and the last section sets up the loading to happen on its own.",
     "crumbs": [
       "Get Started",
-      "Install jstats"
+      "Step 4 — Install jstats"
     ]
   },
   {
@@ -313,7 +313,7 @@
     "text": "What you need first\n\nR and RStudio installed — see Install R and RStudio.\nAn RStudio Project open — RStudio Orientation covers creating one. The automatic-loading step at the end of this page uses a small file that lives inside your Project, so it helps to have one ready.",
     "crumbs": [
       "Get Started",
-      "Install jstats"
+      "Step 4 — Install jstats"
     ]
   },
   {
@@ -324,7 +324,7 @@
     "text": "Install Rtools (Windows only)\nTo install a package from GitHub, Windows needs Rtools, a free build toolkit. Download it from https://cran.r-project.org/bin/windows/Rtools/, choose the version that matches your R (for example Rtools45 for R 4.5.x), and run the installer with its defaults. You do this once, unless you update R later.\n(On a Mac you don’t need Rtools — but you may need Apple’s command line tools; see the Mac note just below the install commands.)",
     "crumbs": [
       "Get Started",
-      "Install jstats"
+      "Step 4 — Install jstats"
     ]
   },
   {
@@ -335,7 +335,7 @@
     "text": "Install the remotes helper\nThe remotes package is what handles installing from GitHub. Click in the Console (bottom-left pane) and run the line below. This is a one-off command you won’t need to save in a script:\ninstall.packages(\"remotes\")",
     "crumbs": [
       "Get Started",
-      "Install jstats"
+      "Step 4 — Install jstats"
     ]
   },
   {
@@ -346,7 +346,7 @@
     "text": "Install jstats and load it\nNow install jstats from GitHub, then load it:\nremotes::install_github(\"JMA61/jstats\")\nlibrary(jstats)\nIf it loaded cleanly, you’ll see a short jstats startup message — and, if a newer version is already out, a note with the exact lines to update (more on that below). That message is how you know jstats is loaded and ready.\nMac users. You may already have the build tools you need. If you hit a build error during installation, open the Terminal app and run:\nxcode-select --install\nFollow the prompts, then run the install command again. The remotes and install lines are the same as above.\n\nIf the install fails\nMost install problems are one of a handful of things. Scan the titles below and open the one that matches your error. If yours isn’t here, the full Troubleshooting page has more.\n\n\n\n\n\n\nWarningAPI rate limit exceeded\n\n\n\n\n\nGitHub limits how many requests it answers from one internet connection per hour. A single install is well under the limit, but two situations can trip it: retrying a failing install many times in quick succession, or several people on the same network (a campus or office connection) all installing within the same hour and hitting the shared limit together. The fix is simply to wait an hour and try again, and to avoid rapid repeated retries. This limit goes away entirely once jstats reaches CRAN.\n\n\n\n\n\n\n\n\n\nWarningthere is no package called ‘remotes’\n\n\n\n\n\nThe install-from-GitHub command needs the remotes package, and it isn’t installed yet. Run this first, then retry the install:\ninstall.packages(\"remotes\")\n\n\n\n\n\n\n\n\n\nWarningA build or compilation error\n\n\n\n\n\nOn Windows, this usually means Rtools is missing or doesn’t match your R version. Install the matching Rtools (see Install Rtools, above), then restart RStudio (Session menu, Restart R) and try the install again. On a Mac, open Terminal and run xcode-select --install, follow the prompts, then retry.\n\n\n\n\n\n\n\n\n\nWarningThe install seems half-done or broken\n\n\n\n\n\nThe simplest fix is to remove jstats and install it fresh:\nremove.packages(\"jstats\")\nremotes::install_github(\"JMA61/jstats\")\nlibrary(jstats)\n\n\n\n\n\n\n\n\n\nWarningRStudio hangs or loops every time it starts\n\n\n\n\n\nThis almost always means an install command was put in your .Rprofile. That file runs every time R starts, so an install line tries to reinstall on every startup and can loop. Your .Rprofile should only ever hold lightweight startup lines like library(jstats) — never an install command. To recover: close RStudio, open your Project folder in your computer’s file manager, open the .Rprofile file in a plain text editor (Notepad on Windows, TextEdit on Mac), delete the install line so only the library(jstats) line remains, save, and reopen RStudio.",
     "crumbs": [
       "Get Started",
-      "Install jstats"
+      "Step 4 — Install jstats"
     ]
   },
   {
@@ -354,10 +354,10 @@
     "href": "install-jstats.html#keep-jstats-up-to-date",
     "title": "Install jstats",
     "section": "Keep jstats up to date",
-    "text": "Keep jstats up to date\nBecause jstats is updated often during this phase, it checks for a newer version each time you load it with library(jstats). When one is available, it prints a short message with a few lines of code — you simply copy those lines into the Console and run them, and jstats updates itself. You don’t have to track releases or hunt anything down; just watch for the message when the package loads and copy what it gives you. (This all gets simpler once jstats reaches CRAN; we’ll update these instructions when it does.)\n\n\n\n\n\n\nImportantThis is a beta, and your input shapes it\n\n\n\nWhile jstats is in this pre-release phase, it’s still actively growing — which makes now the best time to ask for things. If a function is missing an option your work needs, or you’d like an analysis it doesn’t yet cover, say so: open an issue on the package’s GitHub page (the built-in spot for reporting problems and requesting features). If you hit an error, paste the full error message into the issue, along with what you ran and which versions of R and jstats you’re on — that detail makes a fix far quicker. Changes are far easier to fold in now than after the package reaches its stable release, where keeping existing code working limits what can change.",
+    "text": "Keep jstats up to date\nBecause jstats is updated often during this phase, it checks for a newer version each time you load it with library(jstats). When one is available, it prints a short message with a few lines of code — you simply copy those lines into the Console and run them, and jstats updates itself. You don’t have to track releases or hunt anything down; just watch for the message when the package loads and copy what it gives you. (This all gets simpler once jstats reaches CRAN; we’ll update these instructions when it does.)\n\n\n\n\n\n\nImportantThis is a beta, and your input shapes it\n\n\n\nWhile jstats is in this pre-release phase, it’s still actively growing — which makes now the best time to ask for things. If a function is missing an option your work needs, or you’d like an analysis it doesn’t yet cover, say so: open an issue on the package’s GitHub page (the built-in spot for reporting problems and requesting features). If you hit an error, paste the full error message into the issue, along with what you ran and which versions of R and jstats you’re on — that detail makes a fix far quicker. Changes are far easier to fold in now than after the package reaches its stable release, where keeping existing code working limits what can change.\n\n\n\n\n\n\n\n\nNoteFor experienced R users\n\n\n\n\n\nA concrete example of feature-by-request: a researcher wanted to see which cells drive a significant chi-square, so adjusted standardized residuals were added to the cross-tabs function — jcrosstab(Education ~ Volunteer, data = community, residuals = \"adjusted\"). That kind of targeted addition is exactly what this phase is for.",
     "crumbs": [
       "Get Started",
-      "Install jstats"
+      "Step 4 — Install jstats"
     ]
   },
   {
@@ -368,7 +368,7 @@
     "text": "Load jstats automatically (recommended)\nYou can tell your Project to load jstats for you every time it opens, so you never have to type library(jstats) again. It’s optional, but worth doing: besides saving the keystrokes, it means the package’s automatic update check runs every time you start work — so you’re always told when a new version is available — and you open each session ready to go. This uses a small setup file called an .Rprofile (a file R reads automatically when it starts).\nCreate a plain text file named .Rprofile in your Project folder containing one line:\nlibrary(jstats)\nSave it, then restart R (Session menu, Restart R). From now on, every session in this Project starts with jstats already loaded.\nKeep this to lightweight startup lines — loading a package, and later a setting or two. Do not put an install command (like remotes::install_github(...)) in .Rprofile: because the file runs on every startup, an install line there tries to reinstall each time and can send RStudio into a loop. Installing is a one-off you run by hand; loading is the repeatable step that belongs in startup.\nWe’re keeping this minimal for now. Later you’ll add a line or two more — where your data lives, and how many digits to show in output — but one line is plenty to start.\n\n\n\n\n\n\nNoteGoing deeper (optional)\n\n\n\n\n\nThis .Rprofile lives inside your Project and applies only to this Project. That’s deliberate — it’s self-contained and safe to edit. There’s also a global, all-Projects version, but it’s better left until you’re juggling several Projects at once; the books cover it.",
     "crumbs": [
       "Get Started",
-      "Install jstats"
+      "Step 4 — Install jstats"
     ]
   },
   {
@@ -376,7 +376,7 @@
     "href": "books.html",
     "title": "Books",
     "section": "",
-    "text": "NoteComing soon\n\n\n\nFull details, sample chapters, and where to buy will live here.\n\n\nTwo books are planned:\n\nStatistics in R, Made Accessible — for readers meeting statistics and R at the same time. Warm and patient, assuming no prior knowledge of either, building carefully from the ground up.\nFrom SPSS and Stata to R — for researchers who already know the statistics and want a clear path into R with jstats: function options, design rationale, and migration patterns from commercial software.\n\nThe free Get Started guide and the Guides section are a reduced version of the books’ material; the books are the deeper, complete treatment."
+    "text": "NoteComing soon\n\n\n\nFull details, sample chapters, and where to buy will live here.\n\n\nTwo books are planned:\n\nStatistics in R, Made Accessible — for readers meeting statistics and R at the same time. Warm and patient, assuming no prior knowledge of either, building carefully from the ground up.\nFrom SPSS and Stata to R — for researchers who already know the statistics and want a clear path into R with jstats: function options, design rationale, and migration patterns from commercial software.\n\nThe free Get Started guide and the Guides section are a reduced version of the books’ material; the books are the deeper, complete treatment.\njstats is more than a single package. Around it is a growing set of free online guides, this book series, a video channel, and ready-to-use teaching datasets. It follows a long tradition of teaching-focused statistics packages that began in the classroom and grew into something larger — Danielle Navarro’s lsr, the companion to her widely used Learning Statistics with R, is one well-loved example — and the aim here is the same."
   },
   {
     "objectID": "guides.html",
@@ -393,7 +393,7 @@
     "text": "These are the two pieces everything else sits on: R (the engine that does the statistics) and RStudio (the friendlier window you drive it from). Both are free. Install R first, then RStudio on top of it.\nYou only do this once per computer. If you need to set up a second machine later, this page is the one to come back to.",
     "crumbs": [
       "Get Started",
-      "Install R and RStudio"
+      "Step 2 — Install R and RStudio"
     ]
   },
   {
@@ -404,7 +404,7 @@
     "text": "Install R\nGo to CRAN — the official archive of R, at https://cran.r-project.org — choose the download for your system (Windows, Mac, or Linux), and run the installer with its default settings. That’s it; you won’t open R directly — RStudio will.",
     "crumbs": [
       "Get Started",
-      "Install R and RStudio"
+      "Step 2 — Install R and RStudio"
     ]
   },
   {
@@ -415,7 +415,7 @@
     "text": "Install RStudio\nDownload RStudio Desktop from https://posit.co/download/rstudio-desktop/ and install it. (Install R first; RStudio needs it.) From now on, RStudio is the program you open to work.\n\nWith both installed, the next page gives you a quick tour of RStudio — the panes, the console, and how your data looks once it’s loaded — before you add the jstats package itself.",
     "crumbs": [
       "Get Started",
-      "Install R and RStudio"
+      "Step 2 — Install R and RStudio"
     ]
   },
   {
@@ -478,12 +478,12 @@
   {
     "objectID": "start-here.html",
     "href": "start-here.html",
-    "title": "Getting started with jstats",
+    "title": "jstats",
     "section": "",
-    "text": "WarningDemo draft v1\n\n\n\nThis is an early cut for colleague review. Some pages are complete and others are still skeletons. The labeled side-boxes throughout — For experienced R users, Coming from SPSS or Stata?, If you’re new to statistics, Aside, and Going deeper — are optional: each is written for some readers and safely skipped by the rest. The main text reads straight through without them, and you can fold each box open or closed.\nThis short page orients everyone — new and experienced alike — and then points you to the right starting place. Read it first, then follow the link that matches your situation (the choices are at the bottom).",
+    "text": "In short, R and RStudio are the free tools you run everything inside, and jstats is an add-on package — the one these guides are about. The two short sections below say what each of these is; if you already work in R, skim them and move on.",
     "crumbs": [
       "Get Started",
-      "Start here (everyone)"
+      "Step 1 — Overview"
     ]
   },
   {
@@ -494,7 +494,7 @@
     "text": "What you’ll get\nThis guide takes you from nothing installed to your first real statistical result — an actual regression — in about an hour. You’ll do a little setup once, then spend most of your time getting results.",
     "crumbs": [
       "Get Started",
-      "Start here (everyone)"
+      "Step 1 — Overview"
     ]
   },
   {
@@ -502,10 +502,10 @@
     "href": "start-here.html#the-pieces-r-rstudio-and-a-package",
     "title": "Getting started with jstats",
     "section": "The pieces: R, RStudio, and a package",
-    "text": "The pieces: R, RStudio, and a package\nA few words come up right away. Here’s what each one is, and how they stack:\n\nR is the engine — the free program that actually does the statistics.\nRStudio is the dashboard you drive it from — a friendlier window onto R, with a place to write your commands, see your results, and view your data. You install R first, then RStudio on top of it.\nA package is an add-on that teaches R new tricks — extra commands bundled together and shared. jstats is one of these.\nRtools (Windows only) is a small free toolkit R uses to build certain add-ons. You install it once and then forget it exists; it’s needed only for the jstats install step, and the Install jstats page covers it. (Mac has an equivalent it usually already has.)\n\nSo the order is: install R, install RStudio, then add the jstats package (with Rtools along for the ride on Windows). The pages that follow walk you through each step.\n\n\n\n\n\n\nNoteAside\n\n\n\n\n\nThe best-known example of a friendlier layer over R is the tidyverse — actually a meta-package, a single package whose only job is to install and load a whole family of related packages at once. It became enormously popular by smoothing R for everyday data work. jstats shares that goal of smoothing the path, though it takes a different route: where the tidyverse introduces its own style of doing things, jstats deliberately stays close to ordinary R — more on why that matters just below.\n\n\n\n\n\n\n\n\n\nNoteAside — where the names come from\n\n\n\n\n\nR is the successor to an older language called S; its own name plays on that S while also nodding to the initials of R’s two creators. jstats quietly continues that little naming tradition — the j is its author’s initial. Nothing rides on this; it’s just a bit of lineage you can enjoy and skip.",
+    "text": "The pieces: R, RStudio, and a package\nA few words come up right away. Here’s what each one is, and how they stack:\n\nR is the engine — the free program that actually does the statistics.\nRStudio is the dashboard you drive it from — a friendlier window onto R, with a place to write your commands, see your results, and view your data. You install R first, then RStudio on top of it.\nA package is an add-on that teaches R new tricks — extra commands bundled together and shared. jstats is one of these.\nRtools (Windows only) is a small free toolkit R uses to build certain add-ons. You install it once and then forget it exists; it’s needed only for the jstats install step, and the Install jstats page covers it. (Mac has an equivalent it usually already has.)\n\nSo the order is: install R, install RStudio, then add the jstats package (with Rtools along for the ride on Windows). The pages that follow walk you through each step.\n\n\n\n\n\n\nNoteAside\n\n\n\n\n\nThe best-known friendlier layer over R is the tidyverse — a family of packages (dplyr for data wrangling, ggplot2 for graphs, and several more) that share a common style, plus a single meta-package of the same name that installs them together and loads the core ones for you in one step. It became enormously popular by smoothing everyday data work, and its pipe-based style — chaining steps with %&gt;% — shaped how a lot of modern R is written (base R later added its own pipe, |&gt;). jstats shares the goal of smoothing the path but takes a different route, staying close to base R.\n\n\n\n\n\n\n\n\n\nNoteAside — where the names come from\n\n\n\n\n\nR is the successor to an older language called S; its own name plays on that S while also nodding to the initials of R’s two creators. jstats quietly continues that little naming tradition — the j is its author’s initial. Nothing rides on this; it’s just a bit of lineage you can enjoy and skip.",
     "crumbs": [
       "Get Started",
-      "Start here (everyone)"
+      "Step 1 — Overview"
     ]
   },
   {
@@ -516,7 +516,7 @@
     "text": "Why jstats\njstats began as a teaching tool — a way to smooth over some of R’s rougher edges for people meeting statistics and code at the same time. But the same design turned out to help experienced users too, so it grew into a fuller package. Two short pitches, depending on where you’re starting.\nIf you’re new to R: jstats gives you a small set of commands that are consistent and predictable, with output that’s easy to read, and it protects you from a few of R’s confusing default behaviors. You get results quickly — and, importantly, you’re still learning real R the whole time. jstats stays close to ordinary R rather than walling you off in a private dialect, so every skill you build here transfers.\nIf you already know R: the payoff is friction removed, not capability hidden. jstats handles labelled survey data directly — the value labels, variable labels, and user-defined missing values that come out of commercial statistical software (SPSS, Stata, SAS) — with no manual conversion. It loads and saves across formats through a single command. And it gives you one consistent, presentation-ready style of output across every function. Crucially, it doesn’t reinvent the statistics: under the hood it calls R’s own long-tested routines (jlm runs lm, jt runs t.test, and so on), so you’re trusting the same calculations you already trust. In other words it’s a wrapper — a simpler, consistent command that sits on top of R’s existing functions and passes the real work through to them, just as R’s own read.csv() is really its more general read.table() with the common settings already filled in for you.\nOne feature worth singling out, because it helps both audiences: non-destructive handling of things like dummy variables. When you tell jstats to treat a variable as a dummy (a yes/no or category indicator used in a regression), it registers that intention without altering or overwriting the variable itself — so you cannot accidentally damage your data by classifying it.\n\n\n\n\n\n\nNoteFor experienced R users\n\n\n\n\n\nThat non-destructive handling means you don’t convert the column to a factor, with the in-place change and downstream surprises that can bring. The registration is a note about how to treat the variable, not an edit to it — and it’s easily undone or changed.\n\n\n\nWhat it covers today — and what’s coming. Right now jstats handles the core of applied social-science analysis: frequency tables and descriptive statistics, data screening, group comparisons (t-tests and ANOVA), correlation, scale reliability (Cronbach’s alpha), cross-tabulations, and both linear and logistic regression. On the near-term roadmap are Poisson and negative-binomial models for count outcomes, and built-in export of presentation-ready tables to Word — APA style among them — with no separate package to install or learn.\nAnd jstats is more than a single package. Around it is a growing set of free online guides (you’re reading one), a planned two-book series — Statistics in R, Made Accessible, for readers meeting statistics and R together, and From SPSS and Stata to R, for researchers who already know the statistics — a video channel, and ready-to-use teaching datasets. It follows a long tradition of teaching-focused statistics packages that began in the classroom and grew into something larger — Danielle Navarro’s lsr package, the companion to her widely used Learning Statistics with R, is one well-loved example — and the aim here is the same.",
     "crumbs": [
       "Get Started",
-      "Start here (everyone)"
+      "Step 1 — Overview"
     ]
   },
   {
@@ -527,7 +527,7 @@
     "text": "What to expect as an early user\nUsing jstats at this early stage comes with a simple, honest trade. The costs are small and real: a few extra steps to install during this pre-release phase, the occasional error message that reads more cryptically than it should, and now and then a feature you wish were there but isn’t yet. The benefit: results fast, and a direct line to shape the package — options and analyses you ask for can often be added (see the note on the Install jstats page).\nAnd there’s a safety net that makes the trade an easy one. jstats is a convenience layer, not a cage. Anything it doesn’t do, plain R still does — you can always drop back to base R, or reach for another package, right alongside jstats in the very same script. In fact that’s the intended path: use jstats for the common social-science tasks it’s built for, pick up a little real R painlessly as you go, and when you eventually need something specialized that jstats doesn’t cover, you’ll have learned enough to add the package that does. You’re never stuck, and you’re never learning a dead end.\n\n\n\n\n\n\nNoteFor experienced R users\n\n\n\n\n\nA concrete example of feature-by-request: a researcher wanted to see which cells drive a significant chi-square, so adjusted standardized residuals were added to the cross-tabs function — jcrosstab(Education ~ Volunteer, data = community, residuals = \"adjusted\"). That kind of targeted addition is exactly what this phase is for.\n\n\n\nOne last idea to carry with you, because it makes the rest click: in R you mostly call functions (a name, then inputs in parentheses), and a function both shows you a result and can hand back an object you keep and reuse. You’ll see what that means at your first real command, and again when you save your first analysis.",
     "crumbs": [
       "Get Started",
-      "Start here (everyone)"
+      "Step 1 — Overview"
     ]
   },
   {
@@ -538,7 +538,7 @@
     "text": "Where to go next\nPick the line that matches where you’re starting:\n\nStarting from scratch? Begin with Install R and RStudio — the next page installs everything.\nAlready have R and RStudio? Skip ahead to Install jstats.\nAlready have jstats working inside an RStudio Project? Jump straight to the jstats Quick Start — it’s worth a look even for seasoned R users, since it’s where the jstats way of working becomes clear.",
     "crumbs": [
       "Get Started",
-      "Start here (everyone)"
+      "Step 1 — Overview"
     ]
   },
   {
@@ -627,6 +627,72 @@
     "crumbs": [
       "Get Started",
       "jstats with your own data"
+    ]
+  },
+  {
+    "objectID": "start-here.html#what-are-r-rstudio-and-jstats",
+    "href": "start-here.html#what-are-r-rstudio-and-jstats",
+    "title": "jstats",
+    "section": "",
+    "text": "You might be arriving here having never used R — or not even sure what it is. Or you might be a long-time R and RStudio user who mainly wants to know what jstats adds. Either way you’re in the right place: we’ve organized this page, and these guides, with optional boxes so you can open what helps and skip what you already know.\nIn short, R and RStudio are the free tools you run everything inside, and jstats is an add-on package — the one these guides are about. If those names are new to you, open the box below; if they’re already familiar, you can head straight to the next page.\n\n\n\n\n\n\nTipIf you’re new to R and RStudio\n\n\n\n\n\nGlad you’re here — none of this assumes you’ve used R before, and the pages that follow walk you through installing each piece, step by step. Here’s what each one is:\nR is the engine — the free program that actually does the statistics. RStudio is the dashboard you drive it from — a friendlier window onto R, with a place to write your commands, see your results, and view your data. You install R first, then RStudio on top of it. A package is an add-on that teaches R new tricks — extra commands bundled together and shared; jstats is one of these.\n\n\n\n\n\n\n\n\n\nNoteAside\n\n\n\n\n\nThe best-known example of a friendlier layer over R is the tidyverse — actually a meta-package, a single package whose only job is to install and load a whole family of related packages at once. It became enormously popular by smoothing R for everyday data work. jstats shares that goal of smoothing the path, though it takes a different route: where the tidyverse introduces its own style of doing things, jstats deliberately stays close to ordinary R.\n\n\n\n\n\n\n\n\n\nNoteAside — where the names come from\n\n\n\n\n\nR is the successor to an older language called S; its own name plays on that S while also nodding to the initials of R’s two creators. jstats quietly continues that little naming tradition — the j is its author’s initial. Nothing rides on this; it’s just a bit of lineage you can enjoy and skip.",
+    "crumbs": [
+      "Get Started",
+      "Step 1 — Overview"
+    ]
+  },
+  {
+    "objectID": "install-jstats.html#what-to-expect-at-this-early-stage",
+    "href": "install-jstats.html#what-to-expect-at-this-early-stage",
+    "title": "Install jstats",
+    "section": "What to expect at this early stage",
+    "text": "What to expect at this early stage\nUsing jstats during its pre-release phase comes with a simple, honest trade. The costs are small and real: a few extra steps to install while it’s distributed through GitHub rather than CRAN, the occasional error message that reads more cryptically than it should, and now and then a feature you wish were there but isn’t yet. The benefit is results fast — and, as the note above says, a direct line to shape what gets built next.\nThere’s also a safety net that makes the trade an easy one. jstats is a convenience layer, not a cage. Anything it doesn’t do, plain R still does — you can always drop back to base R, or reach for another package, right alongside jstats in the very same script. That’s the intended path: use jstats for the common social-science tasks it’s built for, pick up a little real R painlessly as you go, and when you eventually need something specialized it doesn’t cover, you’ll have learned enough to add the package that does. You’re never stuck, and you’re never learning a dead end.",
+    "crumbs": [
+      "Get Started",
+      "Step 4 — Install jstats"
+    ]
+  },
+  {
+    "objectID": "start-here.html#overview-what-are-r-rstudio-and-jstats",
+    "href": "start-here.html#overview-what-are-r-rstudio-and-jstats",
+    "title": "jstats",
+    "section": "",
+    "text": "In short, R and RStudio are the free tools you run everything inside, and jstats is an add-on package — the one these guides are about. The two short sections below say what each of these is; if you already work in R, skim them and move on.",
+    "crumbs": [
+      "Get Started",
+      "Step 1 — Overview"
+    ]
+  },
+  {
+    "objectID": "start-here.html#r-and-rstudio",
+    "href": "start-here.html#r-and-rstudio",
+    "title": "jstats",
+    "section": "R and RStudio",
+    "text": "R and RStudio\nR is the engine — the free software that does the actual computing and statistics. RStudio is the dashboard you drive it from: a friendlier window onto R, with a place to write your commands, see your results, view your data, and keep your work organized. You install R first, then RStudio on top of it — and from then on you open RStudio, not R. Most people never open R directly at all.",
+    "crumbs": [
+      "Get Started",
+      "Step 1 — Overview"
+    ]
+  },
+  {
+    "objectID": "start-here.html#jstats-and-other-packages",
+    "href": "start-here.html#jstats-and-other-packages",
+    "title": "jstats",
+    "section": "jstats and other packages",
+    "text": "jstats and other packages\nR already does a great deal on its own — R as it comes, before you add anything, is usually called base R. But much of R’s power comes from packages: add-ons that teach R new tricks, each a bundle of extra commands that someone has written and shared. Thousands exist, and they tend to fall into a few broad kinds:\n\nSome take results computed by base R and lay them out in a cleaner, more organized form — often with far less code.\nSome import and export data in other programs’ formats — haven, for instance, reads and writes SPSS, Stata, and SAS files.\nSome turn base R’s results into graphs and charts — ggplot2 is the best known.\nSome add whole analyses base R doesn’t include on its own — for example, mice for filling in missing data, or packages for mixed models and survival analysis.\n\njstats is one of these add-ons — but rather than specializing in a single one of these jobs, it draws the most useful pieces from across the whole range and bundles them into one more comprehensive package, aimed at the things social scientists do most often. The practical payoff: instead of installing and loading several separate packages just to get going, you can lean on jstats for most of your early work and add other packages as your needs grow. Because jstats stays close to base R rather than inventing its own dialect, those other packages slot in alongside it naturally when the time comes.\nHere’s how jstats draws on each kind. Most of what it does is kind 1: it takes the analyses social scientists use most — descriptives, frequencies, t-tests, ANOVA, regression, correlation, and more — and presents the results in a clean, familiar layout like the one you’d see in commercial statistical software, all from a single short command. It also does kind 2 directly, reading and writing labelled SPSS, Stata, and SAS files so they work without a separate import step; a bit of kind 3, making basic graphs more quickly and simply than reaching for ggplot2 when you don’t need its full range of options; and the least of kind 4 so far, though it adds a few things base R doesn’t include — for example, Gelman (2008) standardized regression coefficients. Throughout, it leans on base R’s own computational engines underneath, so what you learn stays close to base R.",
+    "crumbs": [
+      "Get Started",
+      "Step 1 — Overview"
+    ]
+  },
+  {
+    "objectID": "start-here.html#next-steps",
+    "href": "start-here.html#next-steps",
+    "title": "jstats",
+    "section": "Next steps",
+    "text": "Next steps\nWith this background in mind, you’re ready for Step 2, where we install R and RStudio, and then Step 3, a brief tour of RStudio. Already comfortable in RStudio? Jump ahead to Step 4 (installing jstats) and then Step 5 (the Quick Start).\nThat’s all the background you need to get going. If you’d like a little more first — where the names came from, R’s history, or a closer look at some of R’s best-known packages — the optional boxes below are there to open or skip as you please.\n\n\n\n\n\n\nNoteAside — a very short history of R\n\n\n\n\n\nR’s roots reach back to S, a language created at Bell Labs in the 1970s for statistics and data analysis. (Bell Labs had a taste for one-letter names — it’s the same lab behind the C programming language and the Unix operating system — and S nods to statistics.) S was later turned into commercial software called S-PLUS. Then, in the early 1990s, two statisticians at the University of Auckland in New Zealand — Ross Ihaka and Robert Gentleman — wrote a free, open-source language of their own in the spirit of S and named it R: the letter just before S, and the shared first initial of both their names. R has been developed ever since by a worldwide volunteer group, the R Core Team, and stays free for everyone — which is a big part of why it has grown so many add-on packages.\n\n\n\n\n\n\n\n\n\nNoteAside — where the jstats name comes from\n\n\n\n\n\njstats quietly continues that naming tradition. It pairs the j of its author’s first name with stats, and every command the package adds begins with that same j — a small signal that lets you tell at a glance which functions come from jstats rather than from base R or another package.\n\n\n\n\n\n\n\n\n\nNoteAside — what the tidyverse is\n\n\n\n\n\nThe best-known example of a friendlier layer over R is the tidyverse — actually a meta-package, a single package whose only job is to install and load a whole family of related packages at once. It became enormously popular by smoothing R for everyday data work. jstats shares that goal of smoothing the path, though it takes a different route: where the tidyverse introduces its own style of doing things, jstats deliberately stays close to base R.\n\n\n\n\n\n\n\n\n\nNoteAside — the packages jstats builds on\n\n\n\n\n\njstats doesn’t reinvent everything from scratch — it stands on several well-regarded packages: ggplot2 for graphs, haven and labelled for reading and handling data (and its value labels) from SPSS, Stata, and SAS, readxl and writexl for Excel files, and rlang for some of the behind-the-scenes machinery. When you install jstats, all of these come along automatically and it uses them under the hood, so you never install or load them yourself. It’s a similar convenience to the way the tidyverse bundles its own family of packages — except jstats keeps these working quietly in the background rather than putting them in your hands to use directly.\nYou’ll also hear about R Markdown and its newer cousin Quarto — tools for weaving R code and writing together into reports, slides, and websites. These very guides are built with Quarto, with jstats commands and their output sitting right inside the pages you’re reading.\n\n\n\n\n\n\n\n\n\nNoteAside — what is CRAN?\n\n\n\n\n\nWhen you install R, and most packages, they come from CRAN — the Comprehensive R Archive Network, the official online library where R itself and thousands of packages are published and kept. It’s maintained by the R community and is free to use. (jstats isn’t on CRAN just yet — for now it installs from another common home for R projects, which the Install jstats page walks you through — but it’s headed there.)",
+    "crumbs": [
+      "Get Started",
+      "Step 1 — Overview"
     ]
   }
 ]

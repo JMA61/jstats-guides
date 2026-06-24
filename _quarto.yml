@@ -55,20 +55,22 @@ website:
     - title: "Get Started"
       style: "floating"
       contents:
-        - text: "Start here (everyone)"
+        - text: "Step 1 — Overview"
           href: start-here.qmd
-        - text: "Install R and RStudio"
+        - text: "Step 2 — Install R and RStudio"
           href: install-r-and-rstudio.qmd
-        - text: "RStudio Orientation"
+        - text: "Step 3 — RStudio Orientation"
           href: rstudio-orientation.qmd
-        - text: "Install jstats"
+        - text: "Step 4 — Install jstats"
           href: install-jstats.qmd
-        - text: "jstats Quick Start"
+        - text: "Step 5 — jstats Quick Start"
           href: quickstart.qmd
-        - text: "jstats with your own data"
-          href: your-data.qmd
-        - text: "A typical jstats workflow"
-          href: workflow.qmd
+        - section: "Going further"
+          contents:
+            - text: "jstats with your own data"
+              href: your-data.qmd
+            - text: "A typical jstats workflow"
+              href: workflow.qmd
   page-footer:
     border: true
     left: "© 2026 Jeff Ackerman"
@@ -101,3 +103,4 @@ format:
           window.addEventListener('resize', syncFooter);
         })();
         </script>
+
