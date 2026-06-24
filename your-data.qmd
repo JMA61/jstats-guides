@@ -1,9 +1,9 @@
 ---
-title: "jstats with your own data"
-subtitle: "Loading, saving, and round-tripping your own files — and handling the missing values that come with them."
 pagetitle: "jstats — Your own data"
 title-prefix: ""
 ---
+
+## jstats with your own data
 
 So far you've worked with `community`, the practice dataset that ships inside the
 package. The point of this page is to move from that to *your* data — getting a

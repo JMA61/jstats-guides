@@ -1,7 +1,9 @@
 ---
-title: "RStudio Orientation"
-subtitle: "Make a Project, get to know the panes, and see what your data looks like once it's loaded."
+pagetitle: "jstats — RStudio Orientation"
+title-prefix: ""
 ---
+
+## RStudio Orientation
 
 Before installing the package, it's worth a few minutes getting comfortable with
 RStudio itself — where things are, and how your data looks once it's loaded. If
@@ -147,6 +149,25 @@ in the console runs and then scrolls away — perfect for quick, one-off jobs li
 fast calculation or installing a package. When you're doing analysis you'll want
 to *keep* — and re-run, and share — you type those commands in the script and save
 the file. We'll start doing exactly that once there's something worth saving.
+
+## Start each session with a clean slate
+
+One quick setting is worth changing now. By default, when you quit RStudio it
+offers to save everything currently loaded — your whole Environment — and reload
+it next time. That sounds convenient, but it causes more confusion than it saves:
+old objects from a previous session linger, and you can't easily tell what you
+meant to keep versus what's just left over. It's a classic source of "why is this
+still here?" puzzlement.
+
+The cleaner habit is to start every session empty and rebuild what you need by
+re-running your script — which is the dependable record of your work anyway. To
+set that up, go to **Tools → Global Options → General**, then:
+
+- uncheck **Restore .RData into workspace at startup**, and
+- set **Save workspace to .RData on exit** to **Never**.
+
+Now each time you open RStudio you start fresh, and your script — not whatever
+happened to be in memory last time — is the source of truth.
 
 ---
 

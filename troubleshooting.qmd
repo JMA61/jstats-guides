@@ -1,7 +1,9 @@
 ---
-title: "Troubleshooting"
-subtitle: "Common problems and their fixes. Scan the titles, open the one that matches."
+pagetitle: "jstats — Troubleshooting"
+title-prefix: ""
 ---
+
+## Troubleshooting
 
 Most problems during setup and early use are one of a handful of things. Find the
 symptom that matches yours below and open it for the fix. This page grows over time;

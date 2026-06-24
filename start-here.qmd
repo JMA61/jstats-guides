@@ -1,7 +1,6 @@
 ---
 pagetitle: "jstats — Overview"
 title-prefix: ""
-toc: false
 ---
 
 ## Overview — What are R, RStudio, and jstats?

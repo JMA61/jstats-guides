@@ -1,7 +1,9 @@
 ---
-title: "Videos"
-subtitle: "The jstats video channel — coming soon."
+pagetitle: "jstats — Videos"
+title-prefix: ""
 ---
+
+## Videos
 
 ::: {.callout-note title="Coming soon"}
 Short, focused video walkthroughs — one narrow topic each — will be linked here as

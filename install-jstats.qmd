@@ -1,7 +1,9 @@
 ---
-title: "Install jstats"
-subtitle: "Getting the package onto your computer — the current GitHub-phase steps, plus what to do if an install stalls."
+pagetitle: "jstats — Install jstats"
+title-prefix: ""
 ---
+
+## Install jstats
 
 This page gets the jstats package installed and loaded, ready to use. It assumes
 you've already installed R and RStudio and have an RStudio Project open. If you

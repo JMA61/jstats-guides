@@ -1,7 +1,9 @@
 ---
-title: "Books"
-subtitle: "The jstats book series — coming soon."
+pagetitle: "jstats — Books"
+title-prefix: ""
 ---
+
+## Books
 
 ::: {.callout-note title="Coming soon"}
 Full details, sample chapters, and where to buy will live here.

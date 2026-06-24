@@ -2,9 +2,7 @@
 pagetitle: "jstats at Griffith"
 title-prefix: ""
 search: false
-toc: true
-toc-title: "On this page"
-toc-location: right
+toc: false
 format:
   html:
     include-in-header:
@@ -22,8 +20,8 @@ format:
     https://jma61.github.io/jstats-guides/griffith
   - search: false keeps it out of the site search; the robots noindex tag asks
     Google/Bing to skip it. Not locked down -- anyone with the URL can open it.
-  - toc: true adds the right-hand "On this page" menu (the page's section
-    headings). The bio heading is in a raw-HTML block, so it is not listed.
+  - toc: false: no right-hand "On this page" menu, so the hero and content span
+    the full width -- matching the home/welcome page (the site's other hero page).
 
   HERO IMAGE: save the Griffith building photo into images/ as
   griffith-banner.jpg (the renamed copy is provided alongside this file).
@@ -81,12 +79,6 @@ format:
      the bio name, but NOT the "On this page" menu title in the right margin. */
   #quarto-document-content h2 {
     font-size: 1.4rem;
-  }
-  /* THIS PAGE ONLY: push the "On this page" menu down so its header aligns with
-     the top of the banner (the content column has top spacing the menu column
-     lacks). Tweak this value if the header sits slightly above/below the banner. */
-  #quarto-margin-sidebar {
-    margin-top: 1.8rem;
   }
   /* THIS PAGE ONLY: keep the real site footer (so its width, height, and
      bottom-of-page position all stay native and correct), but swap its center

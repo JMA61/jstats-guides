@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Install jstats – jstats</title>
+<title>jstats — Install jstats</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6ec2eeb37f8174fe0251ab519a9e11a4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-7035d84f9b8587888e81aabf6836c785.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -109,14 +109,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<meta property="og:title" content="Install jstats – jstats">
-<meta property="og:description" content="Getting the package onto your computer — the current GitHub-phase steps, plus what to do if an install stalls.">
+<meta property="og:title" content="jstats — Install jstats">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta property="og:site_name" content="jstats">
 <meta property="og:image:height" content="720">
 <meta property="og:image:width" content="1280">
-<meta name="twitter:title" content="Install jstats – jstats">
-<meta name="twitter:description" content="Getting the package onto your computer — the current GitHub-phase steps, plus what to do if an install stalls.">
+<meta name="twitter:title" content="jstats — Install jstats">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta name="twitter:image-height" content="720">
 <meta name="twitter:image-width" content="1280">
@@ -265,7 +265,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-you-need-first" id="toc-what-you-need-first" class="nav-link active" data-scroll-target="#what-you-need-first">What you need first</a></li>
+  <li><a href="#install-jstats" id="toc-install-jstats" class="nav-link active" data-scroll-target="#install-jstats">Install jstats</a></li>
+  <li><a href="#what-you-need-first" id="toc-what-you-need-first" class="nav-link" data-scroll-target="#what-you-need-first">What you need first</a></li>
   <li><a href="#install-rtools-windows-only" id="toc-install-rtools-windows-only" class="nav-link" data-scroll-target="#install-rtools-windows-only">Install Rtools (Windows only)</a></li>
   <li><a href="#install-the-remotes-helper" id="toc-install-the-remotes-helper" class="nav-link" data-scroll-target="#install-the-remotes-helper">Install the remotes helper</a></li>
   <li><a href="#install-jstats-and-load-it" id="toc-install-jstats-and-load-it" class="nav-link" data-scroll-target="#install-jstats-and-load-it">Install jstats and load it</a>
@@ -279,28 +280,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Install jstats</h1>
-<p class="subtitle lead">Getting the package onto your computer — the current GitHub-phase steps, plus what to do if an install stalls.</p>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
+<section id="install-jstats" class="level2">
+<h2 class="anchored" data-anchor-id="install-jstats">Install jstats</h2>
 <p>This page gets the jstats package installed and loaded, ready to use. It assumes you’ve already installed R and RStudio and have an RStudio Project open. If you haven’t, start with <a href="./install-r-and-rstudio.html">Install R and RStudio</a> and <a href="./rstudio-orientation.html">RStudio Orientation</a>, then come back here.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="For experienced R users">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -332,6 +318,7 @@ Note
 </div>
 </div>
 <p>Using any R package is really two steps that are easy to blur together. <strong>Installing</strong> downloads the package onto your computer — you do this once. <strong>Loading</strong> switches it on for your current session — you do this each time you start R, with <code>library()</code>. (Think of installing as buying a book for your shelf, and loading as taking it down to read.) jstats works the same way: the steps below do the one-time install, and the last section sets up the loading to happen on its own.</p>
+</section>
 <section id="what-you-need-first" class="level2">
 <h2 class="anchored" data-anchor-id="what-you-need-first">What you need first</h2>
 <ul>
@@ -601,6 +588,13 @@ Note
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

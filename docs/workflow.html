@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>A typical jstats workflow – jstats</title>
+<title>jstats — Workflow</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -34,6 +34,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./your-data.html" rel="prev">
+<link href="./images/avatar.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -43,20 +44,19 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-7035d84f9b8587888e81aabf6836c785.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
-  "type": "overlay",
+  "type": "textbox",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
     "/",
     "s"
   ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -73,6 +73,18 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<meta property="og:title" content="jstats — Workflow">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
+<meta property="og:site_name" content="jstats">
+<meta property="og:image:height" content="720">
+<meta property="og:image:width" content="1280">
+<meta name="twitter:title" content="jstats — Workflow">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
+<meta name="twitter:image-height" content="720">
+<meta name="twitter:image-width" content="1280">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light">
@@ -82,6 +94,10 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/avatar.png" alt="jstats" class="navbar-logo light-content">
+    <img src="./images/avatar.png" alt="jstats" class="navbar-logo dark-content">
+    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">jstats</span>
     </a>
@@ -93,7 +109,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./start-here.html" aria-current="page"> 
 <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
@@ -117,6 +137,13 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Troubleshooting</span></a>
   </li>  
 </ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/jma61/jstats-guides"> <i class="bi bi-github" role="img" aria-label="jstats guides on GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
@@ -127,7 +154,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workflow.html">A typical jstats workflow</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./your-data.html">Going further</a></li><li class="breadcrumb-item"><a href="./workflow.html">A typical jstats workflow</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -141,46 +168,57 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Start here (everyone)</span></a>
+  <a href="./start-here.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Step 1 — Overview</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./install-r-and-rstudio.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Install R and RStudio</span></a>
+ <span class="menu-text">Step 2 — Install R and RStudio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rstudio-orientation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RStudio Orientation</span></a>
+ <span class="menu-text">Step 3 — RStudio Orientation</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./install-jstats.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Install jstats</span></a>
+ <span class="menu-text">Step 4 — Install jstats</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quickstart.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">jstats Quick Start</span></a>
+ <span class="menu-text">Step 5 — jstats Quick Start</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Going further</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./your-data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">jstats with your own data</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./workflow.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">A typical jstats workflow</span></a>
   </div>
 </li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -191,33 +229,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#planned-arc" id="toc-planned-arc" class="nav-link active" data-scroll-target="#planned-arc">Planned arc</a></li>
+  <li><a href="#a-typical-jstats-workflow" id="toc-a-typical-jstats-workflow" class="nav-link active" data-scroll-target="#a-typical-jstats-workflow">A typical jstats workflow</a></li>
+  <li><a href="#planned-arc" id="toc-planned-arc" class="nav-link" data-scroll-target="#planned-arc">Planned arc</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">A typical jstats workflow</h1>
-<p class="subtitle lead">A full session end to end — from loading data to a finished analysis — with the comfortable, everyday features along the way.</p>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./your-data.html">Going further</a></li><li class="breadcrumb-item"><a href="./workflow.html">A typical jstats workflow</a></li></ol></nav></header>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
+<section id="a-typical-jstats-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="a-typical-jstats-workflow">A typical jstats workflow</h2>
 <div class="callout callout-style-default callout-warning callout-titled" title="Skeleton — to be drafted">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -232,6 +256,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>Where the Quick Start raced to a first result and <em>jstats with your own data</em> covered getting files in and out, this page shows what an ordinary working session actually looks like — start to finish. It runs on the shipped datasets (<code>community</code>, with a <code>clinic</code> detour for messy-data steps) so anyone can follow along, and you can swap in your own data where you like. The package-shipped SPSS/Stata/Excel copies, reached with base R’s <code>system.file()</code>, are a natural fit here as a follow-along source that needs no file of your own.</p>
+</section>
 <section id="planned-arc" class="level2">
 <h2 class="anchored" data-anchor-id="planned-arc">Planned arc</h2>
 <ul>
@@ -321,7 +346,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/jma61\.github\.io\/jstats-guides");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -335,6 +360,13 @@ ul.task-list li input[type="checkbox"] {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -658,6 +690,37 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </nav>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Jeff Ackerman</p>
+</div>   
+    <div class="nav-footer-center">
+<p>jstats is an independent project that I develop and maintain in my own time; it began as a teaching tool in a university setting. Views expressed and any errors are my own.</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  function syncFooter(){
+    var c = document.querySelector('main.content')
+         || document.querySelector('#quarto-document-content');
+    var f = document.querySelector('.nav-footer-center');
+    if (c && f) {
+      var w = Math.round(c.getBoundingClientRect().width);
+      f.style.flexGrow = '0';
+      f.style.flexShrink = '0';
+      f.style.flexBasis = w + 'px';
+    }
+  }
+  window.addEventListener('DOMContentLoaded', syncFooter);
+  window.addEventListener('load', syncFooter);
+  window.addEventListener('resize', syncFooter);
+})();
+</script>
 
 
 

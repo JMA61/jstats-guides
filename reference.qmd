@@ -1,7 +1,9 @@
 ---
-title: "Reference"
-subtitle: "Function reference — coming soon."
+pagetitle: "jstats — Reference"
+title-prefix: ""
 ---
+
+## Reference
 
 ::: {.callout-note title="Coming soon"}
 This section will be a task- and function-indexed reference — a place to look up

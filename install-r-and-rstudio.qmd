@@ -1,7 +1,9 @@
 ---
-title: "Install R and RStudio"
-subtitle: "Two free downloads, in order: the engine, then the dashboard."
+pagetitle: "jstats — Install R and RStudio"
+title-prefix: ""
 ---
+
+## Install R and RStudio
 
 These are the two pieces everything else sits on: **R** (the engine that does the
 statistics) and **RStudio** (the friendlier window you drive it from). Both are
@@ -23,8 +25,20 @@ Download **RStudio Desktop** from
 <https://posit.co/download/rstudio-desktop/> and install it. (Install R first;
 RStudio needs it.) From now on, RStudio is the program you open to work.
 
----
+## RStudio's own getting-started guide
 
-With both installed, the next page gives you a quick tour of RStudio — the panes,
-the console, and how your data looks once it's loaded — before you add the jstats
-package itself.
+You may come across RStudio's own
+[Get Started guide](https://docs.posit.co/ide/user/ide/get-started/) while poking
+around. It's well made, but it's built around a different set of tools — the
+**tidyverse** family of packages (especially **ggplot2** for graphs) — rather than
+jstats, so the commands it teaches aren't the ones these guides use. It also
+describes the RStudio window as showing four panes the moment you open it; in
+practice you'll see three at first, with the fourth (the top-left editor)
+appearing once you open a script or view a dataset — which is how the next page
+describes it, to match what you'll actually see.
+
+It overlaps a good deal with our own orientation but follows a different path, so
+for the jstats route the simplest thing is to skip it and keep going here. The
+next page is that orientation — a quick tour of RStudio (the panes, the console,
+and how your data looks once it's loaded) — before you add the jstats package
+itself.

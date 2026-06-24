@@ -1,7 +1,9 @@
 ---
-title: "jstats Quick Start"
-subtitle: "From a loaded package to your first regression — worth a look even if you already know R."
+pagetitle: "jstats — Quick Start"
+title-prefix: ""
 ---
+
+## jstats Quick Start
 
 *From here on, jstats is loaded and you're working in your Project.* This page
 assumes you've installed jstats (see [Install jstats](install-jstats.qmd)) and

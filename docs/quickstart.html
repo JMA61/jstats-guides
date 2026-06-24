@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>jstats Quick Start – jstats</title>
+<title>jstats — Quick Start</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6ec2eeb37f8174fe0251ab519a9e11a4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-7035d84f9b8587888e81aabf6836c785.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -109,14 +109,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<meta property="og:title" content="jstats Quick Start – jstats">
-<meta property="og:description" content="From a loaded package to your first regression — worth a look even if you already know R.">
+<meta property="og:title" content="jstats — Quick Start">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta property="og:site_name" content="jstats">
 <meta property="og:image:height" content="720">
 <meta property="og:image:width" content="1280">
-<meta name="twitter:title" content="jstats Quick Start – jstats">
-<meta name="twitter:description" content="From a loaded package to your first regression — worth a look even if you already know R.">
+<meta name="twitter:title" content="jstats — Quick Start">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta name="twitter:image-height" content="720">
 <meta name="twitter:image-width" content="1280">
@@ -265,7 +265,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#meet-community" id="toc-meet-community" class="nav-link active" data-scroll-target="#meet-community">Meet <code>community</code></a></li>
+  <li><a href="#jstats-quick-start" id="toc-jstats-quick-start" class="nav-link active" data-scroll-target="#jstats-quick-start">jstats Quick Start</a></li>
+  <li><a href="#meet-community" id="toc-meet-community" class="nav-link" data-scroll-target="#meet-community">Meet <code>community</code></a></li>
   <li><a href="#your-first-jstats-command" id="toc-your-first-jstats-command" class="nav-link" data-scroll-target="#your-first-jstats-command">Your first jstats command</a></li>
   <li><a href="#the-examples-just-run" id="toc-the-examples-just-run" class="nav-link" data-scroll-target="#the-examples-just-run">The examples just run</a></li>
   <li><a href="#getting-help-on-any-function" id="toc-getting-help-on-any-function" class="nav-link" data-scroll-target="#getting-help-on-any-function">Getting help on any function</a></li>
@@ -279,28 +280,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">jstats Quick Start</h1>
-<p class="subtitle lead">From a loaded package to your first regression — worth a look even if you already know R.</p>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
+<section id="jstats-quick-start" class="level2">
+<h2 class="anchored" data-anchor-id="jstats-quick-start">jstats Quick Start</h2>
 <p><em>From here on, jstats is loaded and you’re working in your Project.</em> This page assumes you’ve installed jstats (see <a href="./install-jstats.html">Install jstats</a>) and loaded it with <code>library(jstats)</code>.</p>
 <p>Before the tour, one quick contrast. jstats ships with a practice dataset called <code>community</code>; suppose you just want to describe the respondents’ ages. In base R you’d reach for a handful of separate commands:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(community<span class="sc">$</span>Age)</span>
@@ -318,6 +304,7 @@ Variable  Total  Non_missing  Min  Max   Mean     SD
 Age         100          100   18   71  34.62  9.183
 </pre>
 <p>One command, one tidy table — count, missing, range, center, and spread together, in a layout you’ll recognize if you’ve used commercial statistical software. That’s the whole idea behind jstats, and the rest of this page builds on it.</p>
+</section>
 <section id="meet-community" class="level2">
 <h2 class="anchored" data-anchor-id="meet-community">Meet <code>community</code></h2>
 <p>That practice dataset, <strong><code>community</code></strong>, holds 100 made-up community-survey respondents, with income, education, age, a wellbeing score, a few yes/no items, a region, and a five-item attitude scale. It’s available the moment the package is loaded — you don’t have to open or import anything — which is the point of a shipped dataset and what lets these examples just work.</p>
@@ -521,6 +508,13 @@ Age         100          100   18   71  34.62  9.183
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

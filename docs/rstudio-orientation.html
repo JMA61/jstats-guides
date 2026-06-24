@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>RStudio Orientation – jstats</title>
+<title>jstats — RStudio Orientation</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6ec2eeb37f8174fe0251ab519a9e11a4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-7035d84f9b8587888e81aabf6836c785.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -109,14 +109,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<meta property="og:title" content="RStudio Orientation – jstats">
-<meta property="og:description" content="Make a Project, get to know the panes, and see what your data looks like once it’s loaded.">
+<meta property="og:title" content="jstats — RStudio Orientation">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta property="og:site_name" content="jstats">
 <meta property="og:image:height" content="720">
 <meta property="og:image:width" content="1280">
-<meta name="twitter:title" content="RStudio Orientation – jstats">
-<meta name="twitter:description" content="Make a Project, get to know the panes, and see what your data looks like once it’s loaded.">
+<meta name="twitter:title" content="jstats — RStudio Orientation">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta name="twitter:image-height" content="720">
 <meta name="twitter:image-width" content="1280">
@@ -265,36 +265,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#start-a-project" id="toc-start-a-project" class="nav-link active" data-scroll-target="#start-a-project">Start a Project</a></li>
+  <li><a href="#rstudio-orientation" id="toc-rstudio-orientation" class="nav-link active" data-scroll-target="#rstudio-orientation">RStudio Orientation</a></li>
+  <li><a href="#start-a-project" id="toc-start-a-project" class="nav-link" data-scroll-target="#start-a-project">Start a Project</a></li>
   <li><a href="#the-rstudio-panes" id="toc-the-rstudio-panes" class="nav-link" data-scroll-target="#the-rstudio-panes">The RStudio panes</a></li>
   <li><a href="#try-the-console" id="toc-try-the-console" class="nav-link" data-scroll-target="#try-the-console">Try the console</a></li>
+  <li><a href="#start-each-session-with-a-clean-slate" id="toc-start-each-session-with-a-clean-slate" class="nav-link" data-scroll-target="#start-each-session-with-a-clean-slate">Start each session with a clean slate</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">RStudio Orientation</h1>
-<p class="subtitle lead">Make a Project, get to know the panes, and see what your data looks like once it’s loaded.</p>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
+<section id="rstudio-orientation" class="level2">
+<h2 class="anchored" data-anchor-id="rstudio-orientation">RStudio Orientation</h2>
 <p>Before installing the package, it’s worth a few minutes getting comfortable with RStudio itself — where things are, and how your data looks once it’s loaded. If you already work in RStudio day to day, you can skim this and move on to <a href="./install-jstats.html">Install jstats</a>.</p>
+</section>
 <section id="start-a-project" class="level2">
 <h2 class="anchored" data-anchor-id="start-a-project">Start a Project</h2>
 <p>Before installing the package or loading any data, create an RStudio <strong>Project</strong>.</p>
@@ -351,6 +339,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] 12</code></pre>
 <p>That’s the shape of nearly everything you’ll do in R: a function name, inputs in parentheses, a result back. (And yes, <code>sqrt</code> is plain R — you’re already learning the real thing.)</p>
 <p>So what’s the <strong>script</strong> (the Editor) for, if the console can do everything? Just this: <strong>the console is for doing, the script is for keeping.</strong> Anything you type in the console runs and then scrolls away — perfect for quick, one-off jobs like a fast calculation or installing a package. When you’re doing analysis you’ll want to <em>keep</em> — and re-run, and share — you type those commands in the script and save the file. We’ll start doing exactly that once there’s something worth saving.</p>
+</section>
+<section id="start-each-session-with-a-clean-slate" class="level2">
+<h2 class="anchored" data-anchor-id="start-each-session-with-a-clean-slate">Start each session with a clean slate</h2>
+<p>One quick setting is worth changing now. By default, when you quit RStudio it offers to save everything currently loaded — your whole Environment — and reload it next time. That sounds convenient, but it causes more confusion than it saves: old objects from a previous session linger, and you can’t easily tell what you meant to keep versus what’s just left over. It’s a classic source of “why is this still here?” puzzlement.</p>
+<p>The cleaner habit is to start every session empty and rebuild what you need by re-running your script — which is the dependable record of your work anyway. To set that up, go to <strong>Tools → Global Options → General</strong>, then:</p>
+<ul>
+<li>uncheck <strong>Restore .RData into workspace at startup</strong>, and</li>
+<li>set <strong>Save workspace to .RData on exit</strong> to <strong>Never</strong>.</li>
+</ul>
+<p>Now each time you open RStudio you start fresh, and your script — not whatever happened to be in memory last time — is the source of truth.</p>
 <hr>
 <p>With RStudio mapped out, the next page adds the jstats package itself.</p>
 
@@ -445,6 +443,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

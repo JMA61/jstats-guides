@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Troubleshooting – jstats</title>
+<title>jstats — Troubleshooting</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -78,7 +78,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a0fc744874e982218772448a426a01bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-7035d84f9b8587888e81aabf6836c785.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -107,14 +107,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<meta property="og:title" content="Troubleshooting – jstats">
-<meta property="og:description" content="Common problems and their fixes. Scan the titles, open the one that matches.">
+<meta property="og:title" content="jstats — Troubleshooting">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta property="og:site_name" content="jstats">
 <meta property="og:image:height" content="720">
 <meta property="og:image:width" content="1280">
-<meta name="twitter:title" content="Troubleshooting – jstats">
-<meta name="twitter:description" content="Common problems and their fixes. Scan the titles, open the one that matches.">
+<meta name="twitter:title" content="jstats — Troubleshooting">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta name="twitter:image-height" content="720">
 <meta name="twitter:image-width" content="1280">
@@ -144,6 +144,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./start-here.html"> 
 <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
@@ -189,35 +193,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#installing-jstats" id="toc-installing-jstats" class="nav-link active" data-scroll-target="#installing-jstats">Installing jstats</a></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link active" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
+  <li><a href="#installing-jstats" id="toc-installing-jstats" class="nav-link" data-scroll-target="#installing-jstats">Installing jstats</a></li>
   <li><a href="#starting-rstudio-and-loading-jstats" id="toc-starting-rstudio-and-loading-jstats" class="nav-link" data-scroll-target="#starting-rstudio-and-loading-jstats">Starting RStudio and loading jstats</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Troubleshooting</h1>
-<p class="subtitle lead">Common problems and their fixes. Scan the titles, open the one that matches.</p>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
 <p>Most problems during setup and early use are one of a handful of things. Find the symptom that matches yours below and open it for the fix. This page grows over time; if your problem isn’t here, the <em>Install jstats</em> page has the install-specific ones close at hand, and you can always report a new one as a GitHub issue (see <em>Keep jstats up to date</em> on the <a href="./install-jstats.html">Install jstats</a> page).</p>
+</section>
 <section id="installing-jstats" class="level2">
 <h2 class="anchored" data-anchor-id="installing-jstats">Installing jstats</h2>
 <div class="callout callout-style-default callout-warning callout-titled" title="API rate limit exceeded">
@@ -433,6 +424,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

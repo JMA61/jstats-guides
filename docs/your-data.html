@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6ec2eeb37f8174fe0251ab519a9e11a4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-7035d84f9b8587888e81aabf6836c785.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -110,13 +110,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <meta property="og:title" content="jstats — Your own data">
-<meta property="og:description" content="Loading, saving, and round-tripping your own files — and handling the missing values that come with them.">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta property="og:site_name" content="jstats">
 <meta property="og:image:height" content="720">
 <meta property="og:image:width" content="1280">
 <meta name="twitter:title" content="jstats — Your own data">
-<meta name="twitter:description" content="Loading, saving, and round-tripping your own files — and handling the missing values that come with them.">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta name="twitter:image-height" content="720">
 <meta name="twitter:image-width" content="1280">
@@ -265,7 +265,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#first-tell-jstats-where-your-data-live" id="toc-first-tell-jstats-where-your-data-live" class="nav-link active" data-scroll-target="#first-tell-jstats-where-your-data-live">First, tell jstats where your data live</a></li>
+  <li><a href="#jstats-with-your-own-data" id="toc-jstats-with-your-own-data" class="nav-link active" data-scroll-target="#jstats-with-your-own-data">jstats with your own data</a></li>
+  <li><a href="#first-tell-jstats-where-your-data-live" id="toc-first-tell-jstats-where-your-data-live" class="nav-link" data-scroll-target="#first-tell-jstats-where-your-data-live">First, tell jstats where your data live</a></li>
   <li><a href="#the-simplest-possible-load" id="toc-the-simplest-possible-load" class="nav-link" data-scroll-target="#the-simplest-possible-load">The simplest possible load</a></li>
   <li><a href="#save-your-work-then-load-it-back" id="toc-save-your-work-then-load-it-back" class="nav-link" data-scroll-target="#save-your-work-then-load-it-back">Save your work, then load it back</a></li>
   <li><a href="#bringing-in-spss-stata-and-excel-files" id="toc-bringing-in-spss-stata-and-excel-files" class="nav-link" data-scroll-target="#bringing-in-spss-stata-and-excel-files">Bringing in SPSS, Stata, and Excel files</a>
@@ -280,30 +281,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./your-data.html">Going further</a></li><li class="breadcrumb-item"><a href="./your-data.html">jstats with your own data</a></li></ol></nav>
-<div class="quarto-title">
-<h1 class="title">jstats with your own data</h1>
-<p class="subtitle lead">Loading, saving, and round-tripping your own files — and handling the missing values that come with them.</p>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./your-data.html">Going further</a></li><li class="breadcrumb-item"><a href="./your-data.html">jstats with your own data</a></li></ol></nav></header>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
+<section id="jstats-with-your-own-data" class="level2">
+<h2 class="anchored" data-anchor-id="jstats-with-your-own-data">jstats with your own data</h2>
 <p>So far you’ve worked with <code>community</code>, the practice dataset that ships inside the package. The point of this page is to move from that to <em>your</em> data — getting a real file in, saving your work back out, moving between formats, and dealing with the real-world quirks that come with genuine data, missing values most of all.</p>
 <p>The examples still lean on <code>community</code> as a clean stand-in, with a step or two on the file types your own data are likely to arrive in. Nothing here will touch or change your files behind your back — every load brings a working copy into memory, exactly as the <a href="./quickstart.html">Quick Start</a> described, and the original on disk is left alone until you deliberately save.</p>
+</section>
 <section id="first-tell-jstats-where-your-data-live" class="level2">
 <h2 class="anchored" data-anchor-id="first-tell-jstats-where-your-data-live">First, tell jstats where your data live</h2>
 <p>Back on the <a href="./install-jstats.html">Install jstats</a> page you created an <code>.Rprofile</code> with a single line, <code>library(jstats)</code>, and we promised you’d add a line or two later. This is later. Two small settings make day-to-day work smoother, and the <code>.Rprofile</code> is where they belong, because it runs automatically every time the Project opens.</p>
@@ -602,6 +589,13 @@ Income      100           94  14000  91000  47414.89  20145.39
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

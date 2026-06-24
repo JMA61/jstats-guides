@@ -146,8 +146,70 @@ $navbar-active-color: $jstats-cyan;
   font-size: 1.2rem;
 }
 
-// Push the "On this page" menu down so its header aligns with the page title.
-// Tune on the preview: lower the value to lift the menu, raise it to drop it.
-#quarto-margin-sidebar {
-  margin-top: 1.10rem;
+// (S140 had a `#quarto-margin-sidebar { margin-top: 1.10rem }` rule here to
+// align the "On this page" menu with the old title-block heading. That title
+// block is gone after the S142 header redesign, and the extra offset made the
+// right menu start lower than the left -- so it traveled farther before the
+// sticky lock engaged. Removed. The sticky-top pinning below now governs where
+// both menus sit.)
+
+// Always-visible top navbar (site-wide, S142). Quarto's navbar header is
+// already `fixed-top`, but Quarto also applies Headroom.js (the `headroom`
+// class on #quarto-header), which slides the bar up out of view on scroll-down
+// and back on scroll-up -- that shift is what makes the left sidebar and the
+// "On this page" menu jump. There is no Quarto config switch to turn Headroom
+// off, so we neutralize its transform here: the bar then stays pinned at the
+// top of the viewport at all times. Specificity (#id + .class) plus !important
+// overrides Headroom's pinned/unpinned translateY states.
+#quarto-header.headroom {
+  transform: translateY(0) !important;
+  transition: none !important;
+}
+
+// Keep the left sidebar and the right "On this page" menu in place too (S142),
+// to match the now-fixed navbar. Both are position:sticky, but Quarto's layout
+// JS animates their `top` as the Headroom navbar pins/unpins (hence the
+// `transition: top 200ms` on `.sidebar`). With the bar now permanently shown,
+// that animation drags the menus up underneath it on scroll. Pinning their
+// sticky `top` and dropping the transition holds them steady; capping
+// max-height keeps a long menu scrolling within itself.
+//
+// The lock line is set a little ABOVE where the two menus naturally rest, so
+// sticky shifts BOTH down to this single line from the start: zero scroll
+// travel, and the left and right menus align at the same height. The navbar is
+// ~58px (48px logo cap + brand padding); 68px clears both rest positions.
+//
+// TUNING (one number, appears 3x below): if a menu still creeps as you scroll,
+// raise it; if there's too big a gap below the navbar, lower it.
+#quarto-sidebar.sidebar,
+#quarto-margin-sidebar.sidebar {
+  top: 68px !important;
+  max-height: calc(100vh - 68px) !important;
+  transition: none !important;
+}
+
+// Stop the page-to-page "jump" on short pages (S142). Tall pages show a
+// vertical scrollbar; short ones (install-R, the stubs) don't -- so navigating
+// between them changes the usable width and the centered layout shifts sideways
+// (the eye reads it as an up-and-to-the-right hop). Reserving the scrollbar
+// gutter on every page keeps the width constant, so nothing shifts. Applied to
+// both html and body since the body is the scroll container here; it is inert
+// on whichever one isn't scrolling. (Older browsers without scrollbar-gutter
+// just keep the prior behavior -- no harm.)
+html,
+body {
+  scrollbar-gutter: stable;
+}
+
+// Fix the vertical "jump" on very short pages (S142, e.g. install-R). Quarto
+// reserves a full-height container (.quarto-container has
+// min-height: calc(100vh - 132px)), but the grid ROW inside it is only as tall
+// as the text. On a short page that leaves the sticky sidebar / "On this page"
+// cells too short for the menus to settle at the 68px lock line, so they rest a
+// few px high and appear to hop up when you navigate in. Giving the content
+// column the same min-height makes the row full height, so the menus settle
+// consistently. 132px is Quarto's own navbar+footer reserve (kept in sync with
+// .quarto-container); it adds no scroll -- content + navbar + footer = 100vh.
+#quarto-document-content {
+  min-height: calc(100vh - 132px);
 }

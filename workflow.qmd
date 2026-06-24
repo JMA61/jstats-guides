@@ -1,7 +1,9 @@
 ---
-title: "A typical jstats workflow"
-subtitle: "A full session end to end — from loading data to a finished analysis — with the comfortable, everyday features along the way."
+pagetitle: "jstats — Workflow"
+title-prefix: ""
 ---
+
+## A typical jstats workflow
 
 ::: {.callout-warning title="Skeleton — to be drafted"}
 This page has its structure in place; the prose is still to be written. It pulls

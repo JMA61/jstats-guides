@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Install R and RStudio – jstats</title>
+<title>jstats — Install R and RStudio</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -45,7 +45,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6ec2eeb37f8174fe0251ab519a9e11a4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-7035d84f9b8587888e81aabf6836c785.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,14 +74,14 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<meta property="og:title" content="Install R and RStudio – jstats">
-<meta property="og:description" content="Two free downloads, in order: the engine, then the dashboard.">
+<meta property="og:title" content="jstats — Install R and RStudio">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta property="og:site_name" content="jstats">
 <meta property="og:image:height" content="720">
 <meta property="og:image:width" content="1280">
-<meta name="twitter:title" content="Install R and RStudio – jstats">
-<meta name="twitter:description" content="Two free downloads, in order: the engine, then the dashboard.">
+<meta name="twitter:title" content="jstats — Install R and RStudio">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta name="twitter:image-height" content="720">
 <meta name="twitter:image-width" content="1280">
@@ -230,36 +230,24 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#install-r" id="toc-install-r" class="nav-link active" data-scroll-target="#install-r">Install R</a></li>
+  <li><a href="#install-r-and-rstudio" id="toc-install-r-and-rstudio" class="nav-link active" data-scroll-target="#install-r-and-rstudio">Install R and RStudio</a></li>
+  <li><a href="#install-r" id="toc-install-r" class="nav-link" data-scroll-target="#install-r">Install R</a></li>
   <li><a href="#install-rstudio" id="toc-install-rstudio" class="nav-link" data-scroll-target="#install-rstudio">Install RStudio</a></li>
+  <li><a href="#rstudios-own-getting-started-guide" id="toc-rstudios-own-getting-started-guide" class="nav-link" data-scroll-target="#rstudios-own-getting-started-guide">RStudio’s own getting-started guide</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Install R and RStudio</h1>
-<p class="subtitle lead">Two free downloads, in order: the engine, then the dashboard.</p>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
+<section id="install-r-and-rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="install-r-and-rstudio">Install R and RStudio</h2>
 <p>These are the two pieces everything else sits on: <strong>R</strong> (the engine that does the statistics) and <strong>RStudio</strong> (the friendlier window you drive it from). Both are free. Install R first, then RStudio on top of it.</p>
 <p>You only do this once per computer. If you need to set up a second machine later, this page is the one to come back to.</p>
+</section>
 <section id="install-r" class="level2">
 <h2 class="anchored" data-anchor-id="install-r">Install R</h2>
 <p>Go to <strong>CRAN</strong> — the official archive of R, at <a href="https://cran.r-project.org" class="uri">https://cran.r-project.org</a> — choose the download for your system (Windows, Mac, or Linux), and run the installer with its default settings. That’s it; you won’t open R directly — RStudio will.</p>
@@ -267,8 +255,11 @@ ul.task-list li input[type="checkbox"] {
 <section id="install-rstudio" class="level2">
 <h2 class="anchored" data-anchor-id="install-rstudio">Install RStudio</h2>
 <p>Download <strong>RStudio Desktop</strong> from <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a> and install it. (Install R first; RStudio needs it.) From now on, RStudio is the program you open to work.</p>
-<hr>
-<p>With both installed, the next page gives you a quick tour of RStudio — the panes, the console, and how your data looks once it’s loaded — before you add the jstats package itself.</p>
+</section>
+<section id="rstudios-own-getting-started-guide" class="level2">
+<h2 class="anchored" data-anchor-id="rstudios-own-getting-started-guide">RStudio’s own getting-started guide</h2>
+<p>You may come across RStudio’s own <a href="https://docs.posit.co/ide/user/ide/get-started/">Get Started guide</a> while poking around. It’s well made, but it’s built around a different set of tools — the <strong>tidyverse</strong> family of packages (especially <strong>ggplot2</strong> for graphs) — rather than jstats, so the commands it teaches aren’t the ones these guides use. It also describes the RStudio window as showing four panes the moment you open it; in practice you’ll see three at first, with the fourth (the top-left editor) appearing once you open a script or view a dataset — which is how the next page describes it, to match what you’ll actually see.</p>
+<p>It overlaps a good deal with our own orientation but follows a different path, so for the jstats route the simplest thing is to skip it and keep going here. The next page is that orientation — a quick tour of RStudio (the panes, the console, and how your data looks once it’s loaded) — before you add the jstats package itself.</p>
 
 
 </section>
@@ -361,6 +352,13 @@ ul.task-list li input[type="checkbox"] {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
