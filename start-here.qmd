@@ -90,12 +90,14 @@ from jstats rather than from base R or another package.
 :::
 
 ::: {.callout-note collapse="true" title="Aside — what the tidyverse is"}
-The best-known example of a friendlier layer over R is the **tidyverse** — actually
-a *meta-package*, a single package whose only job is to install and load a whole
-family of related packages at once. It became enormously popular by smoothing R for
-everyday data work. jstats shares that goal of smoothing the path, though it takes a
-different route: where the tidyverse introduces its own style of doing things,
-jstats deliberately stays close to base R.
+The best-known friendlier layer over R is the **tidyverse** — a family of packages
+(**dplyr** for data wrangling, **ggplot2** for graphs, and several more) that share
+a common style, plus a single meta-package of the same name that installs them
+together and loads the core ones for you in one step. It became enormously popular
+by smoothing everyday data work, and its pipe-based style — chaining steps with
+`%>%` — shaped how a lot of modern R is written (base R later added its own pipe,
+`|>`). jstats shares the goal of smoothing the path but takes a different route,
+staying close to base R.
 :::
 
 ::: {.callout-note collapse="true" title="Aside — the packages jstats builds on"}

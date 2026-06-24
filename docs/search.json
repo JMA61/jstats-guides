@@ -108,6 +108,7 @@
     "text": "So far you’ve worked with community, the practice dataset that ships inside the package. The point of this page is to move from that to your data — getting a real file in, saving your work back out, moving between formats, and dealing with the real-world quirks that come with genuine data, missing values most of all.\nThe examples still lean on community as a clean stand-in, with a step or two on the file types your own data are likely to arrive in. Nothing here will touch or change your files behind your back — every load brings a working copy into memory, exactly as the Quick Start described, and the original on disk is left alone until you deliberately save.",
     "crumbs": [
       "Get Started",
+      "Going further",
       "jstats with your own data"
     ]
   },
@@ -181,7 +182,7 @@
     "text": "From here on, jstats is loaded and you’re working in your Project. This page assumes you’ve installed jstats (see Install jstats) and loaded it with library(jstats).\nBefore the tour, one quick contrast. jstats ships with a practice dataset called community; suppose you just want to describe the respondents’ ages. In base R you’d reach for a handful of separate commands:\nEach prints on its own — bare, unlabeled numbers you have to keep straight in your head — and you still don’t know how many respondents there are, or whether any ages are missing. jstats does the whole thing in one:\nOne command, one tidy table — count, missing, range, center, and spread together, in a layout you’ll recognize if you’ve used commercial statistical software. That’s the whole idea behind jstats, and the rest of this page builds on it.",
     "crumbs": [
       "Get Started",
-      "jstats Quick Start"
+      "Step 5 — jstats Quick Start"
     ]
   },
   {
@@ -192,7 +193,7 @@
     "text": "Meet community\nThat practice dataset, community, holds 100 made-up community-survey respondents, with income, education, age, a wellbeing score, a few yes/no items, a region, and a five-item attitude scale. It’s available the moment the package is loaded — you don’t have to open or import anything — which is the point of a shipped dataset and what lets these examples just work.",
     "crumbs": [
       "Get Started",
-      "jstats Quick Start"
+      "Step 5 — jstats Quick Start"
     ]
   },
   {
@@ -203,7 +204,7 @@
     "text": "Your first jstats command\nYou met functions in the console earlier with sqrt(). jstats functions work the same way — same shape, same parentheses. Let’s look at how respondents are spread across regions. This is analysis you’ll want to keep, so type it in your script (the Editor) this time, then run it:\njfreq(community, Region)\nThat’s the same function-and-object idea as before, now doing real work. You named the function (jfreq, for frequencies), and inside the parentheses you gave it two things: the dataset (community) and the variable you want counted (Region). jstats prints a tidy frequency table — how many respondents fall in each region, with percentages.\n(Remember R is case-sensitive: it’s Region, not region.)",
     "crumbs": [
       "Get Started",
-      "jstats Quick Start"
+      "Step 5 — jstats Quick Start"
     ]
   },
   {
@@ -214,7 +215,7 @@
     "text": "The examples just run\nOpen the help page for this function, and here it is:\n?jfreq\nScroll to the bottom and you’ll find worked examples. Copy one, paste it into your console, and it runs immediately — because the data it uses are already loaded. No file to open, no path to set.\nA fair word on this, especially if you’re coming from commercial software: runnable help examples aren’t unique to R. Stata and SAS ship practice data too. What’s genuinely worth knowing is this. First, R’s documentation examples are build-verified — every example is actually executed when the package is checked, so they can’t quietly go stale. Second, there’s truly zero setup: community is simply there. Third, one source produces all three — the function, its help page, and its runnable example all come from the same place, so they can’t drift apart. The practical effect: when you’re learning a new function, you can always try it instantly on data that’s already in front of you.",
     "crumbs": [
       "Get Started",
-      "jstats Quick Start"
+      "Step 5 — jstats Quick Start"
     ]
   },
   {
@@ -225,7 +226,7 @@
     "text": "Getting help on any function\nYou just used ?jfreq to open a help page. That works for every jstats function — type ? and the function’s name. There’s also a shortcut: in your script, click on a function’s name and press F1 (Windows) or Fn+F1 (Mac). Either way, the help page opens in the bottom-right pane, with a description, the available options, and worked examples you can run.",
     "crumbs": [
       "Get Started",
-      "jstats Quick Start"
+      "Step 5 — jstats Quick Start"
     ]
   },
   {
@@ -236,7 +237,7 @@
     "text": "What a data frame is\ncommunity is a data frame — R’s name for a rectangle of data: rows are cases (here, respondents) and columns are variables (income, age, and so on). It’s the everyday shape your data take in R.\nHere’s something important about how R handles it. When community is in use, R is working with a copy held in memory — the version listed in your Environment pane — not the file on disk. You can recode, trim, and experiment freely, and the original file is never touched. The flip side is that changes you make live only in that working copy until you deliberately save them — which is exactly what jstats with your own data covers.\n\n\n\n\n\n\nTipComing from SPSS or Stata?\n\n\n\n\n\nThis is a real difference worth pausing on. In SPSS, the data you see in Data View is the working dataset, and saving writes back to that file. R instead keeps a working copy in memory and leaves your original file alone until you explicitly save. The upside is freedom to experiment without fear; the thing to remember is that your changes aren’t on disk until you save them.",
     "crumbs": [
       "Get Started",
-      "jstats Quick Start"
+      "Step 5 — jstats Quick Start"
     ]
   },
   {
@@ -247,7 +248,7 @@
     "text": "Set a default dataset\nYou named community explicitly in your jfreq call. If you’re going to work with one dataset for a while, you can set it as the default so you don’t have to name it every time. Do that with juse (for use this dataset):\njuse(community)\nNow rerun the frequency table without naming the dataset:\njfreq(Region)\nSame result. jstats fills in community for you. (Your Environment can hold several datasets at once; juse just picks which one is the current default — no risk to any original.)",
     "crumbs": [
       "Get Started",
-      "jstats Quick Start"
+      "Step 5 — jstats Quick Start"
     ]
   },
   {
@@ -258,7 +259,7 @@
     "text": "Describe the numeric variables\nFor numeric variables, you usually want means, standard deviations, and the like rather than a full frequency table. That’s jdesc (for describe). Since we’ve set a default with juse, we can name just the variables:\njdesc(Age, WellbeingScore, Income)\njstats prints a compact table of descriptive statistics — one row per variable.",
     "crumbs": [
       "Get Started",
-      "jstats Quick Start"
+      "Step 5 — jstats Quick Start"
     ]
   },
   {
@@ -269,7 +270,7 @@
     "text": "Screen the whole dataset at once\nBefore any serious analysis, it’s good practice to look the whole dataset over — its ranges, possible outliers, skew, missing values, and what kind each variable seems to be. jscreen (for screen) does all of that in one call:\njscreen()\nWith the juse default set, a bare jscreen() screens every variable in community and gives you a fast first read on the data’s health. We’re keeping this light here; there’s much more jscreen can tell you, and we come back to it later. (The full depth lives in the help page and the books.)",
     "crumbs": [
       "Get Started",
-      "jstats Quick Start"
+      "Step 5 — jstats Quick Start"
     ]
   },
   {
@@ -280,7 +281,7 @@
     "text": "Your first analysis: a regression\nThis is the destination of the Quick Start — a working regression.\nLet’s ask whether age predicts wellbeing in these data. The function is jlm (for linear model — the technical name for ordinary regression). Notice something new on the left:\nResults &lt;- jlm(WellbeingScore ~ Age)\n\n\n\n\n\n\nTipIf you’re new to statistics\n\n\n\n\n\nA regression asks a simple question: as one thing changes, does another tend to change along with it, and by how much? Here we’re asking whether wellbeing tends to rise (or fall) as age goes up. The output puts a number on that tendency, and on how confident we can be that it’s a real pattern rather than chance.\n\n\n\nTwo new things in that command.\nThe ~ (tilde) is how R writes a model: outcome on the left, predictor on the right. Read WellbeingScore ~ Age as “wellbeing explained by age.” (We didn’t name the dataset because juse(community) is still in effect; jstats notes which dataset it used at the top of the output.)\nThe &lt;- (typed as a less-than sign and a hyphen) is the assignment operator — it means “store the result in a name.” Here it saves the whole analysis into an object called Results. This is the function-and-object idea finally paying off: you’ll hand Results to other jstats functions later — for formatted tables, for example — without re-running the regression.\nA reassurance, because it’s a common worry: saving the result with &lt;- does not hide your output. jstats analysis functions always print their results to the console and return the object. You get the full table on screen and a saved Results to reuse. Nothing is suppressed.",
     "crumbs": [
       "Get Started",
-      "jstats Quick Start"
+      "Step 5 — jstats Quick Start"
     ]
   },
   {
@@ -291,7 +292,7 @@
     "text": "Read the output\nLook at the printed output. The key pieces:\n\nThe coefficient for Age — how much wellbeing changes for each additional year of age. A positive number means older respondents tend to score higher.\nIts p-value — whether that relationship is statistically distinguishable from zero.\nR-squared — the share of the variation in wellbeing this one predictor accounts for.\n\nIn these data, age is a modest but real predictor of wellbeing. That’s your first regression — run, read, and saved.\n\n\n\n\n\n\nNoteWhere to go next\n\n\n\nAge is only a gentle predictor here. A stronger story in these data is income and wellbeing — but income has some respondents who declined to answer, which is exactly the kind of missing-value handling the next part is about. That’s our natural next step: jstats with your own data.",
     "crumbs": [
       "Get Started",
-      "jstats Quick Start"
+      "Step 5 — jstats Quick Start"
     ]
   },
   {
@@ -549,6 +550,7 @@
     "text": "First, tell jstats where your data live\nBack on the Install jstats page you created an .Rprofile with a single line, library(jstats), and we promised you’d add a line or two later. This is later. Two small settings make day-to-day work smoother, and the .Rprofile is where they belong, because it runs automatically every time the Project opens.\nlibrary(jstats)\njoptions(data.dir = \"Data\")\njoutput(digits = 3)\njoptions(data.dir = \"Data\") tells jstats that your data files live in a subfolder named Data inside your Project, so you can load and save by bare filename without spelling out a path every time. joutput(digits = 3) sets how many digits jstats shows in output — three is a sensible default; change it whenever you like.\nSave the file and restart R (Session menu, Restart R). From now on the package is loaded, your data folder is known, and your output is formatted the way you want — every session, no typing required.\n\n\n\n\n\n\nNoteGoing deeper (optional)\n\n\n\n\n\nThese are settings, not data — they tell jstats how to behave, and they take effect the moment the Project starts. You can also type either line straight into the console to change a setting for the current session only; putting them in the .Rprofile just makes the choice stick. ?joptions and ?joutput list every setting each one controls.",
     "crumbs": [
       "Get Started",
+      "Going further",
       "jstats with your own data"
     ]
   },
@@ -560,6 +562,7 @@
     "text": "The simplest possible load\nBefore your own files, the easy case. Because community ships with the package, you can pull a fresh copy of it into your workspace any time:\njload(\"community\")\nThat’s the same dataset you’ve been using, now loaded by name. This matters more than it looks. Suppose you’ve been experimenting — recoding a variable, dropping some rows — and you want to start over from clean data. One line puts the original back:\njload(\"community\", overwrite = TRUE)\nThe overwrite = TRUE tells jstats it’s fine to replace the copy already in your workspace. Without it, jstats won’t quietly overwrite something you might still want; with it, you get a clean slate. (If you ever save a file of your own named community, jstats will find that file first and point you to jload(\"community\", package = TRUE) for the shipped copy. You won’t hit this in normal use, but it’s there if you need it.)",
     "crumbs": [
       "Get Started",
+      "Going further",
       "jstats with your own data"
     ]
   },
@@ -571,6 +574,7 @@
     "text": "Save your work, then load it back\nNow your own data. Say you’ve loaded a dataset, recoded a few things, and want to keep the result. Saving is one call:\njsave(working_data, \"working_data\")\njstats writes working_data into your Data folder — creating that folder for you the first time if it isn’t there yet — as an R data file. Loading it back later is the mirror image:\njload(\"working_data\")\nOne verb to save, one to load, and you never wrote out a path or an extension. The file lives in your Project, alongside your scripts, ready the next time you open it.\n\n\n\n\n\n\nTipComing from SPSS or Stata?\n\n\n\n\n\nIn SPSS, the dataset you see in Data View is your work, and Save writes it back to that one .sav file. R keeps a working copy in memory and only writes to disk when you call jsave, so saving is a deliberate step you take when a result is worth keeping — not something that happens to your original as you go. The freedom to experiment without endangering the source file is the upside; remembering to save is the thing to build into your habits.",
     "crumbs": [
       "Get Started",
+      "Going further",
       "jstats with your own data"
     ]
   },
@@ -582,6 +586,7 @@
     "text": "Bringing in SPSS, Stata, and Excel files\nYour data probably don’t start life as an R file. They arrive from somewhere — a survey platform, a colleague, a repository — most often as SPSS (.sav), Stata (.dta), or Excel (.xlsx). With jstats, the format makes no difference to the command:\njload(\"survey.sav\")     # SPSS\njload(\"survey.dta\")     # Stata\njload(\"survey.xlsx\")    # Excel\nSame verb every time. jstats looks at the extension, picks the right reader behind the scenes, and hands you a data frame. That’s the payoff worth pausing on: in plain R you’d reach for a different package and a different function for each format — haven::read_sav here, haven::read_dta there, readxl::read_excel for the spreadsheet — and remember which is which. One jload covers them all.\n\n\n\n\n\n\nNoteAside — what about SAS?\n\n\n\n\n\nSAS files work too: jload(\"survey.sas7bdat\") for a SAS dataset, or jload(\"survey.xpt\") for a SAS transport file. The same one-verb idea applies; SAS is simply less common in this audience, so the examples lead with SPSS, Stata, and Excel.\n\n\n\n\nKeeping your variables faithful\nHere’s where the one-verb convenience turns into something more important: fidelity. Real survey data carry information beyond the bare numbers — value labels (so 1 means North and 2 means South), variable labels, and missing-value declarations. It’s easy to lose all of that without noticing.\nSuppose Region arrives as a labeled categorical variable and, coming from a base-R habit, you “lock in” its categories by converting it to a factor before saving:\ncommunity$Region &lt;- as.factor(community$Region)\njsave(community, \"community.sav\")\nThat quietly throws away exactly the information you wanted to keep. The conversion drops the labeled structure: the value labels (North, South, East, West) and the variable label are gone, the categories are renumbered into plain factor positions, and any missing-value declaration is lost. Save the result and what lands on disk is a column of bare codes with the meaning stripped off.\njstats avoids the whole problem by not baking anything in. Leave Region as the labeled variable it already is, and when a function needs to treat it as categorical, just say so at the point of use:\njlm(WellbeingScore ~ Region, community, categorical = \"Region\")\njstats reads the labels, builds the category contrasts for you, and never alters the stored column — so North stays North and your saved file stays faithful. If you’d rather settle it once for the whole session, register the variable a single time:\njdummy(community, Region)\nFrom then on, every function treats Region as categorical without your having to repeat yourself, and the underlying data are still untouched.\n\n\n\n\n\n\nNoteGoing deeper (optional)\n\n\n\n\n\nThe categorical = argument and jdummy() are both about telling jstats how to read a variable rather than changing the variable — a recurring jstats theme: correct the interpretation, don’t damage the data. ?jlm and ?jdummy already document these options in full; Book 2 covers the migration patterns — including why faithful round-trips matter when your results go back to a collaborator — in more detail, with worked examples.",
     "crumbs": [
       "Get Started",
+      "Going further",
       "jstats with your own data"
     ]
   },
@@ -593,6 +598,7 @@
     "text": "Missing values: the part that bites\nThe single most common way real data trip people up is missing values — and the trap is that they often don’t look missing. Surveys routinely record refusals and non-answers as special numeric codes: -99 for “Refused,” -98 for “Don’t know,” and so on. To R, those are just numbers, and they’ll silently contaminate anything you compute.\ncommunity has this built in: Income carries -99 and -98 codes for exactly those reasons. Watch what plain R does with them:\nmean(community$Income)\n[1] 44564.09\nThat figure is wrong, and quietly so — it’s averaged the real incomes together with a handful of -99s and -98s as if they were tiny salaries, dragging the mean down. Worse, the usual safety net does nothing here: mean(community$Income, na.rm = TRUE) returns the same number, because -99 and -98 aren’t NA to R — they’re ordinary negative numbers.\njstats knows better. Because Income arrived with those codes declared as missing, jdesc sets them aside and tells you it did:\njdesc(community, Income)\nDescriptive Statistics\n\nVariable  Total  Non_missing    Min    Max      Mean        SD\n--------  -----  -----------  -----  -----  --------  --------\nIncome      100           94  14000  91000  47414.89  20145.39\n\nTotal of 100 cases, but only 94 non-missing — the six respondents who refused or didn’t know are excluded from the statistics, and the mean rises to where it belongs. Crucially, jstats sets those values aside without deleting them: the codes stay in the column, still labeled “Refused” and “Don’t know,” so you keep the information about why a value is missing.\nWhether jstats recognizes the codes automatically depends on where your data came from:\n\nSPSS (.sav) carries its missing-value declarations with it, so jstats reads them on load — -99 and -98 come in already flagged. These are SPSS-style missing values.\nStata (.dta) uses its own scheme (.a, .b, and so on, called Stata-style missing values), which jstats also reads on load.\nExcel (.xlsx) has no notion of missing-value codes at all. A -99 in a spreadsheet cell is just the number -99, so jstats can’t know it’s special. You’ll need to declare it yourself.\n\nWhen you do need to declare codes — the Excel case, or any file where the declaration didn’t survive — reach for jdeclare_udm rather than overwriting the values:\njdeclare_udm(community, Income,\n             codes = c(\"Refused\" = -99, \"Don't know\" = -98))\nThis flags -99 and -98 as missing while leaving them in place, so the analysis excludes them but you don’t lose the distinction between a refusal and a don’t-know. Recoding them to NA would work for the math but would erase that distinction permanently, which is why the gentler, non-destructive declaration is the one to prefer.\n\n\n\n\n\n\nTipComing from SPSS or Stata?\n\n\n\n\n\nThis is the exact job of the Missing column in SPSS’s Variable View, or Stata’s extended-missing values. jdeclare_udm is the jstats equivalent of opening that dialog and entering the discrete missing codes — except it’s a line you can keep in your script, so the declaration travels with your analysis instead of living only in the data file.",
     "crumbs": [
       "Get Started",
+      "Going further",
       "jstats with your own data"
     ]
   },
@@ -604,6 +610,7 @@
     "text": "When the format can’t hold your missing values\nThere’s one wrinkle worth knowing before you move data between SPSS and Stata, because it’s a genuine difference between the two formats rather than anything jstats invents.\nSPSS-style missing-value codes (the -99/-98 on community$Income) can’t be written directly into a Stata file. Stata stores missing values a different way, and its .dta format simply has nowhere to put SPSS’s enumerated codes. If you save such a column straight to .dta, jstats writes the numbers through with their labels and tells you the declaration didn’t carry — so on reload, -99 and -98 are back to being literal numbers, and the trap from the previous section is open again. (Excel behaves the same way, for the same reason: it has no missing-value concept, so the flag is dropped on the way out.)\nThe fix is to convert the convention first, with jconvert:\ncommunity_stata &lt;- jconvert(community, to = \"stata\")\njsave(community_stata, \"community.dta\")\njconvert(to = \"stata\") translates each column’s SPSS codes into Stata’s missing-value tags before the save, so the declaration survives the trip. If you work in Stata routinely, you can make that the project-wide default instead of converting case by case:\njoptions(missing.convention = \"stata\")\nWhich convention should you prefer? Stay with the SPSS default if your data start and end as .sav files, or if you round-trip results back to a collaborator working in SPSS — the codes pass through untouched. Switch to the Stata convention if you work in Stata, or if you simply prefer its more self-describing tags (a column shows NA(a) rather than a bare -99 that means nothing until you look it up). Neither is more correct; they’re two ways of recording the same thing, and jconvert moves you between them.\n\n\n\n\n\n\nNoteGoing deeper (optional)\n\n\n\n\n\nThe translation is deterministic and works in both directions: SPSS to Stata maps each column’s declared codes onto Stata’s tags in order, and Stata back to SPSS uses your convention codes (-99, -98, …). Labels travel along with the values, so “Refused” stays “Refused” across the conversion. Book 2 lays out the full mapping and the cases where you’d reach for jconvert deliberately, in more detail, with worked examples.",
     "crumbs": [
       "Get Started",
+      "Going further",
       "jstats with your own data"
     ]
   },
@@ -615,6 +622,7 @@
     "text": "A note on the data viewer\nOnce a dataset is loaded, you can look at it: type View(community) (capital V), or click its name in the Environment pane, and a spreadsheet-style grid opens in the source pane. It’s genuinely useful for getting your bearings in a new file.\nOne thing to expect, though, especially coming from commercial software: that grid is read-only. You can scroll and scan, but you can’t click into a cell and type a correction the way you would in SPSS’s Data View. In R, changes are made with code — a jrecode here, a jdeclare_udm there — applied to the working copy in memory, and then saved with jsave when you’re satisfied. The viewer is a window onto your data, not a place to edit them.\n\n\n\n\n\n\nTipComing from SPSS or Stata?\n\n\n\n\n\nIn SPSS you edit data by typing into Data View, and the spreadsheet is the dataset. R separates the two: the viewer just shows you the data, and editing happens through commands. It feels like an extra step at first, but it’s what makes your work reproducible — every change is written down in your script, so you (or anyone else) can rerun the whole analysis from the original file and get the same result.",
     "crumbs": [
       "Get Started",
+      "Going further",
       "jstats with your own data"
     ]
   },
@@ -626,6 +634,7 @@
     "text": "Putting it together\nYou can now bring your own data into jstats, save your work and load it back, move between SPSS, Stata, and Excel, and handle the missing values that come with real files. To close the loop, here’s a full analysis run on data you’d loaded yourself — the same one-line modeling you met in the Quick Start, now on your own dataset:\njlm(WellbeingScore ~ Income + Age, community)\nOne call, real data, results you can read — which is the whole point. The typical jstats workflow page walks an entire project end to end, from loading through to a written-up result.",
     "crumbs": [
       "Get Started",
+      "Going further",
       "jstats with your own data"
     ]
   },
@@ -689,7 +698,7 @@
     "href": "start-here.html#next-steps",
     "title": "jstats",
     "section": "Next steps",
-    "text": "Next steps\nWith this background in mind, you’re ready for Step 2, where we install R and RStudio, and then Step 3, a brief tour of RStudio. Already comfortable in RStudio? Jump ahead to Step 4 (installing jstats) and then Step 5 (the Quick Start).\nThat’s all the background you need to get going. If you’d like a little more first — where the names came from, R’s history, or a closer look at some of R’s best-known packages — the optional boxes below are there to open or skip as you please.\n\n\n\n\n\n\nNoteAside — a very short history of R\n\n\n\n\n\nR’s roots reach back to S, a language created at Bell Labs in the 1970s for statistics and data analysis. (Bell Labs had a taste for one-letter names — it’s the same lab behind the C programming language and the Unix operating system — and S nods to statistics.) S was later turned into commercial software called S-PLUS. Then, in the early 1990s, two statisticians at the University of Auckland in New Zealand — Ross Ihaka and Robert Gentleman — wrote a free, open-source language of their own in the spirit of S and named it R: the letter just before S, and the shared first initial of both their names. R has been developed ever since by a worldwide volunteer group, the R Core Team, and stays free for everyone — which is a big part of why it has grown so many add-on packages.\n\n\n\n\n\n\n\n\n\nNoteAside — where the jstats name comes from\n\n\n\n\n\njstats quietly continues that naming tradition. It pairs the j of its author’s first name with stats, and every command the package adds begins with that same j — a small signal that lets you tell at a glance which functions come from jstats rather than from base R or another package.\n\n\n\n\n\n\n\n\n\nNoteAside — what the tidyverse is\n\n\n\n\n\nThe best-known example of a friendlier layer over R is the tidyverse — actually a meta-package, a single package whose only job is to install and load a whole family of related packages at once. It became enormously popular by smoothing R for everyday data work. jstats shares that goal of smoothing the path, though it takes a different route: where the tidyverse introduces its own style of doing things, jstats deliberately stays close to base R.\n\n\n\n\n\n\n\n\n\nNoteAside — the packages jstats builds on\n\n\n\n\n\njstats doesn’t reinvent everything from scratch — it stands on several well-regarded packages: ggplot2 for graphs, haven and labelled for reading and handling data (and its value labels) from SPSS, Stata, and SAS, readxl and writexl for Excel files, and rlang for some of the behind-the-scenes machinery. When you install jstats, all of these come along automatically and it uses them under the hood, so you never install or load them yourself. It’s a similar convenience to the way the tidyverse bundles its own family of packages — except jstats keeps these working quietly in the background rather than putting them in your hands to use directly.\nYou’ll also hear about R Markdown and its newer cousin Quarto — tools for weaving R code and writing together into reports, slides, and websites. These very guides are built with Quarto, with jstats commands and their output sitting right inside the pages you’re reading.\n\n\n\n\n\n\n\n\n\nNoteAside — what is CRAN?\n\n\n\n\n\nWhen you install R, and most packages, they come from CRAN — the Comprehensive R Archive Network, the official online library where R itself and thousands of packages are published and kept. It’s maintained by the R community and is free to use. (jstats isn’t on CRAN just yet — for now it installs from another common home for R projects, which the Install jstats page walks you through — but it’s headed there.)",
+    "text": "Next steps\nWith this background in mind, you’re ready for Step 2, where we install R and RStudio, and then Step 3, a brief tour of RStudio. Already comfortable in RStudio? Jump ahead to Step 4 (installing jstats) and then Step 5 (the Quick Start).\nThat’s all the background you need to get going. If you’d like a little more first — where the names came from, R’s history, or a closer look at some of R’s best-known packages — the optional boxes below are there to open or skip as you please.\n\n\n\n\n\n\nNoteAside — a very short history of R\n\n\n\n\n\nR’s roots reach back to S, a language created at Bell Labs in the 1970s for statistics and data analysis. (Bell Labs had a taste for one-letter names — it’s the same lab behind the C programming language and the Unix operating system — and S nods to statistics.) S was later turned into commercial software called S-PLUS. Then, in the early 1990s, two statisticians at the University of Auckland in New Zealand — Ross Ihaka and Robert Gentleman — wrote a free, open-source language of their own in the spirit of S and named it R: the letter just before S, and the shared first initial of both their names. R has been developed ever since by a worldwide volunteer group, the R Core Team, and stays free for everyone — which is a big part of why it has grown so many add-on packages.\n\n\n\n\n\n\n\n\n\nNoteAside — where the jstats name comes from\n\n\n\n\n\njstats quietly continues that naming tradition. It pairs the j of its author’s first name with stats, and every command the package adds begins with that same j — a small signal that lets you tell at a glance which functions come from jstats rather than from base R or another package.\n\n\n\n\n\n\n\n\n\nNoteAside — what the tidyverse is\n\n\n\n\n\nThe best-known friendlier layer over R is the tidyverse — a family of packages (dplyr for data wrangling, ggplot2 for graphs, and several more) that share a common style, plus a single meta-package of the same name that installs them together and loads the core ones for you in one step. It became enormously popular by smoothing everyday data work, and its pipe-based style — chaining steps with %&gt;% — shaped how a lot of modern R is written (base R later added its own pipe, |&gt;). jstats shares the goal of smoothing the path but takes a different route, staying close to base R.\n\n\n\n\n\n\n\n\n\nNoteAside — the packages jstats builds on\n\n\n\n\n\njstats doesn’t reinvent everything from scratch — it stands on several well-regarded packages: ggplot2 for graphs, haven and labelled for reading and handling data (and its value labels) from SPSS, Stata, and SAS, readxl and writexl for Excel files, and rlang for some of the behind-the-scenes machinery. When you install jstats, all of these come along automatically and it uses them under the hood, so you never install or load them yourself. It’s a similar convenience to the way the tidyverse bundles its own family of packages — except jstats keeps these working quietly in the background rather than putting them in your hands to use directly.\nYou’ll also hear about R Markdown and its newer cousin Quarto — tools for weaving R code and writing together into reports, slides, and websites. These very guides are built with Quarto, with jstats commands and their output sitting right inside the pages you’re reading.\n\n\n\n\n\n\n\n\n\nNoteAside — what is CRAN?\n\n\n\n\n\nWhen you install R, and most packages, they come from CRAN — the Comprehensive R Archive Network, the official online library where R itself and thousands of packages are published and kept. It’s maintained by the R community and is free to use. (jstats isn’t on CRAN just yet — for now it installs from another common home for R projects, which the Install jstats page walks you through — but it’s headed there.)",
     "crumbs": [
       "Get Started",
       "Step 1 — Overview"
