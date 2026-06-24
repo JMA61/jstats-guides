@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>jstats with your own data – jstats</title>
+<title>jstats — Your own data</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -35,6 +70,7 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="./">
 <link href="./workflow.html" rel="next">
 <link href="./quickstart.html" rel="prev">
+<link href="./images/avatar.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -44,20 +80,19 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-6ec2eeb37f8174fe0251ab519a9e11a4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
-  "type": "overlay",
+  "type": "textbox",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
     "/",
     "s"
   ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -74,6 +109,18 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<meta property="og:title" content="jstats — Your own data">
+<meta property="og:description" content="Loading, saving, and round-tripping your own files — and handling the missing values that come with them.">
+<meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
+<meta property="og:site_name" content="jstats">
+<meta property="og:image:height" content="720">
+<meta property="og:image:width" content="1280">
+<meta name="twitter:title" content="jstats — Your own data">
+<meta name="twitter:description" content="Loading, saving, and round-tripping your own files — and handling the missing values that come with them.">
+<meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
+<meta name="twitter:image-height" content="720">
+<meta name="twitter:image-width" content="1280">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light">
@@ -83,6 +130,10 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/avatar.png" alt="jstats" class="navbar-logo light-content">
+    <img src="./images/avatar.png" alt="jstats" class="navbar-logo dark-content">
+    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">jstats</span>
     </a>
@@ -94,7 +145,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./start-here.html" aria-current="page"> 
 <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
@@ -116,6 +171,13 @@ ul.task-list li input[type="checkbox"] {
   <li class="nav-item">
     <a class="nav-link" href="./troubleshooting.html"> 
 <span class="menu-text">Troubleshooting</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/jma61/jstats-guides"> <i class="bi bi-github" role="img" aria-label="jstats guides on GitHub">
+</i> 
+<span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -142,7 +204,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
+  <a href="./start-here.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Start here (everyone)</span></a>
   </div>
 </li>
@@ -192,7 +254,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#planned-sections" id="toc-planned-sections" class="nav-link active" data-scroll-target="#planned-sections">Planned sections</a></li>
+  <li><a href="#first-tell-jstats-where-your-data-live" id="toc-first-tell-jstats-where-your-data-live" class="nav-link active" data-scroll-target="#first-tell-jstats-where-your-data-live">First, tell jstats where your data live</a></li>
+  <li><a href="#the-simplest-possible-load" id="toc-the-simplest-possible-load" class="nav-link" data-scroll-target="#the-simplest-possible-load">The simplest possible load</a></li>
+  <li><a href="#save-your-work-then-load-it-back" id="toc-save-your-work-then-load-it-back" class="nav-link" data-scroll-target="#save-your-work-then-load-it-back">Save your work, then load it back</a></li>
+  <li><a href="#bringing-in-spss-stata-and-excel-files" id="toc-bringing-in-spss-stata-and-excel-files" class="nav-link" data-scroll-target="#bringing-in-spss-stata-and-excel-files">Bringing in SPSS, Stata, and Excel files</a>
+  <ul class="collapse">
+  <li><a href="#keeping-your-variables-faithful" id="toc-keeping-your-variables-faithful" class="nav-link" data-scroll-target="#keeping-your-variables-faithful">Keeping your variables faithful</a></li>
+  </ul></li>
+  <li><a href="#missing-values-the-part-that-bites" id="toc-missing-values-the-part-that-bites" class="nav-link" data-scroll-target="#missing-values-the-part-that-bites">Missing values: the part that bites</a></li>
+  <li><a href="#when-the-format-cant-hold-your-missing-values" id="toc-when-the-format-cant-hold-your-missing-values" class="nav-link" data-scroll-target="#when-the-format-cant-hold-your-missing-values">When the format can’t hold your missing values</a></li>
+  <li><a href="#a-note-on-the-data-viewer" id="toc-a-note-on-the-data-viewer" class="nav-link" data-scroll-target="#a-note-on-the-data-viewer">A note on the data viewer</a></li>
+  <li><a href="#putting-it-together" id="toc-putting-it-together" class="nav-link" data-scroll-target="#putting-it-together">Putting it together</a></li>
   </ul>
 </nav>
     </div>
@@ -219,33 +291,214 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled" title="Skeleton — to be drafted">
-<div class="callout-header d-flex align-content-center">
+<p>So far you’ve worked with <code>community</code>, the practice dataset that ships inside the package. The point of this page is to move from that to <em>your</em> data — getting a real file in, saving your work back out, moving between formats, and dealing with the real-world quirks that come with genuine data, missing values most of all.</p>
+<p>The examples still lean on <code>community</code> as a clean stand-in, with a step or two on the file types your own data are likely to arrive in. Nothing here will touch or change your files behind your back — every load brings a working copy into memory, exactly as the <a href="./quickstart.html">Quick Start</a> described, and the original on disk is left alone until you deliberately save.</p>
+<section id="first-tell-jstats-where-your-data-live" class="level2">
+<h2 class="anchored" data-anchor-id="first-tell-jstats-where-your-data-live">First, tell jstats where your data live</h2>
+<p>Back on the <a href="./install-jstats.html">Install jstats</a> page you created an <code>.Rprofile</code> with a single line, <code>library(jstats)</code>, and we promised you’d add a line or two later. This is later. Two small settings make day-to-day work smoother, and the <code>.Rprofile</code> is where they belong, because it runs automatically every time the Project opens.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">data.dir =</span> <span class="st">"Data"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>joptions(data.dir = "Data")</code> tells jstats that your data files live in a subfolder named <code>Data</code> inside your Project, so you can load and save by bare filename without spelling out a path every time. <code>joutput(digits = 3)</code> sets how many digits jstats shows in output — three is a sensible default; change it whenever you like.</p>
+<p>Save the file and restart R (<strong>Session menu, Restart R</strong>). From now on the package is loaded, your data folder is known, and your output is formatted the way you want — every session, no typing required.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Skeleton — to be drafted
+<span class="screen-reader-only">Note</span>Going deeper (optional)
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>This page has its structure in place; the prose is still to be written. The plan below is ordered from simplest to most involved.</p>
+<p>These are <em>settings</em>, not data — they tell jstats how to behave, and they take effect the moment the Project starts. You can also type either line straight into the console to change a setting for the current session only; putting them in the <code>.Rprofile</code> just makes the choice stick. <code>?joptions</code> and <code>?joutput</code> list every setting each one controls.</p>
 </div>
 </div>
-<p>This page is about getting <em>your</em> data in and out of jstats — and dealing with the real-world quirks that come with it, especially missing values. The examples lean on <code>community</code> as a clean default, with <code>clinic</code> brought in where dirty-data beats need it; you can also follow along with your own file loaded alongside, so anything that can’t be shown on your data can be shown on <code>community</code>.</p>
-<section id="planned-sections" class="level2">
-<h2 class="anchored" data-anchor-id="planned-sections">Planned sections</h2>
+</div>
+</section>
+<section id="the-simplest-possible-load" class="level2">
+<h2 class="anchored" data-anchor-id="the-simplest-possible-load">The simplest possible load</h2>
+<p>Before your own files, the easy case. Because <code>community</code> ships with the package, you can pull a fresh copy of it into your workspace any time:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That’s the same dataset you’ve been using, now loaded by name. This matters more than it looks. Suppose you’ve been experimenting — recoding a variable, dropping some rows — and you want to start over from clean data. One line puts the original back:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>overwrite = TRUE</code> tells jstats it’s fine to replace the copy already in your workspace. Without it, jstats won’t quietly overwrite something you might still want; with it, you get a clean slate. (If you ever save a file of your own <em>named</em> <code>community</code>, jstats will find that file first and point you to <code>jload("community", package = TRUE)</code> for the shipped copy. You won’t hit this in normal use, but it’s there if you need it.)</p>
+</section>
+<section id="save-your-work-then-load-it-back" class="level2">
+<h2 class="anchored" data-anchor-id="save-your-work-then-load-it-back">Save your work, then load it back</h2>
+<p>Now your own data. Say you’ve loaded a dataset, recoded a few things, and want to keep the result. Saving is one call:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(working_data, <span class="st">"working_data"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>jstats writes <code>working_data</code> into your <code>Data</code> folder — creating that folder for you the first time if it isn’t there yet — as an R data file. Loading it back later is the mirror image:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"working_data"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>One verb to save, one to load, and you never wrote out a path or an extension. The file lives in your Project, alongside your scripts, ready the next time you open it.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS or Stata?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Coming from SPSS or Stata?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In SPSS, the dataset you see in Data View <em>is</em> your work, and <strong>Save</strong> writes it back to that one <code>.sav</code> file. R keeps a working copy in memory and only writes to disk when you call <code>jsave</code>, so saving is a deliberate step you take when a result is worth keeping — not something that happens to your original as you go. The freedom to experiment without endangering the source file is the upside; remembering to save is the thing to build into your habits.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="bringing-in-spss-stata-and-excel-files" class="level2">
+<h2 class="anchored" data-anchor-id="bringing-in-spss-stata-and-excel-files">Bringing in SPSS, Stata, and Excel files</h2>
+<p>Your data probably don’t start life as an R file. They arrive from somewhere — a survey platform, a colleague, a repository — most often as SPSS (<code>.sav</code>), Stata (<code>.dta</code>), or Excel (<code>.xlsx</code>). With jstats, the format makes no difference to the command:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"survey.sav"</span>)     <span class="co"># SPSS</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"survey.dta"</span>)     <span class="co"># Stata</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"survey.xlsx"</span>)    <span class="co"># Excel</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Same verb every time. jstats looks at the extension, picks the right reader behind the scenes, and hands you a data frame. That’s the payoff worth pausing on: in plain R you’d reach for a different package and a different function for each format — <code>haven::read_sav</code> here, <code>haven::read_dta</code> there, <code>readxl::read_excel</code> for the spreadsheet — and remember which is which. One <code>jload</code> covers them all.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Aside — what about SAS?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Aside — what about SAS?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>SAS files work too: <code>jload("survey.sas7bdat")</code> for a SAS dataset, or <code>jload("survey.xpt")</code> for a SAS transport file. The same one-verb idea applies; SAS is simply less common in this audience, so the examples lead with SPSS, Stata, and Excel.</p>
+</div>
+</div>
+</div>
+<section id="keeping-your-variables-faithful" class="level3">
+<h3 class="anchored" data-anchor-id="keeping-your-variables-faithful">Keeping your variables faithful</h3>
+<p>Here’s where the one-verb convenience turns into something more important: <em>fidelity</em>. Real survey data carry information beyond the bare numbers — value labels (so <code>1</code> means North and <code>2</code> means South), variable labels, and missing-value declarations. It’s easy to lose all of that without noticing.</p>
+<p>Suppose <code>Region</code> arrives as a labeled categorical variable and, coming from a base-R habit, you “lock in” its categories by converting it to a factor before saving:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>community<span class="sc">$</span>Region <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(community<span class="sc">$</span>Region)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(community, <span class="st">"community.sav"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That quietly throws away exactly the information you wanted to keep. The conversion drops the labeled structure: the value labels (North, South, East, West) and the variable label are gone, the categories are renumbered into plain factor positions, and any missing-value declaration is lost. Save the result and what lands on disk is a column of bare codes with the meaning stripped off.</p>
+<p>jstats avoids the whole problem by <em>not</em> baking anything in. Leave <code>Region</code> as the labeled variable it already is, and when a function needs to treat it as categorical, just say so at the point of use:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jlm</span>(WellbeingScore <span class="sc">~</span> Region, community, <span class="at">categorical =</span> <span class="st">"Region"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>jstats reads the labels, builds the category contrasts for you, and never alters the stored column — so North stays North and your saved file stays faithful. If you’d rather settle it once for the whole session, register the variable a single time:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdummy</span>(community, Region)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>From then on, every function treats <code>Region</code> as categorical without your having to repeat yourself, and the underlying data are still untouched.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Going deeper (optional)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The <code>categorical =</code> argument and <code>jdummy()</code> are both about <em>telling</em> jstats how to read a variable rather than <em>changing</em> the variable — a recurring jstats theme: correct the interpretation, don’t damage the data. <code>?jlm</code> and <code>?jdummy</code> already document these options in full; Book 2 covers the migration patterns — including why faithful round-trips matter when your results go back to a collaborator — in more detail, with worked examples. <!-- future: link a YouTube walkthrough here when recorded --></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="missing-values-the-part-that-bites" class="level2">
+<h2 class="anchored" data-anchor-id="missing-values-the-part-that-bites">Missing values: the part that bites</h2>
+<p>The single most common way real data trip people up is missing values — and the trap is that they often don’t <em>look</em> missing. Surveys routinely record refusals and non-answers as special numeric codes: <code>-99</code> for “Refused,” <code>-98</code> for “Don’t know,” and so on. To R, those are just numbers, and they’ll silently contaminate anything you compute.</p>
+<p><code>community</code> has this built in: <code>Income</code> carries <code>-99</code> and <code>-98</code> codes for exactly those reasons. Watch what plain R does with them:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(community<span class="sc">$</span>Income)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>[1] 44564.09</code></pre>
+<p>That figure is wrong, and quietly so — it’s averaged the real incomes together with a handful of <code>-99</code>s and <code>-98</code>s as if they were tiny salaries, dragging the mean down. Worse, the usual safety net does nothing here: <code>mean(community$Income, na.rm = TRUE)</code> returns the same number, because <code>-99</code> and <code>-98</code> aren’t <code>NA</code> to R — they’re ordinary negative numbers.</p>
+<p>jstats knows better. Because <code>Income</code> arrived with those codes <em>declared</em> as missing, <code>jdesc</code> sets them aside and tells you it did:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(community, Income)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="jstats-output"><span class="jstats-title">Descriptive Statistics</span>
+
+Variable  Total  Non_missing    Min    Max      Mean        SD
+--------  -----  -----------  -----  -----  --------  --------
+Income      100           94  14000  91000  47414.89  20145.39
+</pre>
+<p>Total of 100 cases, but only 94 <em>non-missing</em> — the six respondents who refused or didn’t know are excluded from the statistics, and the mean rises to where it belongs. Crucially, jstats sets those values aside without deleting them: the codes stay in the column, still labeled “Refused” and “Don’t know,” so you keep the information about <em>why</em> a value is missing.</p>
+<p>Whether jstats recognizes the codes automatically depends on where your data came from:</p>
 <ul>
-<li><strong>Revisit the Project <code>.Rprofile</code>:</strong> add <code>joptions(data.dir = "Data")</code>; mention other optional lines such as <code>joutput(digits = 3)</code>.</li>
-<li><strong>Simplest load:</strong> <code>jload("community")</code> brings in the shipped dataset; the “get a clean copy back” move with <code>overwrite = TRUE</code>.</li>
-<li><strong>Save and reload your own work:</strong> <code>jsave</code> and <code>jload</code> with a bare filename; the auto-created data folder.</li>
-<li><strong>Importing foreign formats:</strong> reading your own SPSS (<code>.sav</code>), Stata (<code>.dta</code>), and Excel (<code>.xlsx</code>) files. <em>(The package-shipped copies reached with <code>system.file()</code> may be demonstrated here or saved for the workflow page — settle at drafting.)</em></li>
-<li><strong>The payoff:</strong> one <code>jload</code> versus a different package and syntax per format.</li>
-<li><strong>Missing values:</strong> user-defined missing values and plain <code>NA</code>s; how SPSS, Stata, and Excel files differ; per-platform sections (read the one that’s yours).</li>
-<li><strong>The SPSS-to-Stata convention switch:</strong> why, and when each is preferable.</li>
-<li><strong>The data viewer is read-only:</strong> you can’t edit cells the way you would in commercial software’s data view; the spreadsheet-style edit-and-reload path belongs here, next to the working-copy-in-memory idea. <em>(Deferred here from the Orientation page by design.)</em></li>
-<li><em>(Optional)</em> a second regression on a loaded copy, to close the loop.</li>
+<li><strong>SPSS (<code>.sav</code>)</strong> carries its missing-value declarations with it, so jstats reads them on load — <code>-99</code> and <code>-98</code> come in already flagged. These are <em>SPSS-style missing values</em>.</li>
+<li><strong>Stata (<code>.dta</code>)</strong> uses its own scheme (<code>.a</code>, <code>.b</code>, and so on, called <em>Stata-style missing values</em>), which jstats also reads on load.</li>
+<li><strong>Excel (<code>.xlsx</code>)</strong> has no notion of missing-value codes at all. A <code>-99</code> in a spreadsheet cell is just the number <code>-99</code>, so jstats can’t know it’s special. You’ll need to declare it yourself.</li>
 </ul>
+<p>When you do need to declare codes — the Excel case, or any file where the declaration didn’t survive — reach for <code>jdeclare_udm</code> rather than overwriting the values:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdeclare_udm</span>(community, Income,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">codes =</span> <span class="fu">c</span>(<span class="st">"Refused"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">99</span>, <span class="st">"Don't know"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">98</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This flags <code>-99</code> and <code>-98</code> as missing while leaving them in place, so the analysis excludes them but you don’t lose the distinction between a refusal and a don’t-know. Recoding them to <code>NA</code> would work for the math but would erase that distinction permanently, which is why the gentler, non-destructive declaration is the one to prefer.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS or Stata?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Coming from SPSS or Stata?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This is the exact job of the <strong>Missing</strong> column in SPSS’s Variable View, or Stata’s extended-missing values. <code>jdeclare_udm</code> is the jstats equivalent of opening that dialog and entering the discrete missing codes — except it’s a line you can keep in your script, so the declaration travels with your analysis instead of living only in the data file.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="when-the-format-cant-hold-your-missing-values" class="level2">
+<h2 class="anchored" data-anchor-id="when-the-format-cant-hold-your-missing-values">When the format can’t hold your missing values</h2>
+<p>There’s one wrinkle worth knowing before you move data between SPSS and Stata, because it’s a genuine difference between the two formats rather than anything jstats invents.</p>
+<p>SPSS-style missing-value codes (the <code>-99</code>/<code>-98</code> on <code>community$Income</code>) can’t be written directly into a Stata file. Stata stores missing values a different way, and its <code>.dta</code> format simply has nowhere to put SPSS’s enumerated codes. If you save such a column straight to <code>.dta</code>, jstats writes the numbers through with their labels and tells you the declaration didn’t carry — so on reload, <code>-99</code> and <code>-98</code> are back to being literal numbers, and the trap from the previous section is open again. (Excel behaves the same way, for the same reason: it has no missing-value concept, so the flag is dropped on the way out.)</p>
+<p>The fix is to convert the convention first, with <code>jconvert</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>community_stata <span class="ot">&lt;-</span> <span class="fu">jconvert</span>(community, <span class="at">to =</span> <span class="st">"stata"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(community_stata, <span class="st">"community.dta"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>jconvert(to = "stata")</code> translates each column’s SPSS codes into Stata’s missing-value tags before the save, so the declaration survives the trip. If you work in Stata routinely, you can make that the project-wide default instead of converting case by case:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">missing.convention =</span> <span class="st">"stata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Which convention should you prefer? Stay with the SPSS default if your data start and end as <code>.sav</code> files, or if you round-trip results back to a collaborator working in SPSS — the codes pass through untouched. Switch to the Stata convention if you work in Stata, or if you simply prefer its more self-describing tags (a column shows <code>NA(a)</code> rather than a bare <code>-99</code> that means nothing until you look it up). Neither is more correct; they’re two ways of recording the same thing, and <code>jconvert</code> moves you between them.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Going deeper (optional)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The translation is deterministic and works in both directions: SPSS to Stata maps each column’s declared codes onto Stata’s tags in order, and Stata back to SPSS uses your convention codes (<code>-99</code>, <code>-98</code>, …). Labels travel along with the values, so “Refused” stays “Refused” across the conversion. Book 2 lays out the full mapping and the cases where you’d reach for <code>jconvert</code> deliberately, in more detail, with worked examples.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="a-note-on-the-data-viewer" class="level2">
+<h2 class="anchored" data-anchor-id="a-note-on-the-data-viewer">A note on the data viewer</h2>
+<p>Once a dataset is loaded, you can look at it: type <code>View(community)</code> (capital V), or click its name in the <strong>Environment</strong> pane, and a spreadsheet-style grid opens in the source pane. It’s genuinely useful for getting your bearings in a new file.</p>
+<p>One thing to expect, though, especially coming from commercial software: that grid is <strong>read-only</strong>. You can scroll and scan, but you can’t click into a cell and type a correction the way you would in SPSS’s Data View. In R, changes are made with code — a <code>jrecode</code> here, a <code>jdeclare_udm</code> there — applied to the working copy in memory, and then saved with <code>jsave</code> when you’re satisfied. The viewer is a window onto your data, not a place to edit them.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS or Stata?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Coming from SPSS or Stata?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In SPSS you edit data by typing into Data View, and the spreadsheet <em>is</em> the dataset. R separates the two: the viewer just shows you the data, and editing happens through commands. It feels like an extra step at first, but it’s what makes your work reproducible — every change is written down in your script, so you (or anyone else) can rerun the whole analysis from the original file and get the same result.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="putting-it-together" class="level2">
+<h2 class="anchored" data-anchor-id="putting-it-together">Putting it together</h2>
+<p>You can now bring your own data into jstats, save your work and load it back, move between SPSS, Stata, and Excel, and handle the missing values that come with real files. To close the loop, here’s a full analysis run on data you’d loaded yourself — the same one-line modeling you met in the Quick Start, now on your own dataset:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jlm</span>(WellbeingScore <span class="sc">~</span> Income <span class="sc">+</span> Age, community)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>One call, real data, results you can read — which is the whole point. The <a href="./workflow.html">typical jstats workflow</a> page walks an entire project end to end, from loading through to a written-up result.</p>
 
 
 </section>
@@ -324,7 +577,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/jma61\.github\.io\/jstats-guides");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -664,6 +917,37 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </nav>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Jeff Ackerman</p>
+</div>   
+    <div class="nav-footer-center">
+<p>jstats is an independent project that I develop and maintain in my own time; it began as a teaching tool in a university setting. Views expressed and any errors are my own.</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  function syncFooter(){
+    var c = document.querySelector('main.content')
+         || document.querySelector('#quarto-document-content');
+    var f = document.querySelector('.nav-footer-center');
+    if (c && f) {
+      var w = Math.round(c.getBoundingClientRect().width);
+      f.style.flexGrow = '0';
+      f.style.flexShrink = '0';
+      f.style.flexBasis = w + 'px';
+    }
+  }
+  window.addEventListener('DOMContentLoaded', syncFooter);
+  window.addEventListener('load', syncFooter);
+  window.addEventListener('resize', syncFooter);
+})();
+</script>
 
 
 

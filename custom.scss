@@ -107,3 +107,47 @@ $navbar-active-color: $jstats-cyan;
     margin: 0 auto 1rem;
   }
 }
+
+// -------------------------------------------------------------------------
+// Heading scale + "On this page" alignment  (site-wide, S140)
+// -------------------------------------------------------------------------
+// Tightens the document heading sizes into one consistent scale matching the
+// Griffith page's section headings (h2 = 1.4rem), and nudges the right-hand
+// "On this page" menu down so its header lines up with the page title.
+//
+// The four sizes below are STARTING VALUES -- adjust them on the live preview
+// to taste. NOTE: custom.scss only recompiles on a `quarto preview` RESTART;
+// a hard browser reload alone will NOT pick up SCSS changes.
+//
+// Scoping notes:
+//   - The h2/h3 rules target #quarto-document-content, so they hit the body
+//     headings but NOT the "On this page" menu title in the right margin
+//     (that h2 lives in #quarto-margin-sidebar).
+//   - The Griffith landing page is untouched: it has no Quarto title block
+//     (so .quarto-title .title does not exist there), and its own page-scoped
+//     `margin-top: 1.8rem` overrides the sidebar value below for its taller
+//     banner. Its page-scoped `h2 { font-size: 1.4rem }` is now redundant with
+//     the global rule and can optionally be removed (same value either way).
+
+// Page title (the h1 from the `title:` front matter): brought down from the
+// theme's ~2rem so the step to the section headings is gentle, not a jump.
+.quarto-title .title {
+  font-size: 1.7rem;
+}
+
+// Section headings (## ) -- matches the Griffith page.
+#quarto-document-content h2 {
+  font-size: 1.4rem;
+}
+
+// Subsection headings (### ) -- kept a clear step below h2. The theme default
+// is 1.45rem, which would otherwise render LARGER than the shrunken h2.
+#quarto-document-content h3 {
+  font-size: 1.2rem;
+}
+
+// Push the "On this page" menu down so its header aligns with the page title.
+// Tune on the preview: lower the value to lift the menu, raise it to drop it.
+#quarto-margin-sidebar {
+  margin-top: 1.10rem;
+}

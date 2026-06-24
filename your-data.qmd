@@ -1,37 +1,343 @@
 ---
 title: "jstats with your own data"
 subtitle: "Loading, saving, and round-tripping your own files — and handling the missing values that come with them."
+pagetitle: "jstats — Your own data"
+title-prefix: ""
 ---
 
-::: {.callout-warning title="Skeleton — to be drafted"}
-This page has its structure in place; the prose is still to be written. The plan
-below is ordered from simplest to most involved.
+So far you've worked with `community`, the practice dataset that ships inside the
+package. The point of this page is to move from that to *your* data — getting a
+real file in, saving your work back out, moving between formats, and dealing with
+the real-world quirks that come with genuine data, missing values most of all.
+
+The examples still lean on `community` as a clean stand-in, with a step or two on
+the file types your own data are likely to arrive in. Nothing here will touch or
+change your files behind your back — every load brings a working copy into memory,
+exactly as the [Quick Start](quickstart.qmd) described, and the original on disk is
+left alone until you deliberately save.
+
+## First, tell jstats where your data live
+
+Back on the [Install jstats](install-jstats.qmd) page you created an `.Rprofile`
+with a single line, `library(jstats)`, and we promised you'd add a line or two
+later. This is later. Two small settings make day-to-day work smoother, and the
+`.Rprofile` is where they belong, because it runs automatically every time the
+Project opens.
+
+```r
+library(jstats)
+joptions(data.dir = "Data")
+joutput(digits = 3)
+```
+
+`joptions(data.dir = "Data")` tells jstats that your data files live in a subfolder
+named `Data` inside your Project, so you can load and save by bare filename without
+spelling out a path every time. `joutput(digits = 3)` sets how many digits jstats
+shows in output — three is a sensible default; change it whenever you like.
+
+Save the file and restart R (**Session menu, Restart R**). From now on the package
+is loaded, your data folder is known, and your output is formatted the way you
+want — every session, no typing required.
+
+::: {.callout-note collapse="true" title="Going deeper (optional)"}
+These are *settings*, not data — they tell jstats how to behave, and they take
+effect the moment the Project starts. You can also type either line straight into
+the console to change a setting for the current session only; putting them in the
+`.Rprofile` just makes the choice stick. `?joptions` and `?joutput` list every
+setting each one controls.
 :::
 
-This page is about getting *your* data in and out of jstats — and dealing with the
-real-world quirks that come with it, especially missing values. The examples lean
-on `community` as a clean default, with `clinic` brought in where dirty-data beats
-need it; you can also follow along with your own file loaded alongside, so anything
-that can't be shown on your data can be shown on `community`.
+## The simplest possible load
 
-## Planned sections
+Before your own files, the easy case. Because `community` ships with the package,
+you can pull a fresh copy of it into your workspace any time:
 
-- **Revisit the Project `.Rprofile`:** add `joptions(data.dir = "Data")`; mention
-  other optional lines such as `joutput(digits = 3)`.
-- **Simplest load:** `jload("community")` brings in the shipped dataset; the "get a
-  clean copy back" move with `overwrite = TRUE`.
-- **Save and reload your own work:** `jsave` and `jload` with a bare filename; the
-  auto-created data folder.
-- **Importing foreign formats:** reading your own SPSS (`.sav`), Stata (`.dta`),
-  and Excel (`.xlsx`) files. *(The package-shipped copies reached with
-  `system.file()` may be demonstrated here or saved for the workflow page — settle
-  at drafting.)*
-- **The payoff:** one `jload` versus a different package and syntax per format.
-- **Missing values:** user-defined missing values and plain `NA`s; how SPSS, Stata,
-  and Excel files differ; per-platform sections (read the one that's yours).
-- **The SPSS-to-Stata convention switch:** why, and when each is preferable.
-- **The data viewer is read-only:** you can't edit cells the way you would in
-  commercial software's data view; the spreadsheet-style edit-and-reload path
-  belongs here, next to the working-copy-in-memory idea. *(Deferred here from the
-  Orientation page by design.)*
-- *(Optional)* a second regression on a loaded copy, to close the loop.
+```r
+jload("community")
+```
+
+That's the same dataset you've been using, now loaded by name. This matters more
+than it looks. Suppose you've been experimenting — recoding a variable, dropping
+some rows — and you want to start over from clean data. One line puts the original
+back:
+
+```r
+jload("community", overwrite = TRUE)
+```
+
+The `overwrite = TRUE` tells jstats it's fine to replace the copy already in your
+workspace. Without it, jstats won't quietly overwrite something you might still
+want; with it, you get a clean slate. (If you ever save a file of your own *named*
+`community`, jstats will find that file first and point you to
+`jload("community", package = TRUE)` for the shipped copy. You won't hit this in
+normal use, but it's there if you need it.)
+
+## Save your work, then load it back
+
+Now your own data. Say you've loaded a dataset, recoded a few things, and want to
+keep the result. Saving is one call:
+
+```r
+jsave(working_data, "working_data")
+```
+
+jstats writes `working_data` into your `Data` folder — creating that folder for you
+the first time if it isn't there yet — as an R data file. Loading it back later is
+the mirror image:
+
+```r
+jload("working_data")
+```
+
+One verb to save, one to load, and you never wrote out a path or an extension. The
+file lives in your Project, alongside your scripts, ready the next time you open it.
+
+::: {.callout-tip collapse="true" title="Coming from SPSS or Stata?"}
+In SPSS, the dataset you see in Data View *is* your work, and **Save** writes it
+back to that one `.sav` file. R keeps a working copy in memory and only writes to
+disk when you call `jsave`, so saving is a deliberate step you take when a result
+is worth keeping — not something that happens to your original as you go. The
+freedom to experiment without endangering the source file is the upside; remembering
+to save is the thing to build into your habits.
+:::
+
+## Bringing in SPSS, Stata, and Excel files
+
+Your data probably don't start life as an R file. They arrive from somewhere — a
+survey platform, a colleague, a repository — most often as SPSS (`.sav`), Stata
+(`.dta`), or Excel (`.xlsx`). With jstats, the format makes no difference to the
+command:
+
+```r
+jload("survey.sav")     # SPSS
+jload("survey.dta")     # Stata
+jload("survey.xlsx")    # Excel
+```
+
+Same verb every time. jstats looks at the extension, picks the right reader behind
+the scenes, and hands you a data frame. That's the payoff worth pausing on: in
+plain R you'd reach for a different package and a different function for each format
+— `haven::read_sav` here, `haven::read_dta` there, `readxl::read_excel` for the
+spreadsheet — and remember which is which. One `jload` covers them all.
+
+::: {.callout-note collapse="true" title="Aside — what about SAS?"}
+SAS files work too: `jload("survey.sas7bdat")` for a SAS dataset, or
+`jload("survey.xpt")` for a SAS transport file. The same one-verb idea applies; SAS
+is simply less common in this audience, so the examples lead with SPSS, Stata, and
+Excel.
+:::
+
+### Keeping your variables faithful
+
+Here's where the one-verb convenience turns into something more important:
+*fidelity*. Real survey data carry information beyond the bare numbers — value
+labels (so `1` means North and `2` means South), variable labels, and missing-value
+declarations. It's easy to lose all of that without noticing.
+
+Suppose `Region` arrives as a labeled categorical variable and, coming from a
+base-R habit, you "lock in" its categories by converting it to a factor before
+saving:
+
+```r
+community$Region <- as.factor(community$Region)
+jsave(community, "community.sav")
+```
+
+That quietly throws away exactly the information you wanted to keep. The conversion
+drops the labeled structure: the value labels (North, South, East, West) and the
+variable label are gone, the categories are renumbered into plain factor positions,
+and any missing-value declaration is lost. Save the result and what lands on disk is
+a column of bare codes with the meaning stripped off.
+
+jstats avoids the whole problem by *not* baking anything in. Leave `Region` as the
+labeled variable it already is, and when a function needs to treat it as
+categorical, just say so at the point of use:
+
+```r
+jlm(WellbeingScore ~ Region, community, categorical = "Region")
+```
+
+jstats reads the labels, builds the category contrasts for you, and never alters the
+stored column — so North stays North and your saved file stays faithful. If you'd
+rather settle it once for the whole session, register the variable a single time:
+
+```r
+jdummy(community, Region)
+```
+
+From then on, every function treats `Region` as categorical without your having to
+repeat yourself, and the underlying data are still untouched.
+
+::: {.callout-note collapse="true" title="Going deeper (optional)"}
+The `categorical =` argument and `jdummy()` are both about *telling* jstats how to
+read a variable rather than *changing* the variable — a recurring jstats theme:
+correct the interpretation, don't damage the data. `?jlm` and `?jdummy` already
+document these options in full; Book 2 covers the migration patterns — including why
+faithful round-trips matter when your results go back to a collaborator — in more
+detail, with worked examples.
+<!-- future: link a YouTube walkthrough here when recorded -->
+:::
+
+## Missing values: the part that bites
+
+The single most common way real data trip people up is missing values — and the
+trap is that they often don't *look* missing. Surveys routinely record refusals and
+non-answers as special numeric codes: `-99` for "Refused," `-98` for "Don't know,"
+and so on. To R, those are just numbers, and they'll silently contaminate anything
+you compute.
+
+`community` has this built in: `Income` carries `-99` and `-98` codes for exactly
+those reasons. Watch what plain R does with them:
+
+```r
+mean(community$Income)
+```
+
+```
+[1] 44564.09
+```
+
+That figure is wrong, and quietly so — it's averaged the real incomes together with
+a handful of `-99`s and `-98`s as if they were tiny salaries, dragging the mean down.
+Worse, the usual safety net does nothing here: `mean(community$Income, na.rm = TRUE)`
+returns the same number, because `-99` and `-98` aren't `NA` to R — they're ordinary
+negative numbers.
+
+jstats knows better. Because `Income` arrived with those codes *declared* as missing,
+`jdesc` sets them aside and tells you it did:
+
+```r
+jdesc(community, Income)
+```
+
+<pre class="jstats-output"><span class="jstats-title">Descriptive Statistics</span>
+
+Variable  Total  Non_missing    Min    Max      Mean        SD
+--------  -----  -----------  -----  -----  --------  --------
+Income      100           94  14000  91000  47414.89  20145.39
+</pre>
+
+Total of 100 cases, but only 94 *non-missing* — the six respondents who refused or
+didn't know are excluded from the statistics, and the mean rises to where it belongs.
+Crucially, jstats sets those values aside without deleting them: the codes stay in
+the column, still labeled "Refused" and "Don't know," so you keep the information
+about *why* a value is missing.
+
+Whether jstats recognizes the codes automatically depends on where your data came
+from:
+
+- **SPSS (`.sav`)** carries its missing-value declarations with it, so jstats reads
+  them on load — `-99` and `-98` come in already flagged. These are *SPSS-style
+  missing values*.
+- **Stata (`.dta`)** uses its own scheme (`.a`, `.b`, and so on, called *Stata-style
+  missing values*), which jstats also reads on load.
+- **Excel (`.xlsx`)** has no notion of missing-value codes at all. A `-99` in a
+  spreadsheet cell is just the number `-99`, so jstats can't know it's special.
+  You'll need to declare it yourself.
+
+When you do need to declare codes — the Excel case, or any file where the
+declaration didn't survive — reach for `jdeclare_udm` rather than overwriting the
+values:
+
+```r
+jdeclare_udm(community, Income,
+             codes = c("Refused" = -99, "Don't know" = -98))
+```
+
+This flags `-99` and `-98` as missing while leaving them in place, so the analysis
+excludes them but you don't lose the distinction between a refusal and a don't-know.
+Recoding them to `NA` would work for the math but would erase that distinction
+permanently, which is why the gentler, non-destructive declaration is the one to
+prefer.
+
+::: {.callout-tip collapse="true" title="Coming from SPSS or Stata?"}
+This is the exact job of the **Missing** column in SPSS's Variable View, or Stata's
+extended-missing values. `jdeclare_udm` is the jstats equivalent of opening that
+dialog and entering the discrete missing codes — except it's a line you can keep in
+your script, so the declaration travels with your analysis instead of living only in
+the data file.
+:::
+
+## When the format can't hold your missing values
+
+There's one wrinkle worth knowing before you move data between SPSS and Stata,
+because it's a genuine difference between the two formats rather than anything
+jstats invents.
+
+SPSS-style missing-value codes (the `-99`/`-98` on `community$Income`) can't be
+written directly into a Stata file. Stata stores missing values a different way, and
+its `.dta` format simply has nowhere to put SPSS's enumerated codes. If you save such
+a column straight to `.dta`, jstats writes the numbers through with their labels and
+tells you the declaration didn't carry — so on reload, `-99` and `-98` are back to
+being literal numbers, and the trap from the previous section is open again. (Excel
+behaves the same way, for the same reason: it has no missing-value concept, so the
+flag is dropped on the way out.)
+
+The fix is to convert the convention first, with `jconvert`:
+
+```r
+community_stata <- jconvert(community, to = "stata")
+jsave(community_stata, "community.dta")
+```
+
+`jconvert(to = "stata")` translates each column's SPSS codes into Stata's
+missing-value tags before the save, so the declaration survives the trip. If you
+work in Stata routinely, you can make that the project-wide default instead of
+converting case by case:
+
+```r
+joptions(missing.convention = "stata")
+```
+
+Which convention should you prefer? Stay with the SPSS default if your data start
+and end as `.sav` files, or if you round-trip results back to a collaborator working
+in SPSS — the codes pass through untouched. Switch to the Stata convention if you
+work in Stata, or if you simply prefer its more self-describing tags (a column shows
+`NA(a)` rather than a bare `-99` that means nothing until you look it up). Neither is
+more correct; they're two ways of recording the same thing, and `jconvert` moves you
+between them.
+
+::: {.callout-note collapse="true" title="Going deeper (optional)"}
+The translation is deterministic and works in both directions: SPSS to Stata maps
+each column's declared codes onto Stata's tags in order, and Stata back to SPSS uses
+your convention codes (`-99`, `-98`, ...). Labels travel along with the values, so
+"Refused" stays "Refused" across the conversion. Book 2 lays out the full mapping and
+the cases where you'd reach for `jconvert` deliberately, in more detail, with worked
+examples.
+:::
+
+## A note on the data viewer
+
+Once a dataset is loaded, you can look at it: type `View(community)` (capital V), or
+click its name in the **Environment** pane, and a spreadsheet-style grid opens in the
+source pane. It's genuinely useful for getting your bearings in a new file.
+
+One thing to expect, though, especially coming from commercial software: that grid is
+**read-only**. You can scroll and scan, but you can't click into a cell and type a
+correction the way you would in SPSS's Data View. In R, changes are made with code —
+a `jrecode` here, a `jdeclare_udm` there — applied to the working copy in memory, and
+then saved with `jsave` when you're satisfied. The viewer is a window onto your data,
+not a place to edit them.
+
+::: {.callout-tip collapse="true" title="Coming from SPSS or Stata?"}
+In SPSS you edit data by typing into Data View, and the spreadsheet *is* the dataset.
+R separates the two: the viewer just shows you the data, and editing happens through
+commands. It feels like an extra step at first, but it's what makes your work
+reproducible — every change is written down in your script, so you (or anyone else)
+can rerun the whole analysis from the original file and get the same result.
+:::
+
+## Putting it together
+
+You can now bring your own data into jstats, save your work and load it back, move
+between SPSS, Stata, and Excel, and handle the missing values that come with real
+files. To close the loop, here's a full analysis run on data you'd loaded yourself —
+the same one-line modeling you met in the Quick Start, now on your own dataset:
+
+```r
+jlm(WellbeingScore ~ Income + Age, community)
+```
+
+One call, real data, results you can read — which is the whole point. The
+[typical jstats workflow](workflow.qmd) page walks an entire project end to end, from
+loading through to a written-up result.
