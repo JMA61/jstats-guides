@@ -23,7 +23,7 @@ open RStudio, not R. Most people never open R directly at all.
 R already does a great deal on its own — R as it comes, before you add anything, is
 usually called **base R**. But much of R's power comes from **packages**: add-ons
 that teach R new tricks, each a bundle of extra commands that someone has written
-and shared. Thousands exist, and they tend to fall into a few broad kinds:
+and shared. Thousands exist, and they tend to fall into a few broad types:
 
 1. Some take results computed by base R and lay them out in a cleaner, more
    organized form — often with far less code.
@@ -44,14 +44,14 @@ your early work and add other packages as your needs grow. Because jstats stays
 close to base R rather than inventing its own dialect, those other packages slot in
 alongside it naturally when the time comes.
 
-Here's how jstats draws on each kind. Most of what it does is **kind 1**: it takes
+Here's how jstats draws on each type. Most of what it does is **type 1**: it takes
 the analyses social scientists use most — descriptives, frequencies, t-tests,
 ANOVA, regression, correlation, and more — and presents the results in a clean,
 familiar layout like the one you'd see in commercial statistical software, all from
-a single short command. It also does **kind 2** directly, reading and writing
+a single short command. It also does **type 2** directly, reading and writing
 labelled SPSS, Stata, and SAS files so they work without a separate import step; a
-bit of **kind 3**, making basic graphs more quickly and simply than reaching for
-ggplot2 when you don't need its full range of options; and the least of **kind 4**
+bit of **type 3**, making basic graphs more quickly and simply than reaching for
+ggplot2 when you don't need its full range of options; and the least of **type 4**
 so far, though it adds a few things base R doesn't include — for example, Gelman
 (2008) standardized regression coefficients. Throughout, it leans on base R's own
 computational engines underneath, so what you learn stays close to base R.

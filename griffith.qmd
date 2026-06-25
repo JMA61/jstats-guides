@@ -127,13 +127,10 @@ jstats has been refined substantially since then. By following the short setup
 steps on this site, you'll be ready to follow along during our Teams session on
 Thursday 9 July, where I'll lead you through the Quick Start. By the end of the
 hour, I expect you'll be able to open a dataset in R and run analyses including
-linear regression, with no prior R experience needed. If you're not yet sure what
-an R "package" is, the Quick Start will give you a feel for it. In short, a
-package is an add-on toolset you install into R, and jstats is currently more
-than 23,000 lines of computer code -- including its extensive help files --
-working behind the scenes, so that the commands you're required to type stay
-short and intuitive, and the output looks more like what you'd see in SPSS or
-Stata. Please set up R, RStudio, and jstats before we meet (see "Setting up"
+linear regression, with no prior R experience needed. Behind the short,
+intuitive commands you'll type, jstats is currently more than 23,000 lines of
+computer code -- including its extensive help files -- doing the work for you.
+Please set up R, RStudio, and jstats before we meet (see "Setting up"
 below). I look forward to seeing you on Teams at 10.00 am on Thursday 9 July.
 
 ## Students in 7036CCJ/CCJ736
@@ -148,21 +145,11 @@ yet. We'll cover all of that during the trimester.
 
 ## Setting up R, RStudio, and jstats
 
-Work through these pages in order to get everything installed. Each one opens in
-a new tab, so this page stays open behind it -- just switch back to this tab
-whenever you like.
-
-1. [**Install R and RStudio**](install-r-and-rstudio.qmd){target="_blank" rel="noopener"} -- two free downloads: the engine, then the dashboard
-2. [**RStudio Orientation**](rstudio-orientation.qmd){target="_blank" rel="noopener"} -- a quick tour of the workspace
-3. [**Install jstats**](install-jstats.qmd){target="_blank" rel="noopener"} -- adding the package itself
-4. [**jstats Quick Start**](quickstart.qmd){target="_blank" rel="noopener"} -- run your first analysis *(optional)*
-
-Already have R and RStudio? Skip straight to [**Install jstats**](install-jstats.qmd){target="_blank" rel="noopener"}.
-
-The Quick Start is optional -- we'll go through it together in our Teams session,
-so don't worry if anything isn't clear yet. If you hit a problem you can't get
-past, have a look at [**Troubleshooting**](troubleshooting.qmd){target="_blank" rel="noopener"}
-first, and we'll sort out anything that's left live.
+Before we meet, please install the three free tools you'll need -- R, RStudio,
+and jstats. Head over to the [**Get Started**](start-here.qmd){target="_blank" rel="noopener"}
+page: it opens in a new tab and walks you through everything from the beginning
+-- a short overview of what each tool is, then the download-and-install steps in
+order. Just work through it from the top.
 
 ## Using jstats in your own teaching?
 

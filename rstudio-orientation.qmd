@@ -30,92 +30,13 @@ work inside a Project — saves more beginner headaches than any other.
 
 ## The RStudio panes
 
-With your Project open, you'll see three panes to begin with. A fourth — the
-**source pane**, in the top-left — appears the first time you open a script or
-view a dataset. Here's what each is for:
+With your Project open, RStudio shows **three panes** to begin with. A fourth — the **Source pane**, in the top-left — doesn't appear until the first time you open a script or view a dataset, so we'll meet it last. We'll take the other three in the order you'll actually reach for them, starting on the left.
 
-- **Editor / source** (top-left) — where you write and save your code, and where a
-  dataset opens as a grid when you click it to view. This is your reusable list of
-  commands.
-- **Console** (bottom-left) — where code runs and results print.
-- **Environment** (top-right) — lists the data and objects currently loaded, by
-  **name and size** (not the data itself). Importantly, what lives here is a
-  *working copy* of your data, held in memory. Mistakes hit the copy, never the
-  original file on disk.
-- **Files / Plots / Help** (bottom-right) — your folder contents, any charts you
-  make, and help pages.
+### The Console — where you type and run code
 
-Let's make the panes concrete with a dataset that already comes with R. R ships
-with several built-in datasets for practice and examples; one is `mtcars` (data on
-some classic car models). You can copy it into a name of your own choosing using
-R's **assignment operator**, `<-`, which means "put what's on the right into the
-name on the left":
+The tall pane down the **left** side is the **Console**. (With only three panes open it fills the whole left side; the moment the Source pane appears above it, the Console settles into the bottom-left.) This is where you **type — or paste — a command, press Enter, and R runs it**, printing the result just below.
 
-```r
-cars <- mtcars
-```
-
-You now have a dataset called `cars` — the same data, under a name you picked. Look
-at the **Environment** pane (top-right): `cars` appears, described as *32 obs. of 11
-variables*. That's its name and size — the Environment lists what you've loaded, not
-the data themselves. To see the data, click `cars` in the **Environment**. A tab
-opens in the **source pane** (top-left) showing a grid — rows of cars down the side,
-variables across the top. This is the same top-left pane where your scripts will
-open shortly; RStudio uses it for both.
-
-<!-- screenshot: Environment showing `cars` as "32 obs. of 11 variables", viewer grid open in source pane -->
-
-`iris` is another built-in dataset (measurements of flowers). Because it's built in,
-it's already available by its own name — you don't have to copy it first. To take a
-quick look, run:
-
-```r
-View(iris)
-```
-
-Note the capital **V** — `View` is one of a handful of base-R functions that breaks
-the usual all-lowercase habit (a leftover from R's long, many-handed history rather
-than any real reason), so `view(iris)` won't work; R distinguishes capitals from
-lowercase. jstats keeps its own functions lowercase, in step with the base-R
-majority.
-
-The same kind of grid opens. Notice one column, `Species`, holds group names
-(setosa, versicolor, virginica) instead of numbers — your first glimpse of a
-**categorical variable**: a column that sorts cases into groups. You'll meet these
-properly later.
-
-<!-- screenshot: View(iris) grid open, Species column visible -->
-
-You'll see `mtcars` and `iris` again and again in R's help pages and in other
-packages' examples — now you know what they are, so they won't catch you off guard.
-jstats brings its own example dataset too, `community`, which becomes available by
-name once you install and load the package — we'll use it from the Quick Start
-onward.
-
-::: {.callout-tip collapse="true" title="Coming from SPSS or Stata?"}
-A rough map if you've mostly used SPSS through its menus: the **Console** is like
-the **output/viewer window** where results appear, and the **Plots** area is where
-charts show up, much as they do in SPSS output. The closest thing to **Data View**
-is the read-only grid that opens when you click a dataset in the Environment — but
-note the **Environment** pane itself is *not* Data View: it only lists what's
-loaded, by name and size. The **Editor** is the one piece without a close
-menu-equivalent — it's your saved list of typed commands (nearest to the SPSS
-syntax window, which menu users rarely open).
-:::
-
-You'll also notice **Terminal** and **Background Jobs** tabs near the Console.
-These are for more advanced use — the Terminal is a direct line to your computer's
-command prompt (PowerShell on Windows, the old DOS-style window) — and you can
-ignore them for now.
-
-One small thing that trips up newcomers: **R is case-sensitive.** `Income` and
-`income` are two different names to R. When something doesn't work, a stray
-capital is a common culprit.
-
-## Try the console
-
-Let's make the **Console** feel real, since it's where everything ultimately runs.
-Click in the Console (bottom-left), type a sum, and press Enter:
+Let's make that real. Click anywhere in the Console, type a sum, and press Enter:
 
 ```r
 2 + 2
@@ -127,9 +48,7 @@ R answers straight back:
 [1] 4
 ```
 
-The console is a calculator that talks back. Now try a **function** — a named
-command that takes some input in parentheses and hands you a result. This one
-finds a square root:
+The Console is a calculator that talks back. Now try a **function** — a named command you give some input to, inside parentheses. This one finds a square root:
 
 ```r
 sqrt(144)
@@ -139,16 +58,55 @@ sqrt(144)
 [1] 12
 ```
 
-That's the shape of nearly everything you'll do in R: a function name, inputs in
-parentheses, a result back. (And yes, `sqrt` is plain R — you're already learning
-the real thing.)
+(And yes, `sqrt` is plain R — you're already learning the real thing. More on what a function actually is in a moment, once we've used a second one.)
 
-So what's the **script** (the Editor) for, if the console can do everything? Just
-this: **the console is for doing, the script is for keeping.** Anything you type
-in the console runs and then scrolls away — perfect for quick, one-off jobs like a
-fast calculation or installing a package. When you're doing analysis you'll want
-to *keep* — and re-run, and share — you type those commands in the script and save
-the file. We'll start doing exactly that once there's something worth saving.
+You'll also see **Terminal** and **Background Jobs** tabs sharing this pane with the Console. They're for more advanced use — the Terminal is a direct line to your computer's own command prompt — and you can ignore them for now.
+
+### The Environment — what you've loaded
+
+The Console also runs commands that *create* things and keep them around. Let's load a dataset, so the **Environment** has something to show. R ships with several built-in datasets for practice; one is `mtcars` (data on some classic car models). Copy it into a name of your own using R's **assignment operator**, `<-`, which means "put what's on the right into the name on the left." Type this in the Console and press Enter — and watch the **top-right** of the screen as you do:
+
+```r
+cars <- mtcars
+```
+
+Up in the top-right is the **Environment pane** — named for its main tab, **Environment**, open by default — and your new `cars` has just appeared there, described as *32 obs. of 11 variables*. That's its name and size, not the data themselves; the Environment lists what you've loaded, it isn't a window onto the data.
+
+What `cars` actually is, in R's terms, is a **data frame**: a table held in memory, with cases down the rows and variables across the columns. Two words are worth keeping apart. A **dataset** is the data at rest — a built-in like `mtcars`, or, later on, a data file on your disk. A **data frame** is the working copy R loads into memory for you to work on. So `cars` is a data frame — a copy of the built-in `mtcars` — and anything you do to it changes that copy, never the original. (This matters more once you load your *own* data: the data frame in the Environment is a copy in memory, and your edits don't reach the file on disk until you deliberately save.) You're not limited to one, either — load or create several data frames and they all list here by name, and you pick which to work on simply by using its name.
+
+### Output / Files / Plots / Help — the bottom-right pane
+
+The **bottom-right** pane gathers everyday tools as tabs: **Files** (the contents of your Project folder), **Plots** (any charts you make show up here), **Packages**, and **Help** (R's built-in documentation). RStudio's own name for it is the **Output** pane. You'll dip into these constantly without thinking about them much.
+
+### The Source pane — where you write and keep code
+
+Now the fourth pane. Open a new script — **File → New File → R Script** (or press **Ctrl+Shift+N**, or **Cmd+Shift+N** on a Mac) — and the **Source pane** opens in the **top-left**, nudging the Console down into the bottom-left. This is where you write code you want to *keep*.
+
+That's the one real difference between the two left-hand panes: **the Console is for doing, the script is for keeping.** Anything you type in the Console runs and then scrolls away — ideal for a quick, one-off job like a fast calculation. Code you'll want to re-run, revise, and share goes in a **script**: a plain text file (with a `.R` ending) that you save. Typing in a script doesn't run anything on its own; when you're ready, you send a line down to the Console to run it.
+
+Try it. In your new script, type — or paste — the line below, then run it: put the cursor anywhere on the line and press **Ctrl+Enter** (**Cmd+Enter** on a Mac), or click **Run** at the top of the pane.
+
+```r
+View(iris)
+```
+
+A small thing that catches beginners: RStudio runs the *whole line* the cursor is sitting on, but if you *highlight* text it runs exactly — and only — what you've highlighted. So either leave the cursor on the line, or select the *entire* command; just don't run with only *part* of a line highlighted, or R will try to run that fragment on its own, which usually fails. (R is pickier about this than SPSS.)
+
+`iris` is another built-in dataset (measurements of flowers); being built in, it's available by its own name without copying first. Note the capital **V** — `View` is one of a handful of base-R functions that breaks the usual all-lowercase habit, so `view(iris)` won't work. That's a glimpse of a rule worth learning early: **R is case-sensitive.** `Income` and `income` are two different names to it, and a stray capital is one of the most common reasons something "doesn't work." (jstats keeps its own functions lowercase, in step with the base-R majority.)
+
+Running the line opens a grid in the Source pane — a new tab alongside your script — with rows of flowers down the side and variables across the top. (Clicking a data frame's name in the Environment opens the same read-only grid; `View()` just does it from code.) Notice one column, `Species`, holds group names — setosa, versicolor, virginica — instead of numbers: your first glimpse of a **categorical variable**, a column that sorts cases into groups. You'll meet these properly later.
+
+<!-- screenshot: a new R Script tab and the View(iris) grid open as two tabs in the Source pane (top-left); Console now bottom-left; cars listed in the Environment (top-right) -->
+
+There's one more idea worth pinning down before we move on, because nearly everything in R rests on it: the **function**. You've now used two — `sqrt()` and `View()` — and they share a shape: a function has a name, and you give it its input inside the parentheses that follow. `sqrt(144)` hands `144` to `sqrt` and gets `12` back; `View(iris)` hands `iris` to `View` and opens a data grid. That pattern — pick the function for the job, put your input in the parentheses, take the result — is how nearly all of R works. **jstats, which you'll install next, is simply a collection of functions in this same form**, named and tidied for the things social scientists do most. Once `something(input)` reads naturally to you, most R code does too.
+
+You'll meet `mtcars` and `iris` again and again in R's help pages and other packages' examples — now you know what they are, so they won't catch you off guard. jstats brings its own example dataset too, `community`, which becomes available by name once you install and load the package; we'll use it from the Quick Start onward.
+
+::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
+A rough map if you've mostly worked in commercial statistical software. The **Console** is like the **output/results window** where results appear (SPSS's output viewer, Stata's Results window, SAS's Log and Output), and the **Plots** tab is where charts show up. The closest thing to a **data view** — SPSS's **Data View**, Stata's **Data Browser**, SAS's table viewer — is the read-only grid that opens when you click a data frame in the Environment, or run `View()`; but the **Environment** pane itself is *not* that grid: it only lists what's loaded, by name and size. The **Source** pane is essentially the editor you already know under another name — the **SPSS syntax editor**, the **Stata do-file editor**, or the **SAS program editor** — a place to write commands, save them, and run them. If you write Stata or SAS code it'll feel almost identical; if you've mostly clicked through SPSS menus, the syntax editor is the SPSS feature it most resembles, and the one habit most worth building.
+
+One deeper difference in style: those tools are built around **commands** or **procedures** — SPSS's `FREQUENCIES`, SAS's `PROC MEANS`, a Stata command, each followed by its options — whereas R is built around **functions** of the form `name(input)`. Getting comfortable with that single, consistent shape (which the next pages lean on heavily) is the main adjustment.
+:::
 
 ## Start each session with a clean slate
 
