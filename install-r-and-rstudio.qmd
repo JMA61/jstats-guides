@@ -19,6 +19,18 @@ choose the download for your system (Windows, Mac, or Linux), and run the
 installer with its default settings. That's it; you won't open R directly —
 RStudio will.
 
+**On a Mac, one extra choice matters.** The Mac download page offers *two*
+installers — one for **Apple silicon** Macs (the newer M1/M2/M3/M4 chips) and one
+for older **Intel** Macs — and you want the one that matches your computer. To
+check which you have, open the Apple menu (top-left of the screen) and choose
+**About This Mac**: a line reading *Chip: Apple M...* means Apple silicon, while
+*Processor: ...Intel...* means Intel. Pick the matching installer — its filename
+ends in `arm64` for Apple silicon and `x86_64` for Intel. A newer Mac will run
+the Intel version through Apple's built-in translation, so grabbing the wrong one
+isn't a disaster — but the matching build runs faster and avoids a class of
+confusing errors that can show up later when you install packages. (Windows has a
+single installer, so there's no equivalent choice to make there.)
+
 ## Install RStudio
 
 Download **RStudio Desktop** from

@@ -13,9 +13,13 @@ haven't, start with [Install R and RStudio](install-r-and-rstudio.qmd) and
 ::: {.callout-note collapse="true" title="For experienced R users"}
 If you've installed R packages before, only a few things here are specific to
 jstats. It currently installs from **GitHub** rather than CRAN, so you need the
-**remotes** package and — on Windows — **Rtools**; and it checks for a newer
-version each time it loads. Jump to the two install commands below; the rest is
-ordinary install-and-load you already know.
+**remotes** package — but jstats is a **pure-R package**, so you do *not* need
+Rtools (Windows) or Apple's command line tools (Mac) to install it. The only
+thing that pulls in a compiler is a *dependency* being rebuilt from source;
+installing with `upgrade = "never"` (below) sidesteps that, and if R ever offers
+to install a package "from sources... which needs compilation," answer no. jstats
+also checks for a newer version each time it loads. Jump to the two install
+commands below; the rest is ordinary install-and-load you already know.
 :::
 
 ::: {.callout-note}
@@ -41,15 +45,12 @@ on its own.
   covers creating one. The automatic-loading step at the end of this page uses a
   small file that lives *inside* your Project, so it helps to have one ready.
 
-## Install Rtools (Windows only)
-
-To install a package from GitHub, Windows needs **Rtools**, a free build toolkit.
-Download it from <https://cran.r-project.org/bin/windows/Rtools/>, choose the
-version that matches your R (for example **Rtools45** for R 4.5.x), and run the
-installer with its defaults. You do this once, unless you update R later.
-
-(On a Mac you don't need Rtools — but you may need Apple's command line tools; see
-the Mac note just below the install commands.)
+One thing you *don't* need: the extra build tools that some R packages require —
+**Rtools** on Windows, or Apple's **command line tools** on Mac. Those are only
+for packages that have to be compiled from source, and jstats is written entirely
+in R, so it installs without them. (If you've read elsewhere that installing from
+GitHub means installing Rtools first, that's the common case, not a rule — and not
+the case here.) The two commands below are all it takes.
 
 ## Install the remotes helper
 
@@ -66,23 +67,20 @@ install.packages("remotes")
 Now install jstats from GitHub, then load it:
 
 ```r
-remotes::install_github("JMA61/jstats")
+remotes::install_github("JMA61/jstats", upgrade = "never")
 library(jstats)
 ```
+
+The `upgrade = "never"` part keeps the install simple: it tells R not to go off
+and rebuild jstats's supporting packages, which is the one thing that could
+otherwise call for those build tools. If R ever pauses and asks whether to
+"install from sources the package which needs compilation," just type `n` and
+press Enter — you don't need to compile anything, and R will use a ready-made
+version instead.
 
 If it loaded cleanly, you'll see a short jstats startup message — and, if a newer
 version is already out, a note with the exact lines to update (more on that
 below). That message is how you know jstats is loaded and ready.
-
-**Mac users.** You may already have the build tools you need. If you hit a build
-error during installation, open the **Terminal** app and run:
-
-```
-xcode-select --install
-```
-
-Follow the prompts, then run the install command again. The `remotes` and install
-lines are the same as above.
 
 ### If the install fails
 
@@ -110,11 +108,28 @@ install.packages("remotes")
 :::
 
 ::: {.callout-warning collapse="true" title="A build or compilation error"}
-On **Windows**, this usually means **Rtools** is missing or doesn't match your R
-version. Install the matching Rtools (see *Install Rtools*, above), then
-**restart RStudio** (Session menu, Restart R) and try the install again. On a
-**Mac**, open Terminal and run `xcode-select --install`, follow the prompts, then
-retry.
+This means R tried to build one of jstats's **supporting packages** from source,
+which needs build tools you normally don't need for jstats. Work through these in
+order — most people never get past the first step.
+
+1. **Answer "no" to the compile prompt.** If R asks whether to *"install from
+   sources the package which needs compilation,"* type `n` and press Enter, then
+   run the install again. R will fetch a ready-made version of that package
+   instead. This resolves the great majority of cases.
+2. **Windows — if it still fails:** install the **Rtools** version that matches
+   your R (for example **Rtools45** for R 4.5.x) from
+   <https://cran.r-project.org/bin/windows/Rtools/>, run the installer with its
+   defaults, then **restart R** (Session menu, Restart R) and try the install
+   again.
+3. **Mac — if it still fails:** open the **Terminal** app and run
+   `xcode-select --install`, follow the prompts, then **restart R** and retry. In
+   the rarer case the error specifically mentions `gfortran` or a Fortran
+   compiler, the community-maintained **macrtools** package installs the full
+   matching toolchain for you — see its instructions at
+   <https://mac.thecoatlessprofessor.com/macrtools/>.
+
+Once jstats reaches CRAN, none of this applies — installation becomes a single
+ready-made download.
 :::
 
 ::: {.callout-warning collapse="true" title="The install seems half-done or broken"}
@@ -122,7 +137,7 @@ The simplest fix is to remove jstats and install it fresh:
 
 ```r
 remove.packages("jstats")
-remotes::install_github("JMA61/jstats")
+remotes::install_github("JMA61/jstats", upgrade = "never")
 library(jstats)
 ```
 :::
@@ -151,11 +166,12 @@ these instructions when it does.)
 ::: {.callout-important title="This is a beta, and your input shapes it"}
 While jstats is in this pre-release phase, it's still actively growing — which
 makes now the best time to ask for things. If a function is missing an option
-your work needs, or you'd like an analysis it doesn't yet cover, say so: open an
-issue on the package's GitHub page (the built-in spot for reporting problems and
-requesting features). If you hit an error, paste the **full error message** into
-the issue, along with what you ran and which versions of R and jstats you're on —
-that detail makes a fix far quicker. Changes are far easier to fold in now than
+your work needs, or you'd like an analysis it doesn't yet cover, say so by email:
+[SurveyCentre@griffith.edu.au](mailto:SurveyCentre@griffith.edu.au). If you hit an
+error, include the **full error message**, what you ran, and which versions of R
+and jstats you're on (you can get those by running `R.version.string` and
+`packageVersion("jstats")`) — that detail makes a fix far quicker. Changes are far
+easier to fold in now than
 after the package reaches its stable release, where keeping existing code working
 limits what can change.
 :::
@@ -221,4 +237,3 @@ social-science tasks it's built for, pick up a little real R painlessly as you g
 and when you eventually need something specialized it doesn't cover, you'll have
 learned enough to add the package that does. You're never stuck, and you're never
 learning a dead end.
-

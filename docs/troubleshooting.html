@@ -207,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="troubleshooting" class="level2">
 <h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
-<p>Most problems during setup and early use are one of a handful of things. Find the symptom that matches yours below and open it for the fix. This page grows over time; if your problem isn’t here, the <em>Install jstats</em> page has the install-specific ones close at hand, and you can always report a new one as a GitHub issue (see <em>Keep jstats up to date</em> on the <a href="./install-jstats.html">Install jstats</a> page).</p>
+<p>Most problems during setup and early use are one of a handful of things. Find the symptom that matches yours below and open it for the fix. This page grows over time; if your problem isn’t here, the <em>Install jstats</em> page has the install-specific ones close at hand, and you can always report a new problem by email at <a href="mailto:SurveyCentre@griffith.edu.au">SurveyCentre@griffith.edu.au</a> — including the full error message and your R and jstats versions makes it quicker to sort out.</p>
 </section>
 <section id="installing-jstats" class="level2">
 <h2 class="anchored" data-anchor-id="installing-jstats">Installing jstats</h2>
@@ -256,7 +256,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>On <strong>Windows</strong>, this usually means <strong>Rtools</strong> is missing or doesn’t match your R version. Install the matching Rtools from <a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a> (for example Rtools45 for R 4.5.x), then <strong>restart RStudio</strong> (Session menu, Restart R) and try the install again. On a <strong>Mac</strong>, open the Terminal app and run <code>xcode-select --install</code>, follow the prompts, then retry.</p>
+<p>This means R tried to build one of jstats’s <strong>supporting packages</strong> from source, which needs build tools you normally don’t need for jstats. Work through these in order — most people never get past the first step.</p>
+<ol type="1">
+<li><strong>Answer “no” to the compile prompt.</strong> If R asks whether to <em>“install from sources the package which needs compilation,”</em> type <code>n</code> and press Enter, then run the install again. R will fetch a ready-made version of that package instead. This resolves the great majority of cases.</li>
+<li><strong>Windows — if it still fails:</strong> install the <strong>Rtools</strong> version that matches your R (for example <strong>Rtools45</strong> for R 4.5.x) from <a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a>, run the installer with its defaults, then <strong>restart R</strong> (Session menu, Restart R) and try the install again.</li>
+<li><strong>Mac — if it still fails:</strong> open the <strong>Terminal</strong> app and run <code>xcode-select --install</code>, follow the prompts, then <strong>restart R</strong> and retry. In the rarer case the error specifically mentions <code>gfortran</code> or a Fortran compiler, the community-maintained <strong>macrtools</strong> package installs the full matching toolchain for you — see its instructions at <a href="https://mac.thecoatlessprofessor.com/macrtools/" class="uri">https://mac.thecoatlessprofessor.com/macrtools/</a>.</li>
+</ol>
+<p>Once jstats reaches CRAN, none of this applies — installation becomes a single ready-made download.</p>
 </div>
 </div>
 </div>
@@ -274,7 +280,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <p>The simplest fix is to remove jstats and install it fresh:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">remove.packages</span>(<span class="st">"jstats"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"JMA61/jstats"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"JMA61/jstats"</span>, <span class="at">upgrade =</span> <span class="st">"never"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>

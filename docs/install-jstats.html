@@ -267,7 +267,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#install-jstats" id="toc-install-jstats" class="nav-link active" data-scroll-target="#install-jstats">Install jstats</a></li>
   <li><a href="#what-you-need-first" id="toc-what-you-need-first" class="nav-link" data-scroll-target="#what-you-need-first">What you need first</a></li>
-  <li><a href="#install-rtools-windows-only" id="toc-install-rtools-windows-only" class="nav-link" data-scroll-target="#install-rtools-windows-only">Install Rtools (Windows only)</a></li>
   <li><a href="#install-the-remotes-helper" id="toc-install-the-remotes-helper" class="nav-link" data-scroll-target="#install-the-remotes-helper">Install the remotes helper</a></li>
   <li><a href="#install-jstats-and-load-it" id="toc-install-jstats-and-load-it" class="nav-link" data-scroll-target="#install-jstats-and-load-it">Install jstats and load it</a>
   <ul class="collapse">
@@ -300,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>If you’ve installed R packages before, only a few things here are specific to jstats. It currently installs from <strong>GitHub</strong> rather than CRAN, so you need the <strong>remotes</strong> package and — on Windows — <strong>Rtools</strong>; and it checks for a newer version each time it loads. Jump to the two install commands below; the rest is ordinary install-and-load you already know.</p>
+<p>If you’ve installed R packages before, only a few things here are specific to jstats. It currently installs from <strong>GitHub</strong> rather than CRAN, so you need the <strong>remotes</strong> package — but jstats is a <strong>pure-R package</strong>, so you do <em>not</em> need Rtools (Windows) or Apple’s command line tools (Mac) to install it. The only thing that pulls in a compiler is a <em>dependency</em> being rebuilt from source; installing with <code>upgrade = "never"</code> (below) sidesteps that, and if R ever offers to install a package “from sources… which needs compilation,” answer no. jstats also checks for a newer version each time it loads. Jump to the two install commands below; the rest is ordinary install-and-load you already know.</p>
 </div>
 </div>
 </div>
@@ -325,11 +324,7 @@ Note
 <li><strong>R and RStudio installed</strong> — see <a href="./install-r-and-rstudio.html">Install R and RStudio</a>.</li>
 <li><strong>An RStudio Project open</strong> — <a href="./rstudio-orientation.html">RStudio Orientation</a> covers creating one. The automatic-loading step at the end of this page uses a small file that lives <em>inside</em> your Project, so it helps to have one ready.</li>
 </ul>
-</section>
-<section id="install-rtools-windows-only" class="level2">
-<h2 class="anchored" data-anchor-id="install-rtools-windows-only">Install Rtools (Windows only)</h2>
-<p>To install a package from GitHub, Windows needs <strong>Rtools</strong>, a free build toolkit. Download it from <a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a>, choose the version that matches your R (for example <strong>Rtools45</strong> for R 4.5.x), and run the installer with its defaults. You do this once, unless you update R later.</p>
-<p>(On a Mac you don’t need Rtools — but you may need Apple’s command line tools; see the Mac note just below the install commands.)</p>
+<p>One thing you <em>don’t</em> need: the extra build tools that some R packages require — <strong>Rtools</strong> on Windows, or Apple’s <strong>command line tools</strong> on Mac. Those are only for packages that have to be compiled from source, and jstats is written entirely in R, so it installs without them. (If you’ve read elsewhere that installing from GitHub means installing Rtools first, that’s the common case, not a rule — and not the case here.) The two commands below are all it takes.</p>
 </section>
 <section id="install-the-remotes-helper" class="level2">
 <h2 class="anchored" data-anchor-id="install-the-remotes-helper">Install the remotes helper</h2>
@@ -339,12 +334,10 @@ Note
 <section id="install-jstats-and-load-it" class="level2">
 <h2 class="anchored" data-anchor-id="install-jstats-and-load-it">Install jstats and load it</h2>
 <p>Now install jstats from GitHub, then load it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"JMA61/jstats"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"JMA61/jstats"</span>, <span class="at">upgrade =</span> <span class="st">"never"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>upgrade = "never"</code> part keeps the install simple: it tells R not to go off and rebuild jstats’s supporting packages, which is the one thing that could otherwise call for those build tools. If R ever pauses and asks whether to “install from sources the package which needs compilation,” just type <code>n</code> and press Enter — you don’t need to compile anything, and R will use a ready-made version instead.</p>
 <p>If it loaded cleanly, you’ll see a short jstats startup message — and, if a newer version is already out, a note with the exact lines to update (more on that below). That message is how you know jstats is loaded and ready.</p>
-<p><strong>Mac users.</strong> You may already have the build tools you need. If you hit a build error during installation, open the <strong>Terminal</strong> app and run:</p>
-<pre><code>xcode-select --install</code></pre>
-<p>Follow the prompts, then run the install command again. The <code>remotes</code> and install lines are the same as above.</p>
 <section id="if-the-install-fails" class="level3">
 <h3 class="anchored" data-anchor-id="if-the-install-fails">If the install fails</h3>
 <p>Most install problems are one of a handful of things. Scan the titles below and open the one that matches your error. If yours isn’t here, the full <a href="./troubleshooting.html">Troubleshooting</a> page has more.</p>
@@ -377,7 +370,7 @@ Note
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The install-from-GitHub command needs the <strong>remotes</strong> package, and it isn’t installed yet. Run this first, then retry the install:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -393,7 +386,13 @@ Note
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>On <strong>Windows</strong>, this usually means <strong>Rtools</strong> is missing or doesn’t match your R version. Install the matching Rtools (see <em>Install Rtools</em>, above), then <strong>restart RStudio</strong> (Session menu, Restart R) and try the install again. On a <strong>Mac</strong>, open Terminal and run <code>xcode-select --install</code>, follow the prompts, then retry.</p>
+<p>This means R tried to build one of jstats’s <strong>supporting packages</strong> from source, which needs build tools you normally don’t need for jstats. Work through these in order — most people never get past the first step.</p>
+<ol type="1">
+<li><strong>Answer “no” to the compile prompt.</strong> If R asks whether to <em>“install from sources the package which needs compilation,”</em> type <code>n</code> and press Enter, then run the install again. R will fetch a ready-made version of that package instead. This resolves the great majority of cases.</li>
+<li><strong>Windows — if it still fails:</strong> install the <strong>Rtools</strong> version that matches your R (for example <strong>Rtools45</strong> for R 4.5.x) from <a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a>, run the installer with its defaults, then <strong>restart R</strong> (Session menu, Restart R) and try the install again.</li>
+<li><strong>Mac — if it still fails:</strong> open the <strong>Terminal</strong> app and run <code>xcode-select --install</code>, follow the prompts, then <strong>restart R</strong> and retry. In the rarer case the error specifically mentions <code>gfortran</code> or a Fortran compiler, the community-maintained <strong>macrtools</strong> package installs the full matching toolchain for you — see its instructions at <a href="https://mac.thecoatlessprofessor.com/macrtools/" class="uri">https://mac.thecoatlessprofessor.com/macrtools/</a>.</li>
+</ol>
+<p>Once jstats reaches CRAN, none of this applies — installation becomes a single ready-made download.</p>
 </div>
 </div>
 </div>
@@ -410,9 +409,9 @@ Note
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The simplest fix is to remove jstats and install it fresh:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">remove.packages</span>(<span class="st">"jstats"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"JMA61/jstats"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">remove.packages</span>(<span class="st">"jstats"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"JMA61/jstats"</span>, <span class="at">upgrade =</span> <span class="st">"never"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -447,7 +446,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>While jstats is in this pre-release phase, it’s still actively growing — which makes now the best time to ask for things. If a function is missing an option your work needs, or you’d like an analysis it doesn’t yet cover, say so: open an issue on the package’s GitHub page (the built-in spot for reporting problems and requesting features). If you hit an error, paste the <strong>full error message</strong> into the issue, along with what you ran and which versions of R and jstats you’re on — that detail makes a fix far quicker. Changes are far easier to fold in now than after the package reaches its stable release, where keeping existing code working limits what can change.</p>
+<p>While jstats is in this pre-release phase, it’s still actively growing — which makes now the best time to ask for things. If a function is missing an option your work needs, or you’d like an analysis it doesn’t yet cover, say so by email: <strong>SurveyCentre [at] griffith [dot] edu [dot] au</strong>. If you hit an error, include the <strong>full error message</strong>, what you ran, and which versions of R and jstats you’re on (you can get those by running <code>R.version.string</code> and <code>packageVersion("jstats")</code>) — that detail makes a fix far quicker. Changes are far easier to fold in now than after the package reaches its stable release, where keeping existing code working limits what can change.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="For experienced R users">
@@ -471,7 +470,7 @@ Note
 <h2 class="anchored" data-anchor-id="load-jstats-automatically-recommended">Load jstats automatically (recommended)</h2>
 <p>You can tell your Project to load jstats for you every time it opens, so you never have to type <code>library(jstats)</code> again. It’s optional, but worth doing: besides saving the keystrokes, it means the package’s automatic update check runs every time you start work — so you’re always told when a new version is available — and you open each session ready to go. This uses a small setup file called an <strong><code>.Rprofile</code></strong> (a file R reads automatically when it starts).</p>
 <p>Create a plain text file named <code>.Rprofile</code> in your Project folder containing one line:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Save it, then restart R (<strong>Session menu, Restart R</strong>). From now on, every session in this Project starts with jstats already loaded.</p>
 <p>Keep this to lightweight startup lines — loading a package, and later a setting or two. Do <strong>not</strong> put an install command (like <code>remotes::install_github(...)</code>) in <code>.Rprofile</code>: because the file runs on every startup, an install line there tries to reinstall each time and can send RStudio into a loop. Installing is a one-off you run by hand; loading is the repeatable step that belongs in startup.</p>
 <p>We’re keeping this minimal for now. Later you’ll add a line or two more — where your data lives, and how many digits to show in output — but one line is plenty to start.</p>

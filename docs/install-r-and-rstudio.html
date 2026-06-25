@@ -251,6 +251,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="install-r" class="level2">
 <h2 class="anchored" data-anchor-id="install-r">Install R</h2>
 <p>Go to <strong>CRAN</strong> — the official archive of R, at <a href="https://cran.r-project.org" class="uri">https://cran.r-project.org</a> — choose the download for your system (Windows, Mac, or Linux), and run the installer with its default settings. That’s it; you won’t open R directly — RStudio will.</p>
+<p><strong>On a Mac, one extra choice matters.</strong> The Mac download page offers <em>two</em> installers — one for <strong>Apple silicon</strong> Macs (the newer M1/M2/M3/M4 chips) and one for older <strong>Intel</strong> Macs — and you want the one that matches your computer. To check which you have, open the Apple menu (top-left of the screen) and choose <strong>About This Mac</strong>: a line reading <em>Chip: Apple M…</em> means Apple silicon, while <em>Processor: …Intel…</em> means Intel. Pick the matching installer — its filename ends in <code>arm64</code> for Apple silicon and <code>x86_64</code> for Intel. A newer Mac will run the Intel version through Apple’s built-in translation, so grabbing the wrong one isn’t a disaster — but the matching build runs faster and avoids a class of confusing errors that can show up later when you install packages. (Windows has a single installer, so there’s no equivalent choice to make there.)</p>
 </section>
 <section id="install-rstudio" class="level2">
 <h2 class="anchored" data-anchor-id="install-rstudio">Install RStudio</h2>

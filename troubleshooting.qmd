@@ -8,8 +8,9 @@ title-prefix: ""
 Most problems during setup and early use are one of a handful of things. Find the
 symptom that matches yours below and open it for the fix. This page grows over time;
 if your problem isn't here, the *Install jstats* page has the install-specific ones
-close at hand, and you can always report a new one as a GitHub issue (see *Keep
-jstats up to date* on the [Install jstats](install-jstats.qmd) page).
+close at hand, and you can always report a new problem by email at
+[SurveyCentre@griffith.edu.au](mailto:SurveyCentre@griffith.edu.au) — including the
+full error message and your R and jstats versions makes it quicker to sort out.
 
 ## Installing jstats
 
@@ -33,12 +34,28 @@ install.packages("remotes")
 :::
 
 ::: {.callout-warning collapse="true" title="A build or compilation error"}
-On **Windows**, this usually means **Rtools** is missing or doesn't match your R
-version. Install the matching Rtools from
-<https://cran.r-project.org/bin/windows/Rtools/> (for example Rtools45 for R 4.5.x),
-then **restart RStudio** (Session menu, Restart R) and try the install again. On a
-**Mac**, open the Terminal app and run `xcode-select --install`, follow the prompts,
-then retry.
+This means R tried to build one of jstats's **supporting packages** from source,
+which needs build tools you normally don't need for jstats. Work through these in
+order — most people never get past the first step.
+
+1. **Answer "no" to the compile prompt.** If R asks whether to *"install from
+   sources the package which needs compilation,"* type `n` and press Enter, then
+   run the install again. R will fetch a ready-made version of that package
+   instead. This resolves the great majority of cases.
+2. **Windows — if it still fails:** install the **Rtools** version that matches
+   your R (for example **Rtools45** for R 4.5.x) from
+   <https://cran.r-project.org/bin/windows/Rtools/>, run the installer with its
+   defaults, then **restart R** (Session menu, Restart R) and try the install
+   again.
+3. **Mac — if it still fails:** open the **Terminal** app and run
+   `xcode-select --install`, follow the prompts, then **restart R** and retry. In
+   the rarer case the error specifically mentions `gfortran` or a Fortran
+   compiler, the community-maintained **macrtools** package installs the full
+   matching toolchain for you — see its instructions at
+   <https://mac.thecoatlessprofessor.com/macrtools/>.
+
+Once jstats reaches CRAN, none of this applies — installation becomes a single
+ready-made download.
 :::
 
 ::: {.callout-warning collapse="true" title="The install seems half-done or broken"}
@@ -46,7 +63,7 @@ The simplest fix is to remove jstats and install it fresh:
 
 ```r
 remove.packages("jstats")
-remotes::install_github("JMA61/jstats")
+remotes::install_github("JMA61/jstats", upgrade = "never")
 library(jstats)
 ```
 :::
