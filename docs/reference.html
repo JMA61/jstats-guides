@@ -158,7 +158,21 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#reference" id="toc-reference" class="nav-link active" data-scroll-target="#reference">Reference</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link active" data-scroll-target="#reference">Reference</a>
+  <ul class="collapse">
+  <li><a href="#getting-help-within-rstudio" id="toc-getting-help-within-rstudio" class="nav-link" data-scroll-target="#getting-help-within-rstudio">Getting help within RStudio</a></li>
+  <li><a href="#what-this-site-adds" id="toc-what-this-site-adds" class="nav-link" data-scroll-target="#what-this-site-adds">What this site adds</a></li>
+  <li><a href="#describe-and-explore" id="toc-describe-and-explore" class="nav-link" data-scroll-target="#describe-and-explore">Describe and explore</a></li>
+  <li><a href="#tests-and-models" id="toc-tests-and-models" class="nav-link" data-scroll-target="#tests-and-models">Tests and models</a></li>
+  <li><a href="#scales-and-reliability" id="toc-scales-and-reliability" class="nav-link" data-scroll-target="#scales-and-reliability">Scales and reliability</a></li>
+  <li><a href="#prepare-and-manage-your-data" id="toc-prepare-and-manage-your-data" class="nav-link" data-scroll-target="#prepare-and-manage-your-data">Prepare and manage your data</a></li>
+  <li><a href="#open-save-and-convert-files" id="toc-open-save-and-convert-files" class="nav-link" data-scroll-target="#open-save-and-convert-files">Open, save, and convert files</a></li>
+  <li><a href="#set-up-your-session" id="toc-set-up-your-session" class="nav-link" data-scroll-target="#set-up-your-session">Set up your session</a></li>
+  <li><a href="#plots" id="toc-plots" class="nav-link" data-scroll-target="#plots">Plots</a></li>
+  <li><a href="#fine-tuning-tell-jstats-how-to-treat-a-variable" id="toc-fine-tuning-tell-jstats-how-to-treat-a-variable" class="nav-link" data-scroll-target="#fine-tuning-tell-jstats-how-to-treat-a-variable">Fine-tuning: tell jstats how to treat a variable</a></li>
+  <li><a href="#datasets" id="toc-datasets" class="nav-link" data-scroll-target="#datasets">Datasets</a></li>
+  <li><a href="#on-the-way" id="toc-on-the-way" class="nav-link" data-scroll-target="#on-the-way">On the way</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -170,22 +184,113 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="reference" class="level2">
 <h2 class="anchored" data-anchor-id="reference">Reference</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Coming soon">
+<p>Below are the jstats functions and datasets, grouped by what they do. First, two quick notes on getting help.</p>
+<section id="getting-help-within-rstudio" class="level3">
+<h3 class="anchored" data-anchor-id="getting-help-within-rstudio">Getting help within RStudio</h3>
+<p>Every function has a built-in help page. The quick way to open one in RStudio is to click the function’s name — in your script or the console — and press <strong>F1</strong> (or <strong>Fn+F1</strong> on most Macs). In any R setup you can also type <code>?</code> followed by the name — for example, <code>?jfreq</code>. Either way you get the description, the options, and worked examples.</p>
+</section>
+<section id="what-this-site-adds" class="level3">
+<h3 class="anchored" data-anchor-id="what-this-site-adds">What this site adds</h3>
+<p>The function and dataset names below link to those same help pages online — and those pages rebuild themselves automatically from the package. Whenever the package changes or a new function is added, they regenerate from its built-in documentation and the examples are re-run, so the documentation and the code never drift apart: what you see is always current. The payoff is that every example shows the real output the call produces, not output typed in by hand — so you can copy one and trust it matches what you’ll get.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Growing into a fuller reference">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Coming soon
+<span class="screen-reader-only">Note</span>Growing into a fuller reference
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This section will be a task- and function-indexed reference — a place to look up how to do a specific thing while you work. It complements the package’s built-in help pages with friendlier, web-linkable entries.</p>
+<p>Over time this section will grow into a task-indexed reference — a place to look up how to do a specific thing while you work, organized by what you want to do rather than by function name. For now, it’s a grouped map of what’s available, with each name linking to its full help page.</p>
 </div>
 </div>
-<p>In the meantime, every jstats function has a built-in help page: type <code>?</code> followed by the function name in the console (for example <code>?jfreq</code>).</p>
+</section>
+<section id="describe-and-explore" class="level3">
+<h3 class="anchored" data-anchor-id="describe-and-explore">Describe and explore</h3>
+<ul>
+<li><a href="https://jma61.github.io/jstats/reference/jdesc.html"><strong><code>jdesc</code></strong></a> — descriptive statistics for one or more variables.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jfreq.html"><strong><code>jfreq</code></strong></a> — frequency tables for categorical variables.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jscreen.html"><strong><code>jscreen</code></strong></a> — a one-call overview of a whole dataset: ranges, missing values, possible outliers, and what kind each variable looks to be.</li>
+</ul>
+</section>
+<section id="tests-and-models" class="level3">
+<h3 class="anchored" data-anchor-id="tests-and-models">Tests and models</h3>
+<ul>
+<li><a href="https://jma61.github.io/jstats/reference/jt.html"><strong><code>jt</code></strong></a> — independent-samples or paired-samples t-test.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jaov.html"><strong><code>jaov</code></strong></a> — one-way ANOVA.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jcrosstab.html"><strong><code>jcrosstab</code></strong></a> — cross-tabulation, with an optional chi-square test.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jcorr.html"><strong><code>jcorr</code></strong></a> — a correlation matrix, with p-values and the N behind each pair.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jlm.html"><strong><code>jlm</code></strong></a> — linear regression.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jlogistic.html"><strong><code>jlogistic</code></strong></a> — logistic regression.</li>
+</ul>
+</section>
+<section id="scales-and-reliability" class="level3">
+<h3 class="anchored" data-anchor-id="scales-and-reliability">Scales and reliability</h3>
+<ul>
+<li><a href="https://jma61.github.io/jstats/reference/jalpha.html"><strong><code>jalpha</code></strong></a> — Cronbach’s alpha reliability analysis for a set of scale items.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jsum.html"><strong><code>jsum</code></strong></a> — a row-wise sum across several variables (for example, a scale total).</li>
+<li><a href="https://jma61.github.io/jstats/reference/javg.html"><strong><code>javg</code></strong></a> — a row-wise mean across several variables (for example, a scale score).</li>
+</ul>
+</section>
+<section id="prepare-and-manage-your-data" class="level3">
+<h3 class="anchored" data-anchor-id="prepare-and-manage-your-data">Prepare and manage your data</h3>
+<ul>
+<li><a href="https://jma61.github.io/jstats/reference/jrecode.html"><strong><code>jrecode</code></strong></a> — recode a variable using an explicit value mapping, with optional labels.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jrelabel.html"><strong><code>jrelabel</code></strong></a> — add or change a variable’s variable- and value-labels.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jdeclare_udm.html"><strong><code>jdeclare_udm</code></strong></a> — declare user-defined missing values (values that should count as missing, such as a “Refused” code) without overwriting your data.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jsubset.html"><strong><code>jsubset</code></strong></a> — set a case-selection filter so functions run on a chosen subset of cases.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jcomplete.html"><strong><code>jcomplete</code></strong></a> — set a listwise complete-case filter so a run of analyses share a matching N.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jcopy.html"><strong><code>jcopy</code></strong></a> — copy a data frame, carrying any of its variable settings along with it.</li>
+</ul>
+</section>
+<section id="open-save-and-convert-files" class="level3">
+<h3 class="anchored" data-anchor-id="open-save-and-convert-files">Open, save, and convert files</h3>
+<ul>
+<li><a href="https://jma61.github.io/jstats/reference/jload.html"><strong><code>jload</code></strong></a> — open a data file (from commercial statistical software, Excel, or CSV) in one command, bringing its value labels, variable labels, and missing-value codes along automatically.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jsave.html"><strong><code>jsave</code></strong></a> — save a data frame back out to a file.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jconvert.html"><strong><code>jconvert</code></strong></a> — convert missing-value declarations between the conventions different programs use.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jdata_dir.html"><strong><code>jdata_dir</code></strong></a> — show the folder jstats reads your data files from.</li>
+</ul>
+</section>
+<section id="set-up-your-session" class="level3">
+<h3 class="anchored" data-anchor-id="set-up-your-session">Set up your session</h3>
+<ul>
+<li><a href="https://jma61.github.io/jstats/reference/juse.html"><strong><code>juse</code></strong></a> — set (or display) the default dataset, so you don’t have to name it in every call.</li>
+<li><a href="https://jma61.github.io/jstats/reference/joptions.html"><strong><code>joptions</code></strong></a> — set or display session-level options, such as the data folder.</li>
+<li><a href="https://jma61.github.io/jstats/reference/joutput.html"><strong><code>joutput</code></strong></a> — set how much detail jstats prints (the output verbosity level).</li>
+</ul>
+</section>
+<section id="plots" class="level3">
+<h3 class="anchored" data-anchor-id="plots">Plots</h3>
+<ul>
+<li><a href="https://jma61.github.io/jstats/reference/jplot.html"><strong><code>jplot</code></strong></a> — plot a jstats result, or draw a quick plot of variables straight from a dataset.</li>
+</ul>
+</section>
+<section id="fine-tuning-tell-jstats-how-to-treat-a-variable" class="level3">
+<h3 class="anchored" data-anchor-id="fine-tuning-tell-jstats-how-to-treat-a-variable">Fine-tuning: tell jstats how to treat a variable</h3>
+<p>Most users will not need these. jstats works out what kind each variable is on its own; these let you override that when you want a particular variable handled a particular way.</p>
+<ul>
+<li><a href="https://jma61.github.io/jstats/reference/jnumeric.html"><strong><code>jnumeric</code></strong></a> — treat a variable as numeric.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jdummy.html"><strong><code>jdummy</code></strong></a> — treat a categorical variable as a set of dummy variables in regression.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jcount.html"><strong><code>jcount</code></strong></a> — treat a variable as a count.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jlikert.html"><strong><code>jlikert</code></strong></a> — treat a variable as an ordered (Likert) response item.</li>
+</ul>
+</section>
+<section id="datasets" class="level3">
+<h3 class="anchored" data-anchor-id="datasets">Datasets</h3>
+<p>jstats ships with two practice datasets, both available the moment the package loads:</p>
+<ul>
+<li><a href="https://jma61.github.io/jstats/reference/community.html"><strong><code>community</code></strong></a> — a clean 100-respondent community survey (income, education, age, a wellbeing score, several yes/no items, a region, and a five-item attitude scale). The package’s default example data; it’s what every function’s help examples use.</li>
+<li><a href="https://jma61.github.io/jstats/reference/clinic.html"><strong><code>clinic</code></strong></a> — a deliberately messy 70-client mental-health and wellbeing sample, the companion for practicing data cleaning: it carries undeclared missing-value codes, stripped labels, and imperfect scale items to work through.</li>
+</ul>
+</section>
+<section id="on-the-way" class="level3">
+<h3 class="anchored" data-anchor-id="on-the-way">On the way</h3>
+<p>A few capabilities are planned for future versions — among them regression for count outcomes (Poisson and negative-binomial models) and exporting formatted, APA-style results to Word. The function set above is what ships today.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

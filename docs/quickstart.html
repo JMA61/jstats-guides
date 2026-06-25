@@ -292,8 +292,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(community<span class="sc">$</span>Age)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(community<span class="sc">$</span>Age)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(community<span class="sc">$</span>Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>[1] 34.62
-[1] 9.183
+<pre><code>[1] 40.66
+[1] 11.68027
 [1] 18 71</code></pre>
 <p>Each prints on its own — bare, unlabeled numbers you have to keep straight in your head — and you still don’t know how many respondents there are, or whether any ages are missing. jstats does the whole thing in one:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(community, Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -301,7 +301,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 Variable  Total  Non_missing  Min  Max   Mean     SD
 --------  -----  -----------  ---  ---  -----  -----
-Age         100          100   18   71  34.62  9.183
+Age         100          100   18   71  40.66  11.68
 </pre>
 <p>One command, one tidy table — count, missing, range, center, and spread together, in a layout you’ll recognize if you’ve used commercial statistical software. That’s the whole idea behind jstats, and the rest of this page builds on it.</p>
 </section>
