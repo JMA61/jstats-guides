@@ -35,50 +35,50 @@ name linking to its full help page.
 
 ### Describe and explore
 
-- [**`jdesc`**](https://jma61.github.io/jstats/reference/jdesc.html) — descriptive statistics for one or more variables.
-- [**`jfreq`**](https://jma61.github.io/jstats/reference/jfreq.html) — frequency tables for categorical variables.
-- [**`jscreen`**](https://jma61.github.io/jstats/reference/jscreen.html) — a one-call overview of a whole dataset: ranges, missing values, possible outliers, and what kind each variable looks to be.
+- [`jdesc`](https://jma61.github.io/jstats/reference/jdesc.html) — descriptive statistics for one or more variables.
+- [`jfreq`](https://jma61.github.io/jstats/reference/jfreq.html) — frequency tables for categorical variables.
+- [`jscreen`](https://jma61.github.io/jstats/reference/jscreen.html) — a one-call overview of a whole dataset: ranges, missing values, possible outliers, and what kind each variable looks to be.
 
 ### Tests and models
 
-- [**`jt`**](https://jma61.github.io/jstats/reference/jt.html) — independent-samples or paired-samples t-test.
-- [**`jaov`**](https://jma61.github.io/jstats/reference/jaov.html) — one-way ANOVA.
-- [**`jcrosstab`**](https://jma61.github.io/jstats/reference/jcrosstab.html) — cross-tabulation, with an optional chi-square test.
-- [**`jcorr`**](https://jma61.github.io/jstats/reference/jcorr.html) — a correlation matrix, with p-values and the N behind each pair.
-- [**`jlm`**](https://jma61.github.io/jstats/reference/jlm.html) — linear regression.
-- [**`jlogistic`**](https://jma61.github.io/jstats/reference/jlogistic.html) — logistic regression.
+- [`jt`](https://jma61.github.io/jstats/reference/jt.html) — independent-samples or paired-samples t-test.
+- [`jaov`](https://jma61.github.io/jstats/reference/jaov.html) — one-way ANOVA.
+- [`jcrosstab`](https://jma61.github.io/jstats/reference/jcrosstab.html) — cross-tabulation, with an optional chi-square test.
+- [`jcorr`](https://jma61.github.io/jstats/reference/jcorr.html) — a correlation matrix, with p-values and the N behind each pair.
+- [`jlm`](https://jma61.github.io/jstats/reference/jlm.html) — linear regression.
+- [`jlogistic`](https://jma61.github.io/jstats/reference/jlogistic.html) — logistic regression.
 
 ### Scales and reliability
 
-- [**`jalpha`**](https://jma61.github.io/jstats/reference/jalpha.html) — Cronbach's alpha reliability analysis for a set of scale items.
-- [**`jsum`**](https://jma61.github.io/jstats/reference/jsum.html) — a row-wise sum across several variables (for example, a scale total).
-- [**`javg`**](https://jma61.github.io/jstats/reference/javg.html) — a row-wise mean across several variables (for example, a scale score).
+- [`jalpha`](https://jma61.github.io/jstats/reference/jalpha.html) — Cronbach's alpha reliability analysis for a set of scale items.
+- [`jsum`](https://jma61.github.io/jstats/reference/jsum.html) — a row-wise sum across several variables (for example, a scale total).
+- [`javg`](https://jma61.github.io/jstats/reference/javg.html) — a row-wise mean across several variables (for example, a scale score).
 
 ### Prepare and manage your data
 
-- [**`jrecode`**](https://jma61.github.io/jstats/reference/jrecode.html) — recode a variable using an explicit value mapping, with optional labels.
-- [**`jrelabel`**](https://jma61.github.io/jstats/reference/jrelabel.html) — add or change a variable's variable- and value-labels.
-- [**`jdeclare_udm`**](https://jma61.github.io/jstats/reference/jdeclare_udm.html) — declare user-defined missing values (values that should count as missing, such as a "Refused" code) without overwriting your data.
-- [**`jsubset`**](https://jma61.github.io/jstats/reference/jsubset.html) — set a case-selection filter so functions run on a chosen subset of cases.
-- [**`jcomplete`**](https://jma61.github.io/jstats/reference/jcomplete.html) — set a listwise complete-case filter so a run of analyses share a matching N.
-- [**`jcopy`**](https://jma61.github.io/jstats/reference/jcopy.html) — copy a data frame, carrying any of its variable settings along with it.
+- [`jrecode`](https://jma61.github.io/jstats/reference/jrecode.html) — recode a variable using an explicit value mapping, with optional labels.
+- [`jrelabel`](https://jma61.github.io/jstats/reference/jrelabel.html) — add or change a variable's variable- and value-labels.
+- [`jdeclare_udm`](https://jma61.github.io/jstats/reference/jdeclare_udm.html) — declare user-defined missing values (values that should count as missing, such as a "Refused" code) without overwriting your data.
+- [`jsubset`](https://jma61.github.io/jstats/reference/jsubset.html) — set a case-selection filter so functions run on a chosen subset of cases.
+- [`jcomplete`](https://jma61.github.io/jstats/reference/jcomplete.html) — set a listwise complete-case filter so a run of analyses share a matching N.
+- [`jcopy`](https://jma61.github.io/jstats/reference/jcopy.html) — copy a data frame, carrying any of its variable settings along with it.
 
 ### Open, save, and convert files
 
-- [**`jload`**](https://jma61.github.io/jstats/reference/jload.html) — open a data file (from commercial statistical software, Excel, or CSV) in one command, bringing its value labels, variable labels, and missing-value codes along automatically.
-- [**`jsave`**](https://jma61.github.io/jstats/reference/jsave.html) — save a data frame back out to a file.
-- [**`jconvert`**](https://jma61.github.io/jstats/reference/jconvert.html) — convert missing-value declarations between the conventions different programs use.
-- [**`jdata_dir`**](https://jma61.github.io/jstats/reference/jdata_dir.html) — show the folder jstats reads your data files from.
+- [`jload`](https://jma61.github.io/jstats/reference/jload.html) — open a data file (from commercial statistical software, Excel, or CSV) in one command, bringing its value labels, variable labels, and missing-value codes along automatically.
+- [`jsave`](https://jma61.github.io/jstats/reference/jsave.html) — save a data frame back out to a file.
+- [`jconvert`](https://jma61.github.io/jstats/reference/jconvert.html) — convert missing-value declarations between the conventions different programs use.
+- [`jdata_dir`](https://jma61.github.io/jstats/reference/jdata_dir.html) — show the folder jstats reads your data files from.
 
 ### Set up your session
 
-- [**`juse`**](https://jma61.github.io/jstats/reference/juse.html) — set (or display) the default dataset, so you don't have to name it in every call.
-- [**`joptions`**](https://jma61.github.io/jstats/reference/joptions.html) — set or display session-level options, such as the data folder.
-- [**`joutput`**](https://jma61.github.io/jstats/reference/joutput.html) — set how much detail jstats prints (the output verbosity level).
+- [`juse`](https://jma61.github.io/jstats/reference/juse.html) — set (or display) the default dataset, so you don't have to name it in every call.
+- [`joptions`](https://jma61.github.io/jstats/reference/joptions.html) — set or display session-level options, such as the data folder.
+- [`joutput`](https://jma61.github.io/jstats/reference/joutput.html) — set how much detail jstats prints (the output verbosity level).
 
 ### Plots
 
-- [**`jplot`**](https://jma61.github.io/jstats/reference/jplot.html) — plot a jstats result, or draw a quick plot of variables straight from a dataset.
+- [`jplot`](https://jma61.github.io/jstats/reference/jplot.html) — plot a jstats result, or draw a quick plot of variables straight from a dataset.
 
 ### Fine-tuning: tell jstats how to treat a variable
 
@@ -86,17 +86,17 @@ Most users will not need these. jstats works out what kind each variable is on
 its own; these let you override that when you want a particular variable handled
 a particular way.
 
-- [**`jnumeric`**](https://jma61.github.io/jstats/reference/jnumeric.html) — treat a variable as numeric.
-- [**`jdummy`**](https://jma61.github.io/jstats/reference/jdummy.html) — treat a categorical variable as a set of dummy variables in regression.
-- [**`jcount`**](https://jma61.github.io/jstats/reference/jcount.html) — treat a variable as a count.
-- [**`jlikert`**](https://jma61.github.io/jstats/reference/jlikert.html) — treat a variable as an ordered (Likert) response item.
+- [`jnumeric`](https://jma61.github.io/jstats/reference/jnumeric.html) — treat a variable as numeric.
+- [`jdummy`](https://jma61.github.io/jstats/reference/jdummy.html) — treat a categorical variable as a set of dummy variables in regression.
+- [`jcount`](https://jma61.github.io/jstats/reference/jcount.html) — treat a variable as a count.
+- [`jlikert`](https://jma61.github.io/jstats/reference/jlikert.html) — treat a variable as an ordered (Likert) response item.
 
 ### Datasets
 
 jstats ships with two practice datasets, both available the moment the package loads:
 
-- [**`community`**](https://jma61.github.io/jstats/reference/community.html) — a clean 100-respondent community survey (income, education, age, a wellbeing score, several yes/no items, a region, and a five-item attitude scale). The package's default example data; it's what every function's help examples use.
-- [**`clinic`**](https://jma61.github.io/jstats/reference/clinic.html) — a deliberately messy 70-client mental-health and wellbeing sample, the companion for practicing data cleaning: it carries undeclared missing-value codes, stripped labels, and imperfect scale items to work through.
+- [`community`](https://jma61.github.io/jstats/reference/community.html) — a clean 100-respondent community survey (income, education, age, a wellbeing score, several yes/no items, a region, and a five-item attitude scale). The package's default example data; it's what every function's help examples use.
+- [`clinic`](https://jma61.github.io/jstats/reference/clinic.html) — a deliberately messy 70-client mental-health and wellbeing sample, the companion for practicing data cleaning: it carries undeclared missing-value codes, stripped labels, and imperfect scale items to work through.
 
 ### On the way
 

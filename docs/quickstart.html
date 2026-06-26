@@ -315,6 +315,7 @@ Age         100          100   18   71  40.66  11.68
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(community, Region)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>That’s the same function-and-object idea as before, now doing real work. You named the function (<code>jfreq</code>, for <em>frequencies</em>), and inside the parentheses you gave it two things: the dataset (<code>community</code>) and the variable you want counted (<code>Region</code>). jstats prints a tidy frequency table — how many respondents fall in each region, with percentages.</p>
 <p>(Remember R is case-sensitive: it’s <code>Region</code>, not <code>region</code>.)</p>
+<p>(And a reminder from <a href="./rstudio-orientation.html">RStudio Orientation</a>: you can tack a note onto any line after a <code>#</code> — <code>jfreq(community, Region)   # counts by region</code> — and R ignores everything after it.)</p>
 </section>
 <section id="the-examples-just-run" class="level2">
 <h2 class="anchored" data-anchor-id="the-examples-just-run">The examples just run</h2>
@@ -494,7 +495,7 @@ Age         100          100   18   71  40.66  11.68
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/jma61\.github\.io\/jstats-guides");
+        var filterRegex = new RegExp("^(?:http:|https:)\/\/jma61\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

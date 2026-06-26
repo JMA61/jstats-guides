@@ -71,6 +71,8 @@ each region, with percentages.
 
 (Remember R is case-sensitive: it's `Region`, not `region`.)
 
+(And a reminder from [RStudio Orientation](rstudio-orientation.qmd): you can tack a note onto any line after a `#` — `jfreq(community, Region)   # counts by region` — and R ignores everything after it.)
+
 ## The examples just run
 
 Open the help page for this function, and here it is:

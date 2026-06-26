@@ -108,6 +108,16 @@ A rough map if you've mostly worked in commercial statistical software. The **Co
 One deeper difference in style: those tools are built around **commands** or **procedures** — SPSS's `FREQUENCIES`, SAS's `PROC MEANS`, a Stata command, each followed by its options — whereas R is built around **functions** of the form `name(input)`. Getting comfortable with that single, consistent shape (which the next pages lean on heavily) is the main adjustment.
 :::
 
+## Leaving notes in your code — the `#` symbol
+
+One small thing you'll see throughout the examples on this site, and in your own scripts before long. When R meets a `#` on a line, it ignores the `#` and everything after it, to the end of that line. That space is for **you**, not R — somewhere to leave a plain-language note about what a line does:
+
+```r
+sqrt(144)    # find a square root
+```
+
+R runs the `sqrt(144)` part and pays no attention to the words after the `#`. A line that *begins* with `#` is all note and does nothing when run — purely a label for whoever reads the script later, including a future you who's forgotten the details. Notes like these are how a script stays readable, and you'll see them used throughout the code on these pages to explain each step as it happens.
+
 ## Start each session with a clean slate
 
 One quick setting is worth changing now. By default, when you quit RStudio it

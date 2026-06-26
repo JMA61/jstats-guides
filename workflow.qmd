@@ -3,32 +3,212 @@ pagetitle: "jstats — Workflow"
 title-prefix: ""
 ---
 
+```{r setup, include=FALSE}
+options(crayon.enabled = TRUE)
+old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
+library(jstats)
+```
+
 ## A typical jstats workflow
 
-::: {.callout-warning title="Skeleton — to be drafted"}
-This page has its structure in place; the prose is still to be written. It pulls
-the earlier pieces together into one realistic session, and introduces the
-everyday "working comfortably" features in the places they naturally come up.
+The Quick Start raced to a first result, and *[jstats with your own data](your-data.qmd)* covered getting files in and out. This page puts those pieces together and shows what an ordinary working session actually looks like — start to finish. The point isn't any one command; it's the **order**: how a real analysis moves from opening the data to a saved result, and where the everyday "working comfortably" tools fall into place along the way.
+
+It runs on the shipped practice datasets, so you can follow along with nothing of your own: `community` for the main thread, with a short detour to its messy companion `clinic` for the one step that needs a dirty column. Swap in your own data wherever you like — the moves are the same.
+
+::: {.callout-tip collapse="true" title="New to R? Read this first"}
+You don't need to understand every line below to get the shape of a session. Read it once straight through for the *story* — load, look, tidy, analyze, save — and don't worry if a particular function is new. Each one has its own help page (type `?` and the name, e.g. `?jdesc`), and the earlier Get Started pages introduce the basics. The goal here is the arc, not mastery of every step.
 :::
 
-Where the Quick Start raced to a first result and *jstats with your own data*
-covered getting files in and out, this page shows what an ordinary working session
-actually looks like — start to finish. It runs on the shipped datasets (`community`,
-with a `clinic` detour for messy-data steps) so anyone can follow along, and you
-can swap in your own data where you like. The package-shipped SPSS/Stata/Excel
-copies, reached with base R's `system.file()`, are a natural fit here as a
-follow-along source that needs no file of your own.
+## Open the data and get your bearings
 
-## Planned arc
+Every session starts by getting the data in front of you and taking a first look. The `community` data ships with the package, so it's there by name the moment you run `library(jstats)` — no importing needed. (Opening a file of your own is covered in *[jstats with your own data](your-data.qmd)*.) `juse()` sets it as the session default, so later commands don't need to be told which data frame to use every time.
 
-- **Open and orient:** load the data, set the working default with `juse`, screen
-  it with `jscreen`.
-- **Build and clean:** the everyday tidying a real dataset needs — including the
-  `clinic` dirty-data beats (declaring user-defined missing values, light recoding).
-- **Classify without damage — `jdummy()` registrations:** quick to create;
-  non-destructive, fixing a classification without touching the data.
-- **Run the analysis:** the core comparisons and models on the prepared data.
-- **Control the cases an analysis uses — `jcomplete()`.**
-- **Resetting options and clearing registrations** when you want a clean slate.
-- **Save and round-trip:** write the results out and reload across formats; the
-  `inst/extdata` `system.file()` capstone.
+```{r}
+juse(community)
+```
+
+::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
+`juse()` plays the role Stata's `use` does: it names the active dataset once, and the analysis commands that follow assume it. In SPSS terms, it's a bit like having a single data file open in Data View that every menu command then acts on — except you can load several data frames at once and switch which is the default whenever you like.
+:::
+
+With the data loaded, `jscreen()` is the orientation pass — one call that lists every variable, its type, its range, and anything that looks off (odd values, missing data). `stats = TRUE` adds a center-and-spread column for the numeric variables.
+
+```{r}
+jscreen(stats = TRUE)
+```
+
+A screen like this is where you catch problems early — a variable that should be a 0/1 dichotomy showing values of 1 and 2, say, or a "score" whose minimum is an impossible negative number. That second one is exactly what we tackle next.
+
+## A column that arrived messy
+
+`community` ships clean, which is convenient but not realistic — real data usually need some tidying before they can be trusted. So for this one step we detour to `clinic`, jstats's deliberately messy companion dataset (also shipped, so it's available by name too), clean a column there, and then return to `community` for the rest of the session.
+
+```{r}
+juse(clinic)
+```
+
+The column `MoodRating` is meant to run from 1 to 10, but it arrived with two stand-in codes buried in it as ordinary numbers: `-99` for "Refused" and `-98` for "Don't know" — the usual state of affairs after a plain CSV or Excel import, where the file carries no record of what those numbers mean. Until we tell jstats they stand for missing, they are treated as real values and quietly poison every statistic:
+
+```{r}
+jdesc(MoodRating)
+```
+
+The mean is dragged far below the 1–10 range, because those large negative codes are being averaged in as if they were genuine ratings. `jdeclare_udm()` fixes this the careful way — it *declares* the two codes as missing, with labels, without overwriting or deleting anything. The underlying data are untouched; we've only told jstats how to read them.
+
+```{r}
+clinic <- jdeclare_udm(clinic, MoodRating,
+                       codes = c("Refused" = -99, "Don't know" = -98))
+jdesc(MoodRating)
+```
+
+Now the codes are set aside as missing and the mean sits sensibly inside the 1–10 range.
+
+::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
+This is the equivalent of setting a variable's missing values in SPSS's Variable View (the `MISSING VALUES` command in syntax), or Stata's extended missing values. The important parallel is that it's **non-destructive**: like declaring missing values rather than recoding them to system-missing, `jdeclare_udm()` leaves the original codes in place and simply flags them, so nothing is lost and the declaration can be changed or undone later.
+:::
+
+::: {.callout-note collapse="true" title="Going deeper (optional)"}
+Declaring missing values is a small move with a lot behind it — different programs (SPSS, Stata, SAS) record missing data in different ways, and jstats keeps those distinctions straight when you read and write files. *[jstats with your own data](your-data.qmd)* covers the import/export side, and Book 2 covers the cross-program fidelity in more detail, with worked examples. The help page `?jdeclare_udm` documents the options.
+:::
+
+```{r}
+juse(community)
+```
+
+With the detour done, `community` is the session default again.
+
+## Build a scale
+
+A common early task is combining several survey items into one scale score — but only after checking the items hang together. `community` has a five-item Environment battery (`Environment1` through `Environment5`).
+
+By default jstats prints variable *names*, which keeps output uncluttered. But a variable's **label**, when it has one, usually carries the actual question wording — and that can be a useful clue when something looks off. So before we start, let's switch the display to bring the labels along. `joutput()` sets output preferences for the rest of the session; `variable.id = "legend"` keeps the short names in the tables and adds a label legend beneath them:
+
+```{r}
+joutput(variable.id = "legend")
+```
+
+You can also set this for a single call, by passing `variable.id = "legend"` to that function directly instead of session-wide.
+
+::: {.callout-note collapse="true" title="Going deeper (optional)"}
+`variable.id` is just one of several display settings `joutput()` controls. `?joutput` lists them all, and the [Reference](reference.qmd) page links every function to its own help. We won't work through every setting here — the guides are a starting point, not a complete manual — so for the output options covered in more detail, with worked examples, see Book 2.
+:::
+
+Now `jalpha()` reports Cronbach's alpha and the per-item diagnostics, with each item's label shown in the legend below:
+
+```{r}
+jalpha(Environment1, Environment2, Environment3, Environment4, Environment5)
+```
+
+`jalpha()` flags `Environment2` as **reverse-keyed**: it correlates negatively with the rest, which drags the reliability down. The label legend tells you why — `Environment2`'s label ends in "R", the marker this dataset's author used for a reverse-coded item. Your own data won't always be flagged so conveniently, but the label *wording* is often the tell on its own: a positively phrased item sitting among negatively phrased ones is exactly the kind of thing that surfaces here. We fix it by recoding the item into a new column that runs the same direction as the others. `jrecode()` returns the recoded variable, which we store as a new column:
+
+```{r}
+community$Environment2R <- jrecode(community, Environment2,
+                                   map = "1=5; 2=4; 3=3; 4=2; 5=1")
+```
+
+::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
+That `map = "1=5; 2=4; ..."` is the same idea as SPSS's `RECODE Environment2 (1=5)(2=4)(3=3)(4=2)(5=1) INTO Environment2R`. Storing the result in a *new* column (`Environment2R`) rather than overwriting the original is the safe habit — the original item stays intact in case you need it.
+:::
+
+Run `jalpha()` again with the reversed item in place of the original:
+
+```{r}
+jalpha(Environment1, Environment2R, Environment3, Environment4, Environment5)
+```
+
+With the item reversed, reliability improves — but the diagnostics now point at `Environment5`: it has the weakest corrected item-total correlation and the highest "alpha if item dropped," meaning the scale would be a touch *more* reliable without it. So we drop it and build the scale from the four items that hang together, as a per-case mean with `javg()`, requiring at least three of the four present so a respondent who skipped one still gets a score:
+
+```{r}
+community$EnvScale <- javg(Environment1, Environment2R, Environment3, Environment4,
+                           min.valid = 3, var.label = "Environment scale (mean)")
+jdesc(EnvScale)
+```
+
+::: {.callout-note collapse="true" title="Going deeper (optional)"}
+Book 1 covers what Cronbach's alpha measures and why a reverse-keyed item has to be flipped before it's trusted; Book 2 covers `jalpha()`'s and `javg()`'s options — the `min.valid` cutoff, alternative reliability handling — in more detail, with worked examples. The help pages `?jalpha`, `?jrecode`, and `?javg` document them as well.
+<!-- future: link a YouTube scale-building walkthrough here -->
+:::
+
+## Run the analysis
+
+With a clean, prepared dataset, the analysis itself is short. jstats uses the same `DV ~ IV` formula you'd write in base R, so a linear regression of wellbeing on income and age reads naturally:
+
+```{r}
+jlm(WellbeingScore ~ Income + Age)
+```
+
+To add a categorical predictor like `Region`, you tell jstats to treat it as a set of dummy variables. `jdummy()` registers that once — choosing `West` as the reference category here — and every analysis that follows honors it, so you don't re-specify it each time:
+
+```{r}
+jdummy(Region, ref = "West")
+jlm(WellbeingScore ~ Income + Age + Region)
+```
+
+::: {.callout-tip collapse="true" title="For experienced R users"}
+`jdummy()` is doing what you'd otherwise arrange with `factor()` and `contrasts()` / `relevel()`. The difference is that the registration is *non-destructive and persistent*: `Region` stays a plain labelled variable in the data, and the dummy treatment lives in a separate registration that `jlm()`, `jlogistic()`, and the others look up — so you set the reference category in one place, not inside every model call.
+:::
+
+Logistic regression works the same way, with a 0/1 outcome. `Volunteer` is already coded 0/1, so it drops straight in:
+
+```{r}
+jlogistic(Volunteer ~ Age)
+```
+
+A dichotomy stored as 1/2 (the common Yes/No convention) needs recoding to 0/1 first — jstats will stop with a message telling you exactly that, rather than running something misleading. The recode is a one-liner with `jrecode()`, the same tool we used on the scale item; *[jstats with your own data](your-data.qmd)* shows that step in context.
+
+::: {.callout-note collapse="true" title="Going deeper (optional)"}
+Book 1 covers the regression ideas themselves — what the coefficients mean, how dummy variables encode a categorical predictor; Book 2 covers `jlm()` and `jlogistic()`'s options and the reference-category choice in more detail, with worked examples. `?jlm`, `?jlogistic`, and `?jdummy` document the options too.
+:::
+
+## Keep one set of cases across analyses
+
+When several variables have missing values, different analyses can quietly run on different subsets of respondents — a regression on these three variables uses a different N than a correlation on those four. When you want a run of analyses to share the *same* respondents, `jcomplete()` sets a listwise filter: only cases complete on the variables you name are used, until you turn it off.
+
+```{r}
+jcomplete(Income, Education, Age)
+jdesc(Age)
+```
+
+Every analysis you run now uses just that matching set of cases, so their N's line up and the results are comparable. (`jcomplete()` can also preview exactly which cases it would drop before you commit — `?jcomplete` shows how.)
+
+## A clean slate when you want one
+
+The session default, the dummy registration, and the listwise filter all persist by design — that's what makes them convenient. When you do want to clear them (starting a genuinely separate analysis, or undoing something), each has an off switch:
+
+```{r}
+jcomplete(NULL)            # drop the listwise filter
+jdummy(community, NULL)    # drop the dummy registrations
+juse(NULL)                 # clear the session default
+```
+
+You won't normally clear these between ordinary analyses — leaving a default and your registrations in place is the point of having them. It's for a fresh start, or to undo a mistake.
+
+```{r, include=FALSE}
+juse(community)
+```
+
+## Save your work, and open a file someone sends you
+
+A finished session usually ends by saving the prepared data. `jsave()` writes the in-memory data frame back out to a file, and `jload()` reads it back; together they're the round trip. Across formats — R's own `.rds`, plus SPSS, Stata, and Excel — jstats carries value labels, variable labels, and missing-value declarations along as faithfully as each format allows.
+
+```{r, eval=FALSE}
+jsave(community, "community.rds")     # save the prepared data
+jload("community", overwrite = TRUE)  # read it back
+```
+
+::: {.callout-note collapse="true" title="Going deeper (optional)"}
+Saving across formats is where the missing-value distinctions earn their keep — an SPSS-style code can't write straight to a Stata file, and Excel stores no missing-value metadata at all, so jstats handles (and warns about) each case. *[jstats with your own data](your-data.qmd)* walks the full cross-format round trip live; Book 2 covers the fidelity rules in more detail, with worked examples. `?jsave` and `?jconvert` document the options.
+:::
+
+Everything above used files you'd save yourself. The package also ships an example SPSS file inside itself — a stand-in for a data file a colleague emails you. `system.file()` is base R's way of finding a file bundled inside an installed package; `jload()` then opens it like any other received file, missing-value codes and all:
+
+```{r}
+received <- system.file("extdata", "community_spss.sav", package = "jstats")
+jload(received, name = "community_received", overwrite = TRUE)
+jscreen(community_received, stats = TRUE)
+```
+
+And that's a full session, end to end: opened the data, screened it, cleaned a messy column, built and checked a scale, run the models, kept the case base consistent, and saved the result — with the everyday conveniences (`juse()`, `jdummy()`, `jcomplete()`) falling into place as they came up rather than as separate lessons.
+
+This page is the *narrative* of a session. For looking a single task up while you work — "how do I reverse-code an item," "how do I get a correlation matrix" — see the [Reference](reference.qmd) page, which links every function to its full help. And when you're ready to go further than these guides: Book 1 builds the statistics and R together from the start, and Book 2 is the option-by-option guide for readers who already know the statistics.
+<!-- future: link a YouTube full-session walkthrough here -->

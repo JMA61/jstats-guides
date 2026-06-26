@@ -6,11 +6,11 @@
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/rstudio-orientation.html</loc>
-    <lastmod>2026-06-25T05:05:28.514Z</lastmod>
+    <lastmod>2026-06-26T02:02:33.378Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/quickstart.html</loc>
-    <lastmod>2026-06-25T23:04:17.554Z</lastmod>
+    <lastmod>2026-06-26T02:02:33.384Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/install-r-and-rstudio.html</loc>
@@ -30,7 +30,7 @@
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/reference.html</loc>
-    <lastmod>2026-06-25T23:04:17.554Z</lastmod>
+    <lastmod>2026-06-26T00:15:51.692Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/guides.html</loc>
@@ -54,6 +54,10 @@
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/workflow.html</loc>
-    <lastmod>2026-06-24T23:27:28.867Z</lastmod>
+    <lastmod>2026-06-26T04:31:44.682Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/gate-test.html</loc>
+    <lastmod>2026-06-26T02:21:47.442Z</lastmod>
   </url>
 </urlset>

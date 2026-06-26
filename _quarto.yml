@@ -85,6 +85,11 @@ format:
     theme: [cosmo, custom.scss]
     link-external-newwindow: true
     link-external-icon: true
+    # Treat the whole jstats family (this guides site AND the pkgdown
+    # reference site) as internal: those links open in the same tab with
+    # no external-link icon. Genuinely off-site links (CRAN, Posit, etc.)
+    # still get the new-tab + icon treatment.
+    link-external-filter: '^(?:http:|https:)\/\/jma61\.github\.io\/'
     include-after-body:
       text: |
         <script>

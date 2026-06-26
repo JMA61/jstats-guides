@@ -274,6 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#output-files-plots-help-the-bottom-right-pane" id="toc-output-files-plots-help-the-bottom-right-pane" class="nav-link" data-scroll-target="#output-files-plots-help-the-bottom-right-pane">Output / Files / Plots / Help — the bottom-right pane</a></li>
   <li><a href="#the-source-pane-where-you-write-and-keep-code" id="toc-the-source-pane-where-you-write-and-keep-code" class="nav-link" data-scroll-target="#the-source-pane-where-you-write-and-keep-code">The Source pane — where you write and keep code</a></li>
   </ul></li>
+  <li><a href="#leaving-notes-in-your-code-the-symbol" id="toc-leaving-notes-in-your-code-the-symbol" class="nav-link" data-scroll-target="#leaving-notes-in-your-code-the-symbol">Leaving notes in your code — the <code>#</code> symbol</a></li>
   <li><a href="#start-each-session-with-a-clean-slate" id="toc-start-each-session-with-a-clean-slate" class="nav-link" data-scroll-target="#start-each-session-with-a-clean-slate">Start each session with a clean slate</a></li>
   </ul>
 </nav>
@@ -352,6 +353,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
+</section>
+<section id="leaving-notes-in-your-code-the-symbol" class="level2">
+<h2 class="anchored" data-anchor-id="leaving-notes-in-your-code-the-symbol">Leaving notes in your code — the <code>#</code> symbol</h2>
+<p>One small thing you’ll see throughout the examples on this site, and in your own scripts before long. When R meets a <code>#</code> on a line, it ignores the <code>#</code> and everything after it, to the end of that line. That space is for <strong>you</strong>, not R — somewhere to leave a plain-language note about what a line does:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">144</span>)    <span class="co"># find a square root</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>R runs the <code>sqrt(144)</code> part and pays no attention to the words after the <code>#</code>. A line that <em>begins</em> with <code>#</code> is all note and does nothing when run — purely a label for whoever reads the script later, including a future you who’s forgotten the details. Notes like these are how a script stays readable, and you’ll see them used throughout the code on these pages to explain each step as it happens.</p>
 </section>
 <section id="start-each-session-with-a-clean-slate" class="level2">
 <h2 class="anchored" data-anchor-id="start-each-session-with-a-clean-slate">Start each session with a clean slate</h2>
@@ -442,7 +449,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/jma61\.github\.io\/jstats-guides");
+        var filterRegex = new RegExp("^(?:http:|https:)\/\/jma61\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
