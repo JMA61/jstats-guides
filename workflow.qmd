@@ -87,6 +87,8 @@ By default jstats prints variable *names*, which keeps output uncluttered. But a
 joutput(variable.id = "legend")
 ```
 
+Running `joutput()` prints its full settings panel — every output setting, not only the one you changed — so the screenful you see here is expected, not a sign anything went wrong. The setting you changed, `variable.id`, is now marked `(override)`, flagging that it differs from the default; the others stay at their usual values.
+
 You can also set this for a single call, by passing `variable.id = "legend"` to that function directly instead of session-wide.
 
 ::: {.callout-note collapse="true" title="Going deeper (optional)"}
@@ -187,6 +189,22 @@ You won't normally clear these between ordinary analyses — leaving a default a
 juse(community)
 ```
 
+## Dialing the detail up or down
+
+Everything you've seen this session came out at jstats's **standard** detail level — the default. `joutput()` also takes an overall level, so you can trim the output or expand it in a single move:
+
+```{r, eval=FALSE}
+joutput("minimal")    # core results only — leanest output
+joutput("standard")   # the default you've been seeing
+joutput("full")       # fullest detail — diagnostics, extra tests, complete processing summaries
+```
+
+`minimal` strips the output down to the essential result tables — handy for a clean report or a production script; `full` turns on the additional diagnostics and notes that `standard` leaves off. Important warnings and errors always appear, whatever level you choose.
+
+::: {.callout-note collapse="true" title="Going deeper (optional)"}
+Each level is a preset for a whole set of individual switches — effect sizes, confidence intervals, the Case Processing Summary, and more — and you can override any one of them on its own, as you did earlier with `variable.id`. `?joutput` lists every setting and what each level turns on; Book 2 covers output control in more detail, with worked examples.
+:::
+
 ## Save your work, and open a file someone sends you
 
 A finished session usually ends by saving the prepared data. `jsave()` writes the in-memory data frame back out to a file, and `jload()` reads it back; together they're the round trip. Across formats — R's own `.rds`, plus SPSS, Stata, and Excel — jstats carries value labels, variable labels, and missing-value declarations along as faithfully as each format allows.
@@ -210,5 +228,5 @@ jscreen(community_received, stats = TRUE)
 
 And that's a full session, end to end: opened the data, screened it, cleaned a messy column, built and checked a scale, run the models, kept the case base consistent, and saved the result — with the everyday conveniences (`juse()`, `jdummy()`, `jcomplete()`) falling into place as they came up rather than as separate lessons.
 
-This page is the *narrative* of a session. For looking a single task up while you work — "how do I reverse-code an item," "how do I get a correlation matrix" — see the [Reference](reference.qmd) page, which links every function to its full help. And when you're ready to go further than these guides: Book 1 builds the statistics and R together from the start, and Book 2 is the option-by-option guide for readers who already know the statistics.
+This page is the *narrative* of a session, not a manual: to keep it moving it left a good deal unexplained — including output you saw but we didn't stop on, like the **Case Processing Summary** that headed several of the analyses (the small table reporting how many cases an analysis used and how missing values were handled). For looking a single task up while you work — "how do I reverse-code an item," "how do I get a correlation matrix" — see the [Reference](reference.qmd) page, which links every function to its full help and its options. And to go further than these guides, the book series covers the analyses and their output in full: Book 1 builds the statistics and R together from the start, and Book 2 is the option-by-option guide — output settings, the Case Processing Summary, and the rest — for readers who already know the statistics.
 <!-- future: link a YouTube full-session walkthrough here -->

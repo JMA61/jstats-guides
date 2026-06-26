@@ -271,6 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#run-the-analysis" id="toc-run-the-analysis" class="nav-link" data-scroll-target="#run-the-analysis">Run the analysis</a></li>
   <li><a href="#keep-one-set-of-cases-across-analyses" id="toc-keep-one-set-of-cases-across-analyses" class="nav-link" data-scroll-target="#keep-one-set-of-cases-across-analyses">Keep one set of cases across analyses</a></li>
   <li><a href="#a-clean-slate-when-you-want-one" id="toc-a-clean-slate-when-you-want-one" class="nav-link" data-scroll-target="#a-clean-slate-when-you-want-one">A clean slate when you want one</a></li>
+  <li><a href="#dialing-the-detail-up-or-down" id="toc-dialing-the-detail-up-or-down" class="nav-link" data-scroll-target="#dialing-the-detail-up-or-down">Dialing the detail up or down</a></li>
   <li><a href="#save-your-work-and-open-a-file-someone-sends-you" id="toc-save-your-work-and-open-a-file-someone-sends-you" class="nav-link" data-scroll-target="#save-your-work-and-open-a-file-someone-sends-you">Save your work, and open a file someone sends you</a></li>
   </ul>
 </nav>
@@ -485,6 +486,7 @@ MoodRating     70           63    1    9  5.46  1.702
   digits: 3
 </code></pre>
 </div>
+<p>Running <code>joutput()</code> prints its full settings panel — every output setting, not only the one you changed — so the screenful you see here is expected, not a sign anything went wrong. The setting you changed, <code>variable.id</code>, is now marked <code>(override)</code>, flagging that it differs from the default; the others stay at their usual values.</p>
 <p>You can also set this for a single call, by passing <code>variable.id = "legend"</code> to that function directly instead of session-wide.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
@@ -914,13 +916,15 @@ Variable Labels:
 </div>
 <p>You won’t normally clear these between ordinary analyses — leaving a default and your registrations in place is the point of having them. It’s for a fresh start, or to undo a mistake.</p>
 </section>
-<section id="save-your-work-and-open-a-file-someone-sends-you" class="level2">
-<h2 class="anchored" data-anchor-id="save-your-work-and-open-a-file-someone-sends-you">Save your work, and open a file someone sends you</h2>
-<p>A finished session usually ends by saving the prepared data. <code>jsave()</code> writes the in-memory data frame back out to a file, and <code>jload()</code> reads it back; together they’re the round trip. Across formats — R’s own <code>.rds</code>, plus SPSS, Stata, and Excel — jstats carries value labels, variable labels, and missing-value declarations along as faithfully as each format allows.</p>
+<section id="dialing-the-detail-up-or-down" class="level2">
+<h2 class="anchored" data-anchor-id="dialing-the-detail-up-or-down">Dialing the detail up or down</h2>
+<p>Everything you’ve seen this session came out at jstats’s <strong>standard</strong> detail level — the default. <code>joutput()</code> also takes an overall level, so you can trim the output or expand it in a single move:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(community, <span class="st">"community.rds"</span>)     <span class="co"># save the prepared data</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)  <span class="co"># read it back</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"minimal"</span>)    <span class="co"># core results only — leanest output</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"standard"</span>)   <span class="co"># the default you've been seeing</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"full"</span>)       <span class="co"># fullest detail — diagnostics, extra tests, complete processing summaries</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p><code>minimal</code> strips the output down to the essential result tables — handy for a clean report or a production script; <code>full</code> turns on the additional diagnostics and notes that <code>standard</code> leaves off. Important warnings and errors always appear, whatever level you choose.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -933,14 +937,38 @@ Variable Labels:
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p>Each level is a preset for a whole set of individual switches — effect sizes, confidence intervals, the Case Processing Summary, and more — and you can override any one of them on its own, as you did earlier with <code>variable.id</code>. <code>?joutput</code> lists every setting and what each level turns on; Book 2 covers output control in more detail, with worked examples.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="save-your-work-and-open-a-file-someone-sends-you" class="level2">
+<h2 class="anchored" data-anchor-id="save-your-work-and-open-a-file-someone-sends-you">Save your work, and open a file someone sends you</h2>
+<p>A finished session usually ends by saving the prepared data. <code>jsave()</code> writes the in-memory data frame back out to a file, and <code>jload()</code> reads it back; together they’re the round trip. Across formats — R’s own <code>.rds</code>, plus SPSS, Stata, and Excel — jstats carries value labels, variable labels, and missing-value declarations along as faithfully as each format allows.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(community, <span class="st">"community.rds"</span>)     <span class="co"># save the prepared data</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)  <span class="co"># read it back</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Going deeper (optional)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>Saving across formats is where the missing-value distinctions earn their keep — an SPSS-style code can’t write straight to a Stata file, and Excel stores no missing-value metadata at all, so jstats handles (and warns about) each case. <em><a href="./your-data.html">jstats with your own data</a></em> walks the full cross-format round trip live; Book 2 covers the fidelity rules in more detail, with worked examples. <code>?jsave</code> and <code>?jconvert</code> document the options.</p>
 </div>
 </div>
 </div>
 <p>Everything above used files you’d save yourself. The package also ships an example SPSS file inside itself — a stand-in for a data file a colleague emails you. <code>system.file()</code> is base R’s way of finding a file bundled inside an installed package; <code>jload()</code> then opens it like any other received file, missing-value codes and all:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>received <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"community_spss.sav"</span>, <span class="at">package =</span> <span class="st">"jstats"</span>)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(received, <span class="at">name =</span> <span class="st">"community_received"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>received <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"community_spss.sav"</span>, <span class="at">package =</span> <span class="st">"jstats"</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(received, <span class="at">name =</span> <span class="st">"community_received"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loaded community_received (SPSS format; 100 cases, 15 variables)</code></pre>
 </div>
@@ -955,7 +983,7 @@ These codes are excluded as missing in jstats analyses. For better base R compat
   jconvert(community_received, to = "stata")  - retains missing-value codes, base R compatible (recommended)
   jconvert(community_received, to = "baseR")  - converts to plain NA and removes missing-value codes</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jscreen</span>(community_received, <span class="at">stats =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jscreen</span>(community_received, <span class="at">stats =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Data Screening
 </span>  Cases: 100 
   Variables: 15 
@@ -1010,7 +1038,7 @@ Variable Labels:
 </code></pre>
 </div>
 <p>And that’s a full session, end to end: opened the data, screened it, cleaned a messy column, built and checked a scale, run the models, kept the case base consistent, and saved the result — with the everyday conveniences (<code>juse()</code>, <code>jdummy()</code>, <code>jcomplete()</code>) falling into place as they came up rather than as separate lessons.</p>
-<p>This page is the <em>narrative</em> of a session. For looking a single task up while you work — “how do I reverse-code an item,” “how do I get a correlation matrix” — see the <a href="./reference.html">Reference</a> page, which links every function to its full help. And when you’re ready to go further than these guides: Book 1 builds the statistics and R together from the start, and Book 2 is the option-by-option guide for readers who already know the statistics. <!-- future: link a YouTube full-session walkthrough here --></p>
+<p>This page is the <em>narrative</em> of a session, not a manual: to keep it moving it left a good deal unexplained — including output you saw but we didn’t stop on, like the <strong>Case Processing Summary</strong> that headed several of the analyses (the small table reporting how many cases an analysis used and how missing values were handled). For looking a single task up while you work — “how do I reverse-code an item,” “how do I get a correlation matrix” — see the <a href="./reference.html">Reference</a> page, which links every function to its full help and its options. And to go further than these guides, the book series covers the analyses and their output in full: Book 1 builds the statistics and R together from the start, and Book 2 is the option-by-option guide — output settings, the Case Processing Summary, and the rest — for readers who already know the statistics. <!-- future: link a YouTube full-session walkthrough here --></p>
 
 
 </section>

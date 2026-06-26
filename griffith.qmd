@@ -151,6 +151,32 @@ page: it opens in a new tab and walks you through everything from the beginning
 -- a short overview of what each tool is, then the download-and-install steps in
 order. Just work through it from the top.
 
+::: {.callout-tip collapse="true" title="Using a Griffith SAL lab computer?"}
+SAL lab machines are networked but not connected to the open internet. jstats
+runs perfectly there -- every analysis works fully offline. But while jstats is
+still in development it installs from GitHub, and each time it loads it briefly
+checks GitHub for a newer version. On a machine with no route to the internet
+that check has to time out first, so you may notice a short pause (a few seconds)
+at `library(jstats)`.
+
+To skip the check and load instantly, add one line to your `.Rprofile`, *above*
+the `library(jstats)` line:
+
+```r
+options(jstats.check_updates = FALSE)
+library(jstats)
+```
+
+Or, for a single session, run `options(jstats.check_updates = FALSE)` once before
+`library(jstats)`. On your own internet-connected computer you can leave the
+setting out -- the check is quick there, and it's how you find out when an update
+is available.
+
+This pause is specific to the current GitHub version. Once jstats moves to CRAN
+(R's central package archive), it will install and update the normal CRAN way and
+won't make this startup check at all.
+:::
+
 ## Using jstats in your own teaching?
 
 You're welcome to. jstats is under continuous development -- I'm regularly adding
