@@ -75,6 +75,7 @@ name linking to its full help page.
 - [`juse`](https://jma61.github.io/jstats/reference/juse.html) — set (or display) the default dataset, so you don't have to name it in every call.
 - [`joptions`](https://jma61.github.io/jstats/reference/joptions.html) — set or display session-level options, such as the data folder.
 - [`joutput`](https://jma61.github.io/jstats/reference/joutput.html) — set how much detail jstats prints (the output verbosity level).
+- [`jupdate`](https://jma61.github.io/jstats/reference/jupdate.html) — update jstats to the latest version (one command; restart R afterward to load it).
 
 ### Plots
 
