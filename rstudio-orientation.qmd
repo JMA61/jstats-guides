@@ -1,5 +1,5 @@
 ---
-pagetitle: "jstats — RStudio Orientation"
+pagetitle: "jstats:RStudio"
 title-prefix: ""
 ---
 

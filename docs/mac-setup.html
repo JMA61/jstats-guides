@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>jstats — Mac setup (build tools, XQuartz)</title>
+<title>jstats:Mac</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -74,13 +74,13 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<meta property="og:title" content="jstats — Mac setup (build tools, XQuartz)">
+<meta property="og:title" content="jstats:Mac">
 <meta property="og:description" content="">
 <meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta property="og:site_name" content="jstats">
 <meta property="og:image:height" content="720">
 <meta property="og:image:width" content="1280">
-<meta name="twitter:title" content="jstats — Mac setup (build tools, XQuartz)">
+<meta name="twitter:title" content="jstats:Mac">
 <meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta name="twitter:image-height" content="720">
@@ -276,7 +276,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Very occasionally an install may try to build a supporting package from source and report a build or compilation error. If that happens, work through these in order — most people never get past the first step:</p>
 <ol type="1">
 <li><strong>Answer “no” to the compile prompt.</strong> If R asks whether to <em>“install from sources the package which needs compilation,”</em> type <code>n</code> and press Enter, then run the install again — R will fetch a ready-made version instead. This resolves almost every case.</li>
-<li><strong>If it still fails</strong>, open the <strong>Terminal</strong> app and run <code>xcode-select --install</code> to add Apple’s command line tools, then <strong>restart R</strong> and retry.</li>
+<li><strong>If it still fails</strong>, open the <strong>Terminal</strong> app <em>(macOS’s built-in command-line window — it’s in the Applications folder, under Utilities)</em> and run <code>xcode-select --install</code> to add Apple’s command line tools, then <strong>restart R</strong> and retry.</li>
 <li><strong>If the error specifically mentions <code>gfortran</code></strong> or a Fortran compiler, the community-maintained <strong>macrtools</strong> package installs the full matching toolchain for you — see <a href="https://mac.thecoatlessprofessor.com/macrtools/" class="uri">https://mac.thecoatlessprofessor.com/macrtools/</a>.</li>
 </ol>
 </section>

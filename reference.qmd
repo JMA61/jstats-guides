@@ -1,5 +1,5 @@
 ---
-pagetitle: "jstats — Reference"
+pagetitle: "jstats:Reference"
 title-prefix: ""
 ---
 

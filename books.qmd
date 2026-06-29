@@ -1,5 +1,5 @@
 ---
-pagetitle: "jstats — Books"
+pagetitle: "jstats:Books"
 title-prefix: ""
 ---
 

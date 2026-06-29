@@ -1,5 +1,5 @@
 ---
-pagetitle: "jstats — Workflow"
+pagetitle: "jstats:Workflow"
 title-prefix: ""
 ---
 

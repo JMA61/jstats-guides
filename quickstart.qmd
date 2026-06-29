@@ -1,5 +1,5 @@
 ---
-pagetitle: "jstats — Quick Start"
+pagetitle: "jstats:Quickstart"
 title-prefix: ""
 ---
 

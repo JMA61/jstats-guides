@@ -1,5 +1,5 @@
 ---
-pagetitle: "jstats — Windows setup"
+pagetitle: "jstats:Windows"
 title-prefix: ""
 ---
 

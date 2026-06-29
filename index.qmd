@@ -1,5 +1,5 @@
 ---
-pagetitle: "jstats — R Made Accessible"
+pagetitle: "jstats:Home"
 title-prefix: ""
 toc: false
 ---

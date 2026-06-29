@@ -1,5 +1,5 @@
 ---
-pagetitle: "jstats — Troubleshooting"
+pagetitle: "jstats:Help"
 title-prefix: ""
 ---
 

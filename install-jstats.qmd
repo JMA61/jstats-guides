@@ -1,5 +1,5 @@
 ---
-pagetitle: "jstats — Install jstats"
+pagetitle: "jstats:Install"
 title-prefix: ""
 ---
 
@@ -12,7 +12,7 @@ Project open. If you haven't, work through
 [Install R and RStudio](install-r-and-rstudio.qmd), your platform page, and
 [RStudio Orientation](rstudio-orientation.qmd) first, then come back here.
 
-::: {.callout-note collapse="true" title="For experienced R users"}
+::: {.callout-tip collapse="true" title="For experienced R users"}
 If you've installed R packages before, only a few things here are specific to
 jstats. It currently installs from **GitHub** rather than CRAN, so you need the
 **remotes** package — but jstats is a **pure-R package**, so you do *not* need
@@ -153,13 +153,51 @@ reopen RStudio.
 
 Because jstats is updated often during this phase, it checks for a newer version
 each time you load it with `library(jstats)`. When one is available, it prints a
-short message with a few lines of code — you simply copy those lines into the
-Console and run them, and jstats updates itself. You don't have to track releases
-or hunt anything down; just watch for the message when the package loads and copy
-what it gives you. (This all gets simpler once jstats reaches CRAN; we'll update
-these instructions when it does.) On Windows, if you skipped Rtools, the same
-harmless *"Rtools is required..."* warning reappears on each update — see
-[Step 4a](windows-setup.qmd).
+short message at startup — the new version number and the one command to run.
+That command is:
+
+```r
+jupdate()
+```
+
+Run it in the Console and jstats updates itself: one command, with nothing to copy
+or keep track of. `jupdate()` first checks that you're online and that you aren't
+already on the latest version (if you are, it just says so and stops), then
+downloads and installs the new version. It doesn't pause to ask "are you sure?"
+— it goes ahead and updates.
+
+One thing to know: *installing* the new version and *loading* it are two separate
+steps. `jupdate()` puts the new version on your computer, but the session you're in
+keeps running the old one until you restart R. You don't have to remember how
+— when the update finishes, `jupdate()` prints the exact steps:
+
+```
+jstats has been updated.
+
+Restart R to load it in RStudio:
+  - open the Session menu > choose Restart R
+  - or press Ctrl+Shift+F10
+
+The Console will return to a blank prompt.
+Reload jstats with library(jstats) (unless loaded automatically on startup).
+```
+
+Follow those and you're running the new version.
+
+(This all gets simpler once jstats reaches CRAN: `jupdate()` keeps working, just
+updating the ordinary way, and we'll revise these instructions then.) On Windows,
+if you skipped Rtools, the same harmless *"Rtools is required..."* warning can
+reappear during an update — see [Step 4a](windows-setup.qmd).
+
+::: {.callout-note collapse="true" title="Going deeper (optional)"}
+A couple of extra options. If you'd rather confirm before anything installs, run
+`jupdate(ask = TRUE)` — it shows the available and installed versions and waits
+for your okay. Updates are reliable here because `jupdate()` installs in a
+*separate* R process, so the copy loaded in your session never has to overwrite its
+own files mid-update (the usual cause of a failed update on Windows). And to
+silence the startup check entirely — for instance on a machine that's on a
+network but has no internet — set `options(jstats.check_updates = FALSE)`.
+:::
 
 ::: {.callout-important title="This is a beta, and your input shapes it"}
 While jstats is in this pre-release phase, it's still actively growing — which
@@ -174,7 +212,7 @@ after the package reaches its stable release, where keeping existing code workin
 limits what can change.
 :::
 
-::: {.callout-note collapse="true" title="For experienced R users"}
+::: {.callout-tip collapse="true" title="For experienced R users"}
 A concrete example of feature-by-request: a researcher wanted to see *which cells*
 drive a significant chi-square, so adjusted standardized residuals were added to
 the cross-tabs function — `jcrosstab(Education ~ Volunteer, data = community,

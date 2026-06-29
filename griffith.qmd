@@ -1,5 +1,5 @@
 ---
-pagetitle: "jstats at Griffith"
+pagetitle: "jstats:Griffith"
 title-prefix: ""
 search: false
 toc: false

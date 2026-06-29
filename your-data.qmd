@@ -1,5 +1,5 @@
 ---
-pagetitle: "jstats — Your own data"
+pagetitle: "jstats:Your Data"
 title-prefix: ""
 ---
 
