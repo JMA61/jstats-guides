@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./quickstart.html" rel="next">
-<link href="./rstudio-orientation.html" rel="prev">
+<link href="./mac-setup.html" rel="prev">
 <link href="./images/avatar.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./install-jstats.html">Step 4 — Install jstats</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./install-jstats.html">Step 5 — Install jstats</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -222,14 +222,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./windows-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Step 4a — Windows setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mac-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Step 4b — Mac setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./install-jstats.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Step 4 — Install jstats</span></a>
+ <span class="menu-text">Step 5 — Install jstats</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quickstart.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Step 5 — jstats Quick Start</span></a>
+ <span class="menu-text">Step 6 — jstats Quick Start</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -286,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="install-jstats" class="level2">
 <h2 class="anchored" data-anchor-id="install-jstats">Install jstats</h2>
-<p>This page gets the jstats package installed and loaded, ready to use. It assumes you’ve already installed R and RStudio and have an RStudio Project open. If you haven’t, start with <a href="./install-r-and-rstudio.html">Install R and RStudio</a> and <a href="./rstudio-orientation.html">RStudio Orientation</a>, then come back here.</p>
+<p>This page gets the jstats package installed and loaded, ready to use. It assumes you’ve already installed R and RStudio, done your platform’s one-time setup (<a href="./windows-setup.html">Windows</a> or <a href="./mac-setup.html">Mac</a>), and have an RStudio Project open. If you haven’t, work through <a href="./install-r-and-rstudio.html">Install R and RStudio</a>, your platform page, and <a href="./rstudio-orientation.html">RStudio Orientation</a> first, then come back here.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="For experienced R users">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -299,37 +311,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>If you’ve installed R packages before, only a few things here are specific to jstats. It currently installs from <strong>GitHub</strong> rather than CRAN, so you need the <strong>remotes</strong> package — but jstats is a <strong>pure-R package</strong>, so you do <em>not</em> need Rtools (Windows) or Apple’s command line tools (Mac) to install it. The only thing that pulls in a compiler is a <em>dependency</em> being rebuilt from source; installing with <code>upgrade = "never"</code> (below) sidesteps that, and if R ever offers to install a package “from sources… which needs compilation,” answer no. jstats also checks for a newer version each time it loads. Jump to the two install commands below; the rest is ordinary install-and-load you already know.</p>
+<p>If you’ve installed R packages before, only a few things here are specific to jstats. It currently installs from <strong>GitHub</strong> rather than CRAN, so you need the <strong>remotes</strong> package — but jstats is a <strong>pure-R package</strong>, so you do <em>not</em> need Rtools (Windows) or Apple’s command line tools (Mac) to install it. The only thing that pulls in a compiler is a <em>dependency</em> being rebuilt from source; installing with <code>upgrade = "never"</code> (below) sidesteps that, and if R ever offers to install a package “from sources… which needs compilation,” answer no. On Windows, RStudio still prints a cosmetic “Rtools is required…” warning on every install and update unless Rtools is present — harmless, and <a href="./windows-setup.html">Step 4a</a> covers silencing it. jstats also checks for a newer version each time it loads. Jump to the two install commands below; the rest is ordinary install-and-load you already know.</p>
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
+</section>
+<section id="what-you-need-first" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-need-first">What you need first</h2>
+<p>Before the install steps below, make sure you have:</p>
+<ul>
+<li><strong>R and RStudio installed</strong> — see <a href="./install-r-and-rstudio.html">Install R and RStudio</a>.</li>
+<li><strong>Your platform’s setup done</strong> — <a href="./windows-setup.html">Step 4a — Windows setup</a> or <a href="./mac-setup.html">Step 4b — Mac setup</a>. These cover the small amount of one-time preparation needed while jstats installs from GitHub.</li>
+<li><strong>An RStudio Project open</strong> — <a href="./rstudio-orientation.html">RStudio Orientation</a> covers creating one. The automatic-loading step at the end of this page uses a small file that lives <em>inside</em> your Project, so it helps to have one ready.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Skipped straight to installing jstats?">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+<span class="screen-reader-only">Tip</span>Skipped straight to installing jstats?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>jstats is currently distributed through <strong>GitHub</strong> — a website where software is shared and developed. Later it will also be on <strong>CRAN</strong> (the same archive you downloaded R from), at which point installing it gets simpler. These instructions cover the current GitHub phase. You install once; after that, the package tells you whenever an update is available (see <em>Keep jstats up to date</em>, below).</p>
+<p>If you already had R and RStudio and jumped here, read your platform’s setup page first — <a href="./windows-setup.html">Windows setup</a> or <a href="./mac-setup.html">Mac setup</a> — since it covers one-time preparation for installing from GitHub. Then carry on below.</p>
 </div>
 </div>
-<p>Using any R package is really two steps that are easy to blur together. <strong>Installing</strong> downloads the package onto your computer — you do this once. <strong>Loading</strong> switches it on for your current session — you do this each time you start R, with <code>library()</code>. (Think of installing as buying a book for your shelf, and loading as taking it down to read.) jstats works the same way: the steps below do the one-time install, and the last section sets up the loading to happen on its own.</p>
-</section>
-<section id="what-you-need-first" class="level2">
-<h2 class="anchored" data-anchor-id="what-you-need-first">What you need first</h2>
-<ul>
-<li><strong>R and RStudio installed</strong> — see <a href="./install-r-and-rstudio.html">Install R and RStudio</a>.</li>
-<li><strong>An RStudio Project open</strong> — <a href="./rstudio-orientation.html">RStudio Orientation</a> covers creating one. The automatic-loading step at the end of this page uses a small file that lives <em>inside</em> your Project, so it helps to have one ready.</li>
-</ul>
-<p>One thing you <em>don’t</em> need: the extra build tools that some R packages require — <strong>Rtools</strong> on Windows, or Apple’s <strong>command line tools</strong> on Mac. Those are only for packages that have to be compiled from source, and jstats is written entirely in R, so it installs without them. (If you’ve read elsewhere that installing from GitHub means installing Rtools first, that’s the common case, not a rule — and not the case here.) The two commands below are all it takes.</p>
 </section>
 <section id="install-the-remotes-helper" class="level2">
 <h2 class="anchored" data-anchor-id="install-the-remotes-helper">Install the remotes helper</h2>
 <p>The <strong>remotes</strong> package is what handles installing from GitHub. Click in the <strong>Console</strong> (bottom-left pane) and run the line below. This is a one-off command you won’t need to save in a script:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="Seeing a warning about Rtools? (Windows)">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Seeing a warning about Rtools? (Windows)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If you skipped the Rtools step on <a href="./windows-setup.html">Step 4a</a>, Windows may print a harmless <em>“Rtools is required…”</em> warning here. It’s safe to ignore — jstats is pure R, so nothing is being compiled — and <a href="./windows-setup.html">Step 4a</a> shows what it looks like and how to stop it. (On a Mac it doesn’t apply.)</p>
+</div>
+</div>
+</div>
 </section>
 <section id="install-jstats-and-load-it" class="level2">
 <h2 class="anchored" data-anchor-id="install-jstats-and-load-it">Install jstats and load it</h2>
@@ -342,7 +370,7 @@ Note
 <h3 class="anchored" data-anchor-id="if-the-install-fails">If the install fails</h3>
 <p>Most install problems are one of a handful of things. Scan the titles below and open the one that matches your error. If yours isn’t here, the full <a href="./troubleshooting.html">Troubleshooting</a> page has more.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="API rate limit exceeded">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -351,14 +379,14 @@ Note
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>GitHub limits how many requests it answers from one internet connection per hour. A single install is well under the limit, but two situations can trip it: retrying a failing install many times in quick succession, or several people on the <strong>same network</strong> (a campus or office connection) all installing within the same hour and hitting the shared limit together. The fix is simply to <strong>wait an hour and try again</strong>, and to avoid rapid repeated retries. This limit goes away entirely once jstats reaches CRAN.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="there is no package called 'remotes'">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -367,7 +395,7 @@ Note
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The install-from-GitHub command needs the <strong>remotes</strong> package, and it isn’t installed yet. Run this first, then retry the install:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -375,7 +403,7 @@ Note
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="A build or compilation error">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -384,20 +412,20 @@ Note
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This means R tried to build one of jstats’s <strong>supporting packages</strong> from source, which needs build tools you normally don’t need for jstats. Work through these in order — most people never get past the first step.</p>
 <ol type="1">
 <li><strong>Answer “no” to the compile prompt.</strong> If R asks whether to <em>“install from sources the package which needs compilation,”</em> type <code>n</code> and press Enter, then run the install again. R will fetch a ready-made version of that package instead. This resolves the great majority of cases.</li>
-<li><strong>Windows — if it still fails:</strong> install the <strong>Rtools</strong> version that matches your R (for example <strong>Rtools45</strong> for R 4.5.x) from <a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a>, run the installer with its defaults, then <strong>restart R</strong> (Session menu, Restart R) and try the install again.</li>
-<li><strong>Mac — if it still fails:</strong> open the <strong>Terminal</strong> app and run <code>xcode-select --install</code>, follow the prompts, then <strong>restart R</strong> and retry. In the rarer case the error specifically mentions <code>gfortran</code> or a Fortran compiler, the community-maintained <strong>macrtools</strong> package installs the full matching toolchain for you — see its instructions at <a href="https://mac.thecoatlessprofessor.com/macrtools/" class="uri">https://mac.thecoatlessprofessor.com/macrtools/</a>.</li>
+<li><strong>Windows — if it still fails:</strong> make sure <strong>Rtools</strong> is installed and matches your R version — <a href="./windows-setup.html">Step 4a — Windows setup</a> covers this. If you installed it there, just <strong>restart R</strong> (Session menu, Restart R) and try the install again.</li>
+<li><strong>Mac — if it still fails:</strong> <a href="./mac-setup.html">Step 4b — Mac setup</a> covers the build tools (Apple’s command line tools, and <code>gfortran</code> via macrtools). Install what it describes, <strong>restart R</strong>, and retry.</li>
 </ol>
 <p>Once jstats reaches CRAN, none of this applies — installation becomes a single ready-made download.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="The install seems half-done or broken">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -406,7 +434,7 @@ Note
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The simplest fix is to remove jstats and install it fresh:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">remove.packages</span>(<span class="st">"jstats"</span>)</span>
@@ -416,7 +444,7 @@ Note
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="RStudio hangs or loops every time it starts">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -425,7 +453,7 @@ Note
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This almost always means an <strong>install command was put in your <code>.Rprofile</code></strong>. That file runs <em>every time R starts</em>, so an install line tries to reinstall on every startup and can loop. Your <code>.Rprofile</code> should only ever hold lightweight startup lines like <code>library(jstats)</code> — never an install command. To recover: close RStudio, open your Project folder in your computer’s file manager, open the <code>.Rprofile</code> file in a plain text editor (Notepad on Windows, TextEdit on Mac), delete the install line so only the <code>library(jstats)</code> line remains, save, and reopen RStudio.</p>
 </div>
@@ -435,7 +463,7 @@ Note
 </section>
 <section id="keep-jstats-up-to-date" class="level2">
 <h2 class="anchored" data-anchor-id="keep-jstats-up-to-date">Keep jstats up to date</h2>
-<p>Because jstats is updated often during this phase, it checks for a newer version each time you load it with <code>library(jstats)</code>. When one is available, it prints a short message with a few lines of code — you simply copy those lines into the Console and run them, and jstats updates itself. You don’t have to track releases or hunt anything down; just watch for the message when the package loads and copy what it gives you. (This all gets simpler once jstats reaches CRAN; we’ll update these instructions when it does.)</p>
+<p>Because jstats is updated often during this phase, it checks for a newer version each time you load it with <code>library(jstats)</code>. When one is available, it prints a short message with a few lines of code — you simply copy those lines into the Console and run them, and jstats updates itself. You don’t have to track releases or hunt anything down; just watch for the message when the package loads and copy what it gives you. (This all gets simpler once jstats reaches CRAN; we’ll update these instructions when it does.) On Windows, if you skipped Rtools, the same harmless <em>“Rtools is required…”</em> warning reappears on each update — see <a href="./windows-setup.html">Step 4a</a>.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="This is a beta, and your input shapes it">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -450,7 +478,7 @@ Note
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="For experienced R users">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -459,7 +487,7 @@ Note
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A concrete example of feature-by-request: a researcher wanted to see <em>which cells</em> drive a significant chi-square, so adjusted standardized residuals were added to the cross-tabs function — <code>jcrosstab(Education ~ Volunteer, data = community, residuals = "adjusted")</code>. That kind of targeted addition is exactly what this phase is for.</p>
 </div>
@@ -475,7 +503,7 @@ Note
 <p>Keep this to lightweight startup lines — loading a package, and later a setting or two. Do <strong>not</strong> put an install command (like <code>remotes::install_github(...)</code>) in <code>.Rprofile</code>: because the file runs on every startup, an install line there tries to reinstall each time and can send RStudio into a loop. Installing is a one-off you run by hand; loading is the repeatable step that belongs in startup.</p>
 <p>We’re keeping this minimal for now. Later you’ll add a line or two more — where your data lives, and how many digits to show in output — but one line is plenty to start.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -484,7 +512,7 @@ Note
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This <code>.Rprofile</code> lives inside your Project and applies only to this Project. That’s deliberate — it’s self-contained and safe to edit. There’s also a global, all-Projects version, but it’s better left until you’re juggling several Projects at once; the books cover it.</p>
 </div>
@@ -573,7 +601,7 @@ Note
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/jma61\.github\.io\/jstats-guides");
+        var filterRegex = new RegExp("^(?:http:|https:)\/\/jma61\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -909,13 +937,13 @@ Note
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./rstudio-orientation.html" class="pagination-link" aria-label="Step 3 — RStudio Orientation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Step 3 — RStudio Orientation</span>
+      <a href="./mac-setup.html" class="pagination-link" aria-label="Step 4b — Mac setup">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Step 4b — Mac setup</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./quickstart.html" class="pagination-link" aria-label="Step 5 — jstats Quick Start">
-        <span class="nav-page-text">Step 5 — jstats Quick Start</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./quickstart.html" class="pagination-link" aria-label="Step 6 — jstats Quick Start">
+        <span class="nav-page-text">Step 6 — jstats Quick Start</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -177,6 +177,16 @@ This pause is specific to the current GitHub version. Once jstats moves to CRAN
 won't make this startup check at all.
 :::
 
+::: {.callout-tip collapse="true" title="On a University-owned computer?"}
+University-managed computers are often locked down so that staff can't install
+software themselves. If you find you can't install R or RStudio — the installer is
+blocked, or asks for an administrator account you don't have — contact **the IT
+helpdesk** and ask them to enable the install, or to install R and RStudio (and
+Rtools, if you're installing that too) for you. Once those are in place, the
+jstats steps on the [Install jstats](install-jstats.qmd) page run just as they
+would on any other machine.
+:::
+
 ## Using jstats in your own teaching?
 
 You're welcome to. jstats is under continuous development -- I'm regularly adding

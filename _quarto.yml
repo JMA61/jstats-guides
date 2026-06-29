@@ -61,9 +61,13 @@ website:
           href: install-r-and-rstudio.qmd
         - text: "Step 3 — RStudio Orientation"
           href: rstudio-orientation.qmd
-        - text: "Step 4 — Install jstats"
+        - text: "Step 4a — Windows setup"
+          href: windows-setup.qmd
+        - text: "Step 4b — Mac setup"
+          href: mac-setup.qmd
+        - text: "Step 5 — Install jstats"
           href: install-jstats.qmd
-        - text: "Step 5 — jstats Quick Start"
+        - text: "Step 6 — jstats Quick Start"
           href: quickstart.qmd
         - section: "Going further"
           contents:
