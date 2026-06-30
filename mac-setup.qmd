@@ -3,7 +3,7 @@ pagetitle: "jstats:Mac"
 title-prefix: ""
 ---
 
-## Mac setup
+## Mac prerequisites
 
 A short note on preparing a Mac to install jstats from GitHub. The honest summary
 is that **most Mac users need nothing on this page** — jstats installs and runs

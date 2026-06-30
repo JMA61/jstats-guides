@@ -127,7 +127,7 @@
     "text": "A little one-time preparation gets your Windows computer ready to install jstats while it’s distributed from GitHub. It takes a few minutes, and once jstats reaches CRAN none of it will be needed.\n\nUsing any R package is really two steps that are easy to blur together. Installing downloads the package onto your computer — you do this once. Loading switches it on for your current session — you do this each time you start R, with library(). (Think of installing as buying a book for your shelf, and loading as taking it down to read.)\njstats is currently distributed through GitHub — a website where software is shared and developed — rather than from CRAN, the central archive you downloaded R from. That difference is the only reason your computer needs a little one-time preparation now, and why the install command on the next page looks slightly different from an ordinary package install. Once jstats reaches CRAN, that preparation falls away and installing becomes a single ready-made download. Until then, this page covers the small bit your computer needs.",
     "crumbs": [
       "Get Started",
-      "Step 4a — Windows setup"
+      "Step 4a — Windows prerequisites"
     ]
   },
   {
@@ -149,7 +149,7 @@
     "text": "Install Rtools (recommended)\nRtools is a small set of build tools for Windows. jstats itself doesn’t need it — jstats is written entirely in R, so it installs and runs without compiling anything. But there’s a practical reason to install it now anyway. While jstats installs from GitHub, RStudio shows a warning every time you install or update a package if it can’t find Rtools on your computer. The warning begins “Rtools is required to build R packages but is not currently installed” and looks alarming — but it is harmless here: nothing is actually wrong, and the install still works. The catch is that it reappears on every update, and jstats updates often during this phase, so the simplest way never to be bothered by it is to install Rtools once, now.\nTo install it:\n\nGo to https://cran.r-project.org/bin/windows/Rtools/.\nChoose the version that matches the version of R you installed — for example Rtools45 for R 4.5.x, or Rtools44 for R 4.4.x. (The Rtools page explains how to tell which you need. Matching matters — an unmatched version won’t clear the warning.)\nRun the installer with its default settings, then restart RStudio (close it and reopen it) so it picks up the new tools.\n\nAfter this, the Rtools warning won’t appear when you install or update jstats.\n\n\n\n\n\n\nNoteWhat the warning looks like (if you skip Rtools)\n\n\n\n\n\nIf you’d rather not install Rtools, you don’t strictly have to — jstats works perfectly without it. You’ll just see this warning each time you install or update jstats, beginning “Rtools is required to build R packages but is not currently installed”:\n\n\n\nThe Rtools warning RStudio shows when Rtools isn’t installed. It is harmless — the install still completes.\n\n\nIt’s safe to ignore: jstats is pure R, so nothing is being compiled, and the install finishes normally. The same warning reappears on every update:\n\n\n\nThe same Rtools warning, shown during an update. Harmless — the update still completes.\n\n\nInstalling Rtools (above) is simply the way to stop it appearing.",
     "crumbs": [
       "Get Started",
-      "Step 4a — Windows setup"
+      "Step 4a — Windows prerequisites"
     ]
   },
   {
@@ -160,7 +160,7 @@
     "text": "Next: install jstats\nWith Rtools in place (or knowingly skipped), continue to Step 5 — Install jstats, where the actual install commands live. Once jstats moves to CRAN, this preparation page won’t be needed — installation will happen the ordinary way, with no warning and no Rtools.",
     "crumbs": [
       "Get Started",
-      "Step 4a — Windows setup"
+      "Step 4a — Windows prerequisites"
     ]
   },
   {
@@ -506,7 +506,7 @@
     "href": "install-jstats.html#what-you-need-first",
     "title": "jstats",
     "section": "What you need first",
-    "text": "What you need first\nBefore the install steps below, make sure you have:\n\nR and RStudio installed — see Install R and RStudio.\nYour platform’s setup done — Step 4a — Windows setup or Step 4b — Mac setup. These cover the small amount of one-time preparation needed while jstats installs from GitHub.\nAn RStudio Project open — RStudio Orientation covers creating one. The automatic-loading step at the end of this page uses a small file that lives inside your Project, so it helps to have one ready.\n\n\n\n\n\n\n\nTipSkipped straight to installing jstats?\n\n\n\nIf you already had R and RStudio and jumped here, read your platform’s setup page first — Windows setup or Mac setup — since it covers one-time preparation for installing from GitHub. Then carry on below.",
+    "text": "What you need first\nBefore the install steps below, make sure you have:\n\nR and RStudio installed — see Install R and RStudio.\nYour platform’s setup done — Step 4a — Windows prerequisites or Step 4b — Mac prerequisites. These cover the small amount of one-time preparation needed while jstats installs from GitHub.\nAn RStudio Project open — RStudio Orientation covers creating one. The automatic-loading step at the end of this page uses a small file that lives inside your Project, so it helps to have one ready.\n\n\n\n\n\n\n\nTipSkipped straight to installing jstats?\n\n\n\nIf you already had R and RStudio and jumped here, read your platform’s setup page first — Windows prerequisites or Mac prerequisites — since it covers one-time preparation for installing from GitHub. Then carry on below.",
     "crumbs": [
       "Get Started",
       "Step 5 — Install jstats"
@@ -528,7 +528,7 @@
     "href": "install-jstats.html#install-jstats-and-load-it",
     "title": "jstats",
     "section": "Install jstats and load it",
-    "text": "Install jstats and load it\nNow install jstats from GitHub, then load it:\nremotes::install_github(\"JMA61/jstats\", upgrade = \"never\")\nlibrary(jstats)\nThe upgrade = \"never\" part keeps the install simple: it tells R not to go off and rebuild jstats’s supporting packages, which is the one thing that could otherwise call for those build tools. If R ever pauses and asks whether to “install from sources the package which needs compilation,” just type n and press Enter — you don’t need to compile anything, and R will use a ready-made version instead.\nIf it loaded cleanly, you’ll see a short jstats startup message — and, if a newer version is already out, a note with the exact lines to update (more on that below). That message is how you know jstats is loaded and ready.\n\nIf the install fails\nMost install problems are one of a handful of things. Scan the titles below and open the one that matches your error. If yours isn’t here, the full Troubleshooting page has more.\n\n\n\n\n\n\nWarningAPI rate limit exceeded\n\n\n\n\n\nGitHub limits how many requests it answers from one internet connection per hour. A single install is well under the limit, but two situations can trip it: retrying a failing install many times in quick succession, or several people on the same network (a campus or office connection) all installing within the same hour and hitting the shared limit together. The fix is simply to wait an hour and try again, and to avoid rapid repeated retries. This limit goes away entirely once jstats reaches CRAN.\n\n\n\n\n\n\n\n\n\nWarningthere is no package called ‘remotes’\n\n\n\n\n\nThe install-from-GitHub command needs the remotes package, and it isn’t installed yet. Run this first, then retry the install:\ninstall.packages(\"remotes\")\n\n\n\n\n\n\n\n\n\nWarningA build or compilation error\n\n\n\n\n\nThis means R tried to build one of jstats’s supporting packages from source, which needs build tools you normally don’t need for jstats. Work through these in order — most people never get past the first step.\n\nAnswer “no” to the compile prompt. If R asks whether to “install from sources the package which needs compilation,” type n and press Enter, then run the install again. R will fetch a ready-made version of that package instead. This resolves the great majority of cases.\nWindows — if it still fails: make sure Rtools is installed and matches your R version — Step 4a — Windows setup covers this. If you installed it there, just restart R (Session menu, Restart R) and try the install again.\nMac — if it still fails: Step 4b — Mac setup covers the build tools (Apple’s command line tools, and gfortran via macrtools). Install what it describes, restart R, and retry.\n\nOnce jstats reaches CRAN, none of this applies — installation becomes a single ready-made download.\n\n\n\n\n\n\n\n\n\nWarningThe install seems half-done or broken\n\n\n\n\n\nThe simplest fix is to remove jstats and install it fresh:\nremove.packages(\"jstats\")\nremotes::install_github(\"JMA61/jstats\", upgrade = \"never\")\nlibrary(jstats)\n\n\n\n\n\n\n\n\n\nWarningRStudio hangs or loops every time it starts\n\n\n\n\n\nThis almost always means an install command was put in your .Rprofile. That file runs every time R starts, so an install line tries to reinstall on every startup and can loop. Your .Rprofile should only ever hold lightweight startup lines like library(jstats) — never an install command. To recover: close RStudio, open your Project folder in your computer’s file manager, open the .Rprofile file in a plain text editor (Notepad on Windows, TextEdit on Mac), delete the install line so only the library(jstats) line remains, save, and reopen RStudio.",
+    "text": "Install jstats and load it\nNow install jstats from GitHub, then load it:\nremotes::install_github(\"JMA61/jstats\", upgrade = \"never\")\nlibrary(jstats)\nThe upgrade = \"never\" part keeps the install simple: it tells R not to go off and rebuild jstats’s supporting packages, which is the one thing that could otherwise call for those build tools. If R ever pauses and asks whether to “install from sources the package which needs compilation,” just type n and press Enter — you don’t need to compile anything, and R will use a ready-made version instead.\nIf it loaded cleanly, you’ll see a short jstats startup message — and, if a newer version is already out, a note with the exact lines to update (more on that below). That message is how you know jstats is loaded and ready.\n\nIf the install fails\nMost install problems are one of a handful of things. Scan the titles below and open the one that matches your error. If yours isn’t here, the full Troubleshooting page has more.\n\n\n\n\n\n\nWarningAPI rate limit exceeded\n\n\n\n\n\nGitHub limits how many requests it answers from one internet connection per hour. A single install is well under the limit, but two situations can trip it: retrying a failing install many times in quick succession, or several people on the same network (a campus or office connection) all installing within the same hour and hitting the shared limit together. The fix is simply to wait an hour and try again, and to avoid rapid repeated retries. This limit goes away entirely once jstats reaches CRAN.\n\n\n\n\n\n\n\n\n\nWarningthere is no package called ‘remotes’\n\n\n\n\n\nThe install-from-GitHub command needs the remotes package, and it isn’t installed yet. Run this first, then retry the install:\ninstall.packages(\"remotes\")\n\n\n\n\n\n\n\n\n\nWarningA build or compilation error\n\n\n\n\n\nThis means R tried to build one of jstats’s supporting packages from source, which needs build tools you normally don’t need for jstats. Work through these in order — most people never get past the first step.\n\nAnswer “no” to the compile prompt. If R asks whether to “install from sources the package which needs compilation,” type n and press Enter, then run the install again. R will fetch a ready-made version of that package instead. This resolves the great majority of cases.\nWindows — if it still fails: make sure Rtools is installed and matches your R version — Step 4a — Windows prerequisites covers this. If you installed it there, just restart R (Session menu, Restart R) and try the install again.\nMac — if it still fails: Step 4b — Mac prerequisites covers the build tools (Apple’s command line tools, and gfortran via macrtools). Install what it describes, restart R, and retry.\n\nOnce jstats reaches CRAN, none of this applies — installation becomes a single ready-made download.\n\n\n\n\n\n\n\n\n\nWarningThe install seems half-done or broken\n\n\n\n\n\nThe simplest fix is to remove jstats and install it fresh:\nremove.packages(\"jstats\")\nremotes::install_github(\"JMA61/jstats\", upgrade = \"never\")\nlibrary(jstats)\n\n\n\n\n\n\n\n\n\nWarningRStudio hangs or loops every time it starts\n\n\n\n\n\nThis almost always means an install command was put in your .Rprofile. That file runs every time R starts, so an install line tries to reinstall on every startup and can loop. Your .Rprofile should only ever hold lightweight startup lines like library(jstats) — never an install command. To recover: close RStudio, open your Project folder in your computer’s file manager, open the .Rprofile file in a plain text editor (Notepad on Windows, TextEdit on Mac), delete the install line so only the library(jstats) line remains, save, and reopen RStudio.",
     "crumbs": [
       "Get Started",
       "Step 5 — Install jstats"
@@ -575,7 +575,7 @@
     "text": "A short note on preparing a Mac to install jstats from GitHub. The honest summary is that most Mac users need nothing on this page — jstats installs and runs cleanly as it is. It’s here as a safety net for the rare hitch, and to answer a question Mac users often arrive with (XQuartz). Once jstats reaches CRAN, none of it applies.\n\nUsing any R package is really two steps that are easy to blur together. Installing downloads the package onto your computer — you do this once. Loading switches it on for your current session — you do this each time you start R, with library(). (Think of installing as buying a book for your shelf, and loading as taking it down to read.)\njstats is currently distributed through GitHub — a website where software is shared and developed — rather than from CRAN, the central archive you downloaded R from. That difference is the only reason your computer needs a little one-time preparation now, and why the install command on the next page looks slightly different from an ordinary package install. Once jstats reaches CRAN, that preparation falls away and installing becomes a single ready-made download. Until then, this page covers the small bit your computer needs.",
     "crumbs": [
       "Get Started",
-      "Step 4b — Mac setup"
+      "Step 4b — Mac prerequisites"
     ]
   },
   {
@@ -597,7 +597,7 @@
     "text": "You probably need nothing extra\njstats is written entirely in R, so installing it doesn’t compile anything, and the install command on the next page (upgrade = \"never\") tells R not to rebuild jstats’s supporting packages either. On a normal Mac setup, that means jstats installs with no build tools, no compiler, and no warning. So the two sections below are only for the uncommon case where something goes wrong — you can carry on to Step 5 — Install jstats now and come back only if you hit one of these.",
     "crumbs": [
       "Get Started",
-      "Step 4b — Mac setup"
+      "Step 4b — Mac prerequisites"
     ]
   },
   {
@@ -608,7 +608,7 @@
     "text": "If an install ever asks to compile (build tools)\nVery occasionally an install may try to build a supporting package from source and report a build or compilation error. If that happens, work through these in order — most people never get past the first step:\n\nAnswer “no” to the compile prompt. If R asks whether to “install from sources the package which needs compilation,” type n and press Enter, then run the install again — R will fetch a ready-made version instead. This resolves almost every case.\nIf it still fails, open the Terminal app (macOS’s built-in command-line window — it’s in the Applications folder, under Utilities) and run xcode-select --install to add Apple’s command line tools, then restart R and retry.\nIf the error specifically mentions gfortran or a Fortran compiler, the community-maintained macrtools package installs the full matching toolchain for you — see https://mac.thecoatlessprofessor.com/macrtools/.",
     "crumbs": [
       "Get Started",
-      "Step 4b — Mac setup"
+      "Step 4b — Mac prerequisites"
     ]
   },
   {
@@ -619,7 +619,7 @@
     "text": "About XQuartz\nYou may have heard that R on a Mac “needs XQuartz.” For jstats, it does not.\nXQuartz is the X11 windowing system for macOS (Apple stopped bundling X11 years ago). Some R packages rely on it — notably anything built on Tcl/Tk (such as R Commander), the rgl package for 3-D graphics, and R’s older X11 graphics device. jstats uses none of these: its graphics go through the Mac’s native quartz device, so it never touches X11. If you only use jstats, you can ignore XQuartz entirely.\nIf you later install a different package that does need it, R tells you plainly when you try to use that feature — you won’t be left guessing. At that point, install XQuartz from https://www.xquartz.org/ and then restart your Mac (XQuartz loads at login).",
     "crumbs": [
       "Get Started",
-      "Step 4b — Mac setup"
+      "Step 4b — Mac prerequisites"
     ]
   },
   {
@@ -630,7 +630,7 @@
     "text": "Next: install jstats\nContinue to Step 5 — Install jstats. Once jstats moves to CRAN, this page’s safety net falls away — installation becomes a single ready-made download.",
     "crumbs": [
       "Get Started",
-      "Step 4b — Mac setup"
+      "Step 4b — Mac prerequisites"
     ]
   },
   {
@@ -834,6 +834,28 @@
       "Get Started",
       "Going further",
       "A typical jstats workflow"
+    ]
+  },
+  {
+    "objectID": "windows-setup.html#windows-prerequisites",
+    "href": "windows-setup.html#windows-prerequisites",
+    "title": "jstats",
+    "section": "",
+    "text": "A little one-time preparation gets your Windows computer ready to install jstats while it’s distributed from GitHub. It takes a few minutes, and once jstats reaches CRAN none of it will be needed.\n\nUsing any R package is really two steps that are easy to blur together. Installing downloads the package onto your computer — you do this once. Loading switches it on for your current session — you do this each time you start R, with library(). (Think of installing as buying a book for your shelf, and loading as taking it down to read.)\njstats is currently distributed through GitHub — a website where software is shared and developed — rather than from CRAN, the central archive you downloaded R from. That difference is the only reason your computer needs a little one-time preparation now, and why the install command on the next page looks slightly different from an ordinary package install. Once jstats reaches CRAN, that preparation falls away and installing becomes a single ready-made download. Until then, this page covers the small bit your computer needs.",
+    "crumbs": [
+      "Get Started",
+      "Step 4a — Windows prerequisites"
+    ]
+  },
+  {
+    "objectID": "mac-setup.html#mac-prerequisites",
+    "href": "mac-setup.html#mac-prerequisites",
+    "title": "jstats",
+    "section": "",
+    "text": "A short note on preparing a Mac to install jstats from GitHub. The honest summary is that most Mac users need nothing on this page — jstats installs and runs cleanly as it is. It’s here as a safety net for the rare hitch, and to answer a question Mac users often arrive with (XQuartz). Once jstats reaches CRAN, none of it applies.\n\nUsing any R package is really two steps that are easy to blur together. Installing downloads the package onto your computer — you do this once. Loading switches it on for your current session — you do this each time you start R, with library(). (Think of installing as buying a book for your shelf, and loading as taking it down to read.)\njstats is currently distributed through GitHub — a website where software is shared and developed — rather than from CRAN, the central archive you downloaded R from. That difference is the only reason your computer needs a little one-time preparation now, and why the install command on the next page looks slightly different from an ordinary package install. Once jstats reaches CRAN, that preparation falls away and installing becomes a single ready-made download. Until then, this page covers the small bit your computer needs.",
+    "crumbs": [
+      "Get Started",
+      "Step 4b — Mac prerequisites"
     ]
   }
 ]

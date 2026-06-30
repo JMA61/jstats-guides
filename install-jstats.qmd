@@ -32,8 +32,8 @@ ordinary install-and-load you already know.
 Before the install steps below, make sure you have:
 
 - **R and RStudio installed** — see [Install R and RStudio](install-r-and-rstudio.qmd).
-- **Your platform's setup done** — [Step 4a — Windows setup](windows-setup.qmd) or
-  [Step 4b — Mac setup](mac-setup.qmd). These cover the small amount of one-time
+- **Your platform's setup done** — [Step 4a — Windows prerequisites](windows-setup.qmd) or
+  [Step 4b — Mac prerequisites](mac-setup.qmd). These cover the small amount of one-time
   preparation needed while jstats installs from GitHub.
 - **An RStudio Project open** — [RStudio Orientation](rstudio-orientation.qmd)
   covers creating one. The automatic-loading step at the end of this page uses a
@@ -41,7 +41,7 @@ Before the install steps below, make sure you have:
 
 ::: {.callout-tip title="Skipped straight to installing jstats?"}
 If you already had R and RStudio and jumped here, read your platform's setup page
-first — [Windows setup](windows-setup.qmd) or [Mac setup](mac-setup.qmd) — since it
+first — [Windows prerequisites](windows-setup.qmd) or [Mac prerequisites](mac-setup.qmd) — since it
 covers one-time preparation for installing from GitHub. Then carry on below.
 :::
 
@@ -117,10 +117,10 @@ order — most people never get past the first step.
    run the install again. R will fetch a ready-made version of that package
    instead. This resolves the great majority of cases.
 2. **Windows — if it still fails:** make sure **Rtools** is installed and matches
-   your R version — [Step 4a — Windows setup](windows-setup.qmd) covers this. If
+   your R version — [Step 4a — Windows prerequisites](windows-setup.qmd) covers this. If
    you installed it there, just **restart R** (Session menu, Restart R) and try
    the install again.
-3. **Mac — if it still fails:** [Step 4b — Mac setup](mac-setup.qmd) covers the
+3. **Mac — if it still fails:** [Step 4b — Mac prerequisites](mac-setup.qmd) covers the
    build tools (Apple's command line tools, and `gfortran` via macrtools). Install
    what it describes, **restart R**, and retry.
 

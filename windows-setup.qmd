@@ -3,7 +3,7 @@ pagetitle: "jstats:Windows"
 title-prefix: ""
 ---
 
-## Windows setup
+## Windows prerequisites
 
 A little one-time preparation gets your Windows computer ready to install jstats
 while it's distributed from GitHub. It takes a few minutes, and once jstats
