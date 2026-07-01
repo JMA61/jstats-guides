@@ -60,8 +60,7 @@ computational engines underneath, so what you learn stays close to base R.
 
 With this background in mind, you're ready for **Step 2**, where we install R and
 RStudio, and then **Step 3**, a brief tour of RStudio. Already comfortable in
-RStudio? You'll still want your platform's quick setup — **Step 4a** (Windows) or
-**Step 4b** (Mac) — then **Step 5** (installing jstats) and **Step 6** (the Quick
+RStudio? Skip ahead to **Step 4** (installing jstats) and **Step 5** (the Quick
 Start).
 
 That's all the background you need to get going. If you'd like a little more first
