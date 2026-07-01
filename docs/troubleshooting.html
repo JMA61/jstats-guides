@@ -211,63 +211,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="installing-jstats" class="level2">
 <h2 class="anchored" data-anchor-id="installing-jstats">Installing jstats</h2>
-<div class="callout callout-style-default callout-warning callout-titled" title="API rate limit exceeded">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>API rate limit exceeded
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>GitHub limits how many requests it answers from one internet connection per hour. A single install is well under the limit, but two situations can trip it: retrying a failing install many times in quick succession, or several people on the <strong>same network</strong> (a campus or office connection) all installing within the same hour and hitting the shared limit together. The fix is to <strong>wait an hour and try again</strong>, and to avoid rapid repeated retries. This limit goes away entirely once jstats reaches CRAN, because CRAN installs don’t use the GitHub interface at all.</p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled" title="there is no package called 'remotes'">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>there is no package called ‘remotes’
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Installing from GitHub needs the <strong>remotes</strong> package, and it isn’t installed yet. Run this first, then retry the install:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled" title="A build or compilation error">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>A build or compilation error
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>This means R tried to build one of jstats’s <strong>supporting packages</strong> from source, which needs build tools you normally don’t need for jstats. Work through these in order — most people never get past the first step.</p>
-<ol type="1">
-<li><strong>Answer “no” to the compile prompt.</strong> If R asks whether to <em>“install from sources the package which needs compilation,”</em> type <code>n</code> and press Enter, then run the install again. R will fetch a ready-made version of that package instead. This resolves the great majority of cases.</li>
-<li><strong>Windows — if it still fails:</strong> install the <strong>Rtools</strong> version that matches your R (for example <strong>Rtools45</strong> for R 4.5.x) from <a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a>, run the installer with its defaults, then <strong>restart R</strong> (Session menu, Restart R) and try the install again.</li>
-<li><strong>Mac — if it still fails:</strong> open the <strong>Terminal</strong> app and run <code>xcode-select --install</code>, follow the prompts, then <strong>restart R</strong> and retry. In the rarer case the error specifically mentions <code>gfortran</code> or a Fortran compiler, the community-maintained <strong>macrtools</strong> package installs the full matching toolchain for you — see its instructions at <a href="https://mac.thecoatlessprofessor.com/macrtools/" class="uri">https://mac.thecoatlessprofessor.com/macrtools/</a>.</li>
-</ol>
-<p>Once jstats reaches CRAN, none of this applies — installation becomes a single ready-made download.</p>
-</div>
-</div>
-</div>
 <div class="callout callout-style-default callout-warning callout-titled" title="The install seems half-done or broken">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -276,12 +221,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The simplest fix is to remove jstats and install it fresh:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">remove.packages</span>(<span class="st">"jstats"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"JMA61/jstats"</span>, <span class="at">upgrade =</span> <span class="st">"never"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">remove.packages</span>(<span class="st">"jstats"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"jstats"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">"https://jma61.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -289,7 +235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="starting-rstudio-and-loading-jstats" class="level2">
 <h2 class="anchored" data-anchor-id="starting-rstudio-and-loading-jstats">Starting RStudio and loading jstats</h2>
 <div class="callout callout-style-default callout-warning callout-titled" title="RStudio hangs or loops every time it starts">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -298,14 +244,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This almost always means an <strong>install command was put in your <code>.Rprofile</code></strong>. That file runs <em>every time R starts</em>, so an install line tries to reinstall on every startup and can loop. Your <code>.Rprofile</code> should only ever hold lightweight startup lines like <code>library(jstats)</code> — never an install command. To recover: close RStudio, open your Project folder in your computer’s file manager, open the <code>.Rprofile</code> file in a plain text editor (Notepad on Windows, TextEdit on Mac), delete the install line so only the <code>library(jstats)</code> line remains, save, and reopen RStudio.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="Loading jstats pauses for several seconds on a no-internet connection">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -314,19 +260,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>While jstats is still in development it installs from GitHub, and each time it loads it briefly checks GitHub for a newer version. The package itself works fully offline, but on a machine that is <strong>connected to a network yet has no route to the open internet</strong> – common on locked-down lab or server installations – that check has to time out before loading finishes, so <code>library(jstats)</code> can pause for a few seconds.</p>
+<p>While jstats is still in development it installs from an r-universe repository, and each time it loads it briefly checks that repository for a newer version. The package itself works fully offline, but on a machine that is <strong>connected to a network yet has no route to the open internet</strong> – common on locked-down lab or server installations – that check has to time out before loading finishes, so <code>library(jstats)</code> can pause for a few seconds.</p>
 <p>To skip the check and load immediately, set this option <em>before</em> loading the package:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">jstats.check_updates =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">jstats.check_updates =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Putting the <code>options(...)</code> line above the <code>library(jstats)</code> line in your <code>.Rprofile</code> makes it the default every session. On an ordinary internet connection you can leave it out – the check is fast there, and it’s how you learn an update is available.</p>
-<p>This is specific to the current GitHub version. Once jstats reaches CRAN, installing and updating happen the normal CRAN way, with no startup check of this kind.</p>
+<p>This is specific to this pre-CRAN version. Once jstats reaches CRAN, installing and updating happen the normal CRAN way, with no startup check of this kind.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="could not find function 'jfreq' (or another jstats function)">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -335,16 +281,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>jstats probably isn’t loaded in this session. Run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If it still isn’t found, check spelling and capitalization — R is case-sensitive, so <code>jfreq</code> and <code>jFreq</code> are different names.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="object 'community' not found">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -353,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The shipped datasets become available once the package is loaded. Run <code>library(jstats)</code> first, then try again. (If you’re working with your own data instead, make sure you’ve loaded it — see <a href="./your-data.html">jstats with your own data</a>.)</p>
 </div>

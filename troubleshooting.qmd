@@ -14,56 +14,13 @@ full error message and your R and jstats versions makes it quicker to sort out.
 
 ## Installing jstats
 
-::: {.callout-warning collapse="true" title="API rate limit exceeded"}
-GitHub limits how many requests it answers from one internet connection per hour.
-A single install is well under the limit, but two situations can trip it: retrying
-a failing install many times in quick succession, or several people on the **same
-network** (a campus or office connection) all installing within the same hour and
-hitting the shared limit together. The fix is to **wait an hour and try again**, and
-to avoid rapid repeated retries. This limit goes away entirely once jstats reaches
-CRAN, because CRAN installs don't use the GitHub interface at all.
-:::
-
-::: {.callout-warning collapse="true" title="there is no package called 'remotes'"}
-Installing from GitHub needs the **remotes** package, and it isn't installed yet.
-Run this first, then retry the install:
-
-```r
-install.packages("remotes")
-```
-:::
-
-::: {.callout-warning collapse="true" title="A build or compilation error"}
-This means R tried to build one of jstats's **supporting packages** from source,
-which needs build tools you normally don't need for jstats. Work through these in
-order — most people never get past the first step.
-
-1. **Answer "no" to the compile prompt.** If R asks whether to *"install from
-   sources the package which needs compilation,"* type `n` and press Enter, then
-   run the install again. R will fetch a ready-made version of that package
-   instead. This resolves the great majority of cases.
-2. **Windows — if it still fails:** install the **Rtools** version that matches
-   your R (for example **Rtools45** for R 4.5.x) from
-   <https://cran.r-project.org/bin/windows/Rtools/>, run the installer with its
-   defaults, then **restart R** (Session menu, Restart R) and try the install
-   again.
-3. **Mac — if it still fails:** open the **Terminal** app and run
-   `xcode-select --install`, follow the prompts, then **restart R** and retry. In
-   the rarer case the error specifically mentions `gfortran` or a Fortran
-   compiler, the community-maintained **macrtools** package installs the full
-   matching toolchain for you — see its instructions at
-   <https://mac.thecoatlessprofessor.com/macrtools/>.
-
-Once jstats reaches CRAN, none of this applies — installation becomes a single
-ready-made download.
-:::
-
 ::: {.callout-warning collapse="true" title="The install seems half-done or broken"}
 The simplest fix is to remove jstats and install it fresh:
 
 ```r
 remove.packages("jstats")
-remotes::install_github("JMA61/jstats", upgrade = "never")
+install.packages("jstats",
+  repos = c("https://jma61.r-universe.dev", "https://cloud.r-project.org"))
 library(jstats)
 ```
 :::
@@ -81,8 +38,9 @@ line so only the `library(jstats)` line remains, save, and reopen RStudio.
 :::
 
 ::: {.callout-warning collapse="true" title="Loading jstats pauses for several seconds on a no-internet connection"}
-While jstats is still in development it installs from GitHub, and each time it
-loads it briefly checks GitHub for a newer version. The package itself works fully
+While jstats is still in development it installs from an r-universe repository, and
+each time it loads it briefly checks that repository for a newer version. The
+package itself works fully
 offline, but on a machine that is **connected to a network yet has no route to the
 open internet** -- common on locked-down lab or server installations -- that check
 has to time out before loading finishes, so `library(jstats)` can pause for a few
@@ -101,7 +59,7 @@ Putting the `options(...)` line above the `library(jstats)` line in your
 connection you can leave it out -- the check is fast there, and it's how you learn
 an update is available.
 
-This is specific to the current GitHub version. Once jstats reaches CRAN,
+This is specific to this pre-CRAN version. Once jstats reaches CRAN,
 installing and updating happen the normal CRAN way, with no startup check of this
 kind.
 :::

@@ -154,9 +154,10 @@ order. Just work through it from the top.
 ::: {.callout-tip collapse="true" title="Using a Griffith SAL lab computer?"}
 SAL lab machines are networked but not connected to the open internet. jstats
 runs perfectly there -- every analysis works fully offline. But while jstats is
-still in development it installs from GitHub, and each time it loads it briefly
-checks GitHub for a newer version. On a machine with no route to the internet
-that check has to time out first, so you may notice a short pause (a few seconds)
+still in development it installs from an r-universe repository, and each time it
+loads it briefly checks that repository for a newer version. On a machine with no
+route to the internet that check has to time out first, so you may notice a short
+pause (a few seconds)
 at `library(jstats)`.
 
 To skip the check and load instantly, add one line to your `.Rprofile`, *above*
@@ -172,7 +173,7 @@ Or, for a single session, run `options(jstats.check_updates = FALSE)` once befor
 setting out -- the check is quick there, and it's how you find out when an update
 is available.
 
-This pause is specific to the current GitHub version. Once jstats moves to CRAN
+This pause is specific to this pre-CRAN version. Once jstats moves to CRAN
 (R's central package archive), it will install and update the normal CRAN way and
 won't make this startup check at all.
 :::
@@ -181,10 +182,10 @@ won't make this startup check at all.
 University-managed computers are often locked down so that staff can't install
 software themselves. If you find you can't install R or RStudio — the installer is
 blocked, or asks for an administrator account you don't have — contact **the IT
-helpdesk** and ask them to enable the install, or to install R and RStudio (and
-Rtools, if you're installing that too) for you. Once those are in place, the
-jstats steps on the [Install jstats](install-jstats.qmd) page run just as they
-would on any other machine.
+helpdesk** and ask them to enable the install, or to install R and RStudio for
+you. Once those are in place, the jstats steps on the
+[Install jstats](install-jstats.qmd) page run just as they would on any other
+machine.
 :::
 
 ## Using jstats in your own teaching?
@@ -193,8 +194,8 @@ You're welcome to. jstats is under continuous development -- I'm regularly addin
 and refining functions. My current focus is the set of analyses I cover in my
 course, but I plan to expand it with additional functions for other data-analysis
 tasks common in social-science research and publishing. For now it installs from
-GitHub, where the project lives during early development; before long I expect to
-move it to CRAN -- R's central package archive -- so installation becomes simpler
+an r-universe repository during early development; before long I expect to move it
+to CRAN -- R's central package archive -- so installation becomes simpler
 and more routine. If you're using jstats in a course -- at Griffith or anywhere
 else -- I'd be glad to hear about it, purely out of interest and so I can get a
 sense of where the package is being used. Email me at
