@@ -58,6 +58,16 @@ computational engines underneath, so what you learn stays close to base R.
 
 ## Next steps
 
+One reassurance before you start, because it matters more than it sounds:
+**nothing you type into R can harm your computer.** The worst outcome of any
+command is a red error message saying R didn't understand — and errors aren't a
+sign you're doing badly. They're a normal part of how everyone works in R,
+beginners and forty-year veterans alike. The setup steps ahead — installing two
+programs and a package — are honestly the clumsiest part of the whole journey,
+and things get easier the moment they're done. Work through them patiently, lean
+on the [Troubleshooting](troubleshooting.qmd) page if anything snags, and once
+you're in, experiment freely.
+
 With this background in mind, you're ready for **Step 2**, where we install R and
 RStudio, and then **Step 3**, a brief tour of RStudio. Already comfortable in
 RStudio? Skip ahead to **Step 4** (installing jstats) and **Step 5** (the Quick
@@ -124,4 +134,5 @@ use. (jstats isn't on CRAN just yet — for now it installs from another common 
 for R projects, which the Install jstats page walks you through — but it's headed
 there.)
 :::
+
 

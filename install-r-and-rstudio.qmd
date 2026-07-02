@@ -37,6 +37,10 @@ Download **RStudio Desktop** from
 <https://posit.co/download/rstudio-desktop/> and install it. (Install R first;
 RStudio needs it.) From now on, RStudio is the program you open to work.
 
+The download page also mentions paid products — those are enterprise tools aimed
+at large organizations, not something you're missing out on. The free **RStudio
+Desktop** is the full program, and it's the one you'll open every time you work.
+
 ## RStudio's own getting-started guide
 
 You may come across RStudio's own
@@ -54,3 +58,4 @@ for the jstats route the simplest thing is to skip it and keep going here. The
 next page is that orientation — a quick tour of RStudio (the panes, the console,
 and how your data looks once it's loaded) — before you add the jstats package
 itself.
+

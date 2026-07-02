@@ -25,6 +25,45 @@ library(jstats)
 ```
 :::
 
+::: {.callout-warning collapse="true" title="The install fails on Windows: 'not writable', 'cannot create dir', or the message mentions OneDrive"}
+On many Windows computers the **Documents** folder is synced by OneDrive — and by
+default that is where R keeps its **package library** (the folder your installed
+packages live in). OneDrive can lock files while it syncs, and an install that
+runs into a lock fails part-way with messages like the ones above.
+
+Fixes, from simplest to most durable:
+
+1. **Pause OneDrive and retry.** Click the OneDrive cloud icon near the clock,
+   choose **Pause syncing**, run the install line again, then resume syncing.
+2. **Give R a package library outside the synced folder.** This one-time setup
+   ends the problem for good. Create a plain folder directly on your drive, such
+   as `C:\Rlibs`. Then create a plain text file named `.Renviron` in your
+   Documents folder containing this single line:
+
+   ```
+   R_LIBS_USER=C:/Rlibs
+   ```
+
+   (Note the forward slash — that's how R writes paths.) Restart R and run the
+   install line again; packages now install to the new folder, out of OneDrive's
+   reach.
+
+A related, rarer cause of the same errors: a Windows username containing accented
+or non-English characters can break the library path in the same way. The same
+fix applies — a package library at a simple location like `C:/Rlibs`.
+:::
+
+::: {.callout-warning collapse="true" title="The install asks for an administrator password, or a work network blocks the download"}
+On managed work or lab computers, two things can stop the install: your account
+may not be allowed to install software, or the network may block downloads from
+sites it doesn't recognize. Neither is anything you did wrong — and the request
+to your IT support is a small one. jstats installs as a **ready-made binary** (no
+compilers or build tools are needed), fetched from the two addresses in the
+install line: the r-universe repository (`jma61.r-universe.dev`) and an ordinary
+CRAN mirror (`cloud.r-project.org`). Ask IT either to allow those two addresses
+or to run the install line for you; either way it's a quick job for them.
+:::
+
 ## Starting RStudio and loading jstats
 
 ::: {.callout-warning collapse="true" title="RStudio hangs or loops every time it starts"}
@@ -34,7 +73,8 @@ startup and can loop. Your `.Rprofile` should only ever hold lightweight startup
 lines like `library(jstats)` — never an install command. To recover: close RStudio,
 open your Project folder in your computer's file manager, open the `.Rprofile` file
 in a plain text editor (Notepad on Windows, TextEdit on Mac), delete the install
-line so only the `library(jstats)` line remains, save, and reopen RStudio.
+line, keeping the `library(jstats)` line (and its reminder comment, if your
+`.Rprofile` has one), save, and reopen RStudio.
 :::
 
 ::: {.callout-warning collapse="true" title="Loading jstats pauses for several seconds on a no-internet connection"}
@@ -64,6 +104,39 @@ installing and updating happen the normal CRAN way, with no startup check of thi
 kind.
 :::
 
+::: {.callout-warning collapse="true" title="Error in library(jstats): there is no package called 'jstats'"}
+This shows up two ways: you run `library(jstats)` in the Console and get this
+error, or — if your `.Rprofile` loads jstats automatically — the same error
+greets you every time RStudio starts. Either way, the usual cause is that **R
+itself was updated**, and updating R starts a fresh, empty package library — so
+jstats (along with any other packages you had installed) is no longer there.
+
+The rule in plain words: R's version numbers have three parts, like 4.5.2. Only a
+change to the **middle** number (4.5 → 4.6) starts a fresh package library; a
+last-number update (4.5.1 → 4.5.2) changes nothing about your packages. And this
+is about **R**, not RStudio — RStudio updates are always safe and never touch
+your packages. R has no built-in update notifier, so updating R is a separate,
+deliberate act; if you did it recently, this reinstall is the one follow-up
+chore.
+
+(Why `jupdate()` can't rescue you here: `jupdate()` is itself a jstats command,
+and jstats isn't installed in the new library yet.)
+
+The fix is the same install line as the first time — run it once and you're
+back:
+
+```r
+install.packages("jstats",
+  repos = c("https://jma61.r-universe.dev", "https://cloud.r-project.org"))
+library(jstats)
+```
+
+Don't confuse this error with the harmless **warning** that jstats `was built
+under R version 4.x.x` — that one just means the ready-made copy was built on a
+slightly different R patch, needs no action, and clears on its own. This callout
+is about the actual error where jstats can't be found at all.
+:::
+
 ::: {.callout-warning collapse="true" title="could not find function 'jfreq' (or another jstats function)"}
 jstats probably isn't loaded in this session. Run:
 
@@ -81,3 +154,27 @@ The shipped datasets become available once the package is loaded. Run
 instead, make sure you've loaded it — see
 [jstats with your own data](your-data.qmd).)
 :::
+
+
+## Typing commands in the Console
+
+::: {.callout-warning collapse="true" title="The Console shows a + and nothing runs"}
+If you press Enter and the Console answers with a `+` instead of the usual `>`
+prompt, R thinks your command isn't finished — nearly always a closing quotation
+mark or a closing parenthesis is missing. Press the **Escape** key (Esc) to
+cancel and get a fresh `>` prompt, then retype or re-paste the whole command.
+(Typing more into the `+` line rarely ends well; Escape and a clean start is
+quicker.)
+:::
+
+::: {.callout-warning collapse="true" title="Error: unexpected symbol (or unexpected ',' or ')')"}
+These errors are R's way of saying the punctuation in a command doesn't add up —
+most often a missing comma between two inputs, or a missing or extra parenthesis
+or quotation mark. Compare your line character by character against the example
+you copied it from; the difference is usually one small mark.
+
+A reading tip that helps with R errors in general: in a long error message, the
+most useful part usually comes **after the final colon** — start reading there,
+then work backward only if you need to.
+:::
+

@@ -22,7 +22,9 @@ always knows where it is.
 
 To create one, in RStudio choose **File → New Project → New Directory → New
 Project**, give it a name (for example `jstats-practice`), pick where it should
-live, and click **Create Project**. RStudio opens your new Project.
+live — a folder on your computer itself is a safer home than a cloud-synced one
+like OneDrive, whose syncing can quietly interfere with R's files — and click
+**Create Project**. RStudio opens your new Project.
 
 From now on, you reopen this Project by double-clicking its `.Rproj` file (the
 small file RStudio created inside your Project folder). That one habit — always
