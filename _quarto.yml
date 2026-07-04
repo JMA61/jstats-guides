@@ -23,7 +23,7 @@ website:
         href: index.qmd
       - text: "Get Started"
         href: start-here.qmd
-      - text: "Guides"
+      - text: "How-Tos"
         href: guides.qmd
       - text: "Reference"
         href: reference.qmd
@@ -65,12 +65,15 @@ website:
           href: install-jstats.qmd
         - text: "Step 5 — jstats Quick Start"
           href: quickstart.qmd
+        - text: "---"
         - section: "Going further"
           contents:
             - text: "jstats with your own data"
               href: your-data.qmd
             - text: "A typical jstats workflow"
               href: workflow.qmd
+            - text: "Loading jstats automatically"
+              href: loading-jstats-automatically.qmd
   page-footer:
     border: true
     left: "© 2026 Jeff Ackerman"

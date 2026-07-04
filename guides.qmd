@@ -1,9 +1,9 @@
 ---
-pagetitle: "jstats:Guides"
+pagetitle: "jstats:How-Tos"
 title-prefix: ""
 ---
 
-## Guides
+## How-Tos
 
 ::: {.callout-note title="Coming soon"}
 This section will hold longer how-to articles on specific themes — working with

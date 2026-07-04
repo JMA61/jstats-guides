@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>jstats:Install</title>
+<title>jstats:Auto-load</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -68,8 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./quickstart.html" rel="next">
-<link href="./rstudio-orientation.html" rel="prev">
+<link href="./workflow.html" rel="prev">
 <link href="./images/avatar.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -109,13 +108,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<meta property="og:title" content="jstats:Install">
+<meta property="og:title" content="jstats:Auto-load">
 <meta property="og:description" content="">
 <meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta property="og:site_name" content="jstats">
 <meta property="og:image:height" content="720">
 <meta property="og:image:width" content="1280">
-<meta name="twitter:title" content="jstats:Install">
+<meta name="twitter:title" content="jstats:Auto-load">
 <meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta name="twitter:image-height" content="720">
@@ -190,7 +189,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./install-jstats.html">Step 4 — Install jstats</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./your-data.html">Going further</a></li><li class="breadcrumb-item"><a href="./loading-jstats-automatically.html">Loading jstats automatically</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -222,7 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./install-jstats.html" class="sidebar-item-text sidebar-link active">
+  <a href="./install-jstats.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Step 4 — Install jstats</span></a>
   </div>
 </li>
@@ -256,7 +255,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./loading-jstats-automatically.html" class="sidebar-item-text sidebar-link">
+  <a href="./loading-jstats-automatically.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Loading jstats automatically</span></a>
   </div>
 </li>
@@ -272,121 +271,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#install-jstats" id="toc-install-jstats" class="nav-link active" data-scroll-target="#install-jstats">Install jstats</a></li>
-  <li><a href="#what-you-need-first" id="toc-what-you-need-first" class="nav-link" data-scroll-target="#what-you-need-first">What you need first</a></li>
-  <li><a href="#install-jstats-and-load-it" id="toc-install-jstats-and-load-it" class="nav-link" data-scroll-target="#install-jstats-and-load-it">Install jstats and load it</a>
-  <ul class="collapse">
-  <li><a href="#if-the-install-fails" id="toc-if-the-install-fails" class="nav-link" data-scroll-target="#if-the-install-fails">If the install fails</a></li>
-  </ul></li>
-  <li><a href="#keep-jstats-up-to-date" id="toc-keep-jstats-up-to-date" class="nav-link" data-scroll-target="#keep-jstats-up-to-date">Keep jstats up to date</a></li>
-  <li><a href="#what-to-expect-at-this-early-stage" id="toc-what-to-expect-at-this-early-stage" class="nav-link" data-scroll-target="#what-to-expect-at-this-early-stage">What to expect at this early stage</a></li>
+  <li><a href="#loading-jstats-automatically" id="toc-loading-jstats-automatically" class="nav-link active" data-scroll-target="#loading-jstats-automatically">Loading jstats automatically</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./your-data.html">Going further</a></li><li class="breadcrumb-item"><a href="./loading-jstats-automatically.html">Loading jstats automatically</a></li></ol></nav></header>
 
 
 
 
-<section id="install-jstats" class="level2">
-<h2 class="anchored" data-anchor-id="install-jstats">Install jstats</h2>
-<p>This page gets the jstats package installed and loaded, ready to use. It assumes you’ve already installed R and RStudio and have an RStudio Project open. If you haven’t, work through <a href="./install-r-and-rstudio.html">Install R and RStudio</a> and <a href="./rstudio-orientation.html">RStudio Orientation</a> first, then come back here.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="For experienced R users">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>For experienced R users
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>If you’ve installed R packages before, this is ordinary install-and-load with one small wrinkle. jstats isn’t on CRAN yet, so it installs from an <strong>r-universe</strong> repository (a free, CRAN-like service that publishes ready-made package <strong>binaries</strong>). In practice that means a single <code>install.packages()</code> call with a <code>repos</code> argument — the r-universe repository for jstats itself, plus a regular CRAN mirror for any supporting packages — shown just below. Because you’re installing a binary, nothing is compiled, so there’s no need for Rtools (Windows) or Apple’s command line tools (Mac), and no <code>remotes</code> or GitHub step. jstats also checks for a newer version each time it loads, and <code>jupdate()</code> updates it in a single command. Jump to the install line below — the rest is the install-and-load you already know.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="what-you-need-first" class="level2">
-<h2 class="anchored" data-anchor-id="what-you-need-first">What you need first</h2>
-<p>Before the steps below, make sure you have:</p>
-<ul>
-<li><strong>R and RStudio installed</strong> — see <a href="./install-r-and-rstudio.html">Install R and RStudio</a>.</li>
-<li><strong>An RStudio Project open</strong> — <a href="./rstudio-orientation.html">RStudio Orientation</a> covers creating one.</li>
-</ul>
-</section>
-<section id="install-jstats-and-load-it" class="level2">
-<h2 class="anchored" data-anchor-id="install-jstats-and-load-it">Install jstats and load it</h2>
-<p>jstats installs with a single command. Click in the <strong>Console</strong> (bottom-left pane), paste the two lines below, and press Enter — the first installs jstats, the second loads it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"jstats"</span>,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">"https://jma61.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span>))</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The <code>repos</code> part just tells R where to look: the first address is the r-universe repository where jstats is published, and the second is an ordinary CRAN mirror that supplies any of jstats’s supporting packages you don’t already have. Both hand over ready-made versions, so nothing is built from source and the install is quick.</p>
-<p>Installing is normally a <strong>once-per-computer</strong> job — plus once more if you ever update R itself, which comes out in a new version about once a year and starts a fresh package library when it does. <strong>Worth bookmarking:</strong> this page always carries the current install line, so it’s the one to come back to on a new computer or after an R update. (If <code>library(jstats)</code> ever fails after updating R, the <a href="./troubleshooting.html">Troubleshooting</a> page has the details.)</p>
-<p>On the first install — or the first time you load jstats after updating R — you may see a line like <code>package 'jstats' was built under R version 4.x.x</code>. That’s normal and needs no action: it only means the ready-made copy was built on a slightly different R version than the one you’re running. It clears the next time you update R.</p>
-<p>If it loaded cleanly, you’ll see a short jstats startup message — and, if a newer version is already out, a note with the exact lines to update (more on that below). That message is how you know jstats is loaded and ready.</p>
-<p>You’ll run <code>library(jstats)</code> at the start of each session. Prefer not to? You can set your Project to load it for you automatically — see <a href="./loading-jstats-automatically.html">Loading jstats automatically</a>.</p>
-<section id="if-the-install-fails" class="level3">
-<h3 class="anchored" data-anchor-id="if-the-install-fails">If the install fails</h3>
-<p>The most common snags are below — scan the titles and open the one that matches your error. If yours isn’t here, the full <a href="./troubleshooting.html">Troubleshooting</a> page has more.</p>
-<div class="callout callout-style-default callout-warning callout-titled" title="The install seems half-done or broken">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>The install seems half-done or broken
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>The simplest fix is to remove jstats and install it fresh:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">remove.packages</span>(<span class="st">"jstats"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"jstats"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">"https://jma61.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span>))</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled" title="RStudio hangs or loops every time it starts">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>RStudio hangs or loops every time it starts
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>This almost always means an <strong>install command was put in your <code>.Rprofile</code></strong>. That file runs <em>every time R starts</em>, so an install line tries to reinstall on every startup and can loop. Your <code>.Rprofile</code> should only ever hold lightweight startup lines like <code>library(jstats)</code> — never an install command. To recover: close RStudio, open your Project folder in your computer’s file manager, open the <code>.Rprofile</code> file in a plain text editor (Notepad on Windows, TextEdit on Mac), delete the install line, keeping the <code>library(jstats)</code> line (and its reminder comment, if your <code>.Rprofile</code> has one), save, and reopen RStudio.</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="keep-jstats-up-to-date" class="level2">
-<h2 class="anchored" data-anchor-id="keep-jstats-up-to-date">Keep jstats up to date</h2>
-<p>Because jstats is updated often during this phase, it checks for a newer version each time you load it with <code>library(jstats)</code>. When one is available, it prints a short message at startup — the new version number and the one command to run. That command is:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jupdate</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Run it in the Console and jstats updates itself: one command, with nothing to copy or keep track of. <code>jupdate()</code> first checks that you’re online and that you aren’t already on the latest version (if you are, it just says so and stops), then downloads and installs the new version. It doesn’t pause to ask “are you sure?” — it goes ahead and updates.</p>
-<p>One thing to know: <em>installing</em> the new version and <em>loading</em> it are two separate steps. <code>jupdate()</code> puts the new version on your computer, but the session you’re in keeps running the old one until you restart R. You don’t have to remember how — when the update finishes, <code>jupdate()</code> prints the exact steps:</p>
-<pre><code>jstats has been updated.
-
-Restart R to load it in RStudio:
-  - open the Session menu &gt; choose Restart R
-  - or press Ctrl+Shift+F10
-
-The Console will return to a blank prompt.
-Reload jstats with library(jstats) (unless loaded automatically on startup).</code></pre>
-<p>Follow those and you’re running the new version.</p>
-<p>(This all gets simpler once jstats reaches CRAN: <code>jupdate()</code> keeps working, just updating the ordinary way, and we’ll revise these instructions then.)</p>
+<section id="loading-jstats-automatically" class="level2">
+<h2 class="anchored" data-anchor-id="loading-jstats-automatically">Loading jstats automatically</h2>
+<p>Once jstats is installed, you can have your Project load it for you every time it opens — so you never type <code>library(jstats)</code> by hand. It’s optional (typing the one line at the start of a session works perfectly well), but worth doing: besides saving the keystrokes, it means the package’s automatic update check runs every time you start work — so you’re always told when a new version is available — and you open each session ready to go. This uses a small setup file called an <strong><code>.Rprofile</code></strong> (a file R reads automatically when it starts).</p>
+<p>Create a plain text file named <code>.Rprofile</code> in your Project folder containing these two lines:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To reinstall jstats (new computer, or after updating R) see the install code at: jma61.github.io/jstats-guides/install-jstats.html</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The second line does the loading. The first is a <strong>comment</strong> — R ignores any line that starts with <code>#</code> — holding the address of the install page, so the reinstall instructions are one glance away on a new computer or after an R update. Keep the <code>#</code> in place: without it, R would try to run the address as a command at every startup and complain; with it, the line is just a note that costs nothing.</p>
+<p>Save it, then restart R (<strong>Session menu, Restart R</strong>). From now on, every session in this Project starts with jstats already loaded.</p>
+<p>Keep this to lightweight startup lines — loading a package, and later a setting or two. Do <strong>not</strong> put an install command (an <code>install.packages("jstats", ...)</code> line) in <code>.Rprofile</code>: because the file runs on every startup, an install line there tries to reinstall each time and can send RStudio into a loop. Installing is a one-off you run by hand; loading is the repeatable step that belongs in startup.</p>
+<p>We’re keeping this minimal for now. Later you’ll add a line or two more — where your data lives, and how many digits to show in output — but this is plenty to start.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -395,46 +301,12 @@ Reload jstats with library(jstats) (unless loaded automatically on startup).</co
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>A couple of extra options. If you’d rather confirm before anything installs, run <code>jupdate(ask = TRUE)</code> — it shows the available and installed versions and waits for your okay. Updates are reliable here because <code>jupdate()</code> installs in a <em>separate</em> R process, so the copy loaded in your session never has to overwrite its own files mid-update (the usual cause of a failed update on Windows). And to silence the startup check entirely — for instance on a machine that’s on a network but has no internet — set <code>options(jstats.check_updates = FALSE)</code>.</p>
+<p>This <code>.Rprofile</code> lives inside your Project and applies only to this Project. That’s deliberate — it’s self-contained and safe to edit. There’s also a global, all-Projects version, but it’s better left until you’re juggling several Projects at once; the books cover it.</p>
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-important callout-titled" title="This is a beta, and your input shapes it">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>This is a beta, and your input shapes it
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>While jstats is in this pre-release phase, it’s still actively growing — which makes now the best time to ask for things. If a function is missing an option your work needs, or you’d like an analysis it doesn’t yet cover, say so by email: <a href="mailto:SurveyCentre@griffith.edu.au">SurveyCentre@griffith.edu.au</a>. If you hit an error, include the <strong>full error message</strong>, what you ran, and which versions of R and jstats you’re on (you can get those by running <code>R.version.string</code> and <code>packageVersion("jstats")</code>) — that detail makes a fix far quicker. Changes are far easier to fold in now than after the package reaches its stable release, where keeping existing code working limits what can change.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="For experienced R users">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>For experienced R users
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>A concrete example of feature-by-request: a researcher wanted to see <em>which cells</em> drive a significant chi-square, so adjusted standardized residuals were added to the cross-tabs function — <code>jcrosstab(Education ~ Volunteer, data = community, residuals = "adjusted")</code>. That kind of targeted addition is exactly what this phase is for.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="what-to-expect-at-this-early-stage" class="level2">
-<h2 class="anchored" data-anchor-id="what-to-expect-at-this-early-stage">What to expect at this early stage</h2>
-<p>Using jstats during its pre-release phase comes with a simple, honest trade. The costs are small and real: the occasional error message that reads more cryptically than it should, and now and then a feature you wish were there but isn’t yet. The benefit is results fast — and, as the note above says, a direct line to shape what gets built next.</p>
-<p>There’s also a safety net that makes the trade an easy one. jstats is a convenience layer, not a cage. Anything it doesn’t do, plain R still does — you can always drop back to base R, or reach for another package, right alongside jstats in the very same script. That’s the intended path: use jstats for the common social-science tasks it’s built for, pick up a little real R painlessly as you go, and when you eventually need something specialized it doesn’t cover, you’ll have learned enough to add the package that does. You’re never stuck, and you’re never learning a dead end.</p>
 
 
 </section>
@@ -849,14 +721,11 @@ Reload jstats with library(jstats) (unless loaded automatically on startup).</co
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./rstudio-orientation.html" class="pagination-link" aria-label="Step 3 — RStudio Orientation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Step 3 — RStudio Orientation</span>
+      <a href="./workflow.html" class="pagination-link" aria-label="A typical jstats workflow">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">A typical jstats workflow</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./quickstart.html" class="pagination-link" aria-label="Step 5 — jstats Quick Start">
-        <span class="nav-page-text">Step 5 — jstats Quick Start</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
