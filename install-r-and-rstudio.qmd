@@ -12,6 +12,23 @@ free. Install R first, then RStudio on top of it.
 You only do this once per computer. If you need to set up a second machine later,
 this page is the one to come back to.
 
+```{=html}
+<div style="max-width:720px;margin:1.5rem auto 1.5rem;">
+  <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
+    <iframe src="https://www.youtube-nocookie.com/embed/fJoT3mJxMlA?rel=0" title="Install R and RStudio" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <p style="margin:0.5rem 0 0;text-align:center;font-size:0.9rem;font-style:italic;color:#555;">This video is an early version and will be replaced soon with an updated one that matches the written steps below.</p>
+</div>
+```
+
+::: {.callout-note title="Seeing a security warning?"}
+A blue "Windows protected your PC" box, or a prompt about an unrecognized publisher,
+is normal for brand-new software. The
+[Troubleshooting](troubleshooting.qmd#security-warnings-when-downloading-or-installing)
+page walks through each one — with a short note you can pass to your IT department if
+you're on a managed computer.
+:::
+
 ## Install R
 
 Go to **CRAN** — the official archive of R, at <https://cran.r-project.org> —
@@ -34,8 +51,10 @@ single installer, so there's no equivalent choice to make there.)
 ## Install RStudio
 
 Download **RStudio Desktop** from
-<https://posit.co/download/rstudio-desktop/> and install it. (Install R first;
-RStudio needs it.) From now on, RStudio is the program you open to work.
+<https://docs.posit.co/ide/user/#rstudio-ide-oss-downloads> and install it. (Install R first;
+RStudio needs it.) On a Mac, the download is a disk image (`.dmg`): open it, then
+drag the RStudio icon into your **Applications** folder. From now on, RStudio is the
+program you open to work.
 
 The download page also mentions paid products — those are enterprise tools aimed
 at large organizations, not something you're missing out on. The free **RStudio

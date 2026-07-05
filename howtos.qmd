@@ -1,0 +1,29 @@
+---
+pagetitle: "jstats:How-Tos"
+title-prefix: ""
+---
+
+## How-Tos
+
+These how-tos assume you've worked through [Get Started](start-here.qmd) — you'll be
+comfortable loading jstats, using `juse()` and `jload()`, and running the basic
+functions. Each one stands on its own, so read whichever you need; for now,
+[Get Started](start-here.qmd) is the place to begin.
+
+The articles below are on the way. They go beyond the Get Started on-ramp and point
+toward the fuller treatment in the books.
+
+## Working with data from commercial statistical software
+
+*Coming soon* — importing and working with data from SPSS, Stata, and SAS, including
+value and variable labels and the different missing-value conventions.
+
+## Building and checking a scale
+
+*Coming soon* — combining Likert items into a scale and checking its reliability with
+Cronbach's alpha.
+
+## Handling missing values across platforms
+
+*Coming soon* — declaring, converting, and preserving user-defined missing values as
+data move between SPSS, Stata, SAS, and R.

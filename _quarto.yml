@@ -24,7 +24,7 @@ website:
       - text: "Get Started"
         href: start-here.qmd
       - text: "How-Tos"
-        href: guides.qmd
+        href: howtos.qmd
       - text: "Reference"
         href: reference.qmd
       - text: "Books"

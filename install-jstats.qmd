@@ -182,3 +182,7 @@ and when you eventually need something specialized it doesn't cover, you'll have
 learned enough to add the package that does. You're never stuck, and you're never
 learning a dead end.
 
+---
+
+With jstats installed and loaded, the [jstats Quick Start](quickstart.qmd) puts it to work.
+

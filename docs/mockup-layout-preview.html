@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>jstats:How-Tos</title>
+<title>jstats:Layout mockup</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -72,13 +72,13 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<meta property="og:title" content="jstats:How-Tos">
+<meta property="og:title" content="jstats:Layout mockup">
 <meta property="og:description" content="">
 <meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta property="og:site_name" content="jstats">
 <meta property="og:image:height" content="720">
 <meta property="og:image:width" content="1280">
-<meta name="twitter:title" content="jstats:How-Tos">
+<meta name="twitter:title" content="jstats:Layout mockup">
 <meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta name="twitter:image-height" content="720">
@@ -116,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./guides.html" aria-current="page"> 
+    <a class="nav-link" href="./guides.html"> 
 <span class="menu-text">How-Tos</span></a>
   </li>  
   <li class="nav-item">
@@ -158,34 +158,142 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#how-tos" id="toc-how-tos" class="nav-link active" data-scroll-target="#how-tos">How-Tos</a></li>
+  <li><a href="#install-r-and-rstudio" id="toc-install-r-and-rstudio" class="nav-link active" data-scroll-target="#install-r-and-rstudio">Install R and RStudio</a></li>
+  <li><a href="#security-warnings-when-downloading-or-installing" id="toc-security-warnings-when-downloading-or-installing" class="nav-link" data-scroll-target="#security-warnings-when-downloading-or-installing">Security warnings when downloading or installing</a>
+  <ul class="collapse">
+  <li><a href="#on-your-own-computer" id="toc-on-your-own-computer" class="nav-link" data-scroll-target="#on-your-own-computer">On your own computer</a></li>
+  <li><a href="#on-a-work-or-managed-computer" id="toc-on-a-work-or-managed-computer" class="nav-link" data-scroll-target="#on-a-work-or-managed-computer">On a work or managed computer</a></li>
+  <li><a href="#a-note-for-your-it-department" id="toc-a-note-for-your-it-department" class="nav-link" data-scroll-target="#a-note-for-your-it-department">A note for your IT department</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Layout mockup — video + Troubleshooting security entry (DELETE after review)</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="how-tos" class="level2">
-<h2 class="anchored" data-anchor-id="how-tos">How-Tos</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Coming soon">
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!--
+  THROWAWAY LAYOUT MOCKUP — NOT part of the site.
+  Purpose: preview the IMAGE/VIDEO SCHEME (how many, how big, where) before
+  the real cut. Grey dashed boxes stand in for the real screenshots and the
+  real video embed; the labels give the size I recommend.
+
+  Render it on its own, then delete the file:
+      quarto preview mockup-layout-preview.qmd     (live preview)
+      quarto render  mockup-layout-preview.qmd     (one-off render)
+  It picks up the site theme (custom.scss) automatically, so what you see
+  is close to the real page styling.
+
+  Do NOT run a whole-project `quarto render` while this file is in the repo
+  root, or it gets built into the site. Delete it when you're done reviewing.
+
+  The prose below is representative (real content shape, real density, so
+  page length is honest) but still gets a polish pass in the actual cut.
+-->
+<style>
+.ph{background:#eceff2;border:2px dashed #9aa4ae;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    color:#465059;font-weight:600;line-height:1.4;margin:1.1rem 0;padding:.6rem;}
+.ph small{font-weight:400;color:#6b757e;}
+.ph-video{aspect-ratio:16/9;max-width:720px;}
+.ph-shot{aspect-ratio:5/4;max-width:460px;}
+.cap{font-size:.85em;color:#6b757e;font-style:italic;margin:-.4rem 0 1.3rem;}
+.pageband{border-top:3px solid #c7ced4;margin:2.4rem 0 .3rem;padding-top:.5rem;
+    font-size:.8em;letter-spacing:.04em;text-transform:uppercase;color:#8a939b;font-weight:700;}
+</style>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Coming soon
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This section will hold longer how-to articles on specific themes — working with data from commercial software, building and checking a scale, handling missing values across platforms, and more. They go beyond the <a href="./start-here.html">Get Started</a> on-ramp and point toward the fuller treatment in the books.</p>
+<p><strong>This is a layout mockup, not a real page.</strong> The two parts below simulate two <em>different</em> real pages. The grey boxes are placeholders sized to the recommendation; everything else is representative draft prose. Delete this file after you’ve eyeballed the scheme.</p>
 </div>
 </div>
-<p>For now, the <a href="./start-here.html">Get Started</a> guide is the place to begin.</p>
+<div class="pageband">
+<p>Part A — simulates the Step 2 page (install-r-and-rstudio.qmd): where the video sits</p>
+</div>
+<section id="install-r-and-rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="install-r-and-rstudio">Install R and RStudio</h2>
+<p>R is the engine and RStudio is the workbench you’ll actually sit in front of. This short video walks through installing both on Windows, start to finish — you can pause it at any point and follow along.</p>
+<div class="ph ph-video">
+▶ VIDEO EMBED GOES HERE<br><small>responsive 16:9 · fills the content column · capped at max-width 720px (≈ 720 × 405)<br>placeholder now; the real YouTube embed drops in once the 200 is public</small>
+</div>
+<p class="cap">
+Links mentioned in the video appear just below it (the under-video link block); the written walkthrough continues underneath.
+</p>
+<p><em>(…written step-by-step walkthrough continues here — download links, the Mac Apple-silicon-vs-Intel choice, the RStudio <code>.dmg</code> → Applications note, and a short callout pointing to the security-warnings entry on the Troubleshooting page…)</em></p>
+<div class="pageband">
+<p>Part B — simulates the new section on troubleshooting.qmd (placed first, before “Installing jstats”)</p>
+</div>
+</section>
+<section id="security-warnings-when-downloading-or-installing" class="level2">
+<h2 class="anchored" data-anchor-id="security-warnings-when-downloading-or-installing">Security warnings when downloading or installing</h2>
+<p>Installing R or RStudio for the first time can throw up a warning or two — a browser prompt, a blue “Windows protected your PC” box, a password request on a work machine. All of it is normal for brand-new software from a site Windows hasn’t seen you use before. This section explains what each one is and what to do, in two situations: installing on <strong>your own computer</strong>, and installing on a <strong>work or managed computer</strong> where someone else controls what can be installed.</p>
+<section id="on-your-own-computer" class="level3">
+<h3 class="anchored" data-anchor-id="on-your-own-computer">On your own computer</h3>
+<p>When the installer finishes downloading, your browser may ask whether to <strong>keep</strong> the file — keep it; it’s the installer you just asked for.</p>
+<p>Running the R installer, Windows may show a blue <strong>SmartScreen</strong> box that at first offers only <strong>Don’t run</strong>. This is reputation-based, not a virus warning: it appears because the file is newly released, not because anything is wrong. Click <strong>More info</strong> and the box expands to show the app name and the publisher, plus a <strong>Run anyway</strong> button. Only ever do this for installers you downloaded yourself from the official sources — <strong>cran.r-project.org</strong> for R and <strong>posit.co</strong> for RStudio.</p>
+<div class="ph ph-shot">
+SCREENSHOT 1<br><small>SmartScreen, “More info” expanded<br>(app name + publisher + “Run anyway”)<br>max-width 460px</small>
+</div>
+<p class="cap">
+The version number in the screenshot will be newer than the one you see today.
+</p>
+<p>Next, Windows asks for permission to make changes — the <strong>User Account Control</strong> box. It opens with <strong>No</strong> highlighted, so you have to click <strong>Yes</strong> on purpose. Where it names a <strong>verified publisher</strong>, that’s Windows confirming the file’s signature checked out. (RStudio’s permission box looks the same; you generally won’t see the SmartScreen step for it, because its publisher is already recognized.)</p>
+<div class="ph ph-shot">
+SCREENSHOT 2<br><small>User Account Control box —<br>“verified publisher”<br>max-width 460px</small>
+</div>
+<p class="cap">
+The version number in the screenshot will be newer than the one you see today.
+</p>
+<p>One small thing if you download an installer twice: the second copy arrives named like <strong><code>R-4.x.y-win (1).exe</code></strong>. Any copy is fine to run — the <code>(1)</code> is just your browser avoiding a name clash, not a different program.</p>
+</section>
+<section id="on-a-work-or-managed-computer" class="level3">
+<h3 class="anchored" data-anchor-id="on-a-work-or-managed-computer">On a work or managed computer</h3>
+<p>On a university or workplace computer you may not be able to install software yourself. What you see depends on how the machine is set up:</p>
+<ul>
+<li>The install is blocked, but the screen offers a path to <strong>temporary administrator rights</strong> — usually a prompt for your own credentials, then a box asking <em>why</em> you’re installing. Both are routine; fill them in and continue.</li>
+<li>There’s no self-service path, in which case R and RStudio are requested through your <strong>service desk</strong>, a <strong>software catalog</strong>, or your <strong>instructor</strong>. The note below is written for whoever handles that request.</li>
+</ul>
+</section>
+<section id="a-note-for-your-it-department" class="level3">
+<h3 class="anchored" data-anchor-id="a-note-for-your-it-department">A note for your IT department</h3>
+<p><em>(Written to IT staff; linkable by its own heading anchor so it can be pointed at directly.)</em></p>
+<p>A student or researcher has asked to install <strong>R</strong> and <strong>RStudio Desktop</strong>, the standard open-source tools for statistical computing.</p>
+<ul>
+<li><strong>Origins.</strong> R comes from CRAN (<strong>cran.r-project.org</strong>); RStudio Desktop from <strong>posit.co</strong> / Posit’s documentation site. Both are widely used in academic and government settings.</li>
+<li><strong>Signatures.</strong> The R for Windows installer is code-signed — the permission dialog shows a <strong>verified publisher</strong> — and CRAN publishes checksums/fingerprints for verification. RStudio Desktop is signed by <strong>Posit Software, PBC</strong>.</li>
+<li><strong>Deployment in controlled environments.</strong> R offers a <strong>per-user install</strong> that needs no administrator rights, and RStudio ships a <strong>Windows <code>.zip</code> archive</strong> that can be unpacked without a full installer. <em>(Exact admin/deployment specifics — confirmed against current Posit admin docs — go in at the real cut.)</em></li>
+<li><strong>SmartScreen.</strong> A fresh release may be flagged by Microsoft SmartScreen until it accrues download reputation; this resets per release and is not an indication of malware.</li>
+<li>Organizations operating under standards such as <strong>ISO/IEC 27001</strong> will route this through their software-approval process; this page provides the provenance information to support that assessment.</li>
+</ul>
+<p><em>(…end of the security-warnings section; the existing “Installing jstats” callouts follow below it on the real page…)</em></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

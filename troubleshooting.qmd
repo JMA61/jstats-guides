@@ -6,11 +6,84 @@ title-prefix: ""
 ## Troubleshooting
 
 Most problems during setup and early use are one of a handful of things. Find the
-symptom that matches yours below and open it for the fix. This page grows over time;
-if your problem isn't here, the *Install jstats* page has the install-specific ones
-close at hand, and you can always report a new problem by email at
-[SurveyCentre@griffith.edu.au](mailto:SurveyCentre@griffith.edu.au) — including the
-full error message and your R and jstats versions makes it quicker to sort out.
+one that matches yours below. This page grows over time.
+
+## Security warnings when downloading or installing
+
+Installing R or RStudio for the first time can bring up a warning or two — a browser
+prompt, a blue "Windows protected your PC" box, or a request for a password on a work
+machine. This is normal for brand-new software from a source your computer hasn't seen
+you use before; none of it means anything is wrong. Open the box that matches your
+situation:
+
+::: {.callout-warning collapse="true" title="On your own computer"}
+When an installer finishes downloading, your browser may ask whether to **keep** the
+file. Keep it — it's the installer you just requested.
+
+Running the R installer, Windows may show a blue **SmartScreen** box offering, at
+first, only a **Don't run** button. This is reputation-based, not a virus alert: it
+appears because the file is newly released and too few people have downloaded it yet
+for Windows to recognize it — not because anything is wrong with it. Click **More
+info** and the box expands to show the app name and the publisher, along with a **Run
+anyway** button. Only ever do this for installers you downloaded yourself from the
+official sources — **cran.r-project.org** for R and **posit.co** for RStudio.
+
+![The version numbers you see will be newer than the ones shown here.](images/security-smartscreen.png){width=460px fig-alt="Windows SmartScreen dialog, expanded via More info, showing the application name, the publisher, and a Run anyway button."}
+
+Next, Windows asks permission to make changes to your computer — the **User Account
+Control** box. It opens with **No** highlighted, so you have to click **Yes** on
+purpose. Where it names a **verified publisher**, that's Windows confirming the
+installer's digital signature checked out. (RStudio's permission box looks the same.
+You generally won't see the SmartScreen step for RStudio, because its publisher is
+already widely recognized.)
+
+![The version numbers you see will be newer than the ones shown here.](images/security-uac.png){width=460px fig-alt="Windows User Account Control dialog showing a verified publisher, with Yes and No buttons and No highlighted."}
+
+One last thing, if you ever download an installer twice: the second copy comes back
+with a number added to its name, like `R-4.6.1-win (1).exe`. Any copy is fine to run —
+the `(1)` is just your browser avoiding a name clash, not a different or altered
+program.
+:::
+
+::: {.callout-warning collapse="true" title="On a work or managed computer"}
+On a university or workplace computer you may not be allowed to install software
+yourself. What happens depends on how the machine is set up:
+
+- The install is blocked, but the screen offers a path to **temporary administrator
+  rights** — usually a prompt for your own credentials, sometimes followed by a box
+  asking *why* you're installing. Both are routine; fill them in and carry on.
+- There's no self-service path, in which case R and RStudio are requested through your
+  **IT service desk**, a **software catalog**, or your **instructor**. The note below
+  is written for whoever handles that request — you can point them straight to it.
+:::
+
+::: {#it-note .callout-warning collapse="true" title="A note for your IT department"}
+*The rest of this entry is addressed to IT staff.*
+
+A student or researcher has asked to install **R** and **RStudio Desktop**, the
+standard open-source tools for statistical computing and the environment these guides
+teach. This note summarizes their provenance to support a software-approval assessment.
+
+- **Sources.** R is published by the R Foundation through CRAN
+  (**cran.r-project.org**); RStudio Desktop comes from **Posit** (**posit.co** /
+  **docs.posit.co**). Both are long-established and in wide academic and government use.
+- **Signatures and integrity.** The R for Windows installer is code-signed — the User
+  Account Control dialog shows a verified publisher — and it is downloaded over HTTPS
+  from CRAN, which also publishes checksums for verifying the download. RStudio Desktop
+  is signed by **Posit Software, PBC**.
+- **Installing without administrator rights.** Administrator rights aren't strictly
+  required. Run without them, the R for Windows installer installs into the user's own
+  file area instead of Program Files (administrator rights are needed only for a
+  system-wide install and the optional registry entries). RStudio Desktop is
+  additionally offered as a **Windows `.zip` archive** that can be unpacked and run
+  without the installer; current deployment guidance is on Posit's documentation site.
+- **SmartScreen.** Microsoft SmartScreen may flag a freshly released version until it
+  accumulates download reputation; this resets with each release and is not an
+  indication of malware.
+- Organizations operating under standards such as **ISO/IEC 27001** will route this
+  through their software-approval process; the information above is provided to support
+  that assessment.
+:::
 
 ## Installing jstats
 
