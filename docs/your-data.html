@@ -152,7 +152,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./guides.html"> 
+    <a class="nav-link" href="./howtos.html"> 
 <span class="menu-text">How-Tos</span></a>
   </li>  
   <li class="nav-item">
@@ -299,12 +299,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="first-tell-jstats-where-your-data-live" class="level2">
 <h2 class="anchored" data-anchor-id="first-tell-jstats-where-your-data-live">First, tell jstats where your data live</h2>
-<p>Back on the <a href="./install-jstats.html">Install jstats</a> page you created an <code>.Rprofile</code> with a single line, <code>library(jstats)</code>, and we promised you’d add a line or two later. This is later. Two small settings make day-to-day work smoother, and the <code>.Rprofile</code> is where they belong, because it runs automatically every time the Project opens.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">data.dir =</span> <span class="st">"Data"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Two small settings make day-to-day work smoother — one tells jstats where your data files live, the other sets how many digits it shows in output:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">data.dir =</span> <span class="st">"Data"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>joptions(data.dir = "Data")</code> tells jstats that your data files live in a subfolder named <code>Data</code> inside your Project, so you can load and save by bare filename without spelling out a path every time. <code>joutput(digits = 3)</code> sets how many digits jstats shows in output — three is a sensible default; change it whenever you like.</p>
-<p>Save the file and restart R (<strong>Session menu, Restart R</strong>). From now on the package is loaded, your data folder is known, and your output is formatted the way you want — every session, no typing required.</p>
+<p>There are two ways to put these to work. The quickest is to run both lines in the Console; they take effect immediately and stay in force until you restart R, so you’d rerun them at the start of each session. To have them apply automatically in every session instead — no typing required — put them in your Project’s <code>.Rprofile</code>, the same startup file that can load jstats for you.</p>
+<p>If you followed the optional <a href="./loading-jstats-automatically.html">Loading jstats automatically</a> page, that <code>.Rprofile</code> already exists, holding a <code>library(jstats)</code> line (with a reminder comment above it) — and that page noted you’d add a line or two later. This is later: open the file and add the two settings below the <code>library(jstats)</code> line. Save, then restart R (<strong>Session menu, Restart R</strong>). From now on the package is loaded, your data folder is known, and your output is formatted the way you want — every session, with nothing to type.</p>
+<p>Haven’t set that file up? You don’t need it to keep going — the Console approach above works fine for now, and the <a href="./loading-jstats-automatically.html">Loading jstats automatically</a> page walks through the one-time setup whenever you want it, these two settings included.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -317,7 +318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>These are <em>settings</em>, not data — they tell jstats how to behave, and they take effect the moment the Project starts. You can also type either line straight into the console to change a setting for the current session only; putting them in the <code>.Rprofile</code> just makes the choice stick. <code>?joptions</code> and <code>?joutput</code> list every setting each one controls.</p>
+<p>These are <em>settings</em>, not data — they tell jstats how to behave. Placed in the <code>.Rprofile</code>, they take effect the moment the Project starts; run in the Console, they last until you restart R. <code>?joptions</code> and <code>?joutput</code> list every setting each one controls.</p>
 </div>
 </div>
 </div>
