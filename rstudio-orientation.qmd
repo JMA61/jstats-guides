@@ -26,9 +26,11 @@ live — a folder on your computer itself is a safer home than a cloud-synced on
 like OneDrive, whose syncing can quietly interfere with R's files — and click
 **Create Project**. RStudio opens your new Project.
 
-From now on, you reopen this Project by double-clicking its `.Rproj` file (the
-small file RStudio created inside your Project folder). That one habit — always
-work inside a Project — saves more beginner headaches than any other.
+From now on, there are two ways to reopen this Project. From inside RStudio, choose
+**File → Open Project**. Or, in your computer's file manager — **File Explorer** on
+Windows, **Finder** on a Mac — open the Project folder and double-click its `.Rproj`
+file (the small file RStudio created there), which launches straight into RStudio. That
+one habit — always work inside a Project — saves more beginner headaches than any other.
 
 ## The RStudio panes
 
@@ -74,7 +76,7 @@ cars <- mtcars
 
 Up in the top-right is the **Environment pane** — named for its main tab, **Environment**, open by default — and your new `cars` has just appeared there, described as *32 obs. of 11 variables*. That's its name and size, not the data themselves; the Environment lists what you've loaded, it isn't a window onto the data.
 
-What `cars` actually is, in R's terms, is a **data frame**: a table held in memory, with cases down the rows and variables across the columns. Two words are worth keeping apart. A **dataset** is the data at rest — a built-in like `mtcars`, or, later on, a data file on your disk. A **data frame** is the working copy R loads into memory for you to work on. So `cars` is a data frame — a copy of the built-in `mtcars` — and anything you do to it changes that copy, never the original. (This matters more once you load your *own* data: the data frame in the Environment is a copy in memory, and your edits don't reach the file on disk until you deliberately save.) You're not limited to one, either — load or create several data frames and they all list here by name, and you pick which to work on simply by using its name.
+What `cars` actually is, in R's terms, is a **data frame**: a table held in memory, with cases down the rows and variables across the columns. Two words are worth keeping apart. A **dataset** is the data at rest — a built-in like `mtcars`, or, later on, a data file on your disk. A **data frame** is the working copy R loads into memory for you to work on. So `cars` is a data frame — a copy of the built-in `mtcars`. That distinction has a practical side worth knowing from the start: when you change a data frame — recode a variable, say, or drop a few rows — R changes only the working copy in memory and leaves the original untouched, and your changes live in that working copy alone until you deliberately save them. With a built-in like `cars` there's no file of your own in play; but once you're working with data you've loaded from your own files, this is the thing to hold onto — nothing is written back to your file on disk until you choose to save. You're not limited to one, either — load or create several data frames and they all list here by name, and you pick which to work on simply by using its name.
 
 ### Output / Files / Plots / Help — the bottom-right pane
 

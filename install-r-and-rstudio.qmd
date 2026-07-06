@@ -21,6 +21,11 @@ this page is the one to come back to.
 </div>
 ```
 
+**From the video —** download **R** from CRAN at <https://cran.r-project.org>, and
+**RStudio Desktop** from
+<https://docs.posit.co/ide/user/#rstudio-ide-oss-downloads>. Both are walked through in
+the written steps just below.
+
 ::: {.callout-note title="Seeing a security warning?"}
 A blue "Windows protected your PC" box, or a prompt about an unrecognized publisher,
 is normal for brand-new software. The
