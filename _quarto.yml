@@ -68,7 +68,7 @@ website:
         - text: "---"
         - section: "Going further"
           contents:
-            - text: "jstats with your own data"
+            - text: "Loading, Saving, Converting Data"
               href: your-data.qmd
             - text: "A typical jstats workflow"
               href: workflow.qmd
