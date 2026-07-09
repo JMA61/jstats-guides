@@ -18,7 +18,7 @@ Two books are planned:
   and want a clear path into R with jstats: function options, design rationale, and
   migration patterns from commercial software.
 
-The free [Get Started](start-here.qmd) guide and the [Guides](guides.qmd) section are a
+The free [Get Started](start-here.qmd) guide and the [How-Tos](howtos.qmd) section are a
 reduced version of the books' material; the books are the deeper, complete
 treatment.
 

@@ -11,7 +11,7 @@ library(jstats)
 
 ## A typical jstats workflow
 
-The Quick Start raced to a first result, and *[jstats with your own data](your-data.qmd)* covered getting files in and out. This page puts those pieces together and shows what an ordinary working session actually looks like — start to finish. The point isn't any one command; it's the **order**: how a real analysis moves from opening the data to a saved result, and where the everyday "working comfortably" tools fall into place along the way.
+The Quick Start raced to a first result, and *[Loading, Saving, Converting Data](data.qmd)* covered getting files in and out. This page puts those pieces together and shows what an ordinary working session actually looks like — start to finish. The point isn't any one command; it's the **order**: how a real analysis moves from opening the data to a saved result, and where the everyday "working comfortably" tools fall into place along the way.
 
 It runs on the shipped practice datasets, so you can follow along with nothing of your own: `community` for the main thread, with a short detour to its messy companion `clinic` for the one step that needs a dirty column. Swap in your own data wherever you like — the moves are the same.
 
@@ -21,7 +21,7 @@ You don't need to understand every line below to get the shape of a session. Rea
 
 ## Open the data and get your bearings
 
-Every session starts by getting the data in front of you and taking a first look. The `community` data ships with the package, so it's there by name the moment you run `library(jstats)` — no importing needed. (Opening a file of your own is covered in *[jstats with your own data](your-data.qmd)*.) `juse()` sets it as the session default, so later commands don't need to be told which data frame to use every time.
+Every session starts by getting the data in front of you and taking a first look. The `community` data ships with the package, so it's there by name the moment you run `library(jstats)` — no importing needed. (Opening a file of your own is covered in *[Loading, Saving, Converting Data](data.qmd)*.) `juse()` sets it as the session default, so later commands don't need to be told which data frame to use every time.
 
 ```{r}
 juse(community)
@@ -68,7 +68,7 @@ This is the equivalent of setting a variable's missing values in SPSS's Variable
 :::
 
 ::: {.callout-note collapse="true" title="Going deeper (optional)"}
-Declaring missing values is a small move with a lot behind it — different programs (SPSS, Stata, SAS) record missing data in different ways, and jstats keeps those distinctions straight when you read and write files. *[jstats with your own data](your-data.qmd)* covers the import/export side, and Book 2 covers the cross-program fidelity in more detail, with worked examples. The help page `?jdeclare_udm` documents the options.
+Declaring missing values is a small move with a lot behind it — different programs (SPSS, Stata, SAS) record missing data in different ways, and jstats keeps those distinctions straight when you read and write files. *[Loading, Saving, Converting Data](data.qmd)* covers the import/export side, and Book 2 covers the cross-program fidelity in more detail, with worked examples. The help page `?jdeclare_udm` documents the options.
 :::
 
 ```{r}
@@ -156,7 +156,7 @@ Logistic regression works the same way, with a 0/1 outcome. `Volunteer` is alrea
 jlogistic(Volunteer ~ Age)
 ```
 
-A dichotomy stored as 1/2 (the common Yes/No convention) needs recoding to 0/1 first — jstats will stop with a message telling you exactly that, rather than running something misleading. The recode is a one-liner with `jrecode()`, the same tool we used on the scale item; *[jstats with your own data](your-data.qmd)* shows that step in context.
+A dichotomy stored as 1/2 (the common Yes/No convention) needs recoding to 0/1 first — jstats will stop with a message telling you exactly that, rather than running something misleading. The recode is a one-liner with `jrecode()`, the same tool we used on the scale item; *[Loading, Saving, Converting Data](data.qmd)* shows that step in context.
 
 ::: {.callout-note collapse="true" title="Going deeper (optional)"}
 Book 1 covers the regression ideas themselves — what the coefficients mean, how dummy variables encode a categorical predictor; Book 2 covers `jlm()` and `jlogistic()`'s options and the reference-category choice in more detail, with worked examples. `?jlm`, `?jlogistic`, and `?jdummy` document the options too.
@@ -215,7 +215,7 @@ jload("community", overwrite = TRUE)  # read it back
 ```
 
 ::: {.callout-note collapse="true" title="Going deeper (optional)"}
-Saving across formats is where the missing-value distinctions earn their keep — an SPSS-style code can't write straight to a Stata file, and Excel stores no missing-value metadata at all, so jstats handles (and warns about) each case. *[jstats with your own data](your-data.qmd)* walks the full cross-format round trip live; Book 2 covers the fidelity rules in more detail, with worked examples. `?jsave` and `?jconvert` document the options.
+Saving across formats is where the missing-value distinctions earn their keep — an SPSS-style code can't write straight to a Stata file, and Excel stores no missing-value metadata at all, so jstats handles (and warns about) each case. *[Loading, Saving, Converting Data](data.qmd)* walks the full cross-format round trip live; Book 2 covers the fidelity rules in more detail, with worked examples. `?jsave` and `?jconvert` document the options.
 :::
 
 Everything above used files you'd save yourself. The package also ships an example SPSS file inside itself — a stand-in for a data file a colleague emails you. `system.file()` is base R's way of finding a file bundled inside an installed package; `jload()` then opens it like any other received file, missing-value codes and all:
@@ -230,3 +230,4 @@ And that's a full session, end to end: opened the data, screened it, cleaned a m
 
 This page is the *narrative* of a session, not a manual: to keep it moving it left a good deal unexplained — including output you saw but we didn't stop on, like the **Case Processing Summary** that headed several of the analyses (the small table reporting how many cases an analysis used and how missing values were handled). For looking a single task up while you work — "how do I reverse-code an item," "how do I get a correlation matrix" — see the [Reference](reference.qmd) page, which links every function to its full help and its options. And to go further than these guides, the book series covers the analyses and their output in full: Book 1 builds the statistics and R together from the start, and Book 2 is the option-by-option guide — output settings, the Case Processing Summary, and the rest — for readers who already know the statistics.
 <!-- future: link a YouTube full-session walkthrough here -->
+

@@ -72,7 +72,7 @@ jdesc(community,Age)
 
 ## Specify the number of digits in the output
 joutput(digits = 4)
-## The digits setting controls how many digits appear (compare with digits = 2 below)
+## At digits = 4 the Age mean reads 40.6505; at digits = 2 it rounds to 40.65
 jdesc(community,Age)
 
 joutput(digits = 2)
@@ -134,3 +134,4 @@ jfreq(MyData_r_with_stata_UDM,Education) # Now the UDMs display in Stata format
 
 ## Run a regression
 jlm(WellbeingScore ~ Income + Age, MyData_r)
+

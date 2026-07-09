@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./loading-jstats-automatically.html" rel="next">
-<link href="./your-data.html" rel="prev">
+<link href="./data.html" rel="prev">
 <link href="./images/avatar.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./your-data.html">Going further</a></li><li class="breadcrumb-item"><a href="./workflow.html">A typical jstats workflow</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html">Going further</a></li><li class="breadcrumb-item"><a href="./workflow.html">A typical jstats workflow</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -244,8 +244,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./your-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">jstats with your own data</span></a>
+  <a href="./data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Loading, Saving, Converting Data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -285,14 +285,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./your-data.html">Going further</a></li><li class="breadcrumb-item"><a href="./workflow.html">A typical jstats workflow</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html">Going further</a></li><li class="breadcrumb-item"><a href="./workflow.html">A typical jstats workflow</a></li></ol></nav></header>
 
 
 
 
 <section id="a-typical-jstats-workflow" class="level2">
 <h2 class="anchored" data-anchor-id="a-typical-jstats-workflow">A typical jstats workflow</h2>
-<p>The Quick Start raced to a first result, and <em><a href="./your-data.html">jstats with your own data</a></em> covered getting files in and out. This page puts those pieces together and shows what an ordinary working session actually looks like — start to finish. The point isn’t any one command; it’s the <strong>order</strong>: how a real analysis moves from opening the data to a saved result, and where the everyday “working comfortably” tools fall into place along the way.</p>
+<p>The Quick Start raced to a first result, and <em><a href="./data.html">Loading, Saving, Converting Data</a></em> covered getting files in and out. This page puts those pieces together and shows what an ordinary working session actually looks like — start to finish. The point isn’t any one command; it’s the <strong>order</strong>: how a real analysis moves from opening the data to a saved result, and where the everyday “working comfortably” tools fall into place along the way.</p>
 <p>It runs on the shipped practice datasets, so you can follow along with nothing of your own: <code>community</code> for the main thread, with a short detour to its messy companion <code>clinic</code> for the one step that needs a dirty column. Swap in your own data wherever you like — the moves are the same.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="New to R? Read this first">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -313,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="open-the-data-and-get-your-bearings" class="level2">
 <h2 class="anchored" data-anchor-id="open-the-data-and-get-your-bearings">Open the data and get your bearings</h2>
-<p>Every session starts by getting the data in front of you and taking a first look. The <code>community</code> data ships with the package, so it’s there by name the moment you run <code>library(jstats)</code> — no importing needed. (Opening a file of your own is covered in <em><a href="./your-data.html">jstats with your own data</a></em>.) <code>juse()</code> sets it as the session default, so later commands don’t need to be told which data frame to use every time.</p>
+<p>Every session starts by getting the data in front of you and taking a first look. The <code>community</code> data ships with the package, so it’s there by name the moment you run <code>library(jstats)</code> — no importing needed. (Opening a file of your own is covered in <em><a href="./data.html">Loading, Saving, Converting Data</a></em>.) <code>juse()</code> sets it as the session default, so later commands don’t need to be told which data frame to use every time.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">juse</span>(community)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -459,7 +459,7 @@ MoodRating     70           63    1    9  5.46  1.702
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Declaring missing values is a small move with a lot behind it — different programs (SPSS, Stata, SAS) record missing data in different ways, and jstats keeps those distinctions straight when you read and write files. <em><a href="./your-data.html">jstats with your own data</a></em> covers the import/export side, and Book 2 covers the cross-program fidelity in more detail, with worked examples. The help page <code>?jdeclare_udm</code> documents the options.</p>
+<p>Declaring missing values is a small move with a lot behind it — different programs (SPSS, Stata, SAS) record missing data in different ways, and jstats keeps those distinctions straight when you read and write files. <em><a href="./data.html">Loading, Saving, Converting Data</a></em> covers the import/export side, and Book 2 covers the cross-program fidelity in more detail, with worked examples. The help page <code>?jdeclare_udm</code> documents the options.</p>
 </div>
 </div>
 </div>
@@ -774,14 +774,15 @@ Missing-data breakdown  From 100    %
 
 
 Coefficients
-                    b      SE      t      β      p  
-----------------  ------  -----  -----  -----  -----
-(Intercept)       23.045  4.077  5.653         &lt;.001
-Income             0.000  0.000  6.698  0.559  &lt;.001
-Age                0.215  0.082  2.620  0.222   .010
-Region_North (1)   5.391  2.466  2.186          .031
-Region_South (1)   7.323  2.770  2.644          .010
-Region_East (1)    5.276  2.356  2.239          .028
+                          b      SE      t      β      p  
+----------------------  ------  -----  -----  -----  -----
+(Intercept)             23.045  4.077  5.653         &lt;.001
+Income                   0.000  0.000  6.698  0.559  &lt;.001
+Age                      0.215  0.082  2.620  0.222   .010
+Region (ref = 4: West)                                    
+  1: North               5.391  2.466  2.186          .031
+  2: South               7.323  2.770  2.644          .010
+  3: East                5.276  2.356  2.239          .028
 
 Outcome:
   WellbeingScore = Wellbeing score (0-100)
@@ -848,7 +849,7 @@ Dependent Variable Encoding
   Reference (0): No
 </code></pre>
 </div>
-<p>A dichotomy stored as 1/2 (the common Yes/No convention) needs recoding to 0/1 first — jstats will stop with a message telling you exactly that, rather than running something misleading. The recode is a one-liner with <code>jrecode()</code>, the same tool we used on the scale item; <em><a href="./your-data.html">jstats with your own data</a></em> shows that step in context.</p>
+<p>A dichotomy stored as 1/2 (the common Yes/No convention) needs recoding to 0/1 first — jstats will stop with a message telling you exactly that, rather than running something misleading. The recode is a one-liner with <code>jrecode()</code>, the same tool we used on the scale item; <em><a href="./data.html">Loading, Saving, Converting Data</a></em> shows that step in context.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -969,7 +970,7 @@ Variable Labels:
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Saving across formats is where the missing-value distinctions earn their keep — an SPSS-style code can’t write straight to a Stata file, and Excel stores no missing-value metadata at all, so jstats handles (and warns about) each case. <em><a href="./your-data.html">jstats with your own data</a></em> walks the full cross-format round trip live; Book 2 covers the fidelity rules in more detail, with worked examples. <code>?jsave</code> and <code>?jconvert</code> document the options.</p>
+<p>Saving across formats is where the missing-value distinctions earn their keep — an SPSS-style code can’t write straight to a Stata file, and Excel stores no missing-value metadata at all, so jstats handles (and warns about) each case. <em><a href="./data.html">Loading, Saving, Converting Data</a></em> walks the full cross-format round trip live; Book 2 covers the fidelity rules in more detail, with worked examples. <code>?jsave</code> and <code>?jconvert</code> document the options.</p>
 </div>
 </div>
 </div>
@@ -1461,8 +1462,8 @@ Variable Labels:
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./your-data.html" class="pagination-link" aria-label="jstats with your own data">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">jstats with your own data</span>
+      <a href="./data.html" class="pagination-link" aria-label="Loading, Saving, Converting Data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Loading, Saving, Converting Data</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

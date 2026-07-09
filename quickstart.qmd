@@ -82,8 +82,8 @@ range(community$Age)
 ```
 
 ```
-[1] 40.66
-[1] 11.68027
+[1] 40.65049
+[1] 11.61955
 [1] 18 71
 ```
 
@@ -104,7 +104,7 @@ jdesc(community, Age)
 
 Variable  Total  Non_missing  Min  Max   Mean     SD
 --------  -----  -----------  ---  ---  -----  -----
-Age         100          100   18   71  40.66  11.68
+Age         103          103   18   71  40.65  11.62
 </pre>
 
 One command, one table — the total number of cases, how many are non-missing, the
@@ -115,12 +115,12 @@ making it simple and readable. The rest of this tour builds on that idea.
 
 ## Meet `community`
 
-That practice dataset, **`community`**, holds 100 simulated community-survey respondents,
+That practice dataset, **`community`**, holds 103 simulated community-survey respondents,
 each with a handful of measures: income, education, age, a wellbeing score, a few yes/no
 items, a region of residence, and a five-item attitude scale. It's available the moment
 you load jstats — no file to open, nothing to import — which is what lets these examples,
 and the package's help-page examples, run without any setup. Bringing in and working with
-data of your own is covered in [jstats with your own data](your-data.qmd).
+data of your own is covered in [Loading, Saving, Converting Data](data.qmd).
 
 ## Counting a categorical variable with `jfreq`
 
@@ -367,5 +367,6 @@ in a later guide.
 The natural next step is bringing in data of your own — your own files, and the realities
 that come with them, like respondents who declined to answer a question (income, in
 `community`, is one such variable). Handling missing values like those is exactly what the
-next part is about: [jstats with your own data](your-data.qmd).
+next part is about: [Loading, Saving, Converting Data](data.qmd).
 :::
+

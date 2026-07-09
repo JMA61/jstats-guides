@@ -69,7 +69,7 @@ website:
         - section: "Going further"
           contents:
             - text: "Loading, Saving, Converting Data"
-              href: your-data.qmd
+              href: data.qmd
             - text: "A typical jstats workflow"
               href: workflow.qmd
             - text: "Loading jstats automatically"
@@ -113,4 +113,5 @@ format:
           window.addEventListener('resize', syncFooter);
         })();
         </script>
+
 

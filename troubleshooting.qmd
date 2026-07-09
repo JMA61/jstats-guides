@@ -225,7 +225,7 @@ so `jfreq` and `jFreq` are different names.
 The shipped datasets become available once the package is loaded. Run
 `library(jstats)` first, then try again. (If you're working with your own data
 instead, make sure you've loaded it — see
-[jstats with your own data](your-data.qmd).)
+[Loading, Saving, Converting Data](data.qmd).)
 :::
 
 
@@ -250,4 +250,5 @@ A reading tip that helps with R errors in general: in a long error message, the
 most useful part usually comes **after the final colon** — start reading there,
 then work backward only if you need to.
 :::
+
 

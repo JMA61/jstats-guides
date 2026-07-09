@@ -243,8 +243,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./your-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">jstats with your own data</span></a>
+  <a href="./data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Loading, Saving, Converting Data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -322,8 +322,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(community<span class="sc">$</span>Age)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(community<span class="sc">$</span>Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>[1] 40.66
-[1] 11.68027
+<pre><code>[1] 40.65049
+[1] 11.61955
 [1] 18 71</code></pre>
 <p>You can run these one line at a time, or select all three and run them together — either way, R returns three answers, one beneath the other. Each line opens with the <code>[1]</code> you met in the orientation: that’s R numbering its output, marking the position of the first value on the line — it isn’t part of the result. Beyond that, the answers are correct but bare: unlabeled numbers, one command per statistic. Describing five variables this way would mean fifteen lines. And some basic facts are still missing — how many respondents there are, and whether any ages are missing. Here’s the same job in jstats, with a function called <code>jdesc</code> (short for <em>descriptives</em>):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(community, Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -331,13 +331,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 Variable  Total  Non_missing  Min  Max   Mean     SD
 --------  -----  -----------  ---  ---  -----  -----
-Age         100          100   18   71  40.66  11.68
+Age         103          103   18   71  40.65  11.62
 </pre>
 <p>One command, one table — the total number of cases, how many are non-missing, the minimum and maximum, the mean, and the standard deviation, together and labeled, laid out the way you’d expect from commercial statistical software like SPSS or Stata. That, in a nutshell, is what jstats is for: taking the everyday work of data analysis and making it simple and readable. The rest of this tour builds on that idea.</p>
 </section>
 <section id="meet-community" class="level2">
 <h2 class="anchored" data-anchor-id="meet-community">Meet <code>community</code></h2>
-<p>That practice dataset, <strong><code>community</code></strong>, holds 100 simulated community-survey respondents, each with a handful of measures: income, education, age, a wellbeing score, a few yes/no items, a region of residence, and a five-item attitude scale. It’s available the moment you load jstats — no file to open, nothing to import — which is what lets these examples, and the package’s help-page examples, run without any setup. Bringing in and working with data of your own is covered in <a href="./your-data.html">jstats with your own data</a>.</p>
+<p>That practice dataset, <strong><code>community</code></strong>, holds 103 simulated community-survey respondents, each with a handful of measures: income, education, age, a wellbeing score, a few yes/no items, a region of residence, and a five-item attitude scale. It’s available the moment you load jstats — no file to open, nothing to import — which is what lets these examples, and the package’s help-page examples, run without any setup. Bringing in and working with data of your own is covered in <a href="./data.html">Loading, Saving, Converting Data</a>.</p>
 </section>
 <section id="counting-a-categorical-variable-with-jfreq" class="level2">
 <h2 class="anchored" data-anchor-id="counting-a-categorical-variable-with-jfreq">Counting a categorical variable with <code>jfreq</code></h2>
@@ -450,7 +450,7 @@ Age         100          100   18   71  40.66  11.68
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The natural next step is bringing in data of your own — your own files, and the realities that come with them, like respondents who declined to answer a question (income, in <code>community</code>, is one such variable). Handling missing values like those is exactly what the next part is about: <a href="./your-data.html">jstats with your own data</a>.</p>
+<p>The natural next step is bringing in data of your own — your own files, and the realities that come with them, like respondents who declined to answer a question (income, in <code>community</code>, is one such variable). Handling missing values like those is exactly what the next part is about: <a href="./data.html">Loading, Saving, Converting Data</a>.</p>
 </div>
 </div>
 
