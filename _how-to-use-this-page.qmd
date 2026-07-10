@@ -1,0 +1,21 @@
+::: {.callout-note collapse="true" title="How to Use this Page"}
+The blocks on this page build one script. Paste each block into the same R
+script file as you reach it, in order — by the end, the whole file runs cleanly
+from top to bottom, except in the few places where a comment says an error is
+deliberate (so you can see what one looks like).
+
+A few mechanics worth knowing:
+
+- Every block starts with a dashed comment header (`## ---- 1. ... ----`). It
+  marks where one block ends and the next begins in your growing script — and
+  RStudio reads those headers as sections, so they appear in the script's
+  outline for easy jumping around.
+- Experiment freely as you go — change a number, rerun a line, poke at things.
+  Building the script yourself is the point.
+- Prefer to grab everything at once? The complete, clean script -- without
+  your experiments, and finished so it runs top to bottom -- is available to
+  download at the bottom of the page.
+
+This box is the same on every hands-on page in this group, so once you've read
+it here, you can skip it elsewhere.
+:::

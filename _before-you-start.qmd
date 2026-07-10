@@ -1,0 +1,10 @@
+::: {.callout-note collapse="false" title="Before you start"}
+To follow along you'll need:
+
+- **R, RStudio, and jstats installed.** If they're not, work through
+  [Get Started, Steps 1-5](start-here.qmd) first and come back.
+- **An RStudio Project open**, so your working directory and files are already
+  set up.
+- **A new, empty R script open** (File > New File > R Script). You'll copy each
+  numbered block into it, one at a time, running each before moving on.
+:::

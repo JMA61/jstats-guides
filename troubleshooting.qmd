@@ -30,6 +30,18 @@ official sources — **cran.r-project.org** for R and **posit.co** for RStudio.
 
 ![The version numbers you see will be newer than the ones shown here.](images/security-smartscreen.png){width=460px fig-alt="Windows SmartScreen dialog, expanded via More info, showing the application name, the publisher, and a Run anyway button."}
 
+On some machines — most often university- or employer-managed ones — the blue box
+appears with **no More info link at all**: just a **Don't run** button and no way
+past it. This usually happens when the installer is launched from the browser's
+download list. The fix is to launch it from your **Downloads folder** instead: open
+**File Explorer**, go to **Downloads**, and double-click the installer there. If the
+box still offers no way through even from the Downloads folder, you're in the
+managed-computer situation — see the next box down.
+
+<!-- picture slot: images/security-smartscreen-no-more-info.png — the SmartScreen
+dialog showing only a Don't run button, no More info link (screenshot when
+available; add a figure line like the one above once the image is in images/). -->
+
 Next, Windows asks permission to make changes to your computer — the **User Account
 Control** box. It opens with **No** highlighted, so you have to click **Yes** on
 purpose. Where it names a **verified publisher**, that's Windows confirming the
@@ -87,6 +99,15 @@ teach. This note summarizes their provenance to support a software-approval asse
 
 ## Installing jstats
 
+::: {.callout-warning collapse="true" title="A red WARNING says Rtools is required"}
+During the install, the Console may print a red WARNING that **Rtools is required
+to build R packages**. It looks alarming, but it's normal and not an error: it's
+RStudio's general-purpose check for build tools, and it fires on almost any package
+install on a Windows computer that doesn't have Rtools. jstats doesn't need Rtools
+— it contains no compiled code and installs as a ready-made binary — so the install
+completes and jstats runs fine. You can ignore the warning; there's nothing to fix.
+:::
+
 ::: {.callout-warning collapse="true" title="The install seems half-done or broken"}
 The simplest fix is to remove jstats and install it fresh:
 
@@ -135,6 +156,33 @@ compilers or build tools are needed), fetched from the two addresses in the
 install line: the r-universe repository (`jma61.r-universe.dev`) and an ordinary
 CRAN mirror (`cloud.r-project.org`). Ask IT either to allow those two addresses
 or to run the install line for you; either way it's a quick job for them.
+:::
+
+::: {.callout-warning collapse="true" title="Where did jstats install? / I updated, but I still see the old version"}
+R keeps installed packages in a **library** — a folder on your computer — and
+there can be more than one. On a fresh Windows setup, the install often lands
+quietly in R's **system library** (inside Program Files) rather than in your
+personal library, without asking. On its own that's harmless: jstats installs and
+runs fine from there.
+
+It only matters if you end up with **two copies in two libraries** — then an
+update can land in one library while R keeps loading the older copy from the
+other, and you appear stuck on the old version. To see which copy R is using,
+and every library R searches:
+
+```r
+find.package("jstats")   # the folder of the copy R loads
+.libPaths()              # every library R searches, in order
+```
+
+If those reveal a second, older copy, remove it from the library it sits in and
+restart R:
+
+```r
+remove.packages("jstats", lib = "paste-the-other-library-path-here")
+```
+
+Then load jstats again and confirm the version with `packageVersion("jstats")`.
 :::
 
 ## Starting RStudio and loading jstats

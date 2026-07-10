@@ -43,6 +43,9 @@ install.packages("jstats",
 library(jstats)
 ```
 
+You may see a red WARNING that Rtools is required. That's normal and not an error —
+jstats installs without it.
+
 The `repos` part just tells R where to look: the first address is the r-universe
 repository where jstats is published, and the second is an ordinary CRAN mirror that
 supplies any of jstats's supporting packages you don't already have. Both hand over

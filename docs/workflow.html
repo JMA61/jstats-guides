@@ -341,39 +341,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jscreen</span>(<span class="at">stats =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Data Screening
 </span><span style="color: #BBBB00;">Using default data frame: community
-</span>  Cases: 100 
+</span>  Cases: 103 
   Variables: 15 
-  Cases with missing data: 30 
+  Cases with missing data: 34 
   Variables with outliers: 0 
 
 Variable Types
-Variable        jstats Class  Sub-class   Unique Values       Mean   Median
---------------  ------------  ----------  -------------  ---------  -------
-RespondentID    Categorical   identifier            100                    
-Income          Numeric                              52  47414.894  48000.0
-Education       Categorical   5-category              5                    
-Age             Numeric                              41     40.660     40.0
-WellbeingScore  Numeric                              43     50.600     51.0
-Volunteer       Categorical   dichotomy               2      0.420         
-OwnsHome        Categorical   dichotomy*              2      1.540         
-Smoker          Categorical   dichotomy               2      0.421         
-CommuteTime     Numeric                              46     31.340     30.5
-Region          Categorical   4-category              4                    
-Environment1    Categorical   Likert                  5                    
-Environment2    Categorical   Likert                  5                    
-Environment3    Categorical   Likert                  5                    
-Environment4    Categorical   Likert                  5                    
-Environment5    Categorical   Likert                  5                    
+Variable        jstats Class  Sub-class   Unique Values       Mean  Median
+--------------  ------------  ----------  -------------  ---------  ------
+RespondentID    Categorical   identifier            103                   
+Income          Numeric                              49  49855.670   49000
+Education       Categorical   5-category              5                   
+Age             Numeric                              41     40.650      40
+WellbeingScore  Numeric                              41     50.893      50
+Volunteer       Categorical   dichotomy               2      0.476        
+OwnsHome        Categorical   dichotomy*              2      1.534        
+Smoker          Categorical   dichotomy               2      0.337        
+CommuteTime     Numeric                              42     30.738      30
+Region          Categorical   4-category              4                   
+Environment1    Categorical   Likert                  5                   
+Environment2    Categorical   Likert                  5                   
+Environment3    Categorical   Likert                  5                   
+Environment4    Categorical   Likert                  5                   
+Environment5    Categorical   Likert                  5                   
 * coded other than 0/1; mean is not a proportion
 
 Missing Data &amp; Outliers (outliers &gt; 3 SD from mean)
 Variable      Missing  % Missing
 ------------  -------  ---------
-Income              6        6.0
-Education           6        6.0
-Smoker              5        5.0
-Environment1       12       12.0
-Environment3       12       12.0
+Income              6        5.8
+Education           6        5.8
+Smoker              5        4.9
+Environment1       12       11.7
+Environment3       12       11.7
 </code></pre>
 </div>
 <p>A screen like this is where you catch problems early — a variable that should be a 0/1 dichotomy showing values of 1 and 2, say, or a “score” whose minimum is an impossible negative number. That second one is exactly what we tackle next.</p>
@@ -490,7 +490,7 @@ MoodRating     70           63    1    9  5.46  1.702
   variable.id: LEGEND (override)
   value.id: BOTH
   ref.categories: ON
-  udm.notice: AUTO
+  udm.notice: ON
   digits: 3
 </code></pre>
 </div>
@@ -519,31 +519,31 @@ MoodRating     70           63    1    9  5.46  1.702
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
 Case Processing    Excluded  Remaining
-    Original              —        100
-    Auto-listwise        18         82
-    Analysis N            —         82
+    Original              —        103
+    Auto-listwise        19         84
+    Analysis N            —         84
 
-Missing-data breakdown  From 100     %
+Missing-data breakdown  From 103     %
     Environment1
-      Missing              12     12.0
+      Missing              12     11.7
     Environment3
-      Missing              12     12.0
+      Missing              12     11.7
 
 ──────────────────────────────────────
 
 Reliability Statistics
 Cronbach's Alpha  N of Items
 ----------------  ----------
-           0.297           5
+           0.348           5
 
 Item Statistics
 Item           Mean     SD   N
 ------------  -----  -----  --
-Environment1  2.988  1.212  82
-Environment2  2.780  1.228  82
-Environment3  3.134  1.163  82
-Environment4  3.098  1.203  82
-Environment5  2.976  1.474  82
+Environment1  3.131  1.180  84
+Environment2  2.869  1.180  84
+Environment3  3.060  1.226  84
+Environment4  3.333  1.186  84
+Environment5  2.762  1.470  84
 </code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: The following item(s) are negatively correlated with the rest of the scale: Environment2.
@@ -554,11 +554,11 @@ They may need reverse-coding, or may not belong in the scale - check the item-to
 Item-Total Statistics
 Item          Corrected Item-Total r  Alpha if Item Deleted
 ------------  ----------------------  ---------------------
-Environment1                   0.505                 -0.115
-Environment2                  -0.615                  0.749
-Environment3                   0.536                 -0.129
-Environment4                   0.365                  0.040
-Environment5                   0.340                  0.012
+Environment1                   0.510                 -0.006
+Environment2                  -0.660                  0.783
+Environment3                   0.539                 -0.052
+Environment4                   0.447                  0.056
+Environment5                   0.455                 -0.030
 
 Variable Labels:
   Environment1 = Climate change is a serious threat.
@@ -602,40 +602,40 @@ To check the recode landed correctly, compare jfreq() on the original and the ne
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
 Case Processing    Excluded  Remaining
-    Original              —        100
-    Auto-listwise        18         82
-    Analysis N            —         82
+    Original              —        103
+    Auto-listwise        19         84
+    Analysis N            —         84
 
-Missing-data breakdown  From 100     %
+Missing-data breakdown  From 103     %
     Environment1
-      Missing              12     12.0
+      Missing              12     11.7
     Environment3
-      Missing              12     12.0
+      Missing              12     11.7
 
 ──────────────────────────────────────
 
 Reliability Statistics
 Cronbach's Alpha  N of Items
 ----------------  ----------
-           0.798           5
+           0.827           5
 
 Item Statistics
 Item            Mean     SD   N
 -------------  -----  -----  --
-Environment1   2.988  1.212  82
-Environment2R  3.220  1.228  82
-Environment3   3.134  1.163  82
-Environment4   3.098  1.203  82
-Environment5   2.976  1.474  82
+Environment1   3.131  1.180  84
+Environment2R  3.131  1.180  84
+Environment3   3.060  1.226  84
+Environment4   3.333  1.186  84
+Environment5   2.762  1.470  84
 
 Item-Total Statistics
 Item           Corrected Item-Total r  Alpha if Item Deleted
 -------------  ----------------------  ---------------------
-Environment1                    0.631                  0.744
-Environment2R                   0.615                  0.749
-Environment3                    0.728                  0.716
-Environment4                    0.601                  0.754
-Environment5                    0.387                  0.832
+Environment1                    0.691                  0.774
+Environment2R                   0.660                  0.783
+Environment3                    0.694                  0.773
+Environment4                    0.679                  0.778
+Environment5                    0.445                  0.854
 
 Variable Labels:
   Environment1  = Climate change is a serious threat.
@@ -650,8 +650,8 @@ Variable Labels:
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>community<span class="sc">$</span>EnvScale <span class="ot">&lt;-</span> <span class="fu">javg</span>(Environment1, Environment2R, Environment3, Environment4,</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">min.valid =</span> <span class="dv">3</span>, <span class="at">var.label =</span> <span class="st">"Environment scale (mean)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Mean of 4 variables computed for 100 cases (min.valid = 3: 12 cases used partial data, 6 set to NA due to missing values).
-Mean of the new variable: 3.131.</code></pre>
+<pre><code>Mean of 4 variables computed for 103 cases (min.valid = 3: 14 cases used partial data, 5 set to NA due to missing values).
+Mean of the new variable: 3.178.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
@@ -664,15 +664,15 @@ For the full distribution (min, max, SD), run jdesc() on the new column.</code><
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
 Case Processing  Excluded  Remaining
-    Original            —        100
-    Remaining N         —        100
+    Original            —        103
+    Remaining N         —        103
 
 ────────────────────────────────────
 
 
 Variable  Total  Non_missing  Min  Max   Mean     SD
 --------  -----  -----------  ---  ---  -----  -----
-EnvScale    100           94    1    5  3.131  0.972
+EnvScale    103           98    1    5  3.178  0.973
 
 Variable Labels:
   EnvScale = Environment scale (mean)
@@ -704,13 +704,13 @@ Variable Labels:
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
 Case Processing    Excluded  Remaining
-    Original              —        100
-    Auto-listwise         6         94
-    Analysis N            —         94
+    Original              —        103
+    Auto-listwise         6         97
+    Analysis N            —         97
 
-Missing-data breakdown  From 100    %
+Missing-data breakdown  From 103    %
     Income
-      Missing              6      6.0
+      Missing              6      5.8
 
 ──────────────────────────────────────
 
@@ -718,9 +718,9 @@ Missing-data breakdown  From 100    %
 Coefficients
                b      SE      t      β      p  
 -----------  ------  -----  -----  -----  -----
-(Intercept)  29.287  3.610  8.113         &lt;.001
-Income        0.000  0.000  6.416  0.549  &lt;.001
-Age           0.170  0.083  2.060  0.176   .042
+(Intercept)  24.815  3.749  6.620         &lt;.001
+Income        0.000  0.000  6.813  0.564  &lt;.001
+Age           0.181  0.082  2.208  0.183   .030
 
 Outcome:
   WellbeingScore = Wellbeing score (0-100)
@@ -728,14 +728,14 @@ Predictors:
   Income         = Annual income (USD)
   Age            = Age (years)
 
-R-squared: 0.387    Adjusted R-squared: 0.373
-Residual Standard Error: 8.925
+R-squared: 0.411    Adjusted R-squared: 0.398
+Residual Standard Error: 9.013
 
-F-statistic: 28.707 on 2 and 91 DF, p-value: &lt;.001
+F-statistic: 32.729 on 2 and 94 DF, p-value: &lt;.001
 Sum of Squares:
-  Regression: 4573.217
-  Residual:   7248.527
-  Total:      11821.745
+  Regression: 5317.416
+  Residual:   7635.945
+  Total:      12953.361
 </code></pre>
 </div>
 <p>To add a categorical predictor like <code>Region</code>, you tell jstats to treat it as a set of dummy variables. <code>jdummy()</code> registers that once — choosing <code>West</code> as the reference category here — and every analysis that follows honors it, so you don’t re-specify it each time:</p>
@@ -747,7 +747,7 @@ Sum of Squares:
   Variable: Region (haven_labelled)
   Reference category: Region_West
   Dummy variables: Region_North, Region_South, Region_East
-  Cases: 100 (0 missing)
+  Cases: 103 (0 missing)
 </code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>Note: this registration is stored for this session only.
@@ -762,27 +762,27 @@ Next session, load that file to restore the registration:
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
 Case Processing    Excluded  Remaining
-    Original              —        100
-    Auto-listwise         6         94
-    Analysis N            —         94
+    Original              —        103
+    Auto-listwise         6         97
+    Analysis N            —         97
 
-Missing-data breakdown  From 100    %
+Missing-data breakdown  From 103    %
     Income
-      Missing              6      6.0
+      Missing              6      5.8
 
 ──────────────────────────────────────
 
 
 Coefficients
-                          b      SE      t      β      p  
-----------------------  ------  -----  -----  -----  -----
-(Intercept)             23.045  4.077  5.653         &lt;.001
-Income                   0.000  0.000  6.698  0.559  &lt;.001
-Age                      0.215  0.082  2.620  0.222   .010
-Region (ref = 4: West)                                    
-  1: North               5.391  2.466  2.186          .031
-  2: South               7.323  2.770  2.644          .010
-  3: East                5.276  2.356  2.239          .028
+                          b      SE      t       β      p  
+----------------------  ------  -----  ------  -----  -----
+(Intercept)             22.404  4.318   5.188         &lt;.001
+Income                   0.000  0.000   6.941  0.572  &lt;.001
+Age                      0.193  0.082   2.342  0.195   .021
+Region (ref = 4: West)                                     
+  1: North               4.905  2.554   1.921          .058
+  2: South              -0.546  2.866  -0.191          .849
+  3: East                1.250  2.509   0.498          .620
 
 Outcome:
   WellbeingScore = Wellbeing score (0-100)
@@ -791,14 +791,14 @@ Predictors:
   Age            = Age (years)
   Region         = Region of residence
 
-R-squared: 0.444    Adjusted R-squared: 0.412
-Residual Standard Error: 8.642
+R-squared: 0.444    Adjusted R-squared: 0.413
+Residual Standard Error: 8.897
 
-F-statistic: 14.058 on 5 and 88 DF, p-value: &lt;.001
+F-statistic: 14.525 on 5 and 91 DF, p-value: &lt;.001
 Sum of Squares:
-  Regression: 5249.590
-  Residual:   6572.155
-  Total:      11821.745
+  Regression: 5749.301
+  Residual:   7204.060
+  Total:      12953.361
 </code></pre>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="For experienced R users">
@@ -826,8 +826,8 @@ Sum of Squares:
 Coefficients
                b      SE    Wald   df   p    Exp(B)
 -----------  ------  -----  -----  --  ----  ------
-(Intercept)  -1.923  0.788  5.954   1  .015   0.146
-Age           0.039  0.018  4.488   1  .034   1.040
+(Intercept)  -2.347  0.811  8.382   1  .004   0.096
+Age           0.055  0.019  8.216   1  .004   1.057
 
 Outcome:
   Volunteer = Volunteered in past year
@@ -837,12 +837,12 @@ Predictors:
 Omnibus Test of Model Coefficients
 Chi-Square  df  p   
 ----------  --  ----
-     4.761   1  .029
+     9.283   1  .002
 
 Model Summary
 -2 Log Likelihood  Cox &amp; Snell R²  Nagelkerke R²      AIC
 -----------------  --------------  -------------  -------
-          131.297           0.046          0.063  135.297
+          133.263           0.086          0.115  137.263
 
 Dependent Variable Encoding
   Modeled (1):   Yes
@@ -877,11 +877,11 @@ Dependent Variable Encoding
 </span>
 Variable     N  Missing  % Missing
 ---------  ---  -------  ---------
-Income     100        6  6.0%     
-Education  100        6  6.0%     
-Age        100        0  0.0%     
+Income     103        6  5.8%     
+Education  103        6  5.8%     
+Age        103        0  0.0%     
 
-  Complete cases: 88 of 100 (88.0%)
+  Complete cases: 91 of 103 (88.3%)
   Listwise filter activated — 12 cases will be excluded from subsequent analyses.
 </code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -889,16 +889,16 @@ Age        100        0  0.0%
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
 Case Processing  Excluded  Remaining
-    Original            —        100
-    jcomplete          12         88  Income, Education, +1 more
-    Remaining N         —         88
+    Original            —        103
+    jcomplete          12         91  Income, Education, +1 more
+    Remaining N         —         91
 
 ────────────────────────────────────────────────────────────────
 
 
 Variable  Total  Non_missing  Min  Max    Mean      SD
 --------  -----  -----------  ---  ---  ------  ------
-Age          88           88   18   71  41.125  11.794
+Age          91           91   18   71  40.484  11.933
 
 Variable Labels:
   Age = Age (years)
@@ -979,7 +979,7 @@ Variable Labels:
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>received <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"community_spss.sav"</span>, <span class="at">package =</span> <span class="st">"jstats"</span>)</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(received, <span class="at">name =</span> <span class="st">"community_received"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Loaded community_received (SPSS format; 100 cases, 15 variables)</code></pre>
+<pre><code>Loaded community_received (SPSS format; 103 cases, 15 variables)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>5 variables have user-defined missing values:
@@ -994,39 +994,39 @@ These codes are excluded as missing in jstats analyses. For better base R compat
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jscreen</span>(community_received, <span class="at">stats =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Data Screening
-</span>  Cases: 100 
+</span>  Cases: 103 
   Variables: 15 
-  Cases with missing data: 30 
+  Cases with missing data: 34 
   Variables with outliers: 0 
 
 Variable Types
-Variable        jstats Class  Sub-class   Unique Values       Mean   Median
---------------  ------------  ----------  -------------  ---------  -------
-RespondentID    Categorical   identifier            100                    
-Income          Numeric                              52  47414.894  48000.0
-Education       Categorical   5-category              5                    
-Age             Numeric                              41     40.660     40.0
-WellbeingScore  Numeric                              43     50.600     51.0
-Volunteer       Categorical   dichotomy               2      0.420         
-OwnsHome        Categorical   dichotomy*              2      1.540         
-Smoker          Categorical   dichotomy               2      0.421         
-CommuteTime     Numeric                              46     31.340     30.5
-Region          Categorical   4-category              4                    
-Environment1    Categorical   Likert                  5                    
-Environment2    Categorical   Likert                  5                    
-Environment3    Categorical   Likert                  5                    
-Environment4    Categorical   Likert                  5                    
-Environment5    Categorical   Likert                  5                    
+Variable        jstats Class  Sub-class   Unique Values       Mean  Median
+--------------  ------------  ----------  -------------  ---------  ------
+RespondentID    Categorical   identifier            103                   
+Income          Numeric                              49  49855.670   49000
+Education       Categorical   5-category              5                   
+Age             Numeric                              41     40.650      40
+WellbeingScore  Numeric                              41     50.893      50
+Volunteer       Categorical   dichotomy               2      0.476        
+OwnsHome        Categorical   dichotomy*              2      1.534        
+Smoker          Categorical   dichotomy               2      0.337        
+CommuteTime     Numeric                              42     30.738      30
+Region          Categorical   4-category              4                   
+Environment1    Categorical   Likert                  5                   
+Environment2    Categorical   Likert                  5                   
+Environment3    Categorical   Likert                  5                   
+Environment4    Categorical   Likert                  5                   
+Environment5    Categorical   Likert                  5                   
 * coded other than 0/1; mean is not a proportion
 
 Missing Data &amp; Outliers (outliers &gt; 3 SD from mean)
 Variable      Missing  % Missing
 ------------  -------  ---------
-Income              6        6.0
-Education           6        6.0
-Smoker              5        5.0
-Environment1       12       12.0
-Environment3       12       12.0
+Income              6        5.8
+Education           6        5.8
+Smoker              5        4.9
+Environment1       12       11.7
+Environment3       12       11.7
 
 Variable Labels:
   RespondentID   = Respondent ID

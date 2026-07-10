@@ -279,11 +279,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#how-much-output-you-see" id="toc-how-much-output-you-see" class="nav-link" data-scroll-target="#how-much-output-you-see">4. How much output you see</a></li>
   <li><a href="#functions-with-no-arguments-and-getting-help" id="toc-functions-with-no-arguments-and-getting-help" class="nav-link" data-scroll-target="#functions-with-no-arguments-and-getting-help">5. Functions with no arguments, and getting help</a></li>
   <li><a href="#the-overwrite-prompt" id="toc-the-overwrite-prompt" class="nav-link" data-scroll-target="#the-overwrite-prompt">6. The overwrite prompt</a></li>
-  <li><a href="#real-output-and-controlling-the-digits" id="toc-real-output-and-controlling-the-digits" class="nav-link" data-scroll-target="#real-output-and-controlling-the-digits">7. Real output, and controlling the digits</a></li>
-  <li><a href="#saving-to-a-data-folder" id="toc-saving-to-a-data-folder" class="nav-link" data-scroll-target="#saving-to-a-data-folder">8. Saving to a Data folder</a></li>
-  <li><a href="#saving-across-formats-and-missing-values" id="toc-saving-across-formats-and-missing-values" class="nav-link" data-scroll-target="#saving-across-formats-and-missing-values">9. Saving across formats – and missing values</a></li>
-  <li><a href="#reloading-and-how-missing-codes-travel" id="toc-reloading-and-how-missing-codes-travel" class="nav-link" data-scroll-target="#reloading-and-how-missing-codes-travel">10. Reloading, and how missing codes travel</a></li>
-  <li><a href="#a-quick-regression-to-finish" id="toc-a-quick-regression-to-finish" class="nav-link" data-scroll-target="#a-quick-regression-to-finish">11. A quick regression to finish</a></li>
+  <li><a href="#saving-to-a-data-folder" id="toc-saving-to-a-data-folder" class="nav-link" data-scroll-target="#saving-to-a-data-folder">7. Saving to a Data folder</a></li>
+  <li><a href="#saving-across-formats-and-missing-values" id="toc-saving-across-formats-and-missing-values" class="nav-link" data-scroll-target="#saving-across-formats-and-missing-values">8. Saving across formats – and missing values</a></li>
+  <li><a href="#reloading-and-how-missing-codes-travel" id="toc-reloading-and-how-missing-codes-travel" class="nav-link" data-scroll-target="#reloading-and-how-missing-codes-travel">9. Reloading, and how missing codes travel</a></li>
+  <li><a href="#turning-up-the-digits" id="toc-turning-up-the-digits" class="nav-link" data-scroll-target="#turning-up-the-digits">10. Turning up the digits</a></li>
+  <li><a href="#the-proof-that-nothing-was-lost" id="toc-the-proof-that-nothing-was-lost" class="nav-link" data-scroll-target="#the-proof-that-nothing-was-lost">11. The proof that nothing was lost</a></li>
   </ul></li>
   <li><a href="#take-the-whole-script-with-you" id="toc-take-the-whole-script-with-you" class="nav-link" data-scroll-target="#take-the-whole-script-with-you">Take the whole script with you</a></li>
   </ul>
@@ -297,10 +297,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="loading-saving-converting-data" class="level2">
 <h2 class="anchored" data-anchor-id="loading-saving-converting-data">Loading, Saving, Converting Data</h2>
-<p>This page is a hands-on run-through. The best way to learn it is to run it yourself, one block at a time, and watch what happens in the Console and in the Environment pane. Each block below does one small thing, so take it a step at a time – there’s no rush.</p>
-<p><em>The complete script is available to download at the very bottom of this page, if you’d prefer the whole thing in one file.</em></p>
+<p>This page is a hands-on run-through of moving data in and out of jstats: loading files, saving your work back out, and converting between formats.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Before you start">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Before you start
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>To follow along you’ll need:</p>
+<ul>
+<li><strong>R, RStudio, and jstats installed.</strong> If they’re not, work through <a href="./start-here.html">Get Started, Steps 1-5</a> first and come back.</li>
+<li><strong>An RStudio Project open</strong>, so your working directory and files are already set up.</li>
+<li><strong>A new, empty R script open</strong> (File &gt; New File &gt; R Script). You’ll copy each numbered block into it, one at a time, running each before moving on.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="How to Use this Page">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How to Use this Page
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The blocks on this page build one script. Paste each block into the same R script file as you reach it, in order — by the end, the whole file runs cleanly from top to bottom, except in the few places where a comment says an error is deliberate (so you can see what one looks like).</p>
+<p>A few mechanics worth knowing:</p>
+<ul>
+<li>Every block starts with a dashed comment header (<code>## ---- 1. ... ----</code>). It marks where one block ends and the next begins in your growing script — and RStudio reads those headers as sections, so they appear in the script’s outline for easy jumping around.</li>
+<li>Experiment freely as you go — change a number, rerun a line, poke at things. Building the script yourself is the point.</li>
+<li>Prefer to grab everything at once? The complete, clean script – without your experiments, and finished so it runs top to bottom – is available to download at the bottom of the page.</li>
+</ul>
+<p>This box is the same on every hands-on page in this group, so once you’ve read it here, you can skip it elsewhere.</p>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled" title="New to R?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -309,49 +352,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>You don’t need to memorize any of this yet. Right now the goal is simply to run each line and watch what happens – the ideas settle in as you go. If a line doesn’t work, check that jstats loaded without errors, then try it again.</p>
+<p>You don’t need to memorize any of this yet. Right now the goal is simply to run each line and watch what happens – the ideas settle in as you go. A few things R doesn’t care about, so you don’t have to either: which line numbers your code lands on, and how many blank lines sit between commands – paste each block anywhere below your previous code and it all works the same. Lines starting with <code>#</code> are comments: notes for humans that R skips entirely (extra hash marks, like <code>##</code>, are still just a comment). And running a line a second time is almost always harmless – you’ll simply get the same result again. If a line doesn’t work, check that jstats loaded without errors, then try it again.</p>
 </div>
 </div>
 </div>
 <section id="load-the-package-and-a-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="load-the-package-and-a-dataset">1. Load the package and a dataset</h3>
 <p>We’ll start by loading the package and one of its built-in practice datasets.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the jstats library</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the package dataset called community</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## It's loaded as a data frame into the Environment</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 1. Load the package and a dataset ---------------------------------</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the jstats library</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the package dataset called community</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## It's loaded as a data frame into the Environment</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For a dataset that ships inside a package, base R has one too: <code>data(community)</code> loads it. The difference shows up beyond package data: <code>data()</code> only reaches datasets bundled in packages, while <code>jload()</code> is one loader for everything on this page — package datasets, your saved <code>.rds</code> files, and SPSS, Stata, SAS, Excel, and CSV files — with the same one-line call.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="objects-and-the-assignment-operator" class="level3">
 <h3 class="anchored" data-anchor-id="objects-and-the-assignment-operator">2. Objects and the assignment operator</h3>
 <p>Anything you create in R is stored as an <em>object</em>. Here we pull a single variable out of the dataset and give it a name of our own.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## "Objects" other than data frames can go into the Environment</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">## The "Assignment Operator" (less-than followed by a dash) is a key Base R fundamental</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Take the thing on the right and assign it to what's on the left</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Take the Region variable from the community data frame and assign it to a new object</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">## The new object we'll call "MyObject"</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>MyObject <span class="ot">&lt;-</span> community<span class="sc">$</span>Region <span class="do">## (Base R code)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 2. Objects and the assignment operator ----------------------------</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## "Objects" other than data frames can go into the Environment</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## The "Assignment Operator" (less-than followed by a dash) is a key Base R fundamental</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Take the thing on the right and assign it to what's on the left</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Take the Region variable from the community data frame and assign it to a new object</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="do">## The new object we'll call "MyObject"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>MyObject <span class="ot">&lt;-</span> community<span class="sc">$</span>Region <span class="do">## (Base R code)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="more-than-one-dataset-and-cleaning-up" class="level3">
 <h3 class="anchored" data-anchor-id="more-than-one-dataset-and-cleaning-up">3. More than one dataset – and cleaning up</h3>
 <p>You’re not limited to one dataset at a time, and you can remove objects you no longer need.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## You can have more than 1 data frame in the Environment</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"clinic"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove MyObject from the Environment</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Note that this is a Base R function (j is not the first letter)</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(MyObject)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove community from the Environment</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(community)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove clinic from the Environment</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(clinic)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 3. More than one dataset, and cleaning up -------------------------</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## You can have more than 1 data frame in the Environment</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"clinic"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove MyObject from the Environment</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Note that this is a Base R function (j is not the first letter)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(MyObject)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove community from the Environment</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(community)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove clinic from the Environment</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(clinic)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -360,9 +425,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>In SPSS you normally have one dataset open in Data View at a time. In R, the Environment can hold several at once – here <code>community</code> and <code>clinic</code> sit side by side – and each command uses whichever one you name. The <code>$</code> in <code>community$Region</code> simply means “the Region column, in the community dataset.”</p>
+<p>SPSS can have several datasets open too – but each opens in its own Data Editor window, and switching the active one takes a syntax chain most users never bother with:</p>
+<pre><code>GET FILE='community.sav'.
+DATASET NAME community.
+GET FILE='clinic.sav'.
+DATASET NAME clinic.
+DATASET ACTIVATE community.</code></pre>
+<p>And when you’re finished with a dataset in SPSS, you close its Data Editor window or run <code>DATASET CLOSE clinic.</code> – the R counterpart is the <code>rm()</code> cleanup you see above.</p>
+<p>In R there are no windows to juggle: the Environment holds several data frames side by side, and every command simply names the one it uses – the <code>$</code> in <code>community$Region</code> means “the Region column, in the community dataset.”</p>
 </div>
 </div>
 </div>
@@ -370,102 +442,216 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="how-much-output-you-see" class="level3">
 <h3 class="anchored" data-anchor-id="how-much-output-you-see">4. How much output you see</h3>
 <p>jstats can show more or less detail. The output level controls how much appears.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## The output level is set to "standard" by default</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">## After you learn more about jstats (and R) you might not want all of that output</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"minimal"</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">## With minimal output, you get less information</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Set the output level back to standard</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"standard"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 4. How much output you see ----------------------------------------</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">## The output level is set to "standard" by default</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## After you learn more about jstats (and R) you might not want all of that output</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"minimal"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">## With minimal output, you get less information</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Set the output level back to standard</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"standard"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>There isn’t one. Base R has no output-level setting — each function prints whatever it prints, and how much you see varies with each package author’s choices. <code>joutput()</code> is a single, jstats-wide control.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="functions-with-no-arguments-and-getting-help" class="level3">
 <h3 class="anchored" data-anchor-id="functions-with-no-arguments-and-getting-help">5. Functions with no arguments, and getting help</h3>
 <p>Most functions need something inside the parentheses, but a few work on their own. Every function also has a help page.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## A few functions work correctly without input between the parentheses, but most require input</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>()  <span class="co"># This will cause an error with a message about how you might fix the error</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## But this one will show you the current output settings for jstats</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>()</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Here's a Base R function that works without arguments/input</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">## List the objects/data frames in the Environment</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Here's another one from Base R</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">## A working directory is the "path" to where your project is stored on your computer</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## If you're not working in a project, you have to set this yourself (finicky)</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="do">## The technical name for a function's inputs are "Arguments"</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="do">## View help files describing necessary and optional Arguments by running...</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>?jload</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 5. Functions with no arguments, and getting help ------------------</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">## A few functions work correctly without input between the parentheses, but most require input</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>()  <span class="co"># This will cause an error with a message about how you might fix the error</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="do">## But this one will show you the current output settings for jstats</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Here's a Base R function that works without arguments/input</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="do">## List the objects/data frames in the Environment</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Here's another one from Base R</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="do">## A working directory is the "path" to where your project is stored on your computer</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="do">## If you're not working in a project, you have to set this yourself (finicky)</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="do">## The technical name for a function's inputs are "Arguments"</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="do">## View help files describing necessary and optional Arguments by running...</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>?jload</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="do">## The same ? help works for base R functions and functions from any installed package</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>?ls</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="do">## And this one opens the package overview: every jstats function, grouped by purpose</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>?jstats</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>?</code> <em>is</em> base R – <code>?jload</code>, <code>?ls</code>, and <code>?mean</code> all work the same way, for base functions and for functions from any installed package. (In RStudio, putting the cursor on a function name and pressing F1 does the same thing. On Macs the key varies from machine to machine – F1 on some, fn + F1 on others, and on some Macs the function keys must first be enabled in System Settings.) What a base R setup doesn’t have is a grouped index: a typical workflow spans functions scattered across many packages, each with its own alphabetical help listing. <code>?jstats</code> shows the whole toolkit on one page, organized by purpose – one advantage of the functions traveling together as a package.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="the-overwrite-prompt" class="level3">
 <h3 class="anchored" data-anchor-id="the-overwrite-prompt">6. The overwrite prompt</h3>
-<p>When you load a dataset that’s already open, jstats checks with you before overwriting it.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## The output you get in the Console Pane can include a confirmation prompt</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Here, jstats will not overwrite community unless you give it permission</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>) <span class="co"># Look at the y/n prompt in the console</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Set an optional overwrite argument/input to overwrite without the prompt</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="real-output-and-controlling-the-digits" class="level3">
-<h3 class="anchored" data-anchor-id="real-output-and-controlling-the-digits">7. Real output, and controlling the digits</h3>
-<p>Now some actual analysis. You can also control how many digits appear.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Get some actual analysis output from the community data frame</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(community, Age)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Specify the number of digits in the output</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="at">digits =</span> <span class="dv">4</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">## At digits = 4 the Age mean reads 40.6505; at digits = 2 it rounds to 40.65</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(community, Age)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(community, Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When you load a dataset that’s already open, jstats checks with you before overwriting it – watch for the y/n prompt in the Console window.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 6. The overwrite prompt -------------------------------------------</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">## The output you get in the Console Pane can include a confirmation prompt</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Here, jstats will not overwrite community unless you give it permission</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>) <span class="co"># Look at the y/n prompt in the console</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Set an optional overwrite argument/input to overwrite without the prompt</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the point?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the point?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The overwrite argument is here to show you two things:</p>
+<ul>
+<li><strong>What an argument looks like.</strong> Options go inside the parentheses as <code>name = value</code> – here, <code>overwrite = TRUE</code>.</li>
+<li><strong>Prompts can be overridden.</strong> The few times jstats asks for confirmation, the prompt appears in the Console – and each one can be switched off with the right argument. That matters when code runs automatically, with nobody at the keyboard to answer: it happens in several places behind this website, and in the finished script you can download at the bottom of this page.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Base R doesn’t ask. Loading or assigning over an existing object replaces it silently — no prompt, no warning, and the old copy is gone. The confirmation prompt is a jstats safeguard.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="saving-to-a-data-folder" class="level3">
-<h3 class="anchored" data-anchor-id="saving-to-a-data-folder">8. Saving to a Data folder</h3>
-<p>Let’s save your work. First tell jstats where your data live, then save a copy.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Use the assignment operator to copy community to a new data frame called MyData</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>MyData <span class="ot">&lt;-</span> community</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Specify your project's Data directory</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="do">## jstats will create this folder upon first save</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Or you can create it manually</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">data.dir =</span> <span class="st">"Data"</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Save the package dataset to the Data folder and call it MyData_r.rds</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Specify R native format with the .rds extension</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="do">## The Data folder is created now, on this first save</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData, <span class="st">"MyData_r.rds"</span>)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove MyData and community data frames from the environment</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Does not remove the dataset from the data folder</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(MyData)</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(community)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<h3 class="anchored" data-anchor-id="saving-to-a-data-folder">7. Saving to a Data folder</h3>
+<p>Let’s save your work – first with no folder specified, to see where files go by default, and then to a Data folder of your own.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 7. Saving to a Data folder ----------------------------------------</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Use the assignment operator to copy community to a new data frame called MyData</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>MyData <span class="ot">&lt;-</span> community</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Save it with no folder specified -- where does the file go?</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">## The console message shows the full path: it landed in your project's</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="do">## working directory, the default location</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">## It's the same path the Base R getwd() command showed you earlier</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData, <span class="st">"WhereDidIGo.rds"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Delete that test file</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="do">## file.remove() is base R -- the file-on-disk equivalent of the rm()</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="do">## you used for data frames. It replies with a cryptic [1] TRUE</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="fu">file.remove</span>(<span class="st">"WhereDidIGo.rds"</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Now name a Data folder of your own</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="do">## jstats will create this folder upon first save</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Or you can create it manually</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">data.dir =</span> <span class="st">"Data"</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Save the dataset to the Data folder and call it MyData_r.rds</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Specify R native format with the .rds extension</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="do">## The Data folder is created now, on this first save</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData, <span class="st">"MyData_r.rds"</span>)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove MyData and community data frames from the environment</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="do">## Does not remove the saved file from the Data folder</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(MyData)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(community)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the point?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the point?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Why set a data folder at all? Tidiness now, and a payoff later. With <code>data.dir</code> set, every save and load on this page knows where to look. And that’s the habit to keep: put <code>joptions(data.dir = "Data")</code> near the top of your own scripts, then drop a dataset of yours into that folder and <code>jload("YourFile.sav")</code> opens it by name alone. If you’re not sure where the folder is on your computer, the jsave message has already told you – it prints the full path each time, ready to paste into File Explorer (Windows) or find in Finder (Mac).</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Saving to the working directory by default is base R’s behavior too – <code>saveRDS(MyData, "MyData_r.rds")</code> puts the file in the same place; jstats just tells you, in full, where it went. To use a folder, base R won’t create it for you (that’s <code>dir.create("Data")</code> first), and the folder name gets typed into every path from then on – with any subfolders along for the ride, e.g. <code>saveRDS(MyData, "Data/CommunityStudy/Wave1/MyData_r.rds")</code>. <code>joptions(data.dir = ...)</code> sets the location once, and every <code>jsave()</code> and <code>jload()</code> after that already knows where to look.</p>
+<p>And note what <code>file.remove()</code> didn’t do: ask. Like the silent overwrite in block 6, base R deletes with no confirmation – mix up a filename and a real data file is gone. jstats’s prompts exist precisely because of edges like that.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="saving-across-formats-and-missing-values" class="level3">
-<h3 class="anchored" data-anchor-id="saving-across-formats-and-missing-values">9. Saving across formats – and missing values</h3>
+<h3 class="anchored" data-anchor-id="saving-across-formats-and-missing-values">8. Saving across formats – and missing values</h3>
 <p>Moving between file formats is easy, with one wrinkle around missing values that jstats handles for you.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Reload the saved MyData.rds dataset from the data folder.</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_r.rds"</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="do">## The original community dataset carries SPSS-style missing values</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="do">## So it saves to SPSS format (.sav) without a problem</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData_r, <span class="st">"MyData_spss.sav"</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="do">## But the SPSS-style missing-value codes need to be converted</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="do">## if you want to save to a format other than R or SPSS</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData_r, <span class="st">"MyData_stata.dta"</span>)  <span class="co"># This will draw an error</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Convert to Stata format (.dta)</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>MyData_stata <span class="ot">&lt;-</span> <span class="fu">jconvert</span>(MyData_r, <span class="at">to =</span> <span class="st">"stata"</span>)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData_stata, <span class="st">"MyData_stata.dta"</span>)  <span class="co"># Now no error</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 8. Saving across formats, and missing values ----------------------</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Reload the saved MyData.rds dataset from the data folder.</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_r.rds"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">## The original community dataset carries SPSS-style missing values</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="do">## So it saves to SPSS format (.sav) without a problem</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData_r, <span class="st">"MyData_spss.sav"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="do">## But the SPSS-style missing-value codes need to be converted</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="do">## if you want to save to a format other than R or SPSS</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData_r, <span class="st">"MyData_stata.dta"</span>)  <span class="co"># This will draw an error</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Convert to Stata format (.dta)</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>MyData_stata <span class="ot">&lt;-</span> <span class="fu">jconvert</span>(MyData_r, <span class="at">to =</span> <span class="st">"stata"</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData_stata, <span class="st">"MyData_stata.dta"</span>)  <span class="co"># Now no error</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -474,44 +660,182 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In SPSS, user-missing values are declared in Variable View and travel with the file. When you Save As a different format, those definitions don’t always carry across cleanly. jstats keeps the equivalent information with your data, and when a format needs it in a different form, <code>jconvert()</code> does the translation – which is why saving straight to Stata format above stops and asks you to convert first.</p>
 </div>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Base R alone can’t write SPSS or Stata files. You’d install and load the <strong>haven</strong> package and call <code>haven::write_sav()</code> or <code>haven::write_dta()</code> yourself — and haven is exactly the proven library jstats uses under the hood, so nothing here reinvents the wheel. What jstats spares you is the setup and the sharp edge: loading an extra package in every script, learning its separate function set, and handling the missing-value translation by hand — haven refuses SPSS-style missing codes headed into Stata format, just as you saw above, and converting them yourself is genuinely fiddly. <code>jconvert()</code> is that translation, done for you.</p>
+<p>Two conversion habits are worth knowing even if you’re an experienced R user. Data that arrive with SPSS-style missing values are ordinary numbers underneath (a -99 really is a -99), so a base R function – or any package that doesn’t read the declarations the way jstats does – can mistake them for real values. Converting to Stata-style (<code>jconvert(to = "stata")</code>) stores them as a special kind of NA instead, which every R function already treats as missing. And for maximum compatibility, <code>jconvert(to = "baseR")</code> turns all declared missing codes – SPSS-, Stata-, or SAS-style – into plain NA. Even if you never use another jstats function, painless conversion across these formats is worth having.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="reloading-and-how-missing-codes-travel" class="level3">
-<h3 class="anchored" data-anchor-id="reloading-and-how-missing-codes-travel">10. Reloading, and how missing codes travel</h3>
+<h3 class="anchored" data-anchor-id="reloading-and-how-missing-codes-travel">9. Reloading, and how missing codes travel</h3>
 <p>Load the saved files back and see how each format keeps its missing-value codes.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove all data frames from the environment</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Load all data sets back</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_r.rds"</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_spss.sav"</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_stata.dta"</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Examine how the missing codes are kept in the different formats</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_r, Education)  <span class="co"># will print whatever was originally stored</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_spss, Education)  <span class="co"># SPSS-style user-defined missing codes (UDMs)</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_stata, Education) <span class="co"># Stata-style UDMs</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>MyData_r_with_stata_UDM <span class="ot">&lt;-</span> <span class="fu">jconvert</span>(MyData_r, <span class="at">to =</span> <span class="st">"stata"</span>)</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_r_with_stata_UDM, Education) <span class="co"># Now the UDMs display in Stata format</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 9. Reloading, and how missing codes travel ------------------------</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove all data frames from the environment</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Load all data sets back</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_r.rds"</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_spss.sav"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_stata.dta"</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Examine how the missing codes are kept in the different formats</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_r, Education)  <span class="co"># will print whatever was originally stored</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_spss, Education)  <span class="co"># SPSS-style user-defined missing codes (UDMs)</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_stata, Education) <span class="co"># Stata-style UDMs</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>MyData_r_with_stata_UDM <span class="ot">&lt;-</span> <span class="fu">jconvert</span>(MyData_r, <span class="at">to =</span> <span class="st">"stata"</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_r_with_stata_UDM, Education) <span class="co"># Now the UDMs display in Stata format</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="a-quick-regression-to-finish" class="level3">
-<h3 class="anchored" data-anchor-id="a-quick-regression-to-finish">11. A quick regression to finish</h3>
-<p>Finally, a short regression to show real analysis running on the reloaded data.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Run a regression</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jlm</span>(WellbeingScore <span class="sc">~</span> Income <span class="sc">+</span> Age, MyData_r)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="turning-up-the-digits" class="level3">
+<h3 class="anchored" data-anchor-id="turning-up-the-digits">10. Turning up the digits</h3>
+<p>One more control before the final check: how many decimal places jstats shows. The default setting is 3, the maximum is 7 – and for what comes next, we want all 7. (One exception: p-values keep their own fixed three-decimal convention and ignore this setting.)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 10. Turning up the digits -----------------------------------------</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">## By default, jstats shows up to 3 decimal places</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_r, Age)   <span class="co"># the Age mean reads 40.65 -- the box below explains why not 40.650</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Turn the display up to the maximum of 7 decimal places</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="at">digits =</span> <span class="dv">7</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_r, Age)   <span class="co"># the same mean now reads 40.6504854</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Coming from SPSS, Stata, or SAS?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>SPSS output shows a fixed number of decimals, padding with zeros to fill the width – a mean of 40.65 appears as 40.650 in a three-decimal table. jstats goes the other way: it never prints trailing zeros, so <code>digits</code> sets a <em>maximum</em>, and each column shows only the decimals it actually needs. That’s why the mean above reads 40.65 at the default setting of 3 – its third decimal happens to be a zero. And if a statistic lands exactly on a round value, it displays short even at digits = 7: that’s trimming, not truncation or a stuck setting.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The closest is <code>options(digits = ...)</code>, and it’s a different animal: it sets <em>significant digits</em>, globally, for nearly everything R prints. <code>joutput(digits = ...)</code> means decimal places, and it changes only jstats output.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="the-proof-that-nothing-was-lost" class="level3">
+<h3 class="anchored" data-anchor-id="the-proof-that-nothing-was-lost">11. The proof that nothing was lost</h3>
+<p>Those three data frames each made a round trip through a different file format. If the trips were truly lossless, the same statistics should come back from every one of them – right down to the seventh decimal.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 11. The proof that nothing was lost -------------------------------</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Ask for the mean of Age from each of the three reloaded data frames</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_r, Age)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_spss, Age)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_stata, Age)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="do">## All three report the identical mean: 40.6504854</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Same data, three file formats, nothing lost along the way</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="do">## And one base R caution, shown live (the box below explains):</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Income carries declared missing-value codes (-99, -98)</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_spss, Income)   <span class="co"># the correct mean -- jdesc leaves the codes out</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Base R gives a bare, unlabeled number, so extra work is needed just to</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="do">## make it visible: cat() adds a label, and the "\n"s add blank lines to</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="do">## set it apart. Run line by line (interactively), a plain mean() prints</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="do">## only a cryptic [1] number; run with Source, it wouldn't appear at all</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">Base R mean of Income:"</span>, <span class="fu">mean</span>(MyData_spss<span class="sc">$</span>Income), <span class="st">"</span><span class="sc">\n\n\n</span><span class="st">"</span>)  <span class="co"># a poisoned mean</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Set the display back to the default before you go</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Put the data folder setting back to its default (the working directory) too</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Passing "" clears it (data.dir = NULL would leave it unchanged)</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="do">## A finished script leaves your session exactly as it found it</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">data.dir =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Coming from SPSS, Stata, or SAS?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>jdesc()</code> is the counterpart of SPSS’s Analyze &gt; Descriptive Statistics &gt; Descriptives – the same N, minimum, maximum, mean, and standard deviation you’d read from that output table. And the check above may feel familiar from practice: reopening a dataset that’s been through another format, and confirming the descriptives still match.</p>
+<p>The matching numbers are only half the story – the missing-value declarations made the round trip too, which is arguably the bigger deal. You saw it back in block 9: Education’s codes come through meaning the same thing in every file, with the Stata copy simply wearing its <code>.a</code>/<code>.b</code> form. In SPSS terms, your MISSING VALUES definitions survived the Save As. (Age itself carries no missing codes – that’s exactly why it makes a clean test variable here.)</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For a clean variable like Age, base R agrees exactly: <code>mean(MyData_r$Age)</code> returns the same 40.65049. The difference appears with variables that carry declared missing-value codes, like <code>Income</code> – those codes are ordinary numbers to base R, and the block’s last lines show the damage live: <code>mean(MyData_spss$Income)</code> folds the -99s and -98s straight into the average, while <code>jdesc()</code> reads the declarations and leaves the codes out automatically — provided the declarations exist: here they traveled with the files, and when a dataset arrives with codes that were never declared, you add the declarations yourself with jstats’s <code>jdeclare_udm()</code> function. It’s the same protection you’d expect from commercial statistical software.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the point?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the point?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The download at the bottom of this page is the <em>finished</em> version of what you built – and finished means something specific. A goal every experienced programmer and statistician takes for granted, but new researchers are rarely told: a completed script should run from beginning to end without errors. On this page you experimented – deliberate errors and prompts included, because that’s how working scripts develop. The download shows what the end of that process looks like, and it differs from the page blocks in three principled ways: the deliberate error lines are commented out, the y/n prompt line is commented out (a prompt would pause an unattended run), and the saves – plus the one reload that could collide with an earlier run’s leftovers – carry <code>overwrite = TRUE</code> so the whole file can be run again and again, exactly the automatic-execution override from block 6.</p>
+<p>To prove a script is finished, use the <strong>Source</strong> icon (to the right of Run in the script toolbar): it runs the entire file, top to bottom, in one go. A few things to know. Source shows the <em>output</em> without echoing each command back to the Console – that’s normal – and the small arrow beside Source offers “Source with Echo” if you’d like the commands shown too. jstats functions print their own tables, so their output always appears; but a bare base R line that merely displays a value – <code>ls()</code>, <code>getwd()</code>, <code>mean()</code> – stays quiet under Source, because R only auto-prints results when you run lines interactively – and even interactively, what it prints is a bare, unlabeled number. That’s why the script prints its base R mean with <code>cat()</code>, a label, and a few blank lines to set it apart – hand-formatting that jstats tables do for you. And if you re-run the script you pasted together yourself, the saves will refuse to overwrite their earlier files – that’s block 6’s lesson again; add <code>overwrite = TRUE</code> just as the finished file does.</p>
+<p>Nothing needs deleting between runs, and nothing is deleted: the overwrite arguments handle the repeats, and the Data folder with its three saved files stays put after every run – that’s what saving is for. Remove the files by hand if you ever want a clean slate.</p>
+<p>One more setup idea if you’re keeping the file – and it’s worth keeping: finished scripts travel. Sooner or later you’ll share one with a supervisor or collaborator, or receive one from someone else, and a script that runs top to bottom on another person’s computer is the standard to aim for. So a downloaded script deserves a proper home: jstats created the Data folder for you during the run-through, but you can also make folders yourself in RStudio – in the <strong>Files</strong> tab of the lower-right pane, click <strong>New Folder</strong> and type a name into the popup. “Scripts” is a good one for storing this download, and it will appear right beside the Data folder you created by following the steps above.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="take-the-whole-script-with-you" class="level2">
 <h2 class="anchored" data-anchor-id="take-the-whole-script-with-you">Take the whole script with you</h2>
 <p>That’s the full run-through. If you’d like the entire script in one file to keep, adjust, and reuse, download it here:</p>
 <div style="margin: 1rem 0 2rem;">
-<p><a href="data-follow-along.R" download="" class="btn btn-danger">Download the full script (.R)</a></p>
+<p><a href="data-follow-along.R" download="" class="btn btn-primary">Download the full script (.R)</a></p>
 </div>
 
 

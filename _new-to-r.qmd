@@ -1,0 +1,11 @@
+::: {.callout-tip collapse="true" title="New to R?"}
+You don't need to memorize any of this yet. Right now the goal is simply to run
+each line and watch what happens -- the ideas settle in as you go. A few things
+R doesn't care about, so you don't have to either: which line numbers your code
+lands on, and how many blank lines sit between commands -- paste each block
+anywhere below your previous code and it all works the same. Lines starting
+with `#` are comments: notes for humans that R skips entirely (extra hash
+marks, like `##`, are still just a comment). And running a line a second time
+is almost always harmless -- you'll simply get the same result again. If a line
+doesn't work, check that jstats loaded without errors, then try it again.
+:::
