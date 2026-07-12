@@ -372,7 +372,9 @@ joptions(data.dir = "Data")
 ## The Data folder is created now, on this first save
 jsave(MyData, "MyData_r.rds"))---",
   chrome = TRUE,
-  lead = "Where these messages read <code>~/your-working-directory/</code>, your own screen shows the real name of your project folder -- the same one the Console header names, just above.")
+  files = c("Data/"),
+  lead = "Where these messages read <code>~/your-working-directory/</code>, your own screen shows the real name of your project folder -- the same one the Console header names, just above.",
+  note = "The Files pane (lower right) is where the new Data folder appears -- alongside whatever else your project folder already holds. Click the folder&#39;s name there and you&#39;ll find MyData_r.rds inside.")
 ```
 
 ::: {.callout-note collapse="true" title="What's the point?"}

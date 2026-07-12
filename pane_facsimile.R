@@ -502,6 +502,260 @@ local({
   }
 
   # ---- run a code string one statement at a time --------------------------
+  # The FILES toolbar strip (S185) ships as TWO slices, like the env strip:
+  # left = the New Folder / New File / Delete / Rename / More buttons, right =
+  # the refresh control, shading between them supplied by the .fp-strip
+  # background-color. Cropped from the S185 Files-tab capture (100% zoom; the
+  # editable PNG masters live in the guides repo images/). The strip carries
+  # NO path text -- the breadcrumb row below it is generated HTML, so the
+  # working-directory placeholder needs no image compositing.
+  FILES_STRIP_L <- paste0("data:image/png;base64,", paste0(
+    "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",
+    "uWFjywAAAABJRU5ErkJggg=="))
+
+  FILES_STRIP_R <- paste0("data:image/png;base64,", paste0(
+    "iVBORw0KGgoAAAANSUhEUgAAACcAAAAZCAIAAAA9saC/AAAC8UlEQVR4nOWW227bRhCGZ3ZJSiIp",
+    "UqR1sGhTPiBxogRwELTv/wQFelO78aGRQqd2JUuiJFO0ueLu9EJBYSBFSSMOctG5XMz+H2Z2sP9g",
+    "8pDBd44outoPw8cn7Hsj/zX+T1TtqReUojS9H48nySpFRNsy252mWasiolIqSVb1uo2Iz0aVUo7G",
+    "kz+vR4ZuBEGnGwRK0V2SnF0MidRut32ficVi5TXsXhg8D3Wd55d/DDnXjt/2gTFEBoCMQ8NtOE5D",
+    "KRlFV7pRCXbD1d2sUK0UNc/lyel5d3u74TqccwIkAgIgQkBEJIZab2+fCMRalBEsRR3dTrY77Q1S",
+    "KsqE+BR9jmdTAGy120E30HQdkQEClZErM8O5lJeXQ6fuMM6lpHi+GA6Ge7udn386fv+uv1zM11IS",
+    "IAEQAVHBHJWlTqezIOgyzoFwtUqjKHp9dOA4tqHrn6Kb3t6BYVRggwQsWWtxh+P5cifYYcgIYDKb",
+    "9cLAqBgAkGXZNJ6LXDJkRACIRKSIdrveM1DXIte4BohEIIQwa/7m3DRr74/7RP+URwDIGNaqlULN",
+    "4g7ruibWuVJEALpuZNkXt0BEx7Fdt+66dUU0jReIaFmmpuvPQPV89+avkVREAJ7vX9/cCrF+nCCE",
+    "OLsYErc+XETz+bJQsBS16XvXN9e5zImgVjNdv/nh/GOySh+y7OEhWy6T388GO71Dz9sK91/88utJ",
+    "LmWhZvG7cs77Ry/i+cL3txjjvr9lWfXTs0E8myKi32yFvUNdNwAZ49zzm1kmNLP2rVQAaLX9307O",
+    "kfGG20DGK9Xaq/4boC9/AhESgJIynk2rBrOKkFDS6TTO3755mS7jKLrKcyml3AwXASgFUqk8Xw8G",
+    "l0ok/VeHpQTLJAGArmlHLw9G48nHi1NCvdXuVE0LCJLk7nY8quh4GG57DYexUmXgU/cmIlql97eT",
+    "2X2aAoBt262mX61W/sNTv96bnuzqGye3LfOpFx/HD9pgoujqB1B7vbA469vi68L+BjU8X9pvJqd3",
+    "AAAAAElFTkSuQmCC"))
+
+  # The SOURCE editor-toolbar strip (S185): left = back/forward, save,
+  # Source on Save, find, and the code-tools controls; right = Run, re-run,
+  # section arrows, Source, and the outline toggle, right-anchored via the
+  # two-slice pattern. The document TAB is generated HTML (sp-tabs), so the
+  # script name in the tab is a parameter, not a baked-in image. Cropped from
+  # the S185 Source-pane capture (100% zoom; masters in the guides repo
+  # images/).
+  SOURCE_STRIP_L <- paste0("data:image/png;base64,", paste0(
+    "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",
+    "C2TA/wMYdJbNYUMjkgAAAABJRU5ErkJggg=="))
+
+  SOURCE_STRIP_R <- paste0("data:image/png;base64,", paste0(
+    "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"))
+
   # ---- working-directory scrubbing (S184) ---------------------------------
   # jstats prints ABSOLUTE paths (jsave: "Saved X to <path>"; jload: "Found X
   # in <path>"), forward-slashed by .jst_norm_path(). Rendered as captured, a
@@ -682,12 +936,126 @@ local({
     setNames(lapply(nms, get, envir = globalenv()), nms)
   }
 
+  # ---- Files pane (chrome + generated rows) (S185) -------------------------
+  # Same pattern as env_pane: HTML tab bar (shared tab_bar builder), image
+  # toolbar strip, then generated content. The breadcrumb row and the
+  # Name/Size/Modified header are HTML (they carry text that must show the
+  # working-directory placeholder and align with the generated rows).
+  # Entries are AUTHOR-DECLARED (a curated character vector), never a live
+  # directory listing -- listing getwd() would publish the render machine's
+  # tree. A trailing "/" marks a folder. Size and Modified are read from the
+  # real file at render time (self-updating, like the Environment grid), and
+  # an entry that does not exist on disk HALTS the render -- the same
+  # fail-loud publish gate as scrub_wd's leak_check: the box must not show a
+  # file the page's code did not actually create.
+  fmt_size <- function(bytes){
+    if (is.na(bytes)) return("")
+    if (bytes < 1024) return(paste0(bytes, " B"))
+    kb <- bytes/1024
+    if (kb < 1024){ v <- round(kb, 1); return(paste0(ifelse(v == round(v), format(round(v)), format(v)), " KB")) }
+    mb <- kb/1024; v <- round(mb, 1)
+    paste0(ifelse(v == round(v), format(round(v)), format(v)), " MB")
+  }
+  fmt_mtime <- function(t){                    # RStudio style: "Jul 13, 2026, 7:11 AM"
+    lt <- as.POSIXlt(t)
+    h12 <- lt$hour %% 12L; if (h12 == 0L) h12 <- 12L
+    sprintf("%s %d, %d, %d:%02d %s", month.abb[lt$mon + 1L], lt$mday,
+            1900L + lt$year, h12, lt$min, if (lt$hour < 12L) "AM" else "PM")
+  }
+  FP_CHECK  <- '<svg width="12" height="12" viewBox="0 0 12 12"><rect x="0.5" y="0.5" width="11" height="11" rx="2" fill="#FFFFFF" stroke="#9AA3A9"/></svg>'
+  FP_HOME   <- '<svg width="13" height="12" viewBox="0 0 13 12"><path d="M6.5 0.8 L12.2 5.6 L11.2 6.7 L10.6 6.2 L10.6 11.2 L7.8 11.2 L7.8 7.6 L5.2 7.6 L5.2 11.2 L2.4 11.2 L2.4 6.2 L1.8 6.7 L0.8 5.6 Z" fill="#8A9BA8"/></svg>'
+  FP_FOLDER <- '<svg width="15" height="12" viewBox="0 0 15 12"><path d="M0.5 2.5 a1 1 0 0 1 1-1 h4 l1.4 1.6 h6.6 a1 1 0 0 1 1 1 v6.4 a1 1 0 0 1 -1 1 h-12 a1 1 0 0 1 -1-1 Z" fill="#F5C64C" stroke="#C79A28" stroke-width="0.8"/></svg>'
+  FP_FILE   <- '<svg width="11" height="13" viewBox="0 0 11 13"><path d="M0.5 0.5 h6.5 l3.5 3.5 v8.5 h-10 Z" fill="#FFFFFF" stroke="#8A9BA8"/><path d="M7 0.5 v3.5 h3.5" fill="none" stroke="#8A9BA8"/></svg>'
+  FP_UP     <- '<svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1 L10.5 6 H7.5 V11 H4.5 V6 H1.5 Z" fill="#2E9E44"/></svg>'
+  FP_RBADGE <- '<svg width="13" height="13" viewBox="0 0 13 13"><rect x="0.5" y="0.5" width="12" height="12" rx="2.5" fill="#EAF1FA" stroke="#7B9BC6"/><text x="6.5" y="9.5" text-anchor="middle" font-size="8" font-weight="700" fill="#2C67B1" font-family="Segoe UI, sans-serif">R</text></svg>'
+  FP_SORT   <- '<svg width="8" height="8" viewBox="0 0 8 8" style="margin-right:4px"><polygon points="4,1 7.4,6.6 0.6,6.6" fill="#9AA3A9"/></svg>'
+  files_pane <- function(entries, path_parts = "your-working-directory"){
+    crumb <- paste0('<span class="fp-crumb">', FP_CHECK, FP_HOME,
+                    '<span class="fp-clink">Home</span>',
+                    paste0(vapply(path_parts, function(p)
+                      paste0('<span class="fp-sep">&#8250;</span><span class="fp-clink">',
+                             esc(p), '</span>'), character(1)), collapse = ""),
+                    '<span class="fp-cr">', FP_RBADGE,
+                    '<span class="fp-ell">&#8230;</span></span></span>')
+    hdr <- paste0('<span class="fp-row fp-hdr"><span class="fp-ck"></span>',
+                  '<span class="fp-ic"></span><span class="fp-nm">', FP_SORT,
+                  'Name</span><span class="fp-sz">Size</span>',
+                  '<span class="fp-md">Modified</span></span>')
+    up  <- paste0('<span class="fp-row"><span class="fp-ck"></span>',
+                  '<span class="fp-ic">', FP_UP, '</span>',
+                  '<span class="fp-nm"><span class="fp-link">..</span></span>',
+                  '<span class="fp-sz"></span><span class="fp-md"></span></span>')
+    rows <- vapply(entries, function(e){
+      is_dir <- grepl("/$", e)
+      path   <- sub("/$", "", e)
+      info   <- file.info(path)
+      if (is.na(info$mtime))
+        stop("pane_facsimile: files box lists '", e, "' but nothing at that ",
+             "path exists on disk at render time -- the box would show a file ",
+             "the page's code did not create.", call. = FALSE)
+      if (is_dir != isTRUE(info$isdir))
+        stop("pane_facsimile: files box entry '", e, "' does not match what ",
+             "is on disk (folder vs file).", call. = FALSE)
+      nm <- basename(path)
+      paste0('<span class="fp-row"><span class="fp-ck">', FP_CHECK, '</span>',
+             '<span class="fp-ic">', if (is_dir) FP_FOLDER else FP_FILE, '</span>',
+             '<span class="fp-nm"><span class="fp-link">', esc(nm), '</span></span>',
+             '<span class="fp-sz">', if (is_dir) "" else fmt_size(info$size), '</span>',
+             '<span class="fp-md">', fmt_mtime(info$mtime), '</span></span>')
+    }, character(1))
+    paste0('<div class="fp-pane">',
+           tab_bar(c("Files","Plots","Packages","Help","Viewer","Presentation"), 1L),
+           '<span class="fp-strip" style="background-image:url(', FILES_STRIP_L,
+           '),url(', FILES_STRIP_R, ')"></span>',
+           crumb, hdr, '<div class="fp-body">',
+           paste(c(up, rows), collapse = "\n"), '</div></div>')
+  }
+
+  # ---- Source pane (chrome + code field) (S185) ----------------------------
+  # A facsimile of the upper-left Source pane holding a script: document tab
+  # (HTML: R-script icon + name + unsaved asterisk + close x), editor-toolbar
+  # strip (image), then line-numbered code. Content comes from the code string
+  # -- the same single-source-of-truth rule as show_block. Built for the
+  # "which pane does code go in?" orientation beat: the same lines shown here
+  # and in a Console box answer the question visually. Minimal color: full-line
+  # comments in RStudio's comment green; other text plain. NOT wrapped in the
+  # "What you should see" callout -- show_source() output is a figure the page
+  # places directly (inside whatever aside or section fits).
+  SP_RDOC <- '<svg width="14" height="14" viewBox="0 0 14 14" style="margin-right:5px"><path d="M1.5 0.5 h8 l3 3 v10 h-11 Z" fill="#FFFFFF" stroke="#8A9BA8"/><text x="7" y="11" text-anchor="middle" font-size="8" font-weight="700" fill="#2C67B1" font-family="Segoe UI, sans-serif">R</text></svg>'
+  source_pane <- function(code, name = "Untitled1", dirty = TRUE){
+    code  <- sub("[\n]+$", "", code)
+    lines <- strsplit(code, "\n", fixed = TRUE)[[1]]
+    if (!length(lines)) lines <- ""
+    tab <- paste0('<span class="ep-tabs sp-tabs"><span class="ep-tab on">',
+                  SP_RDOC, esc(name), if (dirty) '<span class="sp-dirty">*</span>' else "",
+                  '<span class="ep-x">&#215;</span></span>',
+                  '<span class="ep-ctl">', PANE_CTL_SVG, '</span></span>')
+    rows <- vapply(seq_along(lines), function(i){
+      ln  <- lines[[i]]
+      cls <- if (grepl("^\\s*#", ln)) "sp-cmt" else "sp-txt"
+      paste0('<span class="sp-row"><span class="sp-ln">', i, '</span>',
+             '<span class="sp-code ', cls, '">', esc(ln), '</span></span>')
+    }, character(1))
+    paste0('<pre class="cp-pane sp-pane">', tab,
+           '<span class="sp-strip" style="background-image:url(', SOURCE_STRIP_L,
+           '),url(', SOURCE_STRIP_R, ')"></span>',
+           '<span class="sp-body">', paste(rows, collapse = "\n"), '</span></pre>')
+  }
+  show_source <- function(code, name = "Untitled1", dirty = TRUE,
+                          lead = NULL, note = NULL){
+    if (!is.null(lead)) cat('<p class="obx-lead"><em>', lead, "</em></p>\n", sep = "")
+    cat(cap("Source", "upper-left pane"), "\n\n", source_pane(code, name, dirty), "\n", sep = "")
+    if (!is.null(note)) cat('<p class="obx-note"><em>', note, "</em></p>\n", sep = "")
+    invisible(NULL)
+  }
+
   cap <- function(name, loc) sprintf('<div class="obx-cap">%s <span class="obx-loc">(%s)</span></div>', name, loc)
 
   # ---- public: show_block -------------------------------------------------
   show_block <- function(code, box = TRUE, expect_error = FALSE,
                          chrome = FALSE, env = FALSE, lead = NULL,
-                         env_mark = NULL, note = NULL){
+                         env_mark = NULL, note = NULL, files = NULL,
+                         files_path = "your-working-directory"){
     code <- sub("[\n]+$", "", code)
     cat("```r\n", code, "\n```\n\n", sep = "")
     segs <- run_block(code, expect_error = expect_error)   # always run: side effects + publish gate
@@ -703,6 +1071,10 @@ local({
     if (env){
       cat("\n", cap("Environment", "upper-right pane"), "\n\n",
           env_pane(env_objects(), mark = env_mark), "\n", sep = "")
+    }
+    if (!is.null(files)){
+      cat("\n", cap("Files", "lower-right pane"), "\n\n",
+          files_pane(files, path_parts = files_path), "\n", sep = "")
     }
     if (!is.null(note)) cat('<p class="obx-note"><em>', note, "</em></p>\n", sep = "")
     cat("\n:::\n")

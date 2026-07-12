@@ -151,6 +151,64 @@ pre.cp-pane.cp-bare { border-radius: 6px; }     // no chrome strip: just the fie
 .ep-gi { flex: 0 0 auto; margin-left: 8px; }
 .ep-empty { padding: 58px 12px 0; color: #7a7a7a; text-align: center; }
 
+// -- Files pane (S185) -------------------------------------------------------
+// Same construction as the Environment pane: HTML tab bar, image toolbar strip
+// (two slices, right-anchored refresh), then generated rows. The breadcrumb and
+// the Name/Size/Modified header are HTML so the working-directory placeholder
+// and the column alignment need no image compositing.
+.fp-pane { border: 1px solid #C9CFD4; border-radius: 2px; overflow: hidden;
+           font-family: "Segoe UI", "DejaVu Sans", sans-serif; font-size: 12px; background: #fff; }
+.fp-strip {
+  display: block;
+  height: 25px;
+  background-color: #F4F8F9;
+  background-repeat: no-repeat, no-repeat;
+  background-size: auto 100%, auto 100%;
+  background-position: left top, right top;
+  border-bottom: 1px solid #E3E8EA;
+}
+.fp-crumb { display: flex; align-items: center; gap: 5px; padding: 4px 8px 4px 10px;
+            background: #F4F8F9; border-bottom: 1px solid #E3E8EA; white-space: normal; }
+.fp-clink { color: #1C44BB; }
+.fp-sep   { color: #9AA3A9; margin: 0 1px; }
+.fp-cr    { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+.fp-ell   { color: #7a7a7a; letter-spacing: 1px; }
+.fp-row   { display: flex; align-items: center; min-height: 24px; padding: 1px 8px 1px 10px;
+            border-bottom: 1px solid #EDF1F3; white-space: normal; }
+.fp-row.fp-hdr { background: #F4F8F9; color: #444; min-height: 20px;
+                 border-bottom: 1px solid #D5D9DA; }
+.fp-ck   { flex: 0 0 24px; display: flex; align-items: center; }
+.fp-ic   { flex: 0 0 24px; display: flex; align-items: center; }
+.fp-nm   { flex: 1 1 auto; display: flex; align-items: center; min-width: 0;
+           overflow: hidden; text-overflow: ellipsis; }
+.fp-link { color: #2400A6; }
+.fp-sz   { flex: 0 0 70px; }
+.fp-md   { flex: 0 0 160px; }
+.fp-body { background: #fff; }
+
+// -- Source pane (S185) ------------------------------------------------------
+// Document tab (HTML, so the script name is a parameter), editor-toolbar image
+// strip, then line-numbered code. Reuses the console's <pre> wrapper so real
+// newlines and indentation survive Pandoc, and the shared .ep-tabs bar.
+.sp-tabs .ep-tab { display: inline-flex; align-items: center; font-weight: 600; }
+.sp-dirty { color: #6a6a6a; margin-left: 1px; }
+.sp-strip {
+  display: block;
+  height: 25px;
+  background-color: #F4F8F9;
+  background-repeat: no-repeat, no-repeat;
+  background-size: auto 100%, auto 100%;
+  background-position: left top, right top;
+  border-bottom: 1px solid #E3E8EA;
+}
+.sp-body { display: block; background: #fff; padding: 2px 0 8px; }
+.sp-row  { display: flex; }
+.sp-ln   { flex: 0 0 34px; text-align: right; padding-right: 10px; color: #9AA3A9;
+           background: #F7F8F9; user-select: none; }
+.sp-code { flex: 1 1 auto; padding-left: 8px; white-space: pre; }
+.sp-txt  { color: #1a1a1a; }
+.sp-cmt  { color: #297B2F; }
+
 // Footer: the disclaimer is centered (equal side regions keep it centered), and
 // its WIDTH is set by a small script (include-after-body in _quarto.yml) to match
 // each page's main content width -- so it lines up on every page and tracks
