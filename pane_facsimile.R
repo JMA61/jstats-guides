@@ -502,11 +502,47 @@ local({
   }
 
   # ---- run a code string one statement at a time --------------------------
+  # ---- working-directory scrubbing (S184) ---------------------------------
+  # jstats prints ABSOLUTE paths (jsave: "Saved X to <path>"; jload: "Found X
+  # in <path>"), forward-slashed by .jst_norm_path(). Rendered as captured, a
+  # box would publish the RENDER machine's directory tree -- which is not the
+  # reader's, and nobody's business. Every captured path is rewritten to the
+  # SAME placeholder the Console chrome strip already carries in RStudio's
+  # link-blue: "~/your-working-directory/". Chrome and live output then agree,
+  # which is what makes the placeholder a teaching device rather than a fudge.
+  # A real path that survives the rewrite HALTS the render (publish gate) --
+  # the same fail-loud principle as expect_error = FALSE.
+  WD_PLACEHOLDER <- "~/your-working-directory"
+  scrub_wd <- function(txt){
+    if (!length(txt) || !nzchar(txt)) return(txt)
+    wd <- getwd()
+    norm <- function(w) tryCatch(normalizePath(wd, winslash = w, mustWork = FALSE),
+                                 error = function(e) wd)
+    cands <- unique(c(norm("/"), norm("\\"), gsub("\\\\", "/", wd),
+                      gsub("/", "\\\\", wd), wd))
+    cands <- cands[order(-nchar(cands))]      # longest first: no partial hits
+    for (v in cands) txt <- gsub(v, WD_PLACEHOLDER, txt, fixed = TRUE)
+    gsub("your-working-directory\\\\", "your-working-directory/", txt)
+  }
+  leak_check <- function(txt){
+    if (grepl("(?<![A-Za-z])[A-Za-z]:[\\\\/]|/home/|/Users/|/root/", txt, perl = TRUE))
+      stop("pane_facsimile: a real file path survived scrubbing -- this box would ",
+           "publish the render machine's directory. Offending output:\n", txt,
+           call. = FALSE)
+    invisible(TRUE)
+  }
+
   run_block <- function(code, expect_error = FALSE){
     exprs <- parse(text = code, keep.source = TRUE)
     refs  <- attr(exprs, "srcref")
     segs  <- list()
-    add   <- function(type, text) if (nzchar(text)) segs[[length(segs)+1L]] <<- list(type=type, text=text)
+    add   <- function(type, text){
+      text <- scrub_wd(text)                  # no real paths reach a box
+      if (nzchar(text)){
+        leak_check(text)
+        segs[[length(segs)+1L]] <<- list(type=type, text=text)
+      }
+    }
     for (i in seq_along(exprs)){
       srclines <- as.character(refs[[i]]); srclines[1] <- paste0("> ", srclines[1])
       if (length(srclines) > 1) srclines[-1] <- paste0("+ ", srclines[-1])
@@ -559,6 +595,13 @@ local({
   # ---- Environment pane (chrome + generated grid) -------------------------
   summarize <- function(x){
     if (is.data.frame(x)) sprintf("%d obs. of %d variables", nrow(x), ncol(x))
+    # A length-1 atomic is shown by RStudio as its bare value (x  5), NOT as
+    # "num [1:1] 5" -- match that. Labelled scalars keep the vector form, since
+    # RStudio shows their type tag too. (S184: needed by data.qmd's x <- 5.)
+    else if (is.atomic(x) && length(x) == 1L && !inherits(x, "haven_labelled")){
+      if (is.character(x)) encodeString(x, quote = "\"")
+      else format(unclass(x), trim = TRUE)
+    }
     else if (is.atomic(x)){
       tp <- if (inherits(x,"haven_labelled")) paste0(typeof(x),"+lbl")
             else switch(typeof(x), integer="int", double="num", character="chr", logical="logi", typeof(x))
@@ -588,7 +631,27 @@ local({
            '<span class="ep-ctl">', PANE_CTL_SVG, '</span></span>')
   }
 
-  env_pane <- function(objs){
+  # ---- chrome-strip annotation (S184) -------------------------------------
+  # A red ring + arrow marking ONE control on the Environment toolbar. The
+  # strip image is 55px tall but drawn at 48px (background-size: auto 100%),
+  # so displayed px = natural px * 48/55. Measured from ENV_STRIP_L: the broom
+  # ("Clear objects from the workspace") occupies natural x 340-354, y 4-23 ->
+  # displayed x 297-309, y 3-20. Row 2 of the strip is blank from x 288 right,
+  # so the overlay sits entirely INSIDE the strip and cannot touch the grid.
+  MARKS <- list(
+    broom = paste0(
+      '<span class="ep-mark" style="left:289px;top:0;">',
+      '<svg width="28" height="48" viewBox="0 0 28 48" ',
+        'xmlns="http://www.w3.org/2000/svg" aria-hidden="true">',
+      '<rect x="5" y="1" width="18" height="22" rx="5" fill="none" ',
+        'stroke="#D7263D" stroke-width="2"/>',
+      '<line x1="14" y1="45" x2="14" y2="34" stroke="#D7263D" ',
+        'stroke-width="2.5" stroke-linecap="round"/>',
+      '<path d="M14 26 L18.6 34 L9.4 34 Z" fill="#D7263D"/>',
+      '</svg></span>')
+  )
+
+  env_pane <- function(objs, mark = NULL){
     is_df  <- vapply(objs, is.data.frame, logical(1))
     is_fun <- vapply(objs, is.function,  logical(1)) & !is_df
     data_rows  <- objs[is_df]
@@ -606,8 +669,10 @@ local({
     if (length(value_rows)){ rows <- c(rows, hrow("Values")); for (nm in names(value_rows)) rows <- c(rows, orow(nm, value_rows[[nm]], FALSE)) }
     if (length(fun_rows)){ rows <- c(rows, hrow("Functions")); for (nm in names(fun_rows)) rows <- c(rows, orow(nm, fun_rows[[nm]], FALSE)) }
     if (!length(rows)) rows <- '<div class="ep-empty">Environment is empty</div>'
+    overlay <- if (!is.null(mark) && !is.null(MARKS[[mark]])) MARKS[[mark]] else ""
     paste0('<div class="ep-pane">', tab_bar(c("Environment","History","Connections","Tutorial"), 1L),
-           '<span class="ep-strip" style="background-image:url(', ENV_STRIP_L, '),url(', ENV_STRIP_R, ')"></span>',
+           '<span class="ep-strip" style="background-image:url(', ENV_STRIP_L, '),url(', ENV_STRIP_R, ')">',
+           overlay, '</span>',
            '<div class="ep-body">', paste(rows, collapse="\n"), '</div></div>')
   }
 
@@ -621,7 +686,8 @@ local({
 
   # ---- public: show_block -------------------------------------------------
   show_block <- function(code, box = TRUE, expect_error = FALSE,
-                         chrome = FALSE, env = FALSE, lead = NULL){
+                         chrome = FALSE, env = FALSE, lead = NULL,
+                         env_mark = NULL, note = NULL){
     code <- sub("[\n]+$", "", code)
     cat("```r\n", code, "\n```\n\n", sep = "")
     segs <- run_block(code, expect_error = expect_error)   # always run: side effects + publish gate
@@ -635,12 +701,13 @@ local({
           console_field(segs), '</span></pre>\n', sep = "")
     }
     if (env){
-      cat("\n", cap("Environment", "upper-right pane"), "\n\n", env_pane(env_objects()), "\n", sep = "")
+      cat("\n", cap("Environment", "upper-right pane"), "\n\n",
+          env_pane(env_objects(), mark = env_mark), "\n", sep = "")
     }
+    if (!is.null(note)) cat('<p class="obx-note"><em>', note, "</em></p>\n", sep = "")
     cat("\n:::\n")
     invisible(NULL)
   }
 
   invisible(NULL)
 }, envir = .obx)
-

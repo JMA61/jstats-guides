@@ -57,6 +57,7 @@ $navbar-active-color: $jstats-cyan;
 
 // -- shared caption + lead ---------------------------------------------------
 .obx-lead { margin: 2px 0 12px; color: #3a3a3a; font-size: 0.92em; }
+.obx-note { margin: 12px 0 2px; color: #3a3a3a; font-size: 0.92em; }   // trailing note, under the panes
 .obx-cap  { font-size: 0.8rem; font-weight: 600; color: #5a6a78;
             margin: 12px 0 3px; text-transform: uppercase; letter-spacing: 0.03em; }
 .obx-cap:first-of-type { margin-top: 0; }
@@ -118,10 +119,18 @@ pre.cp-pane.cp-bare { border-radius: 6px; }     // no chrome strip: just the fie
 // gap between slices is the shared background-color shading.
 .ep-strip {
   height: 48px;
+  position: relative;                          // containing block for .ep-mark
   background-repeat: no-repeat, no-repeat;
   background-size: auto 100%, auto 100%;
   background-position: left top, right top;
 }
+// Annotation overlay on the chrome strip (S184): a red ring + arrow marking one
+// toolbar control -- currently the broom, RStudio's "Clear objects from the
+// workspace" button. Positioned in DISPLAYED pixels from the strip's left edge
+// (the strip image is scaled 55px -> 48px, so displayed = natural * 48/55), and
+// sized to stay inside the strip, where row 2 is blank -- so it can never sit on
+// top of the object grid below. Coordinates live in pane_facsimile.R's MARKS.
+.ep-mark { position: absolute; z-index: 2; pointer-events: none; line-height: 0; }
 
 // -- Environment pane --------------------------------------------------------
 .ep-pane { border: 1px solid #C9CFD4; border-radius: 2px; overflow: hidden;
@@ -308,4 +317,3 @@ body {
 #quarto-document-content {
   min-height: calc(100vh - 132px);
 }
-

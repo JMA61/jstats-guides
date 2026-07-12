@@ -16,7 +16,7 @@ library(jstats)
 jload("community")
 
 
-## ---- 2. Objects and the assignment operator ----------------------------
+## ---- 2. Objects, the assignment operator, and the Global Environment ----
 
 ## "Objects" other than data frames can go into the Environment
 ## The "Assignment Operator" (less-than followed by a dash) is a key Base R fundamental
@@ -26,20 +26,28 @@ jload("community")
 ## The new object we'll call "MyObject"
 MyObject <- community$Region ## (Base R Code)
 
+## The name on the left is entirely yours to choose, and the thing on the
+## right can be anything at all -- here, just the number 5
+x <- 5
 
-## ---- 3. More than one dataset, and cleaning up -------------------------
-
-## You can have more than 1 data frame in the Environment
+## You are not limited to one dataset at a time
+## Load a second package dataset, clinic, alongside community
 jload("clinic")
+
+
+## ---- 3. Cleaning up ----------------------------------------------------
 
 ## Remove MyObject from the Environment
 ## Note that this is a Base R function (j is not the first letter)
 rm(MyObject)
 
-## Remove community from the Environment
+## Remove x as well
+rm(x)
+
+## Remove the community data frame
 rm(community)
 
-## Remove clinic from the Environment
+## Remove the clinic data frame
 rm(clinic)
 
 
@@ -122,15 +130,18 @@ joptions(data.dir = "Data")
 ## The Data folder is created now, on this first save
 jsave(MyData, "MyData_r.rds", overwrite = TRUE)
 
-## Remove MyData and community data frames from the environment
-## Does not remove the saved file from the Data folder
+
+## ---- 8. Gone from the Environment --------------------------------------
+
+## Remove both data frames from the Environment
+## What happens to the file you just saved? The next block finds out
 rm(MyData)
 rm(community)
 
 
-## ---- 8. Saving across formats, and missing values ----------------------
+## ---- 9. Getting it back, and saving across formats ---------------------
 
-## Reload the saved MyData.rds dataset from the data folder
+## The file survived: jload() brings the saved dataset straight back
 ## (overwrite = TRUE in case an earlier run left MyData_r in the Environment)
 jload("MyData_r.rds", overwrite = TRUE)
 
@@ -149,9 +160,10 @@ MyData_stata <- jconvert(MyData_r, to = "stata")
 jsave(MyData_stata, "MyData_stata.dta", overwrite = TRUE)  # No error
 
 
-## ---- 9. Reloading, and how missing codes travel ------------------------
+## ---- 10. Reloading, and how missing codes travel -----------------------
 
-## Remove all data frames from the environment
+## You removed data frames one at a time earlier; this clears them all at once
+## It is the code equivalent of the broom button in the Environment pane
 rm(list = ls())
 
 ## Load all data sets back
@@ -168,7 +180,7 @@ MyData_r_with_stata_UDM <- jconvert(MyData_r, to = "stata")
 jfreq(MyData_r_with_stata_UDM, Education) # Now the UDMs display in Stata format
 
 
-## ---- 10. Turning up the digits -----------------------------------------
+## ---- 11. Turning up the digits -----------------------------------------
 
 ## By default, jstats shows up to 3 decimal places
 ## (jstats never prints trailing zeros, so a mean can show fewer than that)
@@ -179,7 +191,7 @@ joutput(digits = 7)
 jdesc(MyData_r, Age)   # the same mean, now with more decimals shown
 
 
-## ---- 11. The proof that nothing was lost -------------------------------
+## ---- 12. The proof that nothing was lost -------------------------------
 
 ## Ask for the mean of Age from each of the three reloaded data frames
 jdesc(MyData_r, Age)
@@ -204,4 +216,3 @@ joutput(digits = 3)
 ## Passing "" clears it (data.dir = NULL would leave it unchanged)
 ## A finished script leaves your session exactly as it found it
 joptions(data.dir = "")
-

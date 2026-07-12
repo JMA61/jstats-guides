@@ -16,7 +16,7 @@ resources:
 # any artifacts a previous (possibly halted) render left on disk, and (d)
 # sources pane_facsimile.R, which defines the capture-once / display-twice
 # helpers AND the RStudio Console / Environment pane facsimiles in their OWN
-# dot-named environment (.obx) so block 9's rm(list = ls()) -- which clears the
+# dot-named environment (.obx) so block 10's rm(list = ls()) -- which clears the
 # GLOBAL environment -- cannot reach them. sourcing pane_facsimile.R leaves
 # ONLY .obx in the global environment, so the Environment-pane facsimile shows
 # exactly what the page's blocks create, nothing else.
@@ -91,53 +91,49 @@ type the line again, R can run it for you at the start of every session -- the
 For a dataset that ships inside a package, base R has one too: `data(community)`
 loads it. The difference shows up beyond package data: `data()` only reaches
 datasets bundled in packages, while `jload()` is one loader for everything on
-this page — package datasets, your saved `.rds` files, and SPSS, Stata, SAS,
-Excel, and CSV files — with the same one-line call.
+this page -- package datasets, your saved `.rds` files, and SPSS, Stata, SAS,
+Excel, and CSV files -- with the same one-line call.
 :::
 
-### 2. Objects and the assignment operator
+### 2. Objects, the assignment operator, and the Global Environment
 
-Anything you create in R is stored as an *object*. Here we pull a single variable
-out of the dataset and give it a name of our own.
+Anything you create in R is stored as an *object*, and objects live in the
+**Global Environment** -- the workspace RStudio shows you in the Environment tab
+of the upper-right pane. Here we make two objects of our own, and open a second
+dataset alongside the first.
 
 ```{r}
 #| echo: false
 #| results: asis
-.obx$show_block(r"---(## ---- 2. Objects and the assignment operator ----------------------------
+.obx$show_block(r"---(## ---- 2. Objects, the assignment operator, and the Global Environment ----
 
 ## "Objects" other than data frames can go into the Environment
 ## The "Assignment Operator" (less-than followed by a dash) is a key Base R fundamental
 ## Take the thing on the right and assign it to what's on the left
 ## Take the Region variable from the community data frame and assign it to a new object
 ## The new object we'll call "MyObject"
-MyObject <- community$Region ## (Base R code))---", box = FALSE)
-```
+MyObject <- community$Region ## (Base R code)
 
-### 3. More than one dataset -- and cleaning up
+## The name on the left is entirely yours to choose, and the thing on the
+## right can be anything at all -- here, just the number 5
+x <- 5
 
-You're not limited to one dataset at a time, and you can remove objects you no
-longer need.
-
-```{r}
-#| echo: false
-#| results: asis
-.obx$show_block(r"---(## ---- 3. More than one dataset, and cleaning up -------------------------
-
-## You can have more than 1 data frame in the Environment
-jload("clinic")
-
-## Remove MyObject from the Environment
-## Note that this is a Base R function (j is not the first letter)
-rm(MyObject)
-
-## Remove community from the Environment
-rm(community)
-
-## Remove clinic from the Environment
-rm(clinic))---", box = FALSE)
+## You are not limited to one dataset at a time
+## Load a second package dataset, clinic, alongside community
+jload("clinic"))---",
+  chrome = TRUE, env = TRUE)
 ```
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
+The Global Environment has no real SPSS counterpart, and that is the most
+useful thing to know about it. In SPSS everything lives *inside* a dataset:
+`COMPUTE x = 5.` does not create an object called `x` -- it adds a column of
+5s, one value per case, to whatever dataset is active. There is nowhere for a
+single value, or a single variable, to sit on its own. (SPSS macros come
+closest, and hardly anyone uses them.) In R the Environment is exactly that
+place: a workspace holding objects of any shape, and a data frame is simply one
+of the shapes.
+
 SPSS can have several datasets open too -- but each opens in its own Data
 Editor window, and switching the active one takes a syntax chain most users
 never bother with:
@@ -150,18 +146,55 @@ DATASET NAME clinic.
 DATASET ACTIVATE community.
 ```
 
-And when you're finished with a dataset in SPSS, you close its Data Editor
-window or run `DATASET CLOSE clinic.` -- the R counterpart is the `rm()`
-cleanup you see above.
-
 In R there are no windows to juggle: the Environment holds several data frames
 side by side, and every command simply names the one it uses -- the `$` in
 `community$Region` means "the Region column, in the community dataset."
 :::
 
+### 3. Cleaning up
+
+Objects you no longer need can be removed, and there are two ways to do it.
+`rm()` takes out exactly what you name and leaves everything else alone -- which
+is what you want when one object is wrong and the others are fine. The **broom**
+in the Environment pane's toolbar takes out *everything*, in one click; RStudio
+asks you to confirm before it does. The code below uses `rm()`; the red arrow in
+the box points out the broom.
+
+One thing to expect: `rm()` says nothing at all when it works. Silence is
+success -- the Environment pane is where you check.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 3. Cleaning up ----------------------------------------------------
+
+## Remove MyObject from the Environment
+## Note that this is a Base R function (j is not the first letter)
+rm(MyObject)
+
+## Remove x as well
+rm(x)
+
+## Remove the community data frame
+rm(community)
+
+## Remove the clinic data frame
+rm(clinic))---",
+  chrome = TRUE, env = TRUE, env_mark = "broom",
+  note = "The red arrow points to the broom -- RStudio calls it <b>Clear objects from the workspace</b>. It empties the Global Environment in one go, which is the button form of the <code>rm(list = ls())</code> line you will meet later on this page.")
+```
+
+::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
+When you have finished with a dataset in SPSS you close its Data Editor window,
+or run `DATASET CLOSE clinic.` -- `rm()` is the R counterpart. The difference is
+that the Environment holds more than datasets, so `rm()` removes any object you
+name, whatever its shape.
+:::
+
 ### 4. How much output you see
 
-jstats can show more or less detail. The output level controls how much appears.
+jstats can show more or less detail. The output level controls how much appears --
+so with the Environment empty, load `community` again and watch it say less.
 
 ```{r}
 #| echo: false
@@ -176,11 +209,12 @@ joutput("minimal")
 jload("community")
 
 ## Set the output level back to standard
-joutput("standard"))---", box = FALSE)
+joutput("standard"))---",
+  chrome = TRUE, env = TRUE)
 ```
 
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
-There isn't one. Base R has no output-level setting — each function prints
+There isn't one. Base R has no output-level setting -- each function prints
 whatever it prints, and how much you see varies with each package author's
 choices. `joutput()` is a single, jstats-wide control.
 :::
@@ -220,6 +254,40 @@ getwd()
 ## And this one opens the package overview: every jstats function, grouped by purpose
 ?jstats)---", box = FALSE, expect_error = TRUE)
 ```
+
+::: {.callout-note collapse="true" title="Aside: how R writes file paths"}
+A *path* is a folder's address on your computer -- the folders you would click
+through, written out on one line. Three spelling quirks are worth thirty seconds
+each, because you will meet all three on this page.
+
+**The `~` shorthand.** Look at the top of your Console: RStudio shows your
+working directory with a squiggle, something like `~/your-working-directory/`.
+The `~` is shorthand for your *home* folder (on Windows, usually your Documents
+folder). `getwd()` prints that same address written out in full -- beginning, on
+Windows, with a drive letter such as `C:` or `E:` that names the disk. Short
+spelling in the Console header, long spelling from `getwd()`. Same place.
+
+You have met that squiggle before, on the Quick Start page, doing a completely
+different job -- writing a model, as in `jt(Optimism ~ Gender)`. In a file path
+it has nothing to do with models. Same character, two unrelated jobs.
+
+**The slashes.** R writes paths with forward slashes (`/`) on every kind of
+computer. Windows itself writes the same address with backslashes: File Explorer
+shows `E:\00 R Projects`, R shows `E:/00 R Projects`. Same folder, two
+spellings. When you type a path in R, use `/`.
+
+So: `~` means home, `/` goes between folders, and `getwd()` tells you the full
+address of where you are working.
+
+**And if all of that felt like a lot, don't worry.** You will not have to type a
+path anywhere on this page. As long as you work inside an RStudio Project --
+which is what **Before you start** asks of you -- jstats handles the addresses
+for you. In a moment you will name a folder once, with
+`joptions(data.dir = "Data")`, and jstats creates it inside your project; from
+then on you load and save with plain file names like `"MyData_r.rds"`, and
+jstats works out where they belong. Paths are worth *recognizing* when a message
+prints one. They are not something you need to *write*.
+:::
 
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
 `?` *is* base R -- `?jload`, `?ls`, and `?mean` all work the same way, for base
@@ -266,7 +334,7 @@ The overwrite argument is here to show you two things:
 
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
 Base R doesn't ask. Loading or assigning over an existing object replaces it
-silently — no prompt, no warning, and the old copy is gone. The confirmation
+silently -- no prompt, no warning, and the old copy is gone. The confirmation
 prompt is a jstats safeguard.
 :::
 
@@ -302,12 +370,9 @@ joptions(data.dir = "Data")
 ## Save the dataset to the Data folder and call it MyData_r.rds
 ## Specify R native format with the .rds extension
 ## The Data folder is created now, on this first save
-jsave(MyData, "MyData_r.rds")
-
-## Remove MyData and community data frames from the environment
-## Does not remove the saved file from the Data folder
-rm(MyData)
-rm(community))---", box = FALSE)
+jsave(MyData, "MyData_r.rds"))---",
+  chrome = TRUE,
+  lead = "Where these messages read <code>~/your-working-directory/</code>, your own screen shows the real name of your project folder -- the same one the Console header names, just above.")
 ```
 
 ::: {.callout-note collapse="true" title="What's the point?"}
@@ -337,17 +402,36 @@ data file is gone. jstats's prompts exist precisely because of edges like
 that.
 :::
 
-### 8. Saving across formats -- and missing values
+### 8. Gone from the Environment
 
-Moving between file formats is easy, with one wrinkle around missing values that
-jstats handles for you.
+You have just saved `MyData` to a file on disk. Now remove it -- and `community`
+-- from the Environment. Before you run the block, make a prediction: is the
+file you just saved gone as well?
 
 ```{r}
 #| echo: false
 #| results: asis
-.obx$show_block(r"---(## ---- 8. Saving across formats, and missing values ----------------------
+.obx$show_block(r"---(## ---- 8. Gone from the Environment --------------------------------------
 
-## Reload the saved MyData.rds dataset from the data folder.
+## Remove both data frames from the Environment
+## What happens to the file you just saved? The next block finds out
+rm(MyData)
+rm(community))---",
+  chrome = TRUE, env = TRUE)
+```
+
+### 9. Getting it back, and saving across formats
+
+There it is. The Environment is temporary; the file on disk is not. Load it
+straight back -- then send it out to other formats, where one wrinkle around
+missing values needs handling, and jstats handles it for you.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 9. Getting it back, and saving across formats ---------------------
+
+## The file survived: jload() brings the saved dataset straight back
 jload("MyData_r.rds")
 
 ## The original community dataset carries SPSS-style missing values
@@ -360,7 +444,8 @@ jsave(MyData_r, "MyData_stata.dta")  # This will draw an error
 
 ## Convert to Stata format (.dta)
 MyData_stata <- jconvert(MyData_r, to = "stata")
-jsave(MyData_stata, "MyData_stata.dta")  # Now no error)---", expect_error = TRUE)
+jsave(MyData_stata, "MyData_stata.dta")  # Now no error)---",
+  chrome = TRUE, env = TRUE, expect_error = TRUE)
 ```
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
@@ -374,10 +459,10 @@ why saving straight to Stata format above stops and asks you to convert first.
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
 Base R alone can't write SPSS or Stata files. You'd install and load the
 **haven** package and call `haven::write_sav()` or `haven::write_dta()`
-yourself — and haven is exactly the proven library jstats uses under the hood,
+yourself -- and haven is exactly the proven library jstats uses under the hood,
 so nothing here reinvents the wheel. What jstats spares you is the setup and
 the sharp edge: loading an extra package in every script, learning its separate
-function set, and handling the missing-value translation by hand — haven
+function set, and handling the missing-value translation by hand -- haven
 refuses SPSS-style missing codes headed into Stata format, just as you saw
 above, and converting them yourself is genuinely fiddly. `jconvert()` is that
 translation, done for you.
@@ -385,16 +470,17 @@ translation, done for you.
 Two conversion habits are worth knowing even if you're an experienced R user.
 :::
 
-### 9. Reloading, and how missing codes travel
+### 10. Reloading, and how missing codes travel
 
 Load the saved files back and see how each format keeps its missing-value codes.
 
 ```{r}
 #| echo: false
 #| results: asis
-.obx$show_block(r"---(## ---- 9. Reloading, and how missing codes travel ------------------------
+.obx$show_block(r"---(## ---- 10. Reloading, and how missing codes travel -----------------------
 
-## Remove all data frames from the environment
+## You removed data frames one at a time earlier; this clears them all at once
+## It is the code equivalent of the broom button in the Environment pane
 rm(list = ls())
 
 ## Load all data sets back
@@ -408,10 +494,11 @@ jfreq(MyData_spss, Education)  # SPSS-style user-defined missing codes (UDMs)
 jfreq(MyData_stata, Education) # Stata-style UDMs
 
 MyData_r_with_stata_UDM <- jconvert(MyData_r, to = "stata")
-jfreq(MyData_r_with_stata_UDM, Education) # Now the UDMs display in Stata format)---")
+jfreq(MyData_r_with_stata_UDM, Education) # Now the UDMs display in Stata format)---",
+  chrome = TRUE)
 ```
 
-### 10. Turning up the digits
+### 11. Turning up the digits
 
 One more control before the final check: how many decimal places jstats shows.
 The default setting is 3, the maximum is 7 -- and for what comes next, we want
@@ -421,14 +508,15 @@ and ignore this setting.)
 ```{r}
 #| echo: false
 #| results: asis
-.obx$show_block(r"---(## ---- 10. Turning up the digits -----------------------------------------
+.obx$show_block(r"---(## ---- 11. Turning up the digits -----------------------------------------
 
 ## By default, jstats shows up to 3 decimal places
 jdesc(MyData_r, Age)   # see the Age mean below -- the callouts explain the decimals
 
 ## Turn the display up to the maximum of 7 decimal places
 joutput(digits = 7)
-jdesc(MyData_r, Age)   # the same mean, now with more decimals shown)---")
+jdesc(MyData_r, Age)   # the same mean, now with more decimals shown)---",
+  chrome = TRUE)
 ```
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
@@ -448,7 +536,7 @@ The closest is `options(digits = ...)`, and it's a different animal: it sets
 `joutput(digits = ...)` means decimal places, and it changes only jstats output.
 :::
 
-### 11. The proof that nothing was lost
+### 12. The proof that nothing was lost
 
 Those three data frames each made a round trip through a different file format.
 If the trips were truly lossless, the same statistics should come back from
@@ -457,7 +545,7 @@ every one of them -- right down to the seventh decimal.
 ```{r}
 #| echo: false
 #| results: asis
-.obx$show_block(r"---(## ---- 11. The proof that nothing was lost -------------------------------
+.obx$show_block(r"---(## ---- 12. The proof that nothing was lost -------------------------------
 
 ## Ask for the mean of Age from each of the three reloaded data frames
 jdesc(MyData_r, Age)
@@ -481,7 +569,8 @@ joutput(digits = 3)
 ## Put the data folder setting back to its default (the working directory) too
 ## Passing "" clears it (data.dir = NULL would leave it unchanged)
 ## A finished script leaves your session exactly as it found it
-joptions(data.dir = ""))---")
+joptions(data.dir = ""))---",
+  chrome = TRUE)
 ```
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
@@ -493,7 +582,7 @@ the descriptives still match.
 
 The matching numbers are only half the story -- the missing-value declarations
 made the round trip too, which is arguably the bigger deal. You saw it back in
-block 9: Education's codes come through meaning the same thing in every file,
+block 10: Education's codes come through meaning the same thing in every file,
 with the Stata copy simply wearing its `.a`/`.b` form. In SPSS terms, your
 MISSING VALUES definitions survived the Save As. (Age itself carries no missing
 codes -- that's exactly why it makes a clean test variable here.)
@@ -506,7 +595,7 @@ declared missing-value codes, like `Income` -- those codes are ordinary numbers
 to base R, and the block's last lines show the damage live:
 `mean(MyData_spss$Income)` folds the -99s and -98s straight into the average,
 while `jdesc()` reads the declarations and leaves the codes out automatically
-— provided the declarations exist: here they
+-- provided the declarations exist: here they
 traveled with the files, and when a dataset arrives with codes that were never
 declared, you add the declarations yourself with jstats's `jdeclare_udm()`
 function. It's the same protection you'd expect from commercial statistical
@@ -547,8 +636,11 @@ Console -- the blue command lines, the gray notices, the colored tables, a red
 error where one is meant to happen. They show the *code* being run, not the
 `##` comment lines (running a comment just echoes it back and does nothing), so
 the box stays focused on what actually happens. Reading a block? The commented
-code is in the gray block; the result is in the box beneath it. The first box
-also pictures your **Environment** pane so you can confirm the dataset loaded.
+code is in the gray block; the result is in the box beneath it. Several boxes
+also picture your **Environment** pane -- the upper-right one -- so you can
+watch objects appear and disappear as you work. And where a file path appears,
+the boxes print `~/your-working-directory/` in place of a real folder name: on
+your own screen that reads as the actual path to your project.
 
 Nothing needs deleting between runs, and nothing is deleted: the overwrite
 arguments handle the repeats, and the Data folder with its three saved files
@@ -572,6 +664,14 @@ following the steps above.
 That's the full run-through. If you'd like the entire script in one file to keep,
 adjust, and reuse, download it here:
 
+The file is close to what you have just built: the same code, in the same order,
+as though you had pasted every block above into one script. Three things differ,
+each on purpose -- the lines that raise a deliberate error are commented out, the
+line that triggers the y/n prompt is commented out (a prompt would stall a script
+left to run on its own), and the saves carry `overwrite = TRUE` so the whole file
+can be run again and again. The **What's the point?** box under the last block
+explains why a finished script is written that way.
+
 <div style="margin: 1rem 0 2rem;">
 <a href="data-follow-along.R" download class="btn btn-primary">Download the full script (.R)</a>
 </div>
@@ -587,4 +687,3 @@ adjust, and reuse, download it here:
 if (dir.exists("Data")) unlink("Data", recursive = TRUE)
 if (file.exists("WhereDidIGo.rds")) file.remove("WhereDidIGo.rds")
 ```
-
