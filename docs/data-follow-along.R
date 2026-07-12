@@ -8,7 +8,7 @@
 
 ## ---- 1. Load the package and a dataset ---------------------------------
 
-## Load the jstats library
+## Load the jstats library (needed once per R session)
 library(jstats)
 
 ## Load the package dataset called community
@@ -171,12 +171,12 @@ jfreq(MyData_r_with_stata_UDM, Education) # Now the UDMs display in Stata format
 ## ---- 10. Turning up the digits -----------------------------------------
 
 ## By default, jstats shows up to 3 decimal places
-## (jstats never prints trailing zeros, which is why this mean shows only 2)
-jdesc(MyData_r, Age)   # the Age mean reads 40.65
+## (jstats never prints trailing zeros, so a mean can show fewer than that)
+jdesc(MyData_r, Age)   # note how many decimals the Age mean shows here
 
 ## Turn the display up to the maximum of 7 decimal places
 joutput(digits = 7)
-jdesc(MyData_r, Age)   # the same mean now reads 40.6504854
+jdesc(MyData_r, Age)   # the same mean, now with more decimals shown
 
 
 ## ---- 11. The proof that nothing was lost -------------------------------
@@ -185,8 +185,8 @@ jdesc(MyData_r, Age)   # the same mean now reads 40.6504854
 jdesc(MyData_r, Age)
 jdesc(MyData_spss, Age)
 jdesc(MyData_stata, Age)
-## All three report the identical mean: 40.6504854
-## Same data, three file formats, nothing lost along the way
+## All three report the identical mean, to the last decimal:
+## same data, three file formats, nothing lost along the way
 
 ## And one base R caution, shown live (the guide page explains):
 ## Income carries declared missing-value codes (-99, -98)
@@ -204,3 +204,4 @@ joutput(digits = 3)
 ## Passing "" clears it (data.dir = NULL would leave it unchanged)
 ## A finished script leaves your session exactly as it found it
 joptions(data.dir = "")
+

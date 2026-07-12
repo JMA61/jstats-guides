@@ -5,6 +5,43 @@ resources:
   - data-follow-along.R
 ---
 
+```{r}
+#| label: obx-setup
+#| include: false
+
+# ---------------------------------------------------------------------------
+# EXPECTED-OUTPUT BOXES ("What you should see") -- render scaffolding.
+# Proven S182; wired + pane facsimiles S183. Hidden (include: false). It (a)
+# pins the console width, (b) loads jstats once for the whole page, (c) clears
+# any artifacts a previous (possibly halted) render left on disk, and (d)
+# sources pane_facsimile.R, which defines the capture-once / display-twice
+# helpers AND the RStudio Console / Environment pane facsimiles in their OWN
+# dot-named environment (.obx) so block 9's rm(list = ls()) -- which clears the
+# GLOBAL environment -- cannot reach them. sourcing pane_facsimile.R leaves
+# ONLY .obx in the global environment, so the Environment-pane facsimile shows
+# exactly what the page's blocks create, nothing else.
+#
+# The code STRING passed to .obx$show_block() is the single source of truth: it
+# is printed into the page as a plain ```r block AND executed once, so the shown
+# code and the run code can never drift. Pane facsimiles are read LIVE after the
+# block runs (env = TRUE reads the post-block global environment; the console is
+# the captured output), so they always match what the code actually produced.
+# ---------------------------------------------------------------------------
+
+options(width = 80)   # match a default 80-column console for table alignment
+suppressPackageStartupMessages(library(jstats))
+
+# Clean slate on disk BEFORE any block runs. A publish-gate halt mid-page
+# never reaches the teardown chunk at the bottom, so leftover files from a
+# previous render would collide with the bare jsave() in block 7 (jsave()
+# errors, non-interactively, on an existing file). Clearing here as well as
+# at teardown makes every render start from nothing on disk.
+if (dir.exists("Data")) unlink("Data", recursive = TRUE)
+if (file.exists("WhereDidIGo.rds")) file.remove("WhereDidIGo.rds")
+
+source("pane_facsimile.R")   # defines .obx (dot-named -> survives rm(list = ls()))
+```
+
 ## Loading, Saving, Converting Data
 
 This page is a hands-on run-through of moving data in and out of jstats: loading
@@ -16,20 +53,39 @@ files, saving your work back out, and converting between formats.
 
 {{< include _new-to-r.qmd >}}
 
+{{< include _reset-your-session.qmd >}}
+
 ### 1. Load the package and a dataset
 
 We'll start by loading the package and one of its built-in practice datasets.
 
-```r
-## ---- 1. Load the package and a dataset ---------------------------------
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 1. Load the package and a dataset ---------------------------------
 
-## Load the jstats library
+## Load the jstats library (needed once per R session)
 library(jstats)
 
 ## Load the package dataset called community
 ## It's loaded as a data frame into the Environment
-jload("community")
+jload("community"))---",
+  chrome = TRUE, env = TRUE,
+  lead = "The command lines are shown; the <code>##</code> comment lines aren't -- running a comment just echoes it back and does nothing.")
 ```
+
+::: {.callout-note collapse="true" title="What's the point?"}
+`library(jstats)` switches the package on for the current session -- and once
+per session is all it takes. If you've just come from the Quick Start page,
+jstats may well be loaded already; running the line again is harmless (it
+simply does nothing the second time). You can check at any point in RStudio's
+**Packages** tab (lower-right pane): the checkbox beside **jstats** is ticked
+while the package is loaded. On a fresh load, jstats also prints a short
+version message in the Console; if it was already loaded, the line stays quiet.
+And if you'd rather never
+type the line again, R can run it for you at the start of every session -- the
+[Loading jstats automatically](loading-jstats-automatically.qmd) page shows how.
+:::
 
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
 For a dataset that ships inside a package, base R has one too: `data(community)`
@@ -44,15 +100,17 @@ Excel, and CSV files — with the same one-line call.
 Anything you create in R is stored as an *object*. Here we pull a single variable
 out of the dataset and give it a name of our own.
 
-```r
-## ---- 2. Objects and the assignment operator ----------------------------
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 2. Objects and the assignment operator ----------------------------
 
 ## "Objects" other than data frames can go into the Environment
 ## The "Assignment Operator" (less-than followed by a dash) is a key Base R fundamental
 ## Take the thing on the right and assign it to what's on the left
 ## Take the Region variable from the community data frame and assign it to a new object
 ## The new object we'll call "MyObject"
-MyObject <- community$Region ## (Base R code)
+MyObject <- community$Region ## (Base R code))---", box = FALSE)
 ```
 
 ### 3. More than one dataset -- and cleaning up
@@ -60,8 +118,10 @@ MyObject <- community$Region ## (Base R code)
 You're not limited to one dataset at a time, and you can remove objects you no
 longer need.
 
-```r
-## ---- 3. More than one dataset, and cleaning up -------------------------
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 3. More than one dataset, and cleaning up -------------------------
 
 ## You can have more than 1 data frame in the Environment
 jload("clinic")
@@ -74,7 +134,7 @@ rm(MyObject)
 rm(community)
 
 ## Remove clinic from the Environment
-rm(clinic)
+rm(clinic))---", box = FALSE)
 ```
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
@@ -103,8 +163,10 @@ side by side, and every command simply names the one it uses -- the `$` in
 
 jstats can show more or less detail. The output level controls how much appears.
 
-```r
-## ---- 4. How much output you see ----------------------------------------
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 4. How much output you see ----------------------------------------
 
 ## The output level is set to "standard" by default
 ## After you learn more about jstats (and R) you might not want all of that output
@@ -114,7 +176,7 @@ joutput("minimal")
 jload("community")
 
 ## Set the output level back to standard
-joutput("standard")
+joutput("standard"))---", box = FALSE)
 ```
 
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
@@ -128,8 +190,10 @@ choices. `joutput()` is a single, jstats-wide control.
 Most functions need something inside the parentheses, but a few work on their own.
 Every function also has a help page.
 
-```r
-## ---- 5. Functions with no arguments, and getting help ------------------
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 5. Functions with no arguments, and getting help ------------------
 
 ## A few functions work correctly without input between the parentheses, but most require input
 jload()  # This will cause an error with a message about how you might fix the error
@@ -154,7 +218,7 @@ getwd()
 ?ls
 
 ## And this one opens the package overview: every jstats function, grouped by purpose
-?jstats
+?jstats)---", box = FALSE, expect_error = TRUE)
 ```
 
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
@@ -175,15 +239,17 @@ together as a package.
 When you load a dataset that's already open, jstats checks with you before
 overwriting it -- watch for the y/n prompt in the Console window.
 
-```r
-## ---- 6. The overwrite prompt -------------------------------------------
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 6. The overwrite prompt -------------------------------------------
 
 ## The output you get in the Console Pane can include a confirmation prompt
 ## Here, jstats will not overwrite community unless you give it permission
 jload("community") # Look at the y/n prompt in the console
 
 ## Set an optional overwrite argument/input to overwrite without the prompt
-jload("community", overwrite = TRUE)
+jload("community", overwrite = TRUE))---", box = FALSE)
 ```
 
 ::: {.callout-note collapse="true" title="What's the point?"}
@@ -209,8 +275,10 @@ prompt is a jstats safeguard.
 Let's save your work -- first with no folder specified, to see where files go
 by default, and then to a Data folder of your own.
 
-```r
-## ---- 7. Saving to a Data folder ----------------------------------------
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 7. Saving to a Data folder ----------------------------------------
 
 ## Use the assignment operator to copy community to a new data frame called MyData
 MyData <- community
@@ -239,7 +307,7 @@ jsave(MyData, "MyData_r.rds")
 ## Remove MyData and community data frames from the environment
 ## Does not remove the saved file from the Data folder
 rm(MyData)
-rm(community)
+rm(community))---", box = FALSE)
 ```
 
 ::: {.callout-note collapse="true" title="What's the point?"}
@@ -274,8 +342,10 @@ that.
 Moving between file formats is easy, with one wrinkle around missing values that
 jstats handles for you.
 
-```r
-## ---- 8. Saving across formats, and missing values ----------------------
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 8. Saving across formats, and missing values ----------------------
 
 ## Reload the saved MyData.rds dataset from the data folder.
 jload("MyData_r.rds")
@@ -290,7 +360,7 @@ jsave(MyData_r, "MyData_stata.dta")  # This will draw an error
 
 ## Convert to Stata format (.dta)
 MyData_stata <- jconvert(MyData_r, to = "stata")
-jsave(MyData_stata, "MyData_stata.dta")  # Now no error
+jsave(MyData_stata, "MyData_stata.dta")  # Now no error)---", expect_error = TRUE)
 ```
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
@@ -313,23 +383,16 @@ above, and converting them yourself is genuinely fiddly. `jconvert()` is that
 translation, done for you.
 
 Two conversion habits are worth knowing even if you're an experienced R user.
-Data that arrive with SPSS-style missing values are ordinary numbers underneath
-(a -99 really is a -99), so a base R function -- or any package that doesn't
-read the declarations the way jstats does -- can mistake them for real values.
-Converting to Stata-style (`jconvert(to = "stata")`) stores them as a special
-kind of NA instead, which every R function already treats as missing. And for
-maximum compatibility, `jconvert(to = "baseR")` turns all declared missing
-codes -- SPSS-, Stata-, or SAS-style -- into plain NA. Even if you never use
-another jstats function, painless conversion across these formats is worth
-having.
 :::
 
 ### 9. Reloading, and how missing codes travel
 
 Load the saved files back and see how each format keeps its missing-value codes.
 
-```r
-## ---- 9. Reloading, and how missing codes travel ------------------------
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 9. Reloading, and how missing codes travel ------------------------
 
 ## Remove all data frames from the environment
 rm(list = ls())
@@ -345,7 +408,7 @@ jfreq(MyData_spss, Education)  # SPSS-style user-defined missing codes (UDMs)
 jfreq(MyData_stata, Education) # Stata-style UDMs
 
 MyData_r_with_stata_UDM <- jconvert(MyData_r, to = "stata")
-jfreq(MyData_r_with_stata_UDM, Education) # Now the UDMs display in Stata format
+jfreq(MyData_r_with_stata_UDM, Education) # Now the UDMs display in Stata format)---")
 ```
 
 ### 10. Turning up the digits
@@ -355,15 +418,17 @@ The default setting is 3, the maximum is 7 -- and for what comes next, we want
 all 7. (One exception: p-values keep their own fixed three-decimal convention
 and ignore this setting.)
 
-```r
-## ---- 10. Turning up the digits -----------------------------------------
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 10. Turning up the digits -----------------------------------------
 
 ## By default, jstats shows up to 3 decimal places
-jdesc(MyData_r, Age)   # the Age mean reads 40.65 -- the box below explains why not 40.650
+jdesc(MyData_r, Age)   # see the Age mean below -- the callouts explain the decimals
 
 ## Turn the display up to the maximum of 7 decimal places
 joutput(digits = 7)
-jdesc(MyData_r, Age)   # the same mean now reads 40.6504854
+jdesc(MyData_r, Age)   # the same mean, now with more decimals shown)---")
 ```
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
@@ -389,15 +454,17 @@ Those three data frames each made a round trip through a different file format.
 If the trips were truly lossless, the same statistics should come back from
 every one of them -- right down to the seventh decimal.
 
-```r
-## ---- 11. The proof that nothing was lost -------------------------------
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 11. The proof that nothing was lost -------------------------------
 
 ## Ask for the mean of Age from each of the three reloaded data frames
 jdesc(MyData_r, Age)
 jdesc(MyData_spss, Age)
 jdesc(MyData_stata, Age)
-## All three report the identical mean: 40.6504854
-## Same data, three file formats, nothing lost along the way
+## All three report the identical mean, to the last decimal:
+## same data, three file formats, nothing lost along the way
 
 ## And one base R caution, shown live (the box below explains):
 ## Income carries declared missing-value codes (-99, -98)
@@ -414,7 +481,7 @@ joutput(digits = 3)
 ## Put the data folder setting back to its default (the working directory) too
 ## Passing "" clears it (data.dir = NULL would leave it unchanged)
 ## A finished script leaves your session exactly as it found it
-joptions(data.dir = "")
+joptions(data.dir = ""))---")
 ```
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
@@ -475,6 +542,14 @@ do for you. And if you re-run the script you pasted together yourself, the saves
 to overwrite their earlier files -- that's block 6's lesson again; add
 `overwrite = TRUE` just as the finished file does.
 
+The **What you should see** boxes under some blocks above reproduce that
+Console -- the blue command lines, the gray notices, the colored tables, a red
+error where one is meant to happen. They show the *code* being run, not the
+`##` comment lines (running a comment just echoes it back and does nothing), so
+the box stays focused on what actually happens. Reading a block? The commented
+code is in the gray block; the result is in the box beneath it. The first box
+also pictures your **Environment** pane so you can confirm the dataset loaded.
+
 Nothing needs deleting between runs, and nothing is deleted: the overwrite
 arguments handle the repeats, and the Data folder with its three saved files
 stays put after every run -- that's what saving is for. Remove the files by
@@ -500,3 +575,16 @@ adjust, and reuse, download it here:
 <div style="margin: 1rem 0 2rem;">
 <a href="data-follow-along.R" download class="btn btn-primary">Download the full script (.R)</a>
 </div>
+
+```{r}
+#| label: obx-teardown
+#| include: false
+
+# Page-end teardown: remove the files the render really wrote, so the repo and
+# the docs/ output stay clean. (The setup chunk also clears these at render
+# START, which is what actually protects against a previous halted render --
+# this teardown handles the normal, successful path.)
+if (dir.exists("Data")) unlink("Data", recursive = TRUE)
+if (file.exists("WhereDidIGo.rds")) file.remove("WhereDidIGo.rds")
+```
+

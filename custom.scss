@@ -47,6 +47,101 @@ $navbar-active-color: $jstats-cyan;
   font-weight: 600;
 }
 
+// jstats LIVE pane facsimiles (the "What you should see" callouts on the
+// hands-on Going-further pages). Rendered by pane_facsimile.R's show_block():
+// a Console-pane facsimile (real cropped chrome strip + a white field of
+// captured output) and, on orientation blocks, an Environment-pane facsimile
+// (generated tab bar + cropped toolbar strip + a grid generated from the live
+// objects). Distinct from .jstats-output above, which styles hand-authored
+// static blocks.
+
+// -- shared caption + lead ---------------------------------------------------
+.obx-lead { margin: 2px 0 12px; color: #3a3a3a; font-size: 0.92em; }
+.obx-cap  { font-size: 0.8rem; font-weight: 600; color: #5a6a78;
+            margin: 12px 0 3px; text-transform: uppercase; letter-spacing: 0.03em; }
+.obx-cap:first-of-type { margin-top: 0; }
+.obx-loc  { font-weight: 400; text-transform: none; letter-spacing: 0; color: #8a97a3; }
+
+// -- Console pane ------------------------------------------------------------
+// The console is emitted as a <pre> (Pandoc type-1 raw block: content stays
+// verbatim -- real newlines, indentation, blank lines). The pre itself is the
+// pane frame; .cp-body is the padded text area inside it (padding sits on the
+// inner span so the chrome <img> stays flush with the frame).
+pre.cp-pane {
+  margin: 0 0 4px;
+  padding: 0;
+  border: 1px solid #C9CFD4;
+  border-radius: 2px;
+  overflow: hidden;
+  background: #fff;
+}
+pre.cp-pane.cp-bare { border-radius: 6px; }     // no chrome strip: just the field
+.cp-body {
+  display: block;
+  padding: 0.45rem 0.6rem 0.6rem;
+  font-family: var(--bs-font-monospace, Consolas, "DejaVu Sans Mono", monospace);
+  font-size: 12.5px;                            // matches the Environment grid text
+  line-height: 1.5;
+  white-space: pre;      // break ONLY at the output's real newlines (the coded
+                         // \n structure in jstats messages); long lines scroll
+  overflow-x: auto;
+  color: #1a1a1a;
+  min-height: 1.4rem;
+}
+.cp-in  { color: #2400F0; }                     // RStudio input echo (blue-violet)
+.cp-out { color: #1a1a1a; }                     // normal output (jstats ANSI reds pass through)
+.cp-msg { display: block; background: #EBEBEB; color: #1a1a1a; margin: 2px 0; padding: 1px 3px; }
+.cp-err { display: block; background: #EBEBEB; color: #c0392b; margin: 2px 0; padding: 1px 3px; }
+.cp-cursor { color: #2400F0; }
+
+// -- chrome strips (both panes) ----------------------------------------------
+// The cropped screenshot strips render as fixed-height background images
+// (background-size: auto 100%), NOT width-scaled <img>s, so the row heights
+// stay in true proportion to the generated tab bars at ANY pane width. The
+// right-hand shading continues via background-color (the strips' right sides
+// are plain shading, so the seam is invisible). The console strip's bottom
+// boundary line is drawn here so it spans the full pane width.
+.cp-strip, .ep-strip {
+  display: block;
+  background-color: #F4F8F9;
+}
+.cp-strip {
+  height: 22px;
+  border-bottom: 1px solid #D9D9D9;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: left top;
+}
+// The env strip carries TWO background layers (left slice, right slice) so
+// the right-anchored controls -- the List/refresh dropdowns and the search
+// box -- hug the pane's right edge at any width, as in the real pane. The
+// gap between slices is the shared background-color shading.
+.ep-strip {
+  height: 48px;
+  background-repeat: no-repeat, no-repeat;
+  background-size: auto 100%, auto 100%;
+  background-position: left top, right top;
+}
+
+// -- Environment pane --------------------------------------------------------
+.ep-pane { border: 1px solid #C9CFD4; border-radius: 2px; overflow: hidden;
+           font-family: "Segoe UI", "DejaVu Sans", sans-serif; font-size: 12px; background: #fff; }
+.ep-tabs { display: flex; align-items: flex-end; background: #E5E6E8; border-bottom: 1px solid #D5D9DA; }
+.ep-tabs { white-space: normal; }               // safe inside the console <pre>
+.ep-tab  { padding: 5px 14px 4px; color: #333; border-right: 1px solid #D9DEE1; font-weight: 600; }
+.ep-x    { color: #9AA3A9; margin-left: 7px; font-weight: 400; font-size: 11px; }
+.ep-tab.on { background: #F5F8F9; padding-bottom: 5px; font-weight: 600; color: #1a1a1a; }
+.ep-ctl  { margin-left: auto; align-self: center; padding-right: 12px; }
+.ep-body { min-height: 84px; }
+.ep-row  { display: flex; align-items: center; padding: 3px 8px 3px 23px; min-height: 18px;
+           font-family: var(--bs-font-monospace, Consolas, "DejaVu Sans Mono", monospace);
+           font-size: 12.5px; color: #1a1a1a; }
+.ep-row.ep-hdr { font-family: "Segoe UI", "DejaVu Sans", sans-serif; font-weight: 600; font-size: 12px; color: #202020; padding-left: 8px; }
+.ep-nm { width: 150px; flex: 0 0 auto; display: flex; align-items: center; }
+.ep-ds { flex: 1 1 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ep-gi { flex: 0 0 auto; margin-left: 8px; }
+.ep-empty { padding: 58px 12px 0; color: #7a7a7a; text-align: center; }
+
 // Footer: the disclaimer is centered (equal side regions keep it centered), and
 // its WIDTH is set by a small script (include-after-body in _quarto.yml) to match
 // each page's main content width -- so it lines up on every page and tracks
@@ -213,3 +308,4 @@ body {
 #quarto-document-content {
   min-height: calc(100vh - 132px);
 }
+

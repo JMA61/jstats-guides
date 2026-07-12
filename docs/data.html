@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7035d84f9b8587888e81aabf6836c785.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-6479166c7b3cf802a531f4226b142d0c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -336,7 +336,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Every block starts with a dashed comment header (<code>## ---- 1. ... ----</code>). It marks where one block ends and the next begins in your growing script — and RStudio reads those headers as sections, so they appear in the script’s outline for easy jumping around.</li>
 <li>Experiment freely as you go — change a number, rerun a line, poke at things. Building the script yourself is the point.</li>
-<li>Prefer to grab everything at once? The complete, clean script – without your experiments, and finished so it runs top to bottom – is available to download at the bottom of the page.</li>
+<li>We recommend working through the blocks one at a time first – you learn far more by building the script yourself and watching each piece run than by reading a finished file. Once you’ve done that (or if you’d rather grab everything at once), the complete, clean script – without your experiments, and finished so it runs top to bottom – is available to download at the bottom of the page.</li>
 </ul>
 <p>This box is the same on every hands-on page in this group, so once you’ve read it here, you can skip it elsewhere.</p>
 </div>
@@ -358,19 +358,106 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled" title="Reset your session">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reset your session
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Experimenting means the occasional wrong turn – a setting changed, the practice dataset overwritten, output that suddenly looks different. When something feels off and you’d like a clean footing without restarting RStudio, run these two lines in the Console:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Put jstats' output settings back to their defaults</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"standard"</span>)   <span class="co"># output level, and decimal places back to 3</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Point saving and loading back at your working directory</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">data.dir =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That resets jstats itself. To clear away objects you created while following along – data frames like <code>MyData_r</code>, or a value like <code>MyObject</code> – the simplest way is the little <strong>broom</strong> icon at the top of the <strong>Environment</strong> pane (upper-right): one click sweeps the pane clean. It clears <em>everything</em> in the Environment, so use it when you’re between run-throughs, not in the middle of one. (You can also remove a single object by name, e.g.&nbsp;<code>rm(MyData_r)</code>.) The built-in practice data comes right back with <code>jload("community")</code> whenever you want it.</p>
+<p>This box is the same on every hands-on page in this group.</p>
+</div>
+</div>
+</div>
 <section id="load-the-package-and-a-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="load-the-package-and-a-dataset">1. Load the package and a dataset</h3>
 <p>We’ll start by loading the package and one of its built-in practice datasets.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 1. Load the package and a dataset ---------------------------------</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the jstats library</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the package dataset called community</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## It's loaded as a data frame into the Environment</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 1. Load the package and a dataset ---------------------------------</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the jstats library (needed once per R session)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Load the package dataset called community</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="do">## It's loaded as a data frame into the Environment</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What you should see">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you should see
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p class="obx-lead">
+<em>The command lines are shown; the <code>##</code> comment lines aren’t – running a comment just echoes it back and does nothing.</em>
+</p>
+<div class="obx-cap">
+Console <span class="obx-loc">(lower-left pane)</span>
+</div>
+<pre class="cp-pane cp-chrome"><span class="ep-tabs"><span class="ep-tab on">Console</span><span class="ep-tab">Terminal<span class="ep-x">×</span></span><span class="ep-tab">Background Jobs<span class="ep-x">×</span></span><span class="ep-ctl"><svg width="42" height="16" viewbox="0 0 42 16"><rect x="0.5" y="7.5" width="18" height="7" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="0.5" y="7.5" width="18" height="3.5" fill="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="14" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="3.5" fill="#8A9196"></rect></svg></span></span><span class="cp-strip" style="background-image:url(data:image/png;base64,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)"></span><span class="cp-body"><span class="cp-in">&gt; library(jstats)</span>
+<span class="cp-in">&gt; jload("community")</span>
+<span class="cp-msg">Loaded the jstats example dataset 'community'.
+5 variables have user-defined missing values:
+  Income: -99 ["Refused"], -98 ["Don't know"]
+  Education: -99 ["Refused"], -98 ["Don't know"]
+  Smoker: -99 ["Refused"]
+  Environment1: -99 ["Refused"], -98 ["Don't know"]
+  Environment3: -99 ["Refused"], -98 ["Don't know"]
+These codes are excluded as missing in jstats analyses. For better base R compatibility, convert them:
+  jconvert(community, to = "stata")  - retains missing-value codes, base R compatible (recommended)
+  jconvert(community, to = "baseR")  - converts to plain NA and removes missing-value codes</span>
+<span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
+<div class="obx-cap">
+Environment <span class="obx-loc">(upper-right pane)</span>
+</div>
+<div class="ep-pane">
+<span class="ep-tabs"><span class="ep-tab on">Environment</span><span class="ep-tab">History</span><span class="ep-tab">Connections</span><span class="ep-tab">Tutorial</span><span class="ep-ctl"><svg width="42" height="16" viewbox="0 0 42 16"><rect x="0.5" y="7.5" width="18" height="7" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="0.5" y="7.5" width="18" height="3.5" fill="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="14" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="3.5" fill="#8A9196"></rect></svg></span></span><span class="ep-strip" style="background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXwAAAA3CAIAAACAbWaGAABQ/UlEQVR4nO29ebwlV1UvvtbaY1Wd6d7bnaEzkTkhAwkEI8hD3pMHhCBGCDIEyRMQ5QcKyKCIvDCDQFTkqQ/BgUE0AcIQkDAIIqKIoAkZyUzGTnff6ZxTwx7X74/qXBrom0dABrG/n/NHnbp1q+rU3vXda1541bXXHXroocxMRMwMACklKWW/vQ+bIXROKbVjx47FxUUi6p8YImb84dyPFjIjzGbrZTkC4oSQsiDBIjZEA5aJm1CTHZvALWQlOMe9nqefCTlnxB/SL/nPCWYWQsQYhRDMnFJSSqWUftQe4w9rfBExxti/JvIHeeEfJxRFobUcDAaDwSDnnHN2zjGzsPqHcj++bbQtBmYoRHJdIsSUdhm9IEhBSL4OM3TlSENHHbQpdkaM9noeBkBBzBkQ9lyK9uGeQUIwACMAIWfOwIyQgelHjXR+SOOLhP3DQUC8t5JO44NUJCUpUsAUQmTwUqdADYUtheeZaJHLJHGiKDQuib0/9IAUiY0g0bYIwEUZE5tMMdV7PT4KQb4WSgYqOUGROiNtQt1mJ6UMIfT8vSFxIGJKiYgAIISAiFprRPQu7fX83ntjDBGFEABAa93/YzZZuZS0sB5Bqk6jbCJljmrfq/gfCWbe6zjmnPd+PLnooxY2J2IhhJBMQAwd1IZJJ0JEzxAlGqFy4pTCD/gX/WCwMdtjjEQkhMg5E1FKu+f5dyjRMGOk1miTM2HMGT2ClLmY8vrQD1tN0jDOOjIFa8A45/zdL673WtKRUkoymGKEmUSlRAlJYoyshiHn2gidh0bAjKddYJeyEdXez8OOqEAkFJKZOaPInGPNutzr8ZhQG5EgMYjIkbQJnLsYkL7psJSSEKLfAABm7iXJfhhSSohir+c3VgMwQ1ZaMnPKkZmRwCSAmAWDUnbOyXXRguwIaK9n2Yf/IGyM4+ZApYwQhiTmxJwSp5wAYvSoFGnVNS1mlFnWKdii+AHd9w8D304rMcZ+53euQ0nuHIkdbRgkXWbWpW5SkpwHSfnBdIHUvMmAGrwnoynq+D28APeadBakntWOCaUxLnnmjqTJOZsaRHaxjDqCgIqiBcCy+AbjfgsoOQATOeWcAABDUogIIcW9r0hth6pUiJIImdkxcMosFTFvCGWI6Jyrqirn3MtrveIjhOhJJ8ZYFGqv5w8hSClTil3XCSGKoiAS3vucMxoJTCEEsMIKSwEUQYr+3j66fbgHIOJex3Gz40OXlRIBIoHIMTKzQBKKYiYhVJ2TrSrLBAmMgdWmLvXex/3HA728028AgPfeWvvtf70HEJGEYlGRVhA5pMZrkrOK885d29/+rnT4wqGPetKiHqbokq89W4K9v9ffCe41X61zx1WCMnkKoEDYBJg46yym1ogBW+KhS2S1dtg6t6lMi1JBBoxZYBKYckwAiEqzUHv9DAspCRFZ5KgExBgzoFLfuhh2XdfriRuTuBc++22tdUhxr5/EOXEWShZVCYR127jgjTXSFq0kr8kjY8wIPI0ud/sY5/uLjXHc7ACrrNYWQeScc0wIOebAkipTyYiWKXWxbV2I0Tmv8MdZMO2n956s3T+9PWlo413Y7CRzB2Ok0mfXrAFktJVUumrrr7//vcOd22//6OeXxKCV0Po6Qrbf9t7dK9xrSafIFAOSVCRzyAEySJOEDhFGLgHFNa5s9NbGRilnaeTD3t9PUgMAlIRSAQDIqBgpq0q27V6PzyS6kElkzKlSyoNEVNxFoG96rG3bEmEv3fSKVe9N6PdoJRvn9np+pRQAIKJWSinVyzjOe0mK6sCa2CjoQooRlcjICD9aBsIfA+x1HHur3Lcj+pQAMyQCVFporXfM19sslqTNrZNMWkhPKTATUSlkgL176/6zY4NHetLp0bbtxv7v0E5spAouJZGNspBUrcDtunPHX/0V3H7ljjW/eMgJvuNUAmgptfHue3qY95p0HAIZHVKHaUqos6/axgs9k3LZ+0UFwqmVEVVdtCPY2qy3UO6dFDvHIgUhxMo8AkCpREg+J6lh78e7jD5iKVQpMQafWRtJSMnvIT0iYtd1eLf/sjck9xblXt7pnK/bvZPgxozfTU9aK6UYMa7Xk9GAE7ecQEntUyQMguWP5xz+YWKv47jZwbbQPidBCD4659fb+h+uuHQm+OiFbacee5xmbJpWGEVKCobkwr2f6f9p0NPNnuzcSzo5541ZvfFgN3ukpshrXa3ZsCePcbGOV//1BZPbrr/RN84sPujcp61LXbWhpQQpkNLwPdjl7/VQmM6Q2n7zLX+/645rJuVQR91O59aY1bIe2lOPPeoxshs2tHzhrit/Ydv9TYmbzZqCKKS0WocvX33rvG0O37/kbhayQDve6/F3rDSzrjtgqXrYacchZlRy3rQGPahvMjw75+Cb18ycc4yxLMuU0p133rl959pez98fLKUkoq7rQggLCwsHHHDA1qK8lpqtZAoP3qCWKjZNApbK7vU8+/Afgj3Hca8IIcyamZQyu44jzwC+evNN29n9c33pR7/4uTMe/NMPOPZ4DJlCAkQQBLCpeejHAN9u0+lX2T2PuWezTmIQQpRS1a2zfnbNe/9GXve1691KcdgpJz7n3GLhENNgllDKgecAjafvwUZ2r0lHs7vq6k+TgdMe9EKhhjXPQDUMoyM79eV/fPOtA1o6+BHLtvrtqy5Jc3jY4VsOpQP2eh4RU6achNjZCaTRIUfe54CCBSnexLX5uVvV179y2Y5rb3/AiccYhNLIAM3QSp++aWpu2K35bgNzSinnLAhDyDt27Fjacshez79hCerdtL3jfH29Lkrzx5d/9lEH3/fhxSHrwYMphRBDFs29fXD78P/CXsdxM+QcfdewUuwCoiBr6uTXIJqB+Xozv/AfPrlr166fOfkBE21b71mJH2Ojzl69V/f2JNM6jTOt4pqAbvWSj+Zrv3RXDPNy/59++q/bcuBar7WZ+iQxVVl4qzl/96LOpqTTxV0AC0OMXTRpbVVukZiLeQ433/bxGdx13/2esrbaRjlNUFnjfT3fqdrDjn3sv137Dw/cb1eFkw7V6275zNXt4b9z4hmKRMWi6zpbFCmlDtKCLKbS+XkjWAgZ72iLIguRMSaQau8M6uZ3gS3SXJWMmhLlbqgEZ9Nrsr1zaiOsQ0qZOBJJYiICoZOLPqFYrfNds5tzjoIGQsbgJFCrZBFiLSDJRMhYIytrpAuc4rZDts1wdKsIz/3KR1575MMfdfAJ3ESRhDcixuzszjEcZKB1NbQDUXS5JodQqOA7EpUh6kykqSpU9DKjEymHLEbCrKQorbRzISwupztILwyActZdjqb2clKpGnaZdqQjdsNkQfi8q6WJBgthLtusRhMPrnVyTI2TKiLJ0Kp5nhkqC1B5zCLNZlE4bbcs53WjxpXzPgfP0jHtlxUQzHiVDMVc2SRbMUdEWWexMPRN7UqSM6ttdCkK40Q7wQLSbKoVdh5iYQpdu5nNIm/R1Z2QStcqHEQDKnsXtClT2wpDvldy+yCpDZOZ55R8UEpB5hBCZQtBlFIKnPc6jhsLeK8s96a6EMJsvlZLHqXgs9ei0JEFUhU5+Y5D5EF58XWX0qA464iTdSk6EUI0CjsXO50GopLSiZwgUMuiZcZ5XhjHaK3MGUTunEcuXc5WJTLAq7KxbiQK5G4+1UkhqlxVTqybumgED60Iy4nUupeLEuusysx1KYrYdAFSkYBGRY2elsdUrQsog50CCLPOtWCqtJwZQX4u5EhEL5Smruv6IA8i8t73oQOeU6GNc05LRUQSKaektayd3whu2ggyCCEgppgcMBFhzkgk+xi0FppxMWprD6RCbqWMpRB+Pc5u/7CzUbmwujKHA9P8wIPcrPuJp79cbikiJCGwzV5JACaHAN8D49wT6WS7vxU+1DTb8bnrL/2QtKFSKns1XDr2iGOeynbC9W0xYeZyLQxvz7d84M6df99cdUu3Jr7y195L0cIc43tW7rzpyg/+3nGPZlmUg5K62EjObagTkC40DXyMiAIwaZVQsgLgtHebjpQSGSAzCQAAZgSgzAibKnB7x8PufywzExaA4eMf+/tHP+ang+dqYKLn1vubb7v9tMOOmCd/W5jdUa9c7nYN74zztts+n77wmkt2qPi0w+4XOxaCddDzuI3nbmptLlvVaFk52wwbBQOgpCD4DCaNumLZZc2twAFHMha6UFdWUe4aqRBTRdtCCFE4kYy2ySSVo58WTRmrrpOFWBOzYVB+iEJD3klWcQez1Y6qeeHByzGprMHJGTk7LnAOWc3i+pBsOVyJw5GHiRKzAG0gLkCEPFFpu5CTLiSJKVcDnjGaSpSdX08D081mA61h3kVbyKC0dvN2IkQqazEfkY0DZSBkjo0sTEygaoAt4IOGFHgA2CFwXlZNEaTOKffvTE8czrk+WUQgJoAQglFaStl1ndY6xQhy7+O+pz2iN0n0+jIlppRMUeYERERKkRTRJSMNAPmQgOAT//gPDz3s2CWuUnBFDnOpF03sOlAc0AWl7Jryuh1YMdvKsS3ndYN2MJx3AMZRKAXImd+R5UiGcbQuNlGYYqsXjQox8KysXaJCs3eBiiXuVqrBaNYlpJzJDVik1qoxifk8meSN13E8BzGo52uVsckBjU3mYJnCKBjfylQF7WSMbWuM6Zm3D/swRrdtVxrLzMaYHJNzzqUMACkpoO/QoZF7V/VQ6dDUVqJPqTKDHCCE7bfc+emvX/yBg447Sm3Zv3PLPAvDk48+/n6PEsNFgP/4INhNpc4lFDYJY1TT3fJTj/qdI0971X4/+eKj/tv5245/TEhi7qcRjNVbduruDbd++qyrPv2u2669fsf6vFugGeVAMucWwU3xy9tvfOMVnyq6LNowL4V1WRlNWoncSQWAWSBAZmaEjBAZifb6UUozc85RkkAQKVMmEe59BPdovDCeLGpTVINRNRgW5ciWpS0KMSzLwcCQ/Pv5LU+/4kNP/9rFv/y1v33OLZ976nUX/8P2m7Ao10M475pPv/ZfPtZQblzn9Wyi3SeeZ3/yD79ugrGxztlERYXKYdCZ6Cxq4nan9oVoVRgFmfIgz0KynUhRr0cQBBR9J2fSKwpyiquRoZW6qWeTVJrkh1q5iI6SF2GkdSrcAc6p2ohBVRgxycNxCOCayFe8+ZilxaIqTDmxthiNl550ce54wa2jqlMWMtRFGVMsNIld9XQJZjNONk0KMWt5oQGWoqa8YFiXA2bMSjqRoU0dO1OWUGURMMCcpugidD6B5cJk0yTFsqEuYyqU4IZWc5j6chG6ekhSKdWv1b3MYozphR0iKsuyMLbf379aQm6++N192IbIE2MMIUjAUqjoIiFqaxrXYYoaIeaktM1SJIZGi89efRkxBZezSJo5+LFpTW4koF5NbRE/+aRtT/pcHoLINu1620MmJYrFohpXCwulmiwt/cSf31F/5ulLlR5bOxoNRpWkAQ7Mk76g5TBU1vuIUgv44DNwOHjWxxwYI5xtJBsfwOm5+sAvH7B04DMvqfUqb/+9E4c/ef6XTGH42j/4yWpAQi3QSFv7gN/d0WgjU1C+aNaUUn2kWC8nAkBKuX9K3vuuaZVSiDgYDGKM8Z6UUAL+lrc7M3P2xCnnREaWImd2X1+99QuLONvvqG1f/vtP77rxptl82bPrcN1ODlbV9+Qa3/zONkHtmhC1c6JeXU/CVRY5DZv1nY2bQG58ykh5V9j1R1f/64W7boAuZdmMSyv0NAo/hi4OWAmIZTxxsu2FR/+0s2JWkFhvpdFD0qAkcRACU0rIETNHEIASiABhr5/EyAgMGZERRWJkFOne03AIwYdOawAAY3VKQQgRYggJ2o5ffPs/P+PSD39h7c6bgzfBiE4oD2gK4VlKiSF9tb6rnU0p8ZiH1FpoIAqhBa8bSRxcBkp1SlaijMZnEU0WDNIOYSxi6+uBElDYmLsYHFnFcgIBBzYpCFqVBqxKicdLM+AAueE4LGwj9TjRquGu/vLjlk55y3aHKTsSnV6JufQqVW5BWnXWR0Pn2Le7drZf+t3rz66G535WjNakJV8kVDzVhrMLKwNTxDDamj9zjj30tV9LQDBM5WpQSXaBSHdFLdvoR5WIrZXM9TwEYDeTawYo5bzWyZFJNci50SU1Itjpyp/ft3zGJ12T0gKahf0Z06hsOTvnpJS9mNObGLquSymlEIPz/UAQESkJglq/9zgG2MM215NOL+aEECJnIQSjEKSaeVuU5qGnnHbQYCzbiK2XkatMtiqvve3WVLulYgRcZeZ5yNNxbjHXQ7r99x88sU/6wtzsarHNwOHwZ/2Tm6+HJqf1zq9c+dYT2oe/7jlHDR7xtuU07+pm7pumie8/xxz7+rc8RK3MOxCUgolkQDo49tjLXv7WG/28K8PYF4pBN3Tn77363c77nCEX6fCXXDP74gtOUSjDXHX5aRemnNsd3WXnq5c99G03GB6IAEot5Jz7qMiNHx5CUEpxygSotXbOKaUa15XDgTSb5iIgbBiSaQ+/ShaFzaIQQqWwjuna6fa//5ePv/vWL10uDjrkwCMO+5dL/nZ242rXNWWJ1NVtt35v36/vBJuuMFLq3ExjagVgjnZ5fUcuRAHVMswmLY4E3yV2ffDOr12844pqvPC48n7n3udIm9Suyz92yE8+eYfb9dgrP+h9emi18CennVUKNRTGtQ60CjnNJciOFduUVUwux5wR1l1nC2twk6gMgLZLDMSYkQAZmQER+d7Hynzo059HxOiFsbS60rz/ks8Wdth200z0J+rm63k6BFosKwkSJ7KeNUKBzLjMHSh9ysK237vvGfvZoRchriUeIlTAeT3B0oKgZecnOoa5NAZdNDW5BT2pbWOmg7vkLQiLBQ9J1jMp59IuIecuDpVe5rSuhU2m9Dp3XT3KVes71Llwca5mOg8N+FBZNyc5NzkNu+E4T2uRyYkytk01XMWbCgjKyZUUOaiqOOgZ/9Qc9czBC3/vRf/6G0doO+jIewdos6wn8xyYkpbJ4qRIRiRABtA28upgGptBuRQWZ0PwbTP2EicT2zZRl8NUtiIUOFQYd4GodM41+WJYhzScBcNNXcHAwZSaQjjFY94t/CfvvVJKSnn77bdvOHGNMd77Aw88UAjRr+r/r4wH+JY4t5xzQlZACZJFXVk9Xlh86Hg0KYt3f/bTQKINodRmuZ4ZFfPAeOJBRlPX3UA4rgjwllcdc9J7zrn0uqc++bgvjwaqAG6KO6NbMInZkeD64pf/ev2qLz0aBsHDAKFF5yPA7b//nAse/t73HJhbj2YduOAZz21TRpHY3PjOT9306z97LBxg5vUMxZa/fdVv0cPPOenjAQYiCKczsK89DfR+UcoZzlacXErHn3nuCS+87N8DHwo5stHsQu/EkFL2yunq6mpKyVrb03TvDt+6desGK20O2lCOmBMiMafkEsbGh13B3xLalQL0g+7/U3974Z9tvfOoAw7b/+iTj7zpi9cc85NHmFPv4wd2RNR994HHm2Jz71VMX/ryiw6bnLo0GNx+/Ucg6sx6HmeqFPOYtBiJ3JwJ8pGHbL1117WnnfQ0KIGDiKN2AWjBTkKkJx90ym8f+cAyiWEWAJwUpc5nYEQptXbNPCOSEEJSQnHt7bObd7SKQ9gkN2p5mjJJRkw5K0TKRPzdJEA9+r+dhoiCSqT4iY///cMf/lNSWKTwseXb7rj26sPt5JmTEx5zn/tVoOrkb7r1tqNHBzz9jk9/cf3WR46P+O2jfvowM6CuIw3zKpDC4EBkM2XJ6eLnVr913Id//a8e//xbSR732q9+6RmXPcs88S+BEJ/w/vnbzxAtfPJF1UuOuPp1Xzzm8R8CtnzSKy//ynOOjCJn6P7u3MnPvh9lVBHCOZ9af8/DU7aVvfjZ5iVHvvHUV7zkInHmrxz0yT++NecP359ecMwr//3K3zk+ls0wYoqgy2gg8OoQFnKR12g8wOX/+eizfv6NH73hef/fffxVf3HqaS+4ASBHxY+7yL3rv9/81lOOecEVCuDkg3/75Bde+U8v2dZd/Mzi6R9AJyin41//7//y3FOU8be+7cQtz7lOA3h4/HvjXz0GTHPZeT99ymsvVQpCd/YHZ+/9mYVPvoh+7k8tFU+Rw6c88eL1tz98Vx4GuT6hscDUB1gCQIzx/PPP/8hHPmKthZS99z/7sz/7hje9sbfRJM73QDp7df0iImjJkUPKFP14cSsyyC7e/6hjr7vrzi6nlV2rKWQbtfQuKmjbJkOI5bDCtaKjqRoe/fLLuxcLvvwPGmhAzJMfpNm2oela0Cm7fM0f/95FT3nV++4nE3dY78xyKG2EdMl5L97vvBtP7ngopOMiEYgC2EdtZPdL5/3uXz7ptRc/892P8nUqxjZ86P1/84TzbjrulYf/s0u5nM0vfvr+r/gf1//zc61pdFmNxUDjvMOPvuhFK6++6gxJ1FpYyW6LlM45Y4yUwntAxNe//vWXXHIJx+S9jzEOJ+MzzjjjNa95DQoSQvT8vtmju3szb8g7Nt+ZYTWE7b5dlxmQZJPDoSeeePu/ftmH9pATj2jmdMuNdx5Hx7a5HORwb22m3wk2JZ0WcVQdt3W0xRldVQwAmrVLW3Wu51qrNDhArs2cQphUeTvfdllxn/uDa1UgLWMzKJ6wdPxvHfXQA6zoC4usQyhBDMnMLQZk7CIIH1CgYkTOoK+9bdYlEZzPcu9MUkhKKIFESkkTIANzFphgk2DCzWCLioi8Q6mEVFZITUISia/suu1oZ39jvwecefCJ3godODfOCpZjfcAd+NODA99yzCPGKGYUh4Xk0KFUOe4CAIsHWekKYUF//VUv95fP6uOuecsxD7i/ffHZF6+uvmVS/8mJh77sTW898/nS+E5e85vH/s3fzqYXRX37555y9ElPP2r6fx5Zfvbp8qlXvfLy9kUnSuEvffMDH/qA13/x0t84jpSYw7Uvv/YPV6fvwsx+8NBftc8/5d+v+vWjhoQNVyJnAtbNNOpQsoSYQpNonL2xo/qk+x5y1RU3jidHfvVPLzv3yu6lh2b3tdc+5MQX/8krLn3e8/453+eXzEvud8W1z7tvSE0uPnQRvX85P0qsiUueWTzmNRc/751PvOJPfvY5p709Xf6knOBjn7pEZPP115/+oAufetOOTy+Vo51vesCRv/Jh/8dnvaW+4qgTTvzSn3Tve5hcBbSanUk6xjooLYTYTSspnXfeeZ/73OdWVlYEw3gyecUrXrHbISVFX3dms/Ha05rTf93tw0pBJCiMTXO3urqqcylj9G18+GHHZqMLVjHnOnoRk3JxC8tWVTq0bLbWAXI510GuirVqpIpMKctp2ZmMzgkvm622uuit56XzbzkzhjCX0iKRJcGj6976uvc+6eXNqCK3pisbY5lkjLVW1TS7Kp38vFc/4eWve/MN//OFR46lu/JN//sDZ778Pc1tv631AFoxHmVWXs7MfKt37er6ux4/encOidxRr7rtPQc2mBvHdqsHn3P/0JqmFULMZrOXv/zlAPDB970/M8cYH/7wh5933nnamj7s+B5lfYI9M6QwA+btd14xrmJoppLlfD5dn92xa+3O8daD3H2n133tRhBieMgiHXjsAfufnDNMfSO+D7mym8oKMtEJB/2PnTddBmItNNNQ1zztYvp6iM2IKXRXr6/doXxTQbNlYdvtyx9pOh+gdary1Gzt+E3H/vdRIYBDwdQ5RwxNDl0KRRNthIxQFEtEFbCKMSfgqQtTFp0yioq9fuZ1l0kA4kb9IYSM3xUNMyQhACD74FJKOacQ3VGjg/70/uccACOPCBnXFS6WY/QsKvlzBx735tMeK3MCgkEW613DzEXiSdzGEtr5zbrlGjHD8a/7q186XkK83xN+9Zh09Kt/539WmtL+j/rFI6658bOrxThZ0Z38xn951yOVqoe87adf87+Pfc+Fn7fFxz/4F0e+7OLnHybVuo9w1HNe9pA73/OxO0TKcxnEYa950YOhUroUZV60cWB4bCS7pFJsrRcDHxbswAVvcQEVlFaSKr0siK3KAHUNJ77w/7zk8OCEgiPPOfPIa//5unlXhyZR1BTSIESNrM5+7zsfT9vNmpIPfuaTiytv/lpKoxWEf9lxFRMKfMwZj6nt1979f684+/wXjPPSkOIRL3nZz1/wgU/IZKO2Y9iyxikDtW1wybRKcdZEtFFswVpbluXnP//5E0444eSTT/7Hz3++qqqyLDYqkNxD5bNvf6163gEfS5TEIKVkwvVm7pzruo6zF5BETl3T2AxbhkOn2VOSPviC3bozdirB+iwyLs44CN6qkGQyNkVjVZEw8Mf/8i/PeOUzCiFULueVqrScMbgrPno+v/q1j6chemUiwBxaamPKvmsDC6nK9cc+7qx/e9dHb0gpzD7w2pfhy9/0qKDqmMtpVOgzGLJNjEXmiBbO+ZuVaermdX7Tdcce+tx/ybS1bMs5qaosNspTEFFVVZPJ5FWvetWrX/3q4P3555//ute9rte8iOg7qBj3TS84M4tCzRpumm551/Xz+S3z9TUjRcjLB5704IOPOnz7v92Yluc/9YRf9hMpBPDk+1IcalNJJ5ZOx+NuDiuHrd++MNkfGu/icgFFl+5KbocmEkIw3zmfh65rtk4Wwy3/2B56qhDrOthWDbTsPDdSjBrwAKQSAFDSkAAgZ0Bo612YBYsqqKrIqu3gjOMXH3xUmbhxnguTMw5F6oDtl+/wX/zajtaSDw4zB0kNIAJRBFMqF3aHHffRff2aiYiYo3Mt2pJIkqxCyIDo2/qOu3YgUEpIREKL5dUmxpWyKv67mPjpmpvNdkyncSUaY+5cX690pRz/zJajIAIUIgADc6kqAFijVREGRQAYYCsL4bLwQarFZZpW4YATHxhPOfHwhqiIaRQG0hvIy6FZoUaNMq2pYsgref/jTxfX3UWX3/Rv+ICzDjUq1dxMYNSd9LDFaz7/lfXnDEftEpZQaw4hs4pmZwc8o7sC7ofcVWy7IFpscgeQU5PaGqNhRzBILvAN/3TjCQ8+niuZw8fOkWe/DxCBAeAcM1ay0YWHXUH5NhbJej+78q2nn/SbXwMBIKA6+uScxcEvv+Yrg5Pvt/Tyojn7ou7PH9Fc/flb6JNn2gsBEpCSnPnYn74hTQ8IO26Bu8rMGIoSY1BKhiyECHcXM+pHhIiMMR/+8Id3z34A5zwAECAwCIY+le3bxxH2KBnTW3OIqCiKuWvm7CACSgQAndj355AqOT/NXhqhtWatseVMmlUyTbku11ENtasbpUpmirAO29u2lqMCYkVrKZhUXPzBjz7haX9Wap+pVKHpIJIp9S1/997ROX92RJ0A5TwQVmPJUYquaUutAXy6S6VHvOr3zj/m9R9//gXF31109JO/dGjK2z3GNCiDq0F5RzCUYNNEI9YiImeD6Yx3vu9M9d6Pvf20x8cDqEyd8xs82yunvUHnSU8950lPPeebXlEEyBBj7M09G6X5+lU5MxBBSjnnXrdCZGG0slt+8rZrP6T8zgi5CSi46JoYWQR/1+L+C82x9eJxPzOenJhcQuVzd7dFeo9b6g1z/08z3D1gc0mnUUl1D3rQy1Z33c5rO1O3q/VheXZbci52nW+abj73TZOco5wV4mzlMwNe13HAkrGoUUPkst5cEFFmUhUj8r4gju3MaNHFtvPpfV/qPvpvzfLcCgYAD8KJKu1KNQQvQ8ToDZLCTMgxpzbsjrzcsKjJu52vfdUupVTvZGVOUuJgMOiLRUlJUsr19XXm1LtypZRFUfQJoogYQujreG2GBd4PSUVJWg2HIKmILfg2N4VnzKkDESIXngO2M/QMYtFq0BblSBeQ0VNaEnfc8q9ptk0efeoJfMWVN1JOA6khYLaFvO9PnDzMI/YxFsPCMK0lSgAHE1ip9g+ztUEIHTMOQOmhGrWGOLeMeqiymZumtMtvfumHn/KK5x8swyXnDl96ym31fDZf5c+/+aiKOcQmtbXlLRAT6QB849sectJXXtEtd3FHbC94ar0ajJyLoj7y1/7V7Vxe+YB75OhZ76MTz7jvMb9zud85res6rM3XupUvn3swmMIMj4EJlrLRXpZRTZsW1Ire1Bt1z/j2cdwzowXu1rZ6YWfjZdjQuTaKz/UxQVJKIuhFBsY5iiQEC5mJJLBNiT02FYzIAibh0bHpBlVxyQcueMwTflYIRR1wqhTNiFled9H/hXPOPqGV6BQm0aGYdhDaZDiRQIkQJsST/Z/9yl9431+e/7qX/MXjX/PsEyxUOCRIEZS2kgW6KJhF7hrPEGHF1T7KfP2lVybheGttopj/x1Qak5uHIKTEk60PuH1XWlve6VambTMVNo6qkZ/VGOKhxz/g6Af+DBILij6kEmUIwXvvvQ8h9F7I/tl+L7e3KemMSCXJODiooJPqXbdSXUOaIoYUVoNbdu3Ortnh2p3RrxDMlWjJ7KxXrySA1iMKkVo3Bkl+0xIQrROuS4pTaKZaiQwJFTZu/rVd69fPUoMqMDi0AMowaLIY0AhpiQoiTDFHz8xA3+CFfgoaY3b/MJJSakTREzMRpQTMacuWLQccsHTAAVsOOGBSVcWWLVsOPHC/rVsXJ5PR4uKkKMzCwvigg7Zu2bK4uDi5B/WNEAeSI3LrmxgTZmSw2WAlVGSTY8Kggu2sKC1wMoSrg863eN0zfuuCbjgNaG986+NfyK98w08xP+hx/+uq8x76v2+CmnEGN7/zrPPMk846WErgtCamLqwov1+hRXa3l5AXA5TFeC4HmtSsW/EG8rqqM+BALHaQcT7sPvcL+uBXnfa3f/QIJeXNl37RPeA4MS1LX17xj39wQ43cZJRmMUJbTQY5Z5Wv+NQV93vw/U3pXOk/c8F7qkoOrf78U8/9FKYgSn3s/U/wUeTDznjG6Pcf+4btkKZl0M0QLGsjvXC8Dm3rW/Bi3pAfkPZQyu8+Bf9bxpH3ANzNL0SktZVSE0kAyhk2PohCCNVjg3cQEVgzCyGMAEAiZACuo+kUlMADYGGVSaKK08++7a+XHnicGwFooChMknao5Q0X/elNJ5y2X3IEGjWgSVnFJDlCIets25gGLSgn3KMe89QPv/I8ed5vP4H9NHXZC5trp5qAnqQULUUgLqQaIG0pxkz48df/9lef/ITHkmhzi7D3inf3/Lj2ZOR+wxjz7b6t3XSMxXjrcYcd/yjgscYEaR7cdL66c7a2GjwcfNxDzP7HAeQU6wzSZKm11lpLKfuiVBt0/12PL9wD6WRGH5RXK0ee8Kjrbrnep5vd2tdgth6bldSu9p+NbXbri1Vx/WV/Hd31ilS7DhKEJsib54CgJKlVBsxMTUhZmAwCgMiGJENRsAIg1JBJBSBPJIaMioF87IU7EgIFfGvubFmWmb+xPMYYcwYhhJSi7eq+jDHz7glaFCbnmDOEkGOMPZH3IVf9mN1DEanVUCcvsmCZQ8yZcyUhm+BbtlLqNqVBASlWnLJPc6gbVyXMKp7wf076WLG0uLWUR/7OA//6spcexvNy6Rf+Ynbh6W842UyqcmnhiLc8+fNffv6JhdMZFwhjrWRVtiu+TvjIl72y/vVTxOJp599pnOM1pSRkr1UqBH3krAXcQmWxOKye91Nfmd/19mPIt0hH/+Zbnvn+sw8+UA4P0I+79KGHG0jDNO7g9Fe/0r74SBzc9/dvEI89/w3bn39yUSxW5cJHxVPqTNvd+sJ9bnrycFJOtDnpY798+Tt+XuT7/Opn3/MTrz5+NDywWtSLQv2vTxWsh/nIF77xSX/zZLPf0i9fYkl3vu2yh++qluU9jOOe79VuO1FZmMJKrYAwcY45hRR9DEoprbUxRiu7kUWRcwQ2AABJZIYMjBARUdijItSFRahdTODkznDLpTcf8bynHGdyy4mm4DMntUziq/92wxOe8giNKmVAKH3UWQ9zKiFlbddXK9oyr4qYkfxZL3vDoUc88edOCFZYEwXmrqgMYJxVKcTFFGSQwyzje39hbLWuFvXZX37NVe/9qUJ2ozQU9l7Xador6RRFsZFivud+ZgZoEnaTrYebhRO3T+cppW4GmMV4cWi2HD3L+11++XVXXnnlbV+/dWXnrtVmPca4oSD3dHPP78V3dM+b1Ugmopgd6cTOrN38iduu/uODxws+ZST1LQ6F3b/TqRmvr8zMqY99B1DRxBqpyCrJuHdhgYEQ4mqTPv7lm+6I45zzw47b735b+C3/vBw794JHHLzFiAhRUnHNcvueL9wmyWRms37jr5z1kMoKpSg5F5iIdpNLryWtrKxs3bo1xkgMzJyAU2JtjJQ0rdurr756aEupdpfauf766w877DAhRE5sC0NEu3btmkwmfZqPlDKldJ/7HLrX+69Q3yWmE29R6wyu8ysD2G8mRMGzJFDnai11I5ET2JJFY8B3YfTxJwxf8cDLvvKScVBRNCYKkgJQtPXKgl0ypp66aoz+LhZjE2xnm7A+V6Mt0XthLAPotELCiIY66VBOIs9yJyUUSq4KNfa4HNYKsQASOpwWYdQx5NKXoJmDaDhLDWEt2QqbpBU56gyWgqSLYLmdZ/ax3Vouzpwzha1jt8B2rqJPa1JOqJEomckpx6iLRnexrQeofTBTcgerYWdABcgMbXSydKKTEe+dBN7P5m8fxz3n2IYyBQB9ltaG2L9xWKFNH/ize0HGfLfClZmFz4HQCs5ZoMyap7fBYLSTk1YLW/OccSAJZmoOmQCNXnWBQp6YQQ2rJlWpCEiELbZeVaZupqNynFJaxXKx61oEOZBd5rL2ZsjzTiShhCJ2QebY6mqx6zozkzTyzolgcKDrxgUlqyyrots+w7IImgcp3zve2Xhz8e5SXjnntbW1paWlPSVEuFuEzJ13oWkjra/fcfPVH4x3fXUkhSmL1RC8erDnQ5hCgrDf4lZrbbE43jJe2ODxnsR7OvtehJ1NZ4YHgCgQbNLdYNv94ZbjL73+S1olitQvNbCHVQkAMsgsxNK2+zdpp0mTsirmc9RC8iaFN0qDTccAANENyLVdg65sWzlwMySczxqLi0ErGWBW10PZsvO6MgcculVKmXLmGJG9oirt4RRExL6EBew2SUpCyDmmlISgorBHHXXkqBgAMnMCgG3bDtBaAxBnAGREXFpa0lr3Bh1ElFJuVtB7HlrOKgnWGULmnAq0ybjcSlvK7JqmLCg2FaDvELCNSOQCNKizE6bKi1Am6JzCilmUKoW2biuUaVnLLS2t+ZUQLJlqrJuZb9HHqCikLKNKKocAwKsrxVKlBM3lGnXDLDtMWg2aDEOGAQ45w8DMIqi8FoTMzkRiUnpMPjoTgWTR2BXh7QAMyBgKUbapLXcFZ40FPx2i8LkGrkBVds6So5OegdrMBCCSHRaUotNJ70/U5PU8d2tgJ2ZUSrPaCEtM30POzp7juLEW9u/PnnlYRNRL/huaFyJCgt6Og4iZ4zfeOracI4DMGQGZICFqsge3Zn0pjSRsn8clWYbOKciOYKyUEIuaoGTvlyFyVorIQl7LbLgMUbBaykmkNDVFuyKsyB5nXIXkhMGWVEF5fRdYwxxssdhG7qrUukmVRBAGeZqCWFDsScx4qlsaDmWeFVS06V6GgMA3G7z6jV7S2djJexS+EIpMHGYVisnWg47873d6F8OOptPFfgc3YRt7W1DMokwgbFHYyvaKVW/o3BiFPZNLv5vx3UzSiUEIgUIhiejmXnhVFjk3cirW+2UEADYYBxELyr5DsJWXagLQaM9OVSrUmylYMVlrp63bNXfb1xvnnAzN2OB6ohBpwbqZr6QVC0LOQ9cFzCHRoNi2WByxdVx3MWFQORo9jhzh7l4OcLfBHwCICRF360kAQoiMICXFNjJk5gSQpZQpcU86JHavEr3tWUrpnLuHh4uZowqUJcSUkNjHgR12Muosg4Q4X7Nm3Ak/SEbEuKazSIE//Sv7vfT0f/7ME48c2oh2IflVNTCudYhKW0QPHSO5GDOoCYiYU1DSSDlruizjgtG1pmpXboczL4bjRq3IbpEVR7eGcghRahvSnOMoWwDsIGg5cD6oMtZtGCNMs6wiBVwVYkmVuYuWpY9QF23iuUVbKNumlHwoYVjrRrs882QEqYHV0c3RV4hd11W42OXcCjZZAQaF0lsXopRhVuqxaqlW6wnHAu7dit3P6b2MI9G32HQ2ovu/5X/7P0XnhRC9MS7lwMyITESQi92TATNSJgyYmaEUhtDNEWUdEI1RCKJr2JY4m/mBjaT0PNghz9oo9Ey5/YOIiiEX3CYeoM4+Za5zkmIQWtDjeYBi1KXORksxdpXvch5HVQe0Njuhc44AYsxcOw/DSHHYehx4lwap5Xml9ovuXmtYG969jaioDfb5dnkk5tVSjVJKLKTvUELbrW+XLKkq16LVphLBaS3mIdhCWyFy/ibv1Z4DcW/vcwObSjqVap3AxkcdhAQBI7UrrUGVVa76paRnPADoibBlx0p03CWqK7YdcuCcai/M3otdERqOqDkfNrEHjQTIRR+DLiyCzC4VNJ/lcQyzoZCeSIAoZFqNsdREqZVCCynBpaZz2nyDFHrZpHcf9pUDU049Reacu+CNMYRIJJgzgEBEIUAInWJO2Sul+rneS+y740E2QclmRhgFlWBFCvOq7ULu8o6BPzAQdCAhoE0cRWwwMioilI94x50P9VKPAjZloiYUKm8XZqvEqBmW27S/zESDZcIhdTnOTN46D7UZjluTUQCnaiWtLKhJmOjUAmbQBTQdgxgIkwcEKzRfVGo1dDZvmcL6iO1dIg47kBO14pdHplIwYhG3YGpn8zjKxKNpWpet2QKyM8MuuJRFlUwauNxJGeKwiGwKB2u5QystexMq9JIq1wnkmuIAyMiQGgOEpRw5V2clMohaT0f+uy9ytuc4frM94hshgvHuVwsR715ZAPrIf+Y+5H/3nj7vFFpgFEICRgCDUYc0z6qFuoIo0jCX5KZZmtTNhRl0U7CD3AVIawgKQGXZKN7fq6i4Uyhjp6iroWijqjhrQhRdWaU1VhMH4JPN1GRBOcih1DF5abRgL3xCkZlDEyglazOvYVfoAqysM1RxOA1+k0Kb3+lz47tr0fUGym/XgyTu7xNYAuySVNzgRG2ZWN4FvGWrSg1wdgOBfjIs5p0vQbUi920ONrqq9Ph/Fjy6p/u89sabtm3b1nf8wLtbtXyPJ/2OLozYa2cAoLXe2N6MQZvsBJEgRYgQgRAlkhCiSYEg9xm1BEigiBEBG/guvbb7sA/78H2FXFtbM8a0bRtj3B1WlHNvSP5+X3tDS9+onc7fXOr1m24U7vYC7jYNci8tK1lmSDlHht3WRAKBQEg/zuUp92Ef/vNCjkajpaWlPtCzl3R60ulTXX8A6K+4kYK8maTD+K1C0G7Zu45MgBJZ5kyZGCAzZs7ww2nvuw/7sA/3DNkLOP2X3grV7/mWyKL/cPRCTa+F9gUQAOAe+rqzigoVkYSMMWbMIFAKAidDFsiSMwEAITAwIwPyPklnH/bhRxGyqqo+d6OPkuj3/gDaqvceon67L1O04ZbbK7DVDJAxAwCRAAAGjgmkosSYE3MkAYQMEpAAPf149q7eh334zw7ZNI33Hu52GfSih1LqB6Be4d3twZxz1trekLQZ2RmjQoqJIxODSig4cvAxFlkikiApmDDnzNkln3PWdu890fdhH/bhhwuZUuqFDiFEr1j1gZ4/mMv3Tquu6waDAdzt0trrkbM0FUIREWbIPiOARmuJAAUw9u0bE+aoIFqZMCv3/ZXU9mEf9uG7g+yD3/oMiz3Vq++3yxwAeoJLKTnnNkxLm0k6WhZWKYow3dHtvGl5un0qorSq8JhziDF5ENmOzeCA0eDAUTGpGPe5zPdhH34UITcCGXv1CgB62cdhRBVtNpwD5EFKWLoAY9X4daaxypHTnIqiAbnANO/WUBS926unkt5G0xf42Oin0V/Fe19VVd+TpM8nruvaObewMOk6h5SQLRFldpkjZwWM2ogu8wzXpdd3/OPO5X9eIQEZWp3cXKwReYNLIYfoZrDfzuMffZAaHOxFZJxaeWD23urAwUbugDAKEZQZ+dZTsjBY6aajcqSm0VsXyc9wYSIa4jKFZk2E/ZVY71TJndZj74BldoaG9TJWS6kOgRwqmYNUJniHliQIainnbm2iltaaZTWqAhZFN2/bIqtZW2mLdikH51OQNjNl9ANq5i0SFFEGgcReV0YA+Vn2iirRhZizNArZhSwLJb2fmULNUqk7p6RprFPJsRs5XecMw6xkjnMZORkVCW2ORNjOFS0kva5jmZlEIWJKAVOedqhLyr4wZXZ53ayVoXTElS7M6rQpdFckcHKMCCTrOFPBpMKinyVjhYtUFTqDm/quCAOWHnJQWjUhKmE4OhUEWZl19l1OjiSCLBgUcfh2YfYHYEPchx8dbBqMI+bFYhxOA0lVtozKdG4YO+ZC6Y5WC9sGpUUH7DwBF2bUF6/RWvduqT6ZoOeaXpDRWvdSlTHmHrxU+W4wM4JAICJiTlVDo2SLoHbeugOJmRyWbY13irnRjaHICrMFJdeqsCY72Q10ZURFDEQyJmCBxhijpPSNaNZTp3PyKQcuqe4gjGVUWhs1ZFe6smlmGeMoD9NyYWTohKldbGWtaN3WHVdLy65x0gtVtMAiShULLsglNwtNjk3H46ZLsSyVL6p2JRjDExoYvejB1G5nQMFGhSwZoHO+mxgskfIAk4nFqBDeRd/WhovEM9ZJZIvkYiYrqAPCVNShkNRILRz76KfdOpQGhE+LUjCpriwFjAwI5lghmKZGOexCDm6Mqs5SdPPGQ6M9DAdKGlEVqsnsFOmWqTSsUxObPBmVaLgFhdEzrTIrP2pGSOilGcrOS6HJ55XpjnoEykghzCAn3TV5YCXkggqTJDiAwFpaaYtsJIiscuiz+cUe2Mjv34f/ItiUdHApd25qSYZajNLcAfiMRfBJFkKI6VQHR0myNWpWz8mLEEIIoU9WMsb0XwGgL7kIAL3U0/91z7XuW8Lbc84M+Rs1SRGRIKauoS4JVqXEMicZZ02dnZCpyvtlp+W8c52rQU8NdKl1CBEzSJaYQEqKIEJKIcWmndOgtL4QVgi1GBXEKBfyug3LKVAMIrswkzM9EkM1qkWbF4DQEtrauElcn4ZJJ0VyyRJ0SbjQYQRJzJljl3wOVpYljbRRbii3QOwIglys596gQ6Yik5IURYrAmrhMdUmACKCVINuKyplVN5/BQHYDm0lIHknn1Mi1npQSDQrDjdNaRUe+iJEL5VWyC6NRTbWgwazLFHNa60JqSiWHupih8MOxyF6YbqhCnYeiroVQAzFsECMacHHZoe1qgHo0WiJfFy5YrZuYGsRSVRoqSQLCLBWubIIkneoVLCvGPO18Od6vakXdpK5Z8dLqajjwLISY6SBUgSSIUERIbQghMSSMrda6b8LXi9h92c17rpe2Dz9m2DT3ysYWzLiIOdG8/sRTFn/hYmSQCYKkU1565WdfcZxOkYMkhCiwMZC6WFVVXdda6/l8PhqNYoxayZhy13VlWfZmo5x3d0Ta0zv2TeULoHecMxJzImZG4Lab3rz9sq+vfY2kF/cDez+VpFuWmUiVs0B3bck37ge3bnFYKBymVAxy1USvJOTUSKmZsC9toIRufDcRYy9dYko1bBvpjmTOMETyUFRm7jOItlyHdv+iSm3ORqADobmz23TI4BgEKxK6NORaqdRqw5WtTWNUOeRunbEyNmVHszwSCcoKuNIQ2xBHDmowcavjVWEbRGWU7VjpVNezONRDr7u4kJB1Aj8lLFpiamigfdTYxaQo5YbKIeeolYm4JmYQx1TMuGOkUlpv2xJDsIPksJw3oRROgxU5ZzJBiOWuLqRqhULZqukajBblLLdDtbXtoi4l4rzZCWoxtUFIGma/RkK7mrhCixrHELwzdkReKzuHBE5ZRofziRh0UCopYg5d6JjMYqrrZOboMyopBAagDhWSIJliyDJtaPEA0Mdn/QAMiPvwo4NNJZ2OC6eRoIlqYGIJJ7758obXuG3/5ZXh1cf/2gcaC54Iot6VjB4E6M00fUJDXx3COedDrOu6LEtm7js091yzJ8t8I2/1G3XhACDenUqPOcemXd+5fqsQSYpkK/Awt0YqFuByO9Lh6ID3naoqMHgwbSxa1DFaDbaUllNuGCDmmDMYXVSg14xjNCbe9K6f0CREZezEal2c8gfXQpjpG950qn3mJwyKeRfncpfOwMU65dJksJKylvYL55anveHm6IPTTT01iimUUjvv2JcLyXWpkxKmiC3Kdrm+6Fxx37ddiSwbg1UTq2wGZfqXPzsVtyBWC6SVnIzO+KObbNM0oGGgMOSWrRNcBGtK8irbXAihgxJcSCBqE110ZiF++ePDKiUxK1uVUo2tT5E65lYmkajBKs9aDzl3sxTTHSpDVZQIsRTOUjkvt6rW5Qwi7FruplEQAXRiATPzSA4lhWwypFRpLgIRaI0CTJPrdS9dljazhVksaBDYYwIfmtIIDQP2Y57dlSdFNtpHCJ3LPlrQg9LoCkFnZTaqjvda1bc04d6H/wrYlHSKlVYztGqYc1dCtFmQn6adOZz6my97Gnz5xrsaoRpo2wZE9KsMvee7X8RCCL1bqtfeu67byNvu7T699rQRp7PndRFFX3upt24zM0Nqu5nnXTm2vs0hojBVM+tC3Y600PP1Tq7U1ZxdITsSPt263P7jDfUVtzY33O4DUsZERIljiMkHjnGqOp1v+v3Tq5Pf9PRrVtfnro531P6a16d/vyG0E1HyGMYrivQwtZi2TNuVROO2DaJZaf32Uqw30aMYzLwQGINZdJRBilrqRFPOICaQQdowVthEaZZEEKBqPVROxgxFWvczibSlk+bs9ze7lnk+X5l3n3/uQR3akYhpuQiS6xEUnWiogYjlnNZ1HGSHgQB9TUzkf/5vp+mdZ6qZDNKQED7hfKAFx5ArURNRqJoY5ZIxoHOpfbWkcqPIpWScqpRrBwkUynUhARaUnczJSTFfJChCinKYfNeVUcHUO2xzXAvOyZZLvy1q081CQc7J+VCVIs+6AWUc6HVs10Iqaphc8vRj/8f5V6/BbFCMF0SJIdTgmxKcAJ8ZjOk7xoUQ+lqiG1+/7zN9H35ksHnfq5GX0HYuF7KY46gLQgs9NGY9ex0A8gq6w4sCox90na8U1HU9Go36ho1f+MIXELHvfyqEcM6dccYZg8EghNB3d9xIve+xZ5GO3tWVc0bsPWuCCGJykTsEDQB19FrrrFAiRQoDGvvkArSMPpOntrr2Bn1zCIVZ31/j435m28hoJRRLNlpTzGT2j/N/P/9xL9v2nuXPPB4tlesZRBAH//qlfy6n0i9uLxLsHCcJdSTFActxDCkXyLjIGlbjLl237HCkUtR6TDlGFee3abNfZ8YLvp5jWQiYs0C51Im5oUUGpAzSsAAgLFoNEzlqpm5NFRojqAXuwgRMgJA0UNc1OFKo2LeybBoqyZWxdbYYy9SuJl5jmBDNbKrSashbNMAs+VIgND4Uw1kKIwyCKacqZVgHKBm6ddsMEkYaFWKaVmdmVNY7xWhr4RN4HyENk3BJZAEgaWHWrBtpfRvNwlKsZ0F4NVvwZaTkscBKA2O2U2pHQcSlChwQr0sxmKiQAFZAOzEspShvCnCQkqMAK13jLBgWlBMybISD7a79lnMfJrbPe/VfB5sbkmFCWVvpUEUwd0Fa9STuHNTmkuc89cJzX/nik2QMtpM2KWlHUroN1zgiXnXVVc9+9rOf+9znPvvZz/61X/u1G264YSPBqrfs9KVS9nrdu11Xu5V8RCRC5lDJLRaGFouqsAxeSqlF2dZ5BoPgSWGW2nAxRLXAZOZY75gP79glGY0gmxLknFFAjJHrGf3da343vOYPz64mGD1F43cNZUpaOKFmboqxEXrq6lTqKn/08aUZHqDlAXZgn/FR7OaiVSTGylb1RU/crxJCitEpb77WLKaoTRRffcORk7IcGxpX8lkfg3E3cGEFLMg8b7GJDG22XbgDWj9aEFtCK+OK4DQrMVQkBhedY079i4/96U/YwdYBHr7lJZ+YdwuXv+YE+6R/MnMv4jTEeOcf/7fxsz9ebP/D+9snfmS8nNvZ554weuAfnf+/Bnq49P99DEq/etObTxkbtX954DaBD/rDS5MAmepb/s/Dxr/4kU89kRYGi0tyeOKfrucWEK/8vZ8YnPvJv3u6PWwymQzPvTjam/7oIYtLVbVoj37TF2GdMxs9Stc9zlTalqbUp7/5Jpkgh+vfehI+7VOfeowga3Gw5QF/fAt0eNX5D97vsX8xu+JF95nYY953ww3bHQDJKrKOoRRkKeXUAcAnPvGJz372s5/5zGc+85nPfPazn/3EJz7x/ZjZ+/Aji01JpxaOsy/ComTl8gSuP+/0QXWwGRXvffht4S8enyJI5RS0uq4SNJgicsypzwV/6lOf+hMPOC12Ljl/wgkn/OIv/mJf+KcvrLWR7rBRdBL6SA2AGKNShkRUysQAITgpAVhJRVPXzmjFcbChqlB67DoptakId+ooGWzbCgog8BZbNTZaEmuNStnNABhi0ITgI2lds7jt+iviCUdsw24dR4GkGWyJ3AY3HcBQFYXtKEk5VDG/74nDc25+5eU77ohd3V32+i+effqf3C70MGWRv/rc0z74lNub3DbLf/6gF596zqdNBtve/NErn//l1bt2xfaa3z3ub174uzfCelSjMuTUouThOjSgc6WWkhBFUO964qDccpgu5IEnv/FqnjerXOCVL3xNvnB9ZaW+/NnHve3n/9c/8tFnv+B+F53/wS3chMHAfu4Vv8PnvfCn4E6dVMo7Sq1ijHjlG694clzeOf2jM+Jdb3ngCS89/n0td9Ob75y9+7TfetATL2mjjnllDT7yS+96WnJr053ve/y1Lz7r92/oRCtY5Yuf8KGz69vW6o/83AVnb1Nnrv3Njsatv/Npq695ywVK2VH4wNPtg+X7m52rO3e6P7vvyx/76ivqQgyNMh987P/9pTqs3TW76Ak3nnfWq+/wh/3GF2YfeAac+Jpb5vMvP/nYIw4ugGOeCukUzsDVmLJUiHjttde+4AUv+NVf/dVf/dVffcELXnDttdd+L2Xo9uE/HTYlnS0xJZW252lMeeiFPf71X5nW811/94T3nvPsC2YtxJjdqve5I88dQFca25tsvPeLi4tve9vbfuL00x/4wAe+/e1v37JlyXsvhOgdpRvu8A3HeS/d4O4qcAhAnPt4RQYAhsQZlfTWUATX+HUAyBHbWQuYZwMdCigEW+WNoHW9tIpDl33PcRul5/p6PTnnQokmQ9KIkcrkQnvpW47cb1SMFyeT41936TjiXaqAKNed+eQnLjz6FRc9/7ABh7nRxzz3d8+65h0X3uKjym065U1X/9ljVaw1jB750lce8pE/+6BoYrX/r7/nN44uJkj6sEc/8+jrv3KDGAC1O1MXC/QoB13HsWZKkboZwCPeveLX7trRrq5f9hsnJE1DHuHJv3vBb5xaDgBOfMMrnwi3XHupOPCsXzjhkx/+GFgXwz+996+Pf8bjT8J6acptVR5UhroKhk990WvOBGsh8hUXvOeWx174wTP9jtqYWP38C1977Efe87doVKgQz/7LNz/WBSrVo17+ypOvu+pmtawAEzzxvX/4kxn0+kOfcm52T/zd5x9RxNCe+fOPpKvWv5Y6/sTH33vyK974s4XKY8tP/p3Xio9+ZjVEmTWe/b6/OTPXNBQ/+cr/fdAVV35NjyRM2SG62Khy/7g+D9NO5y1UjNaV8baUA10rRHzWs5516qmn9la/U0899VnPetY+0vkvhU1JZ55lOVfD4SCpdk4patNYl+XD3vv+X/zgOU/5HNghgRW6NAND1iTVN+WKPvSBGOPx+CMf+cjfXHDBZDLpuzLD7l6FZqNS/4Y6xt/U0ZE4i5yBGUlA/185Z4olpkFZjEnLlHOpVVUEkivDeSy7pkW67ODqskNHX71PsTyRUodv9AMAgD1IZ5jkMYc/TF1z9XVerWuc5IN/7dpbd7XxPWdBZexMrm0RbkByXlz+1cvtg+5z8AgjCpVmqTnu1COv+tpNhS7EmHxqLTvmFeGLAx70SH+ItbalZD/6tK3SDKSwJ513LSjKMw55aMhomdpVoRZKlJIVQpzE7oAyziXpPMlN4qxEPCDItBzmqxRyCj6wqFXV0n1e+IrHX/h7n0lafPj3P/jUl/3yES3mODDKhaRS1UaCUO4MTli7Re244poTH34/P6uGoLjg4tD7HAKXXntHGkiIIzDjEAubBkaUwCthtr9YnAQIxixUOpbqlPsdf/iJx/gcs14CWshpzbbm2qu/iF997XGm3La0cJBVp/72FV/98hebYh4kWyq8KQJJjKWA5Bis2SYDN+PBCEzDxGgiy1oQF0oR5+ST7WKMZVm+4x3vOP30008//fR3vOMdfTjFD2Ky78OPBjbv8FmoVcimSYqqQXCRWgw6COwe95cXPvUzj/mli2vlhd8FDJEcZ6mELG3RizPe+4wwbxtpdO+n6MsDaq2d8703fc/czt5vCt+oVUq7q+MQ9YGCRNpoGV3sWt8G7zyiLyCapsYkBHCc59E1S4fcMNx/56AAlBqWNsoS7lmkGhHnLOjMnzn7ug98ZjvaIBpbigySYFQMnbKl2BJSrKkbdocffXz3r9tvrVEqzCsjPcqYjj74eN+S7LLuRmCGgirQeNM/fgl2QhvLC59pX3XS58NyXO74ilecgl2TaRQm0RHGrIaKJLouJ58k4TptXckFoxgQjEwKvkuwWvs4iYq8KkSHcmvKgcTQq5996rn/9JeX5IsuuuSJj36MtmacJOWYxFo3lBYLSLOR0djASrP0U0df8Zmv+sIXNmDq1rQcD089dn8BGuS66ZqcI3Ot1GoM47YgXHUSpSNufCecr8VCDFu9wbYNPgFwsn7bkcfRL7xzlurtcXnnOq+u+PZdP29z0ay4TrQi50ETtpbjTLJkaENsBeiu9jlZQRCCzLFCEMCeUJAunOkHpSzLCy644IILLijLEvfo3LQP/xWweRpEJFkWuWjtPM9HAma55OUCYc7TR/3l+3/ur89+yJtW4mDQJAgShWTvfd+0iJmttb3kEkKw1vLuxr7cW5GrqvyWJoG9cNRv3108kACol4EQlFaVq9cVgpKZRBIImDvCrAcLCrcyDmLCIFdzamNK3reO59/SQmCjoHS0MzKP/NN3H/2C48UvXyTK7DMacH6ZZ+iBArABhmEL5n889YlXv+hxr71pe0kTEa5+4zkvL57xjP3T6opiuPT1r/gIrjgfww1v/ZXXTV//Oz9j+PqvfwlOvP/Jcui0+uol77iSB1Uya0W2UmiwLZc+dsoOQbqG45a4c0llUeeZjHPfCSpnTJEk2nIIEJzZ5XaAcg49Z/WoM5500ft++cILz3zaE0rhsS2bFtn6kiCsiWVASBk9O5AnPezcUz70lF//MHhIQOYLT3/8X/3M4x8tG/ZrLc2yEiP0JjWrEyG5NMtczYGxIoFO8YCiXtWT5bEfWkWZ0UoWefjYXzzjfU9/ysUQnZmWUysU+shkt5WKMwVKwfJy20Fmr4NRARgA1oJ2Vg4KMQicZ8qnIgI4F11nhdb6G/3mEQEgpbQvIvm/FDZ1mTuYVnXVlgUR24f83+XLqrHSnOdbkpH+0e+dey+Uc12lWXY8paaiERG189pYAwBt26IgJXUfE1iWhXO+zwhlhq7rhsPhRpxOVVV9ZCozMydBAjHv/pYzoqiKydalQ+b1rA1tVY5D3YZuVY6Gs1jp7oaVePiu+YkQBgnBG50hS6Extxu/5RttAxArx3Mt6Yy/qq887sTjRVFI1YYgGY579Zf/bP+VvAKxg8aPlRT/7c/cRU8Z3ffAPwCLwFtf9bVLX3KwWetEl+G4377v+/HAJwIQwFkX+ued5J0/6nl/8guDRy+8hzoRj3rcU+6D3rMpYprK+QxminQuLXeAGRAnc4nv/Lmld2YuQTXSP+ldy+88m6vCpwS1m6ZSLA0AkmalQhfcIx77pCc97iuvu/FRsfMYWTjuRK0K4roSFsoyQCjQCgX7/eYnroDTTxwakcCCOOND7l2PiEHXk6UR3FKVfsZiblUmiCG1Sq9XEpynGSpwa8rWJcbS2Vu53gKeU63q4Z3if15w9WvuexwtCkAGoPu96iv/9Oxj9Cow56iCqLKlODVUIPimE2e+/A2vP/HBSy897qXXvPvcw084FrRfn9W6K6SGyBE70oONrGAA2LMB+T78F8Gmfa9kq1y5C+OEi0DdWqYDtfcJYZ5hMvQRBri+rotxk6c5QCFHGX3KGQBISWbOwH3sKeTdrblCCFVVMu+uaNHv6f+0c+fOsiwXFxe6zuWcjTExIGBiaHPSUpiQ1qQomTnmgHIQ6zAa5B2dePsHru7kZK4lR8dNa3FLLKvod0kdUyQD6gWPXlga2RwziCgyMUpvmkldJQtrsQFBHLFyCU2FdiV0VQRTditYDDqhse1wKLEFhBC1cTjVzWRY+kw0T5jdVLpRMm5oyyZOcVZNy7X9Q1UbB7nM2umucDpPgF03S2KJyw47wwLReaUpoYwpZ1WHZEfeRZIadaOAwhqqLHlLDoFL1bl1xYgejRnGxte6U2hIREwg0QaKNuamksYRMtQqgFuvcH9WKYgcMMEuN5qMAeYhD9r6rsIsgnAZCUKZCy9Rd9FVWU9hNkQQcTQ3d4lQaDvKLbDMHHxKnI2fpPGKWh2GBQXdDKWU0Uha6/QCwCp5qbFrAkJXxqHAempRs7VBdSIpTSbm5HwkIm1yYobdQTr9MtMHT3zv7bH34T8RNo/TsVGoLUrmkIo4W1SUstWdxLGSs2Tn9bqo7M5cF0pFwaRrAJBCKKX6CPc+QLlv2LDRnK9tu7W1tT5SeU+/Ut+x9O7VLiN+oyEhMyOC0ZUQSgIH32iCQUFIU1Xywn77z1wb26Q7skxRKokefRtavaFPfYv3SrtypvO0qceZl7rCKklFypTa2WBghZAQ9CASQYJgYnICSRIVtnO6G5cDaNxaOwfZppGZSMMjLLrUUkCzKCphvTLCjAdOKoYG/QKzh6a1oyCnvhY2InJSRnQoW1wFHyl2YxZJcyNFIiIZBQ99V+3KvmClA1QoMw1DycIBLHRayLEwthWtRgGOVQAgPVNdaDJT6VXmhZbBBuR6jpDKYTmfpQQDn1q5sKUzwuHAcyBqqY6FA93CGnbCBEmjKFvjR0M3oBnkYqdsGi9tOSwUj2tes2KcwYfOMcnoPIY8ys2M10yEClThy6W8EEdIw8KksY2ZNBkg6TEnEUg6ARGDFKEvNtBXI+gzZvqvP4C5vg8/IsCrr7v+0EMP3dCuey4wWjn//Y1M36xC4GYtaDYyJza+9rP2Y5c1ez1+kHZu22/xkG1Lo0Ik38SQlbLWyC7ui7jfh334YUL2xl24OwUB7s7G/H57MTcjl82u++3id086jz11stfjG7EkASRCSikDSUmI4DPv887uwz78cCE34ln2VEN6nej7euHNSGcz3X7jDjc8rL0RKue9Sy6GRAy+C1EASCFAYOKUvRNC/Qf9gn3Yh334biA39JRvCaX7fhv2NpM4NiOjPaIHAfYojqHk3ntm+zDXJEVpBApmyJBSCvuMlfuwDz90fFP74I1MqL4szvf1wvdW0vmWMrrfiOtJe29coQUAISHlzCGmlD1RlqJPs9iHfdiHHxr+f6KoW8ryeIyjAAAAAElFTkSuQmCC),url(data:image/png;base64,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)"></span>
+<div class="ep-body">
+<div class="ep-row ep-hdr" style="background:#F3F7F8">
+Data
+</div>
+<div class="ep-row" style="background:#FFFFFF">
+<span class="ep-nm"><svg width="9" height="9" viewbox="0 0 9 9" style="margin-right:6px"><polygon points="1,0 8,4.5 1,9" fill="#4C83B6"></polygon></svg>community</span><span class="ep-ds">103 obs. of 15 variables</span><span class="ep-gi"><svg width="13" height="12" viewbox="0 0 13 12" style="opacity:.65"><rect x="0" y="0" width="13" height="12" fill="none" stroke="#8A9BA8"></rect><line x1="0" y1="4" x2="13" y2="4" stroke="#8A9BA8"></line><line x1="0" y1="8" x2="13" y2="8" stroke="#8A9BA8"></line><line x1="4.5" y1="0" x2="4.5" y2="12" stroke="#8A9BA8"></line><line x1="9" y1="0" x2="9" y2="12" stroke="#8A9BA8"></line></svg></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the point?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the point?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>library(jstats)</code> switches the package on for the current session – and once per session is all it takes. If you’ve just come from the Quick Start page, jstats may well be loaded already; running the line again is harmless (it simply does nothing the second time). You can check at any point in RStudio’s <strong>Packages</strong> tab (lower-right pane): the checkbox beside <strong>jstats</strong> is ticked while the package is loaded. On a fresh load, jstats also prints a short version message in the Console; if it was already loaded, the line stays quiet. And if you’d rather never type the line again, R can run it for you at the start of every session – the <a href="./loading-jstats-automatically.html">Loading jstats automatically</a> page shows how.</p>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -379,7 +466,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>For a dataset that ships inside a package, base R has one too: <code>data(community)</code> loads it. The difference shows up beyond package data: <code>data()</code> only reaches datasets bundled in packages, while <code>jload()</code> is one loader for everything on this page — package datasets, your saved <code>.rds</code> files, and SPSS, Stata, SAS, Excel, and CSV files — with the same one-line call.</p>
 </div>
@@ -389,34 +476,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="objects-and-the-assignment-operator" class="level3">
 <h3 class="anchored" data-anchor-id="objects-and-the-assignment-operator">2. Objects and the assignment operator</h3>
 <p>Anything you create in R is stored as an <em>object</em>. Here we pull a single variable out of the dataset and give it a name of our own.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 2. Objects and the assignment operator ----------------------------</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## "Objects" other than data frames can go into the Environment</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## The "Assignment Operator" (less-than followed by a dash) is a key Base R fundamental</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Take the thing on the right and assign it to what's on the left</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Take the Region variable from the community data frame and assign it to a new object</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="do">## The new object we'll call "MyObject"</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>MyObject <span class="ot">&lt;-</span> community<span class="sc">$</span>Region <span class="do">## (Base R code)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 2. Objects and the assignment operator ----------------------------</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## "Objects" other than data frames can go into the Environment</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">## The "Assignment Operator" (less-than followed by a dash) is a key Base R fundamental</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Take the thing on the right and assign it to what's on the left</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Take the Region variable from the community data frame and assign it to a new object</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">## The new object we'll call "MyObject"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>MyObject <span class="ot">&lt;-</span> community<span class="sc">$</span>Region <span class="do">## (Base R code)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="more-than-one-dataset-and-cleaning-up" class="level3">
 <h3 class="anchored" data-anchor-id="more-than-one-dataset-and-cleaning-up">3. More than one dataset – and cleaning up</h3>
 <p>You’re not limited to one dataset at a time, and you can remove objects you no longer need.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 3. More than one dataset, and cleaning up -------------------------</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## You can have more than 1 data frame in the Environment</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"clinic"</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove MyObject from the Environment</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Note that this is a Base R function (j is not the first letter)</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(MyObject)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove community from the Environment</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(community)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove clinic from the Environment</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(clinic)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 3. More than one dataset, and cleaning up -------------------------</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">## You can have more than 1 data frame in the Environment</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"clinic"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove MyObject from the Environment</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Note that this is a Base R function (j is not the first letter)</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(MyObject)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove community from the Environment</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(community)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove clinic from the Environment</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(clinic)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -425,7 +512,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>SPSS can have several datasets open too – but each opens in its own Data Editor window, and switching the active one takes a syntax chain most users never bother with:</p>
 <pre><code>GET FILE='community.sav'.
@@ -442,111 +529,17 @@ DATASET ACTIVATE community.</code></pre>
 <section id="how-much-output-you-see" class="level3">
 <h3 class="anchored" data-anchor-id="how-much-output-you-see">4. How much output you see</h3>
 <p>jstats can show more or less detail. The output level controls how much appears.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 4. How much output you see ----------------------------------------</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">## The output level is set to "standard" by default</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## After you learn more about jstats (and R) you might not want all of that output</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"minimal"</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">## With minimal output, you get less information</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Set the output level back to standard</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"standard"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>There isn’t one. Base R has no output-level setting — each function prints whatever it prints, and how much you see varies with each package author’s choices. <code>joutput()</code> is a single, jstats-wide control.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="functions-with-no-arguments-and-getting-help" class="level3">
-<h3 class="anchored" data-anchor-id="functions-with-no-arguments-and-getting-help">5. Functions with no arguments, and getting help</h3>
-<p>Most functions need something inside the parentheses, but a few work on their own. Every function also has a help page.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 5. Functions with no arguments, and getting help ------------------</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 4. How much output you see ----------------------------------------</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">## A few functions work correctly without input between the parentheses, but most require input</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>()  <span class="co"># This will cause an error with a message about how you might fix the error</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="do">## But this one will show you the current output settings for jstats</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>()</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Here's a Base R function that works without arguments/input</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="do">## List the objects/data frames in the Environment</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Here's another one from Base R</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="do">## A working directory is the "path" to where your project is stored on your computer</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="do">## If you're not working in a project, you have to set this yourself (finicky)</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="do">## The technical name for a function's inputs are "Arguments"</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="do">## View help files describing necessary and optional Arguments by running...</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>?jload</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="do">## The same ? help works for base R functions and functions from any installed package</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>?ls</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="do">## And this one opens the package overview: every jstats function, grouped by purpose</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>?jstats</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><code>?</code> <em>is</em> base R – <code>?jload</code>, <code>?ls</code>, and <code>?mean</code> all work the same way, for base functions and for functions from any installed package. (In RStudio, putting the cursor on a function name and pressing F1 does the same thing. On Macs the key varies from machine to machine – F1 on some, fn + F1 on others, and on some Macs the function keys must first be enabled in System Settings.) What a base R setup doesn’t have is a grouped index: a typical workflow spans functions scattered across many packages, each with its own alphabetical help listing. <code>?jstats</code> shows the whole toolkit on one page, organized by purpose – one advantage of the functions traveling together as a package.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="the-overwrite-prompt" class="level3">
-<h3 class="anchored" data-anchor-id="the-overwrite-prompt">6. The overwrite prompt</h3>
-<p>When you load a dataset that’s already open, jstats checks with you before overwriting it – watch for the y/n prompt in the Console window.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 6. The overwrite prompt -------------------------------------------</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">## The output you get in the Console Pane can include a confirmation prompt</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Here, jstats will not overwrite community unless you give it permission</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>) <span class="co"># Look at the y/n prompt in the console</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Set an optional overwrite argument/input to overwrite without the prompt</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-note callout-titled" title="What's the point?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>What’s the point?
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>The overwrite argument is here to show you two things:</p>
-<ul>
-<li><strong>What an argument looks like.</strong> Options go inside the parentheses as <code>name = value</code> – here, <code>overwrite = TRUE</code>.</li>
-<li><strong>Prompts can be overridden.</strong> The few times jstats asks for confirmation, the prompt appears in the Console – and each one can be switched off with the right argument. That matters when code runs automatically, with nobody at the keyboard to answer: it happens in several places behind this website, and in the finished script you can download at the bottom of this page.</li>
-</ul>
-</div>
-</div>
-</div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">## The output level is set to "standard" by default</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">## After you learn more about jstats (and R) you might not want all of that output</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"minimal"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="do">## With minimal output, you get less information</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Set the output level back to standard</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"standard"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -559,62 +552,42 @@ DATASET ACTIVATE community.</code></pre>
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Base R doesn’t ask. Loading or assigning over an existing object replaces it silently — no prompt, no warning, and the old copy is gone. The confirmation prompt is a jstats safeguard.</p>
+<p>There isn’t one. Base R has no output-level setting — each function prints whatever it prints, and how much you see varies with each package author’s choices. <code>joutput()</code> is a single, jstats-wide control.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="saving-to-a-data-folder" class="level3">
-<h3 class="anchored" data-anchor-id="saving-to-a-data-folder">7. Saving to a Data folder</h3>
-<p>Let’s save your work – first with no folder specified, to see where files go by default, and then to a Data folder of your own.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 7. Saving to a Data folder ----------------------------------------</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Use the assignment operator to copy community to a new data frame called MyData</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>MyData <span class="ot">&lt;-</span> community</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Save it with no folder specified -- where does the file go?</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">## The console message shows the full path: it landed in your project's</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="do">## working directory, the default location</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">## It's the same path the Base R getwd() command showed you earlier</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData, <span class="st">"WhereDidIGo.rds"</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Delete that test file</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="do">## file.remove() is base R -- the file-on-disk equivalent of the rm()</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="do">## you used for data frames. It replies with a cryptic [1] TRUE</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="fu">file.remove</span>(<span class="st">"WhereDidIGo.rds"</span>)</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Now name a Data folder of your own</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="do">## jstats will create this folder upon first save</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Or you can create it manually</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">data.dir =</span> <span class="st">"Data"</span>)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Save the dataset to the Data folder and call it MyData_r.rds</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Specify R native format with the .rds extension</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="do">## The Data folder is created now, on this first save</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData, <span class="st">"MyData_r.rds"</span>)</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove MyData and community data frames from the environment</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="do">## Does not remove the saved file from the Data folder</span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(MyData)</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(community)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-note callout-titled" title="What's the point?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>What’s the point?
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Why set a data folder at all? Tidiness now, and a payoff later. With <code>data.dir</code> set, every save and load on this page knows where to look. And that’s the habit to keep: put <code>joptions(data.dir = "Data")</code> near the top of your own scripts, then drop a dataset of yours into that folder and <code>jload("YourFile.sav")</code> opens it by name alone. If you’re not sure where the folder is on your computer, the jsave message has already told you – it prints the full path each time, ready to paste into File Explorer (Windows) or find in Finder (Mac).</p>
-</div>
-</div>
-</div>
+<section id="functions-with-no-arguments-and-getting-help" class="level3">
+<h3 class="anchored" data-anchor-id="functions-with-no-arguments-and-getting-help">5. Functions with no arguments, and getting help</h3>
+<p>Most functions need something inside the parentheses, but a few work on their own. Every function also has a help page.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 5. Functions with no arguments, and getting help ------------------</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">## A few functions work correctly without input between the parentheses, but most require input</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>()  <span class="co"># This will cause an error with a message about how you might fix the error</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">## But this one will show you the current output settings for jstats</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>()</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Here's a Base R function that works without arguments/input</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="do">## List the objects/data frames in the Environment</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Here's another one from Base R</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="do">## A working directory is the "path" to where your project is stored on your computer</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="do">## If you're not working in a project, you have to set this yourself (finicky)</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="do">## The technical name for a function's inputs are "Arguments"</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="do">## View help files describing necessary and optional Arguments by running...</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>?jload</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="do">## The same ? help works for base R functions and functions from any installed package</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>?ls</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="do">## And this one opens the package overview: every jstats function, grouped by purpose</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>?jstats</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -623,7 +596,121 @@ DATASET ACTIVATE community.</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>?</code> <em>is</em> base R – <code>?jload</code>, <code>?ls</code>, and <code>?mean</code> all work the same way, for base functions and for functions from any installed package. (In RStudio, putting the cursor on a function name and pressing F1 does the same thing. On Macs the key varies from machine to machine – F1 on some, fn + F1 on others, and on some Macs the function keys must first be enabled in System Settings.) What a base R setup doesn’t have is a grouped index: a typical workflow spans functions scattered across many packages, each with its own alphabetical help listing. <code>?jstats</code> shows the whole toolkit on one page, organized by purpose – one advantage of the functions traveling together as a package.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="the-overwrite-prompt" class="level3">
+<h3 class="anchored" data-anchor-id="the-overwrite-prompt">6. The overwrite prompt</h3>
+<p>When you load a dataset that’s already open, jstats checks with you before overwriting it – watch for the y/n prompt in the Console window.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 6. The overwrite prompt -------------------------------------------</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">## The output you get in the Console Pane can include a confirmation prompt</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Here, jstats will not overwrite community unless you give it permission</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>) <span class="co"># Look at the y/n prompt in the console</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Set an optional overwrite argument/input to overwrite without the prompt</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the point?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the point?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The overwrite argument is here to show you two things:</p>
+<ul>
+<li><strong>What an argument looks like.</strong> Options go inside the parentheses as <code>name = value</code> – here, <code>overwrite = TRUE</code>.</li>
+<li><strong>Prompts can be overridden.</strong> The few times jstats asks for confirmation, the prompt appears in the Console – and each one can be switched off with the right argument. That matters when code runs automatically, with nobody at the keyboard to answer: it happens in several places behind this website, and in the finished script you can download at the bottom of this page.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Base R doesn’t ask. Loading or assigning over an existing object replaces it silently — no prompt, no warning, and the old copy is gone. The confirmation prompt is a jstats safeguard.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="saving-to-a-data-folder" class="level3">
+<h3 class="anchored" data-anchor-id="saving-to-a-data-folder">7. Saving to a Data folder</h3>
+<p>Let’s save your work – first with no folder specified, to see where files go by default, and then to a Data folder of your own.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 7. Saving to a Data folder ----------------------------------------</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Use the assignment operator to copy community to a new data frame called MyData</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>MyData <span class="ot">&lt;-</span> community</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Save it with no folder specified -- where does the file go?</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="do">## The console message shows the full path: it landed in your project's</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="do">## working directory, the default location</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="do">## It's the same path the Base R getwd() command showed you earlier</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData, <span class="st">"WhereDidIGo.rds"</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Delete that test file</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="do">## file.remove() is base R -- the file-on-disk equivalent of the rm()</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="do">## you used for data frames. It replies with a cryptic [1] TRUE</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">file.remove</span>(<span class="st">"WhereDidIGo.rds"</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Now name a Data folder of your own</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="do">## jstats will create this folder upon first save</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Or you can create it manually</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">data.dir =</span> <span class="st">"Data"</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Save the dataset to the Data folder and call it MyData_r.rds</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Specify R native format with the .rds extension</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="do">## The Data folder is created now, on this first save</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData, <span class="st">"MyData_r.rds"</span>)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove MyData and community data frames from the environment</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="do">## Does not remove the saved file from the Data folder</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(MyData)</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(community)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the point?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the point?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Why set a data folder at all? Tidiness now, and a payoff later. With <code>data.dir</code> set, every save and load on this page knows where to look. And that’s the habit to keep: put <code>joptions(data.dir = "Data")</code> near the top of your own scripts, then drop a dataset of yours into that folder and <code>jload("YourFile.sav")</code> opens it by name alone. If you’re not sure where the folder is on your computer, the jsave message has already told you – it prints the full path each time, ready to paste into File Explorer (Windows) or find in Finder (Mac).</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Saving to the working directory by default is base R’s behavior too – <code>saveRDS(MyData, "MyData_r.rds")</code> puts the file in the same place; jstats just tells you, in full, where it went. To use a folder, base R won’t create it for you (that’s <code>dir.create("Data")</code> first), and the folder name gets typed into every path from then on – with any subfolders along for the ride, e.g. <code>saveRDS(MyData, "Data/CommunityStudy/Wave1/MyData_r.rds")</code>. <code>joptions(data.dir = ...)</code> sets the location once, and every <code>jsave()</code> and <code>jload()</code> after that already knows where to look.</p>
 <p>And note what <code>file.remove()</code> didn’t do: ask. Like the silent overwrite in block 6, base R deletes with no confirmation – mix up a filename and a real data file is gone. jstats’s prompts exist precisely because of edges like that.</p>
@@ -634,149 +721,72 @@ DATASET ACTIVATE community.</code></pre>
 <section id="saving-across-formats-and-missing-values" class="level3">
 <h3 class="anchored" data-anchor-id="saving-across-formats-and-missing-values">8. Saving across formats – and missing values</h3>
 <p>Moving between file formats is easy, with one wrinkle around missing values that jstats handles for you.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 8. Saving across formats, and missing values ----------------------</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Reload the saved MyData.rds dataset from the data folder.</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_r.rds"</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">## The original community dataset carries SPSS-style missing values</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="do">## So it saves to SPSS format (.sav) without a problem</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData_r, <span class="st">"MyData_spss.sav"</span>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="do">## But the SPSS-style missing-value codes need to be converted</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="do">## if you want to save to a format other than R or SPSS</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData_r, <span class="st">"MyData_stata.dta"</span>)  <span class="co"># This will draw an error</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Convert to Stata format (.dta)</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>MyData_stata <span class="ot">&lt;-</span> <span class="fu">jconvert</span>(MyData_r, <span class="at">to =</span> <span class="st">"stata"</span>)</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData_stata, <span class="st">"MyData_stata.dta"</span>)  <span class="co"># Now no error</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Coming from SPSS, Stata, or SAS?
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>In SPSS, user-missing values are declared in Variable View and travel with the file. When you Save As a different format, those definitions don’t always carry across cleanly. jstats keeps the equivalent information with your data, and when a format needs it in a different form, <code>jconvert()</code> does the translation – which is why saving straight to Stata format above stops and asks you to convert first.</p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Base R alone can’t write SPSS or Stata files. You’d install and load the <strong>haven</strong> package and call <code>haven::write_sav()</code> or <code>haven::write_dta()</code> yourself — and haven is exactly the proven library jstats uses under the hood, so nothing here reinvents the wheel. What jstats spares you is the setup and the sharp edge: loading an extra package in every script, learning its separate function set, and handling the missing-value translation by hand — haven refuses SPSS-style missing codes headed into Stata format, just as you saw above, and converting them yourself is genuinely fiddly. <code>jconvert()</code> is that translation, done for you.</p>
-<p>Two conversion habits are worth knowing even if you’re an experienced R user. Data that arrive with SPSS-style missing values are ordinary numbers underneath (a -99 really is a -99), so a base R function – or any package that doesn’t read the declarations the way jstats does – can mistake them for real values. Converting to Stata-style (<code>jconvert(to = "stata")</code>) stores them as a special kind of NA instead, which every R function already treats as missing. And for maximum compatibility, <code>jconvert(to = "baseR")</code> turns all declared missing codes – SPSS-, Stata-, or SAS-style – into plain NA. Even if you never use another jstats function, painless conversion across these formats is worth having.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="reloading-and-how-missing-codes-travel" class="level3">
-<h3 class="anchored" data-anchor-id="reloading-and-how-missing-codes-travel">9. Reloading, and how missing codes travel</h3>
-<p>Load the saved files back and see how each format keeps its missing-value codes.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 9. Reloading, and how missing codes travel ------------------------</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 8. Saving across formats, and missing values ----------------------</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove all data frames from the environment</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Reload the saved MyData.rds dataset from the data folder.</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_r.rds"</span>)</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Load all data sets back</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_r.rds"</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_spss.sav"</span>)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_stata.dta"</span>)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Examine how the missing codes are kept in the different formats</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_r, Education)  <span class="co"># will print whatever was originally stored</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_spss, Education)  <span class="co"># SPSS-style user-defined missing codes (UDMs)</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_stata, Education) <span class="co"># Stata-style UDMs</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>MyData_r_with_stata_UDM <span class="ot">&lt;-</span> <span class="fu">jconvert</span>(MyData_r, <span class="at">to =</span> <span class="st">"stata"</span>)</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_r_with_stata_UDM, Education) <span class="co"># Now the UDMs display in Stata format</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="turning-up-the-digits" class="level3">
-<h3 class="anchored" data-anchor-id="turning-up-the-digits">10. Turning up the digits</h3>
-<p>One more control before the final check: how many decimal places jstats shows. The default setting is 3, the maximum is 7 – and for what comes next, we want all 7. (One exception: p-values keep their own fixed three-decimal convention and ignore this setting.)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 10. Turning up the digits -----------------------------------------</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">## By default, jstats shows up to 3 decimal places</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_r, Age)   <span class="co"># the Age mean reads 40.65 -- the box below explains why not 40.650</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Turn the display up to the maximum of 7 decimal places</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="at">digits =</span> <span class="dv">7</span>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_r, Age)   <span class="co"># the same mean now reads 40.6504854</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Coming from SPSS, Stata, or SAS?
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>SPSS output shows a fixed number of decimals, padding with zeros to fill the width – a mean of 40.65 appears as 40.650 in a three-decimal table. jstats goes the other way: it never prints trailing zeros, so <code>digits</code> sets a <em>maximum</em>, and each column shows only the decimals it actually needs. That’s why the mean above reads 40.65 at the default setting of 3 – its third decimal happens to be a zero. And if a statistic lands exactly on a round value, it displays short even at digits = 7: that’s trimming, not truncation or a stuck setting.</p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="do">## The original community dataset carries SPSS-style missing values</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="do">## So it saves to SPSS format (.sav) without a problem</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData_r, <span class="st">"MyData_spss.sav"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="do">## But the SPSS-style missing-value codes need to be converted</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="do">## if you want to save to a format other than R or SPSS</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData_r, <span class="st">"MyData_stata.dta"</span>)  <span class="co"># This will draw an error</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Convert to Stata format (.dta)</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>MyData_stata <span class="ot">&lt;-</span> <span class="fu">jconvert</span>(MyData_r, <span class="at">to =</span> <span class="st">"stata"</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(MyData_stata, <span class="st">"MyData_stata.dta"</span>)  <span class="co"># Now no error</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What you should see">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
+<span class="screen-reader-only">Note</span>What you should see
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The closest is <code>options(digits = ...)</code>, and it’s a different animal: it sets <em>significant digits</em>, globally, for nearly everything R prints. <code>joutput(digits = ...)</code> means decimal places, and it changes only jstats output.</p>
+<pre class="cp-pane cp-bare"><span class="cp-body"><span class="cp-in">&gt; jload("MyData_r.rds")</span>
+<span class="cp-msg">Reading from E:/00 R Projects/OnLineMaterial/Data
+Loaded MyData_r (R native format; 103 cases, 15 variables)
+5 variables have user-defined missing values:
+  Income: -99 ["Refused"], -98 ["Don't know"]
+  Education: -99 ["Refused"], -98 ["Don't know"]
+  Smoker: -99 ["Refused"]
+  Environment1: -99 ["Refused"], -98 ["Don't know"]
+  Environment3: -99 ["Refused"], -98 ["Don't know"]
+These codes are excluded as missing in jstats analyses. For better base R compatibility, convert them:
+  jconvert(MyData_r, to = "stata")  - retains missing-value codes, base R compatible (recommended)
+  jconvert(MyData_r, to = "baseR")  - converts to plain NA and removes missing-value codes</span>
+<span class="cp-in">&gt; jsave(MyData_r, "MyData_spss.sav")</span>
+<span class="cp-msg">Saved MyData_r to E:/00 R Projects/OnLineMaterial/Data/MyData_spss.sav (SPSS format; 103 cases, 15 variables)</span>
+<span class="cp-in">&gt; jsave(MyData_r, "MyData_stata.dta")</span>
+<span class="cp-err">Error: jsave(): 5 variables carry SPSS-style missing values, incompatible with the .dta format.
+
+  Income, Education, Smoker, Environment1, Environment3
+Before saving to Stata format, convert with:
+  MyData_r &lt;- jconvert(MyData_r, to = "stata")</span>
+<span class="cp-in">&gt; MyData_stata &lt;- jconvert(MyData_r, to = "stata")</span>
+<span class="cp-msg">Converted to Stata-style missing values in 5 variables:
+  Income        (-99 "Refused" -&gt; .a, -98 "Don't know" -&gt; .b)
+  Education     (-99 "Refused" -&gt; .a, -98 "Don't know" -&gt; .b)
+  Smoker        (-99 "Refused" -&gt; .a)
+  Environment1  (-99 "Refused" -&gt; .a, -98 "Don't know" -&gt; .b)
+  Environment3  (-99 "Refused" -&gt; .a, -98 "Don't know" -&gt; .b)
+
+Assign the result to keep the conversion:
+  MyData_r &lt;- jconvert(MyData_r, ...)
+
+To keep it across sessions, save the data frame:
+  jsave(MyData_r, "MyData_r.rds")</span>
+<span class="cp-in">&gt; jsave(MyData_stata, "MyData_stata.dta")</span>
+<span class="cp-msg">Saved MyData_stata to E:/00 R Projects/OnLineMaterial/Data/MyData_stata.dta (Stata format; 103 cases, 15 variables)</span></span></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="the-proof-that-nothing-was-lost" class="level3">
-<h3 class="anchored" data-anchor-id="the-proof-that-nothing-was-lost">11. The proof that nothing was lost</h3>
-<p>Those three data frames each made a round trip through a different file format. If the trips were truly lossless, the same statistics should come back from every one of them – right down to the seventh decimal.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 11. The proof that nothing was lost -------------------------------</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Ask for the mean of Age from each of the three reloaded data frames</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_r, Age)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_spss, Age)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_stata, Age)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="do">## All three report the identical mean: 40.6504854</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Same data, three file formats, nothing lost along the way</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="do">## And one base R caution, shown live (the box below explains):</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Income carries declared missing-value codes (-99, -98)</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_spss, Income)   <span class="co"># the correct mean -- jdesc leaves the codes out</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Base R gives a bare, unlabeled number, so extra work is needed just to</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="do">## make it visible: cat() adds a label, and the "\n"s add blank lines to</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="do">## set it apart. Run line by line (interactively), a plain mean() prints</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="do">## only a cryptic [1] number; run with Source, it wouldn't appear at all</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">Base R mean of Income:"</span>, <span class="fu">mean</span>(MyData_spss<span class="sc">$</span>Income), <span class="st">"</span><span class="sc">\n\n\n</span><span class="st">"</span>)  <span class="co"># a poisoned mean</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Set the display back to the default before you go</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Put the data folder setting back to its default (the working directory) too</span></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Passing "" clears it (data.dir = NULL would leave it unchanged)</span></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="do">## A finished script leaves your session exactly as it found it</span></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">data.dir =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -789,8 +799,7 @@ DATASET ACTIVATE community.</code></pre>
 </div>
 <div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><code>jdesc()</code> is the counterpart of SPSS’s Analyze &gt; Descriptive Statistics &gt; Descriptives – the same N, minimum, maximum, mean, and standard deviation you’d read from that output table. And the check above may feel familiar from practice: reopening a dataset that’s been through another format, and confirming the descriptives still match.</p>
-<p>The matching numbers are only half the story – the missing-value declarations made the round trip too, which is arguably the bigger deal. You saw it back in block 9: Education’s codes come through meaning the same thing in every file, with the Stata copy simply wearing its <code>.a</code>/<code>.b</code> form. In SPSS terms, your MISSING VALUES definitions survived the Save As. (Age itself carries no missing codes – that’s exactly why it makes a clean test variable here.)</p>
+<p>In SPSS, user-missing values are declared in Variable View and travel with the file. When you Save As a different format, those definitions don’t always carry across cleanly. jstats keeps the equivalent information with your data, and when a format needs it in a different form, <code>jconvert()</code> does the translation – which is why saving straight to Stata format above stops and asks you to convert first.</p>
 </div>
 </div>
 </div>
@@ -806,12 +815,439 @@ DATASET ACTIVATE community.</code></pre>
 </div>
 <div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p>Base R alone can’t write SPSS or Stata files. You’d install and load the <strong>haven</strong> package and call <code>haven::write_sav()</code> or <code>haven::write_dta()</code> yourself — and haven is exactly the proven library jstats uses under the hood, so nothing here reinvents the wheel. What jstats spares you is the setup and the sharp edge: loading an extra package in every script, learning its separate function set, and handling the missing-value translation by hand — haven refuses SPSS-style missing codes headed into Stata format, just as you saw above, and converting them yourself is genuinely fiddly. <code>jconvert()</code> is that translation, done for you.</p>
+<p>Two conversion habits are worth knowing even if you’re an experienced R user.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="reloading-and-how-missing-codes-travel" class="level3">
+<h3 class="anchored" data-anchor-id="reloading-and-how-missing-codes-travel">9. Reloading, and how missing codes travel</h3>
+<p>Load the saved files back and see how each format keeps its missing-value codes.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 9. Reloading, and how missing codes travel ------------------------</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove all data frames from the environment</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Load all data sets back</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_r.rds"</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_spss.sav"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"MyData_stata.dta"</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Examine how the missing codes are kept in the different formats</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_r, Education)  <span class="co"># will print whatever was originally stored</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_spss, Education)  <span class="co"># SPSS-style user-defined missing codes (UDMs)</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_stata, Education) <span class="co"># Stata-style UDMs</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>MyData_r_with_stata_UDM <span class="ot">&lt;-</span> <span class="fu">jconvert</span>(MyData_r, <span class="at">to =</span> <span class="st">"stata"</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MyData_r_with_stata_UDM, Education) <span class="co"># Now the UDMs display in Stata format</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What you should see">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you should see
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre class="cp-pane cp-bare"><span class="cp-body"><span class="cp-in">&gt; rm(list = ls())</span>
+<span class="cp-in">&gt; jload("MyData_r.rds")</span>
+<span class="cp-msg">Reading from E:/00 R Projects/OnLineMaterial/Data
+Loaded MyData_r (R native format; 103 cases, 15 variables)
+5 variables have user-defined missing values:
+  Income: -99 ["Refused"], -98 ["Don't know"]
+  Education: -99 ["Refused"], -98 ["Don't know"]
+  Smoker: -99 ["Refused"]
+  Environment1: -99 ["Refused"], -98 ["Don't know"]
+  Environment3: -99 ["Refused"], -98 ["Don't know"]
+These codes are excluded as missing in jstats analyses. For better base R compatibility, convert them:
+  jconvert(MyData_r, to = "stata")  - retains missing-value codes, base R compatible (recommended)
+  jconvert(MyData_r, to = "baseR")  - converts to plain NA and removes missing-value codes</span>
+<span class="cp-in">&gt; jload("MyData_spss.sav")</span>
+<span class="cp-msg">Reading from E:/00 R Projects/OnLineMaterial/Data
+Loaded MyData_spss (SPSS format; 103 cases, 15 variables)
+5 variables have user-defined missing values:
+  Income: -99 ["Refused"], -98 ["Don't know"]
+  Education: -99 ["Refused"], -98 ["Don't know"]
+  Smoker: -99 ["Refused"]
+  Environment1: -99 ["Refused"], -98 ["Don't know"]
+  Environment3: -99 ["Refused"], -98 ["Don't know"]
+These codes are excluded as missing in jstats analyses. For better base R compatibility, convert them:
+  jconvert(MyData_spss, to = "stata")  - retains missing-value codes, base R compatible (recommended)
+  jconvert(MyData_spss, to = "baseR")  - converts to plain NA and removes missing-value codes</span>
+<span class="cp-in">&gt; jload("MyData_stata.dta")</span>
+<span class="cp-msg">Reading from E:/00 R Projects/OnLineMaterial/Data
+Loaded MyData_stata (Stata format; 103 cases, 15 variables)
+5 variables have user-defined missing values:
+  Income: .a ["Refused"], .b ["Don't know"]
+  Education: .b ["Don't know"], .a ["Refused"]
+  Smoker: .a ["Refused"]
+  Environment1: .b ["Don't know"], .a ["Refused"]
+  Environment3: .a ["Refused"], .b ["Don't know"]
+These codes are excluded as missing in jstats analyses. For better base R compatibility, convert them:
+  jconvert(MyData_stata, to = "stata")  - retains missing-value codes, base R compatible (recommended)
+  jconvert(MyData_stata, to = "baseR")  - converts to plain NA and removes missing-value codes</span>
+<span class="cp-in">&gt; jfreq(MyData_r, Education)</span>
+<span class="cp-out"><span style="color: #BB0000;">Frequencies
+</span>
+Case Processing  Excluded  Remaining
+    Original            —        103
+    Remaining N         —        103
+
+────────────────────────────────────
+
+Education
+
+                         Freq  Total %  Valid %  Cum. %
+-----------------------  ----  -------  -------  ------
+Valid                                                  
+1: Some high school        23    22.33    23.71   23.71
+2: High school graduate    18    17.48    18.56   42.27
+3: Some college            25    24.27    25.77   68.04
+4: Bachelor's degree       13    12.62    13.40   81.44
+5: Graduate degree         18    17.48    18.56  100.00
+                                                       
+Missing                                                
+-99 ["Refused"]             3     2.91       --      --
+-98 ["Don't know"]          3     2.91       --      --
+                                                       
+Total                     103   100.00                 
+
+</span>
+<span class="cp-in">&gt; jfreq(MyData_spss, Education)</span>
+<span class="cp-out"><span style="color: #BB0000;">Frequencies
+</span>
+Case Processing  Excluded  Remaining
+    Original            —        103
+    Remaining N         —        103
+
+────────────────────────────────────
+
+Education
+
+                         Freq  Total %  Valid %  Cum. %
+-----------------------  ----  -------  -------  ------
+Valid                                                  
+1: Some high school        23    22.33    23.71   23.71
+2: High school graduate    18    17.48    18.56   42.27
+3: Some college            25    24.27    25.77   68.04
+4: Bachelor's degree       13    12.62    13.40   81.44
+5: Graduate degree         18    17.48    18.56  100.00
+                                                       
+Missing                                                
+-99 ["Refused"]             3     2.91       --      --
+-98 ["Don't know"]          3     2.91       --      --
+                                                       
+Total                     103   100.00                 
+
+</span>
+<span class="cp-in">&gt; jfreq(MyData_stata, Education)</span>
+<span class="cp-out"><span style="color: #BB0000;">Frequencies
+</span>
+Case Processing  Excluded  Remaining
+    Original            —        103
+    Remaining N         —        103
+
+────────────────────────────────────
+
+Education
+
+                         Freq  Total %  Valid %  Cum. %
+-----------------------  ----  -------  -------  ------
+Valid                                                  
+1: Some high school        23    22.33    23.71   23.71
+2: High school graduate    18    17.48    18.56   42.27
+3: Some college            25    24.27    25.77   68.04
+4: Bachelor's degree       13    12.62    13.40   81.44
+5: Graduate degree         18    17.48    18.56  100.00
+                                                       
+Missing                                                
+.b ["Don't know"]           3     2.91       --      --
+.a ["Refused"]              3     2.91       --      --
+                                                       
+Total                     103   100.00                 
+
+</span>
+<span class="cp-in">&gt; MyData_r_with_stata_UDM &lt;- jconvert(MyData_r, to = "stata")</span>
+<span class="cp-msg">Converted to Stata-style missing values in 5 variables:
+  Income        (-99 "Refused" -&gt; .a, -98 "Don't know" -&gt; .b)
+  Education     (-99 "Refused" -&gt; .a, -98 "Don't know" -&gt; .b)
+  Smoker        (-99 "Refused" -&gt; .a)
+  Environment1  (-99 "Refused" -&gt; .a, -98 "Don't know" -&gt; .b)
+  Environment3  (-99 "Refused" -&gt; .a, -98 "Don't know" -&gt; .b)
+
+Assign the result to keep the conversion:
+  MyData_r &lt;- jconvert(MyData_r, ...)
+
+To keep it across sessions, save the data frame:
+  jsave(MyData_r, "MyData_r.rds")</span>
+<span class="cp-in">&gt; jfreq(MyData_r_with_stata_UDM, Education)</span>
+<span class="cp-out"><span style="color: #BB0000;">Frequencies
+</span>
+Case Processing  Excluded  Remaining
+    Original            —        103
+    Remaining N         —        103
+
+────────────────────────────────────
+
+Education
+
+                         Freq  Total %  Valid %  Cum. %
+-----------------------  ----  -------  -------  ------
+Valid                                                  
+1: Some high school        23    22.33    23.71   23.71
+2: High school graduate    18    17.48    18.56   42.27
+3: Some college            25    24.27    25.77   68.04
+4: Bachelor's degree       13    12.62    13.40   81.44
+5: Graduate degree         18    17.48    18.56  100.00
+                                                       
+Missing                                                
+.b ["Don't know"]           3     2.91       --      --
+.a ["Refused"]              3     2.91       --      --
+                                                       
+Total                     103   100.00                 
+
+</span></span></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="turning-up-the-digits" class="level3">
+<h3 class="anchored" data-anchor-id="turning-up-the-digits">10. Turning up the digits</h3>
+<p>One more control before the final check: how many decimal places jstats shows. The default setting is 3, the maximum is 7 – and for what comes next, we want all 7. (One exception: p-values keep their own fixed three-decimal convention and ignore this setting.)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 10. Turning up the digits -----------------------------------------</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="do">## By default, jstats shows up to 3 decimal places</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_r, Age)   <span class="co"># see the Age mean below -- the callouts explain the decimals</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Turn the display up to the maximum of 7 decimal places</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="at">digits =</span> <span class="dv">7</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_r, Age)   <span class="co"># the same mean, now with more decimals shown</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What you should see">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you should see
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre class="cp-pane cp-bare"><span class="cp-body"><span class="cp-in">&gt; jdesc(MyData_r, Age)</span>
+<span class="cp-out"><span style="color: #BB0000;">Descriptive Statistics
+</span>
+Variable  Total  Non_missing  Min  Max   Mean     SD
+--------  -----  -----------  ---  ---  -----  -----
+Age         103          103   18   71  40.65  11.62
+</span>
+<span class="cp-in">&gt; joutput(digits = 7)</span>
+<span class="cp-out"><span style="color: #BB0000;">Output Settings
+</span>Level: standard
+  effect.size: ON
+  regression.ci: OFF
+  means.ci: ON
+  levene: OFF
+  posthoc: OFF
+  diagnostics: OFF
+  case.processing: AUTO
+  case.processing.detail: TOTALS
+  variable.id: NAMES
+  value.id: BOTH
+  ref.categories: ON
+  udm.notice: ON
+  digits: 7 (override)
+</span>
+<span class="cp-in">&gt; jdesc(MyData_r, Age)</span>
+<span class="cp-out"><span style="color: #BB0000;">Descriptive Statistics
+</span>
+Variable  Total  Non_missing  Min  Max        Mean         SD
+--------  -----  -----------  ---  ---  ----------  ---------
+Age         103          103   18   71  40.6504854  11.619548
+</span></span></pre>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Coming from SPSS, Stata, or SAS?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>SPSS output shows a fixed number of decimals, padding with zeros to fill the width – a mean of 40.65 appears as 40.650 in a three-decimal table. jstats goes the other way: it never prints trailing zeros, so <code>digits</code> sets a <em>maximum</em>, and each column shows only the decimals it actually needs. That’s why the mean above reads 40.65 at the default setting of 3 – its third decimal happens to be a zero. And if a statistic lands exactly on a round value, it displays short even at digits = 7: that’s trimming, not truncation or a stuck setting.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The closest is <code>options(digits = ...)</code>, and it’s a different animal: it sets <em>significant digits</em>, globally, for nearly everything R prints. <code>joutput(digits = ...)</code> means decimal places, and it changes only jstats output.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="the-proof-that-nothing-was-lost" class="level3">
+<h3 class="anchored" data-anchor-id="the-proof-that-nothing-was-lost">11. The proof that nothing was lost</h3>
+<p>Those three data frames each made a round trip through a different file format. If the trips were truly lossless, the same statistics should come back from every one of them – right down to the seventh decimal.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 11. The proof that nothing was lost -------------------------------</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Ask for the mean of Age from each of the three reloaded data frames</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_r, Age)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_spss, Age)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_stata, Age)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="do">## All three report the identical mean, to the last decimal:</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="do">## same data, three file formats, nothing lost along the way</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="do">## And one base R caution, shown live (the box below explains):</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Income carries declared missing-value codes (-99, -98)</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MyData_spss, Income)   <span class="co"># the correct mean -- jdesc leaves the codes out</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Base R gives a bare, unlabeled number, so extra work is needed just to</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="do">## make it visible: cat() adds a label, and the "\n"s add blank lines to</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="do">## set it apart. Run line by line (interactively), a plain mean() prints</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="do">## only a cryptic [1] number; run with Source, it wouldn't appear at all</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">Base R mean of Income:"</span>, <span class="fu">mean</span>(MyData_spss<span class="sc">$</span>Income), <span class="st">"</span><span class="sc">\n\n\n</span><span class="st">"</span>)  <span class="co"># a poisoned mean</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Set the display back to the default before you go</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Put the data folder setting back to its default (the working directory) too</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Passing "" clears it (data.dir = NULL would leave it unchanged)</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="do">## A finished script leaves your session exactly as it found it</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">data.dir =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What you should see">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you should see
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre class="cp-pane cp-bare"><span class="cp-body"><span class="cp-in">&gt; jdesc(MyData_r, Age)</span>
+<span class="cp-out"><span style="color: #BB0000;">Descriptive Statistics
+</span>
+Variable  Total  Non_missing  Min  Max        Mean         SD
+--------  -----  -----------  ---  ---  ----------  ---------
+Age         103          103   18   71  40.6504854  11.619548
+</span>
+<span class="cp-in">&gt; jdesc(MyData_spss, Age)</span>
+<span class="cp-out"><span style="color: #BB0000;">Descriptive Statistics
+</span>
+Variable  Total  Non_missing  Min  Max        Mean         SD
+--------  -----  -----------  ---  ---  ----------  ---------
+Age         103          103   18   71  40.6504854  11.619548
+</span>
+<span class="cp-in">&gt; jdesc(MyData_stata, Age)</span>
+<span class="cp-out"><span style="color: #BB0000;">Descriptive Statistics
+</span>
+Variable  Total  Non_missing  Min  Max        Mean         SD
+--------  -----  -----------  ---  ---  ----------  ---------
+Age         103          103   18   71  40.6504854  11.619548
+</span>
+<span class="cp-in">&gt; jdesc(MyData_spss, Income)</span>
+<span class="cp-out"><span style="color: #BB0000;">Descriptive Statistics
+</span>
+Case Processing  Excluded  Remaining
+    Original            —        103
+    Remaining N         —        103
+
+────────────────────────────────────
+
+
+Variable  Total  Non_missing    Min    Max           Mean             SD
+--------  -----  -----------  -----  -----  -------------  -------------
+Income      103           97  14000  93000  49855.6701031  17427.2234896
+</span>
+<span class="cp-in">&gt; cat("\n\nBase R mean of Income:", mean(MyData_spss$Income), "\n\n\n")</span>
+<span class="cp-out">
+
+Base R mean of Income: 46945.72 
+
+</span>
+<span class="cp-in">&gt; joutput(digits = 3)</span>
+<span class="cp-out"><span style="color: #BB0000;">Output Settings
+</span>Level: standard
+  effect.size: ON
+  regression.ci: OFF
+  means.ci: ON
+  levene: OFF
+  posthoc: OFF
+  diagnostics: OFF
+  case.processing: AUTO
+  case.processing.detail: TOTALS
+  variable.id: NAMES
+  value.id: BOTH
+  ref.categories: ON
+  udm.notice: ON
+  digits: 3 (override)
+</span>
+<span class="cp-in">&gt; joptions(data.dir = "")</span>
+<span class="cp-out"><span style="color: #BB0000;">Options Settings
+</span>User-defined missing values (UDMs) convention: None selected
+UDM convention codes: -99, -98, -97
+Data folder: Working directory
+Correlation layout: wide
+</span></span></pre>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Coming from SPSS, Stata, or SAS?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>jdesc()</code> is the counterpart of SPSS’s Analyze &gt; Descriptive Statistics &gt; Descriptives – the same N, minimum, maximum, mean, and standard deviation you’d read from that output table. And the check above may feel familiar from practice: reopening a dataset that’s been through another format, and confirming the descriptives still match.</p>
+<p>The matching numbers are only half the story – the missing-value declarations made the round trip too, which is arguably the bigger deal. You saw it back in block 9: Education’s codes come through meaning the same thing in every file, with the Stata copy simply wearing its <code>.a</code>/<code>.b</code> form. In SPSS terms, your MISSING VALUES definitions survived the Save As. (Age itself carries no missing codes – that’s exactly why it makes a clean test variable here.)</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>For a clean variable like Age, base R agrees exactly: <code>mean(MyData_r$Age)</code> returns the same 40.65049. The difference appears with variables that carry declared missing-value codes, like <code>Income</code> – those codes are ordinary numbers to base R, and the block’s last lines show the damage live: <code>mean(MyData_spss$Income)</code> folds the -99s and -98s straight into the average, while <code>jdesc()</code> reads the declarations and leaves the codes out automatically — provided the declarations exist: here they traveled with the files, and when a dataset arrives with codes that were never declared, you add the declarations yourself with jstats’s <code>jdeclare_udm()</code> function. It’s the same protection you’d expect from commercial statistical software.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="What's the point?">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -820,10 +1256,11 @@ DATASET ACTIVATE community.</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The download at the bottom of this page is the <em>finished</em> version of what you built – and finished means something specific. A goal every experienced programmer and statistician takes for granted, but new researchers are rarely told: a completed script should run from beginning to end without errors. On this page you experimented – deliberate errors and prompts included, because that’s how working scripts develop. The download shows what the end of that process looks like, and it differs from the page blocks in three principled ways: the deliberate error lines are commented out, the y/n prompt line is commented out (a prompt would pause an unattended run), and the saves – plus the one reload that could collide with an earlier run’s leftovers – carry <code>overwrite = TRUE</code> so the whole file can be run again and again, exactly the automatic-execution override from block 6.</p>
 <p>To prove a script is finished, use the <strong>Source</strong> icon (to the right of Run in the script toolbar): it runs the entire file, top to bottom, in one go. A few things to know. Source shows the <em>output</em> without echoing each command back to the Console – that’s normal – and the small arrow beside Source offers “Source with Echo” if you’d like the commands shown too. jstats functions print their own tables, so their output always appears; but a bare base R line that merely displays a value – <code>ls()</code>, <code>getwd()</code>, <code>mean()</code> – stays quiet under Source, because R only auto-prints results when you run lines interactively – and even interactively, what it prints is a bare, unlabeled number. That’s why the script prints its base R mean with <code>cat()</code>, a label, and a few blank lines to set it apart – hand-formatting that jstats tables do for you. And if you re-run the script you pasted together yourself, the saves will refuse to overwrite their earlier files – that’s block 6’s lesson again; add <code>overwrite = TRUE</code> just as the finished file does.</p>
+<p>The <strong>What you should see</strong> boxes under some blocks above reproduce that Console – the blue command lines, the gray notices, the colored tables, a red error where one is meant to happen. They show the <em>code</em> being run, not the <code>##</code> comment lines (running a comment just echoes it back and does nothing), so the box stays focused on what actually happens. Reading a block? The commented code is in the gray block; the result is in the box beneath it. The first box also pictures your <strong>Environment</strong> pane so you can confirm the dataset loaded.</p>
 <p>Nothing needs deleting between runs, and nothing is deleted: the overwrite arguments handle the repeats, and the Data folder with its three saved files stays put after every run – that’s what saving is for. Remove the files by hand if you ever want a clean slate.</p>
 <p>One more setup idea if you’re keeping the file – and it’s worth keeping: finished scripts travel. Sooner or later you’ll share one with a supervisor or collaborator, or receive one from someone else, and a script that runs top to bottom on another person’s computer is the standard to aim for. So a downloaded script deserves a proper home: jstats created the Data folder for you during the run-through, but you can also make folders yourself in RStudio – in the <strong>Files</strong> tab of the lower-right pane, click <strong>New Folder</strong> and type a name into the popup. “Scripts” is a good one for storing this download, and it will appear right beside the Data folder you created by following the steps above.</p>
 </div>
