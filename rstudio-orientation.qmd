@@ -3,6 +3,31 @@ pagetitle: "jstats:RStudio"
 title-prefix: ""
 ---
 
+```{r}
+#| label: obx-setup
+#| include: false
+
+# ---------------------------------------------------------------------------
+# PANE FACSIMILES -- render scaffolding (S186).
+#
+# This is a SPINE page, not a Going-further page: no numbered blocks, no
+# follow-along script, no teardown, and no "What you should see" boxes. It
+# sources pane_facsimile.R for exactly one beat -- the source-vs-console
+# comparison in "The Source pane" -- where the facsimiles are used as LAYOUT
+# FIGURES (they teach WHERE code lives), not as expected-output boxes. Hence
+# .obx$show_source() / .obx$show_console(), which emit bare captioned panes,
+# rather than .obx$show_block(), which wraps its pane in a collapsed callout.
+#
+# pane_facsimile.R has no package dependencies -- important here, since this
+# page runs BEFORE the reader has installed jstats.
+#
+# Everything else on this page is a static screenshot or a plain code fence.
+# ---------------------------------------------------------------------------
+
+options(width = 80)          # match a default 80-column console
+source("pane_facsimile.R")   # defines .obx (dot-named)
+```
+
 ## RStudio Orientation
 
 Before installing the package, it's worth a few minutes getting comfortable with
@@ -20,11 +45,41 @@ and `/`, and the fact that Windows and Mac write paths differently. A Project
 sidesteps all of it: it ties a folder, your data, and your work together, so R
 always knows where it is.
 
-To create one, in RStudio choose **File → New Project → New Directory → New
-Project**, give it a name (for example `jstats-practice`), pick where it should
-live — a folder on your computer itself is a safer home than a cloud-synced one
-like OneDrive, whose syncing can quietly interfere with R's files — and click
-**Create Project**. RStudio opens your new Project.
+To create one, choose **File → New Project…** from the menus.
+
+![](images/menu-new-project.png){width=500px fig-alt="RStudio's File menu open, with New Project… highlighted."}
+
+RStudio now asks two quick questions, in two windows. Take the **first option**
+each time — **New Directory**, then **New Project**. Neither window needs a real
+decision from you, so we won't dwell on them; if you'd rather see them before you
+click, open the box below.
+
+::: {.callout-note collapse="true" title="Click-by-click"}
+**First window — Create Project.** Choose **New Directory**, the top option.
+
+![](images/wizard-create-project.png){width=460px fig-alt="RStudio's Create Project dialog, offering New Directory, Existing Directory, and Version Control. New Directory is the first option."}
+
+**Second window — Project Type.** Choose **New Project**, again the top option.
+(The rest of this list is for building R packages, Shiny apps, and other things
+you won't need here.)
+
+![](images/wizard-project-type.png){width=460px fig-alt="RStudio's Project Type dialog, a list beginning with New Project, followed by R Package, Shiny Application, and other project types."}
+
+RStudio then shows you the naming window — the one pictured back in the main
+text, just below this box. Carry on from there.
+:::
+
+The third window is the one that needs you:
+
+![](images/wizard-name-project.png){width=460px fig-alt="RStudio's New Project dialog: a directory name field, a field for where the project should live, and a checkbox for renv."}
+
+Name the directory **`jstats-practice`** — later pages on this site assume that
+name, so it's worth using it as it stands. Then choose where it should live: a
+folder on your computer itself is a safer home than a cloud-synced one like
+OneDrive, whose syncing can quietly interfere with R's files. Leave **Use renv
+with this project** unticked (renv keeps a per-project record of package
+versions — genuinely useful on large projects, and unnecessary here). Then click
+**Create Project**, and RStudio opens your new Project.
 
 From now on, there are two ways to reopen this Project. From inside RStudio, choose
 **File → Open Project**. Or, in your computer's file manager — **File Explorer** on
@@ -36,30 +91,26 @@ one habit — always work inside a Project — saves more beginner headaches tha
 
 With your Project open, RStudio shows **three panes** to begin with. A fourth — the **Source pane**, in the top-left — doesn't appear until the first time you open a script or view a dataset, so we'll meet it last. We'll take the other three in the order you'll actually reach for them, starting on the left.
 
+![Three panes: the Console down the left, the Environment top-right, and the Output pane bottom-right. The top-left is empty — that's where the fourth pane will appear.](images/window-three-panes.png){width=100% fig-alt="The RStudio window showing three panes: a tall Console occupying the full left side, the Environment pane top-right, and the Files/Plots/Packages/Help pane bottom-right."}
+
 ### The Console — where you type and run code
 
 The tall pane down the **left** side is the **Console**. (With only three panes open it fills the whole left side; the moment the Source pane appears above it, the Console settles into the bottom-left.) This is where you **type — or paste — a command, press Enter, and R runs it**, printing the result just below.
 
-Let's make that real. Click anywhere in the Console, type a sum, and press Enter:
+Let's make that real. Click anywhere in the Console, type a sum, and press Enter — and R answers straight back:
 
-```r
-2 + 2
-```
-
-R answers straight back:
-
-```
-[1] 4
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console("2 + 2", fence = TRUE)
 ```
 
 The Console is a calculator that talks back. Now try a **function** — a named command you give some input to, inside parentheses. This one finds a square root:
 
-```r
-sqrt(144)
-```
-
-```
-[1] 12
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console("sqrt(144)", fence = TRUE)
 ```
 
 (And yes, `sqrt` is plain R — you're already learning the real thing. More on what a function actually is in a moment, once we've used a second one.)
@@ -70,8 +121,11 @@ You'll also see **Terminal** and **Background Jobs** tabs sharing this pane with
 
 The Console also runs commands that *create* things and keep them around. Let's load a dataset, so the **Environment** has something to show. R ships with several built-in datasets for practice; one is `mtcars` (data on some classic car models). Copy it into a name of your own using R's **assignment operator**, `<-`, which means "put what's on the right into the name on the left." Type this in the Console and press Enter — and watch the **top-right** of the screen as you do:
 
-```r
-cars <- mtcars
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console("cars <- mtcars", fence = TRUE, env = TRUE, env_mark = "cars",
+  note = "Notice the Console prints nothing back. Creating an object is a silent act -- the result doesn't appear below your line, it appears in the <strong>Environment</strong>, up in the top-right.")
 ```
 
 Up in the top-right is the **Environment pane** — named for its main tab, **Environment**, open by default — and your new `cars` has just appeared there, described as *32 obs. of 11 variables*. That's its name and size, not the data themselves; the Environment lists what you've loaded, it isn't a window onto the data.
@@ -84,11 +138,37 @@ The **bottom-right** pane gathers everyday tools as tabs: **Files** (the content
 
 ### The Source pane — where you write and keep code
 
-Now the fourth pane. Open a new script — **File → New File → R Script** (or press **Ctrl+Shift+N**, or **Cmd+Shift+N** on a Mac) — and the **Source pane** opens in the **top-left**, nudging the Console down into the bottom-left. This is where you write code you want to *keep*.
+Now the fourth pane. Open a new script — **File → New File → R Script** (or press **Ctrl+Shift+N**, or **Cmd+Shift+N** on a Mac).
+
+![](images/menu-new-r-script.png){width=100% fig-alt="RStudio's File menu open, with New File selected and R Script highlighted in the submenu that opens beside it."}
+
+The **Source pane** opens in the **top-left**, holding an empty, untitled script — and the Console, which until now filled the whole left side, settles into the **bottom-left** to make room. That's the four-pane layout you'll work in from here on.
+
+![Look at the top-left: the fourth pane has arrived, and the Console has moved beneath it. (Your own Console and Environment won't be empty like this one — you've already run a few lines.)](images/window-four-panes.png){width=100% fig-alt="The RStudio window showing four panes: an empty untitled script in the Source pane top-left, the Console beneath it bottom-left, the Environment top-right, and the Output pane bottom-right."}
 
 That's the one real difference between the two left-hand panes: **the Console is for doing, the script is for keeping.** Anything you type in the Console runs and then scrolls away — ideal for a quick, one-off job like a fast calculation. Code you'll want to re-run, revise, and share goes in a **script**: a plain text file (with a `.R` ending) that you save. Typing in a script doesn't run anything on its own; when you're ready, you send a line down to the Console to run it.
 
-Try it. In your new script, type — or paste — the line below, then run it: put the cursor anywhere on the line and press **Ctrl+Enter** (**Cmd+Enter** on a Mac), or click **Run** at the top of the pane.
+Which is easier to see than to describe. Click into your new script and type a line you've already met:
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_source("sqrt(144)")
+```
+
+And notice what happens: **nothing.** No `[1] 12`, no answer — just the line, sitting there. The script is a place to *write* code, and writing is all you've done. R hasn't been asked to do anything yet.
+
+So ask it. Put the cursor anywhere on the line and press **Ctrl+Enter** (**Cmd+Enter** on a Mac), or click **Run** at the top of the pane. The line is sent down to the Console, and *now* R answers:
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console("sqrt(144)")
+```
+
+Same line, same answer as when you typed it into the Console earlier. The difference isn't in what R does — it's in where the code *lives*. Run it from the Console and it's gone as soon as it scrolls away; keep it in a script and you can run it again tomorrow, change one number and re-run it, or send the whole thing to a colleague. Nearly all your real work will be written in the script and *run* in the Console, and that is the habit these guides will keep building.
+
+Stay in the script for the next one. On a new line beneath `sqrt(144)`, type — or paste — the line below, and run it the same way:
 
 ```r
 View(iris)
@@ -99,8 +179,6 @@ A small thing that catches beginners: RStudio runs the *whole line* the cursor i
 `iris` is another built-in dataset (measurements of flowers); being built in, it's available by its own name without copying first. Note the capital **V** — `View` is one of a handful of base-R functions that breaks the usual all-lowercase habit, so `view(iris)` won't work. That's a glimpse of a rule worth learning early: **R is case-sensitive.** `Income` and `income` are two different names to it, and a stray capital is one of the most common reasons something "doesn't work." (jstats keeps its own functions lowercase, in step with the base-R majority.)
 
 Running the line opens a grid in the Source pane — a new tab alongside your script — with rows of flowers down the side and variables across the top. (Clicking a data frame's name in the Environment opens the same read-only grid; `View()` just does it from code.) Notice one column, `Species`, holds group names — setosa, versicolor, virginica — instead of numbers: your first glimpse of a **categorical variable**, a column that sorts cases into groups. You'll meet these properly later.
-
-<!-- screenshot: a new R Script tab and the View(iris) grid open as two tabs in the Source pane (top-left); Console now bottom-left; cars listed in the Environment (top-right) -->
 
 There's one more idea worth pinning down before we move on, because nearly everything in R rests on it: the **function**. You've now used two — `sqrt()` and `View()` — and they share a shape: a function has a name, and you give it its input inside the parentheses that follow. `sqrt(144)` hands `144` to `sqrt` and gets `12` back; `View(iris)` hands `iris` to `View` and opens a data grid. That pattern — pick the function for the job, put your input in the parentheses, take the result — is how nearly all of R works. **jstats, which you'll install next, is simply a collection of functions in this same form**, named and tidied for the things social scientists do most. Once `something(input)` reads naturally to you, most R code does too.
 
@@ -144,3 +222,4 @@ happened to be in memory last time — is the source of truth.
 ---
 
 With RStudio mapped out, the next page adds the jstats package itself.
+

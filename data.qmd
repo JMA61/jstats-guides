@@ -31,6 +31,17 @@ resources:
 options(width = 80)   # match a default 80-column console for table alignment
 suppressPackageStartupMessages(library(jstats))
 
+# Block 5 RUNS ?jload / ?ls / ?jstats -- show_block() always executes its code
+# (box = FALSE hides the OUTPUT, not the execution). Each help() call starts R's
+# dynamic httpd help server and calls browseURL(), which pops a browser tab per
+# call on every render/preview (http://127.0.0.1:<random-port>/library/...).
+# A no-op browser swallows those launches: help still resolves, nothing is
+# displayed (the block is boxless by design), and no tab opens. Preferred over
+# options(help_type = "text"), which would instead dump the entire help page
+# into the captured console output -- harmless while the block is boxless, but a
+# trap the day it isn't. (S186)
+options(browser = function(url) invisible(NULL))
+
 # Clean slate on disk BEFORE any block runs. A publish-gate halt mid-page
 # never reaches the teardown chunk at the bottom, so leftover files from a
 # previous render would collide with the bare jsave() in block 7 (jsave()
@@ -80,7 +91,11 @@ per session is all it takes. If you've just come from the Quick Start page,
 jstats may well be loaded already; running the line again is harmless (it
 simply does nothing the second time). You can check at any point in RStudio's
 **Packages** tab (lower-right pane): the checkbox beside **jstats** is ticked
-while the package is loaded. On a fresh load, jstats also prints a short
+while the package is loaded.
+
+![](images/packages-jstats-loaded.png){width=440px fig-alt="RStudio's Packages tab, showing the jstats entry with its checkbox ticked."}
+
+On a fresh load, jstats also prints a short
 version message in the Console; if it was already loaded, the line stays quiet.
 And if you'd rather never
 type the line again, R can run it for you at the start of every session -- the
@@ -689,3 +704,4 @@ explains why a finished script is written that way.
 if (dir.exists("Data")) unlink("Data", recursive = TRUE)
 if (file.exists("WhereDidIGo.rds")) file.remove("WhereDidIGo.rds")
 ```
+

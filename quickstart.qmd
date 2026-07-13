@@ -218,13 +218,15 @@ held in memory — the one listed in your Environment pane — not the file on d
 can explore and change it freely, and nothing is written to disk until you deliberately
 save.
 
-::: {.callout-tip collapse="true" title="Coming from SPSS or Stata?"}
+::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
 If you're arriving from SPSS or Stata, this is a genuine difference worth a pause. There,
 the dataset open in front of you is the file itself, and saving writes your changes
 straight back to it. R works on the in-memory copy instead, and leaves your original file
-untouched until you explicitly save. What you gain is the freedom to experiment without
-putting your data at risk; what it asks of you is remembering that nothing reaches the
-disk until you save it.
+untouched until you explicitly save. (SAS sits closer to R here — a DATA step writes a new
+dataset rather than editing an open one — so the in-memory copy will feel less foreign;
+what still needs watching is that in R nothing reaches the disk until you say so.) What you
+gain is the freedom to experiment without putting your data at risk; what it asks of you is
+remembering that nothing reaches the disk until you save it.
 :::
 
 ## Set a default dataset
@@ -369,4 +371,5 @@ that come with them, like respondents who declined to answer a question (income,
 `community`, is one such variable). Handling missing values like those is exactly what the
 next part is about: [Loading, Saving, Converting Data](data.qmd).
 :::
+
 

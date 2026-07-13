@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-aea2df6b8927d5c92c47a30dd7ac76d0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-398f93b489fa19b1c3fba8903fe08706.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -367,19 +367,19 @@ Age         103          103   18   71  40.65  11.62
 <section id="what-a-data-frame-is" class="level2">
 <h2 class="anchored" data-anchor-id="what-a-data-frame-is">What a data frame is</h2>
 <p>A quick reminder of a term from the <a href="./rstudio-orientation.html">RStudio Orientation</a>, because you’ll meet it everywhere in R: a table of data like <code>community</code> is a <strong>data frame</strong> — cases in the rows, variables in the columns, held in memory and ready to work on. And recall the practical side: when you work with <code>community</code>, R is working on a copy held in memory — the one listed in your Environment pane — not the file on disk, so you can explore and change it freely, and nothing is written to disk until you deliberately save.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS or Stata?">
+<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Coming from SPSS or Stata?
+<span class="screen-reader-only">Tip</span>Coming from SPSS, Stata, or SAS?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>If you’re arriving from SPSS or Stata, this is a genuine difference worth a pause. There, the dataset open in front of you is the file itself, and saving writes your changes straight back to it. R works on the in-memory copy instead, and leaves your original file untouched until you explicitly save. What you gain is the freedom to experiment without putting your data at risk; what it asks of you is remembering that nothing reaches the disk until you save it.</p>
+<p>If you’re arriving from SPSS or Stata, this is a genuine difference worth a pause. There, the dataset open in front of you is the file itself, and saving writes your changes straight back to it. R works on the in-memory copy instead, and leaves your original file untouched until you explicitly save. (SAS sits closer to R here — a DATA step writes a new dataset rather than editing an open one — so the in-memory copy will feel less foreign; what still needs watching is that in R nothing reaches the disk until you say so.) What you gain is the freedom to experiment without putting your data at risk; what it asks of you is remembering that nothing reaches the disk until you save it.</p>
 </div>
 </div>
 </div>

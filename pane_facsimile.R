@@ -8,7 +8,15 @@
 # images/ and the brand-assets registry. The console chrome strip has the
 # working directory painted to the teaching placeholder "~/your-working-directory/".
 #
-# Public entry point: .obx$show_block(code, box, expect_error, chrome, env, lead)
+# Public entry points:
+#   .obx$show_block(code, box, expect_error, chrome, env, lead, files)
+#       the "What you should see" box -- a collapsed callout. The Going-further
+#       device (data.qmd is the model page).
+#   .obx$show_source(code, name, dirty, lead, note)
+#   .obx$show_console(code, expect_error, lead, note)
+#       bare captioned pane FIGURES, no callout wrapper. Together they carry the
+#       source-vs-console beat on the spine pages (Step 3): the same line shown
+#       sitting unrun in a script, then having been run in the Console.
 
 .obx <- new.env(parent = globalenv())
 
@@ -1045,6 +1053,44 @@ local({
                           lead = NULL, note = NULL){
     if (!is.null(lead)) cat('<p class="obx-lead"><em>', lead, "</em></p>\n", sep = "")
     cat(cap("Source", "upper-left pane"), "\n\n", source_pane(code, name, dirty), "\n", sep = "")
+    if (!is.null(note)) cat('<p class="obx-note"><em>', note, "</em></p>\n", sep = "")
+    invisible(NULL)
+  }
+
+  # A bare, captioned CONSOLE-pane figure -- the counterpart of show_source(),
+  # and deliberately NOT wrapped in the "What you should see" callout. The two
+  # together make the source-vs-console beat: the same line shown sitting in a
+  # script (unrun) and then having been run in the Console. Differences from
+  # show_block(), all intentional:
+  #   - no callout wrapper. On a SPINE page (Step 3) these facsimiles teach
+  #     WHERE CODE LIVES and what the panes DO; they are layout figures, so they
+  #     sit open in the flow rather than behind a collapsed box. The collapsed
+  #     "What you should see" box remains the Going-further device.
+  #   - the ```r fence is OPTIONAL (fence = TRUE), not automatic. When the code
+  #     is already visible to the reader -- in a Source facsimile just above, or
+  #     in the spine prose -- re-printing it would show the same line twice.
+  #     When the reader is being asked to TYPE the line, pass fence = TRUE.
+  # env = TRUE appends an Environment facsimile, read live from the global
+  # environment after the code runs (same mechanism as show_block's env arg).
+  # The code still RUNS (same run_block, same publish gate), so the shown result
+  # can never drift from what the line actually produces.
+  #
+  # KNOWN LIMIT (S186): run_block() does not echo a trailing comment -- the line
+  # "sqrt(144)  # find a square root" echoes as "> sqrt(144)". Real RStudio
+  # echoes the whole line. Do NOT use these helpers to illustrate comments; a
+  # plain code fence is honest there, a facsimile is not.
+  show_console <- function(code, expect_error = FALSE, fence = FALSE,
+                           env = FALSE, env_mark = NULL,
+                           lead = NULL, note = NULL){
+    code <- sub("[\n]+$", "", code)
+    if (fence) cat("```r\n", code, "\n```\n\n", sep = "")
+    segs <- run_block(code, expect_error = expect_error)
+    if (!is.null(lead)) cat('<p class="obx-lead"><em>', lead, "</em></p>\n", sep = "")
+    cat(cap("Console", "lower-left pane"), "\n\n", console_pane(segs), "\n", sep = "")
+    if (env){
+      cat("\n", cap("Environment", "upper-right pane"), "\n\n",
+          env_pane(env_objects(), mark = env_mark), "\n", sep = "")
+    }
     if (!is.null(note)) cat('<p class="obx-note"><em>', note, "</em></p>\n", sep = "")
     invisible(NULL)
   }

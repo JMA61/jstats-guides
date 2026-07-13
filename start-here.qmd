@@ -95,10 +95,12 @@ free for everyone — which is a big part of why it has grown so many add-on pac
 :::
 
 ::: {.callout-note collapse="true" title="Aside — where the jstats name comes from"}
-**jstats** quietly continues that naming tradition. It pairs the **j** of its
-author's first name with *stats*, and every command the package adds begins with
-that same **j** — a small signal that lets you tell at a glance which functions come
-from jstats rather than from base R or another package.
+**jstats** is named on the same principle R itself was. R's creators — **Ross Ihaka**
+and **Robert Gentleman**, two statisticians in New Zealand — called their language
+after the first initial they shared. jstats pairs the **j** of its author's first name
+with *stats*, and every command the package adds begins with that same **j** — a small
+signal that lets you tell at a glance which functions come from jstats rather than from
+base R or another package.
 :::
 
 ::: {.callout-note collapse="true" title="Aside — what the tidyverse is"}
@@ -137,5 +139,6 @@ use. (jstats isn't on CRAN just yet — for now it installs from another common 
 for R projects, which the Install jstats page walks you through — but it's headed
 there.)
 :::
+
 
 
