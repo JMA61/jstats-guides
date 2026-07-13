@@ -3,6 +3,56 @@ pagetitle: "jstats:Quickstart"
 title-prefix: ""
 ---
 
+```{r}
+#| label: obx-setup
+#| include: false
+
+# ---------------------------------------------------------------------------
+# CONSOLE FACSIMILES -- render scaffolding (S187). Hidden (include: false).
+#
+# This page uses BOTH facsimile devices:
+#   - .obx$show_console(fence = TRUE)  -> open, in-flow Console pane. Used for
+#     the three blocks whose output carries the page's ARGUMENT (the first
+#     library() call, the bare base R triple, and the jdesc table that answers
+#     it). Collapsing those would hide the very thing being argued about.
+#   - .obx$show_block(chrome = TRUE)   -> collapsed "What you should see" box.
+#     Used from the first jfreq onward, where the output is the reader's own
+#     result to CHECK rather than part of an argument.
+#
+# NOTE -- jstats is deliberately NOT pre-loaded here. data.qmd's setup calls
+# suppressPackageStartupMessages(library(jstats)) to attach once for the page;
+# doing that here would make the page's own first block a no-op -- R prints the
+# startup message on FIRST attach only, so a pre-attached package would leave
+# the open Console facsimile showing a bare "> library(jstats)" and nothing
+# beneath it. The block's whole point is that message, so block 1's library()
+# call must be the genuine first attach. pane_facsimile.R is pure base R and
+# needs no package, so nothing here depends on an early load.
+#
+# joutput()/joptions() are likewise left alone: a first-time reader runs on
+# package defaults, so a virgin render session is exactly the right fidelity.
+# The page writes nothing to disk, so it needs no clean-slate or teardown.
+# ---------------------------------------------------------------------------
+
+options(width = 80)   # match a default 80-column console for table alignment
+
+# Block 1 renders library(jstats) into a Console facsimile, and the startup
+# message it shows is the POINT of that block. But .onAttach() returns early in
+# a non-interactive session (R CMD check, knitr, Quarto), so a plain render
+# would print nothing. This option opens that gate for the render only, so the
+# facsimile shows the REAL, CURRENT message (version number and all) rather
+# than a hard-coded copy that would go stale on every version bump. Requires
+# jstats >= 0.9.103. (S187; see zzz.R.)
+options(jstats.attach.noninteractive = TRUE)
+
+# Defensive only: the ?jfreq / ?jstats blocks are PLAIN fences and never run.
+# Should one ever be converted to a facsimile, help() would start R's httpd
+# help server and call browseURL(), popping a browser tab on every render.
+# A no-op browser swallows that. (Same guard as data.qmd; see S186.)
+options(browser = function(url) invisible(NULL))
+
+source("pane_facsimile.R")   # defines .obx (dot-named -> survives rm(list = ls()))
+```
+
 ## jstats Quick Start
 
 This is where you put jstats to work. We'll take a quick tour of the package on a
@@ -49,18 +99,39 @@ or build on later. (You saw the division of labor in the orientation: the Consol
 quick one-offs; a script is for work you keep.) Open one with **File → New File → R
 Script**; it appears in the Source pane, top-left.
 
-The first line to type is the library command:
+The first line to type is the library command. Run it the way you practiced — cursor
+anywhere on the line, then **Ctrl+Enter** (**Cmd+Enter** on a Mac), or the **Run** button
+at the top of the pane:
 
-```r
-library(jstats)
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console("library(jstats)", fence = TRUE)
 ```
 
-Run it the way you practiced — cursor anywhere on the line, then **Ctrl+Enter**
-(**Cmd+Enter** on a Mac), or the **Run** button at the top of the pane. Down in the
-Console, jstats answers with a short startup message, and that message confirms the
-package is loaded for this session. (Typing one library line per session is no great
-burden — but if you'd rather have jstats load itself automatically whenever RStudio
-opens, [Loading jstats automatically](loading-jstats-automatically.qmd) shows you how.)
+Down in the Console, jstats answers with a short startup message, and that message
+confirms the package is loaded for this session. (Typing one library line per session is
+no great burden — but if you'd rather have jstats load itself automatically whenever
+RStudio opens, [Loading jstats automatically](loading-jstats-automatically.qmd) shows you
+how.)
+
+::: {.callout-note collapse="true" title="If you see a warning"}
+Alongside the startup message, R may also print a **warning** — most often one saying the
+package *was built under* a newer version of R than the one you're running. Nothing has
+gone wrong. jstats is loaded and working.
+
+It's worth knowing the difference between the two things R can say to you, because you'll
+meet both. An **error** means R *stopped*: the command did not run, and nothing was
+produced. A **warning** means the command *did* run, and R is telling you something about
+it afterward. So a warning is never cause for alarm — but it isn't something to ignore on
+principle either. Read it. Some warnings matter a great deal; this one doesn't.
+
+This one simply reflects that the copy of jstats you downloaded was built on a slightly
+newer version of R than the one on your computer. It's harmless, and it will reappear each
+time you load the package until your R catches up. If you'd rather not see it, install the
+current version of R — [Install R and RStudio](install-r-and-rstudio.qmd) walks through
+it.
+:::
 
 ## Why jstats — a quick contrast
 
@@ -73,18 +144,14 @@ we're running them only for the comparison. Leaving a blank line between command
 optional — R ignores blank lines entirely, so you can use them to space a script for
 readability, or not:
 
-```r
-mean(community$Age)
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(mean(community$Age)
 
 sd(community$Age)
 
-range(community$Age)
-```
-
-```
-[1] 40.65049
-[1] 11.61955
-[1] 18 71
+range(community$Age))---", fence = TRUE)
 ```
 
 You can run these one line at a time, or select all three and run them together — either
@@ -96,16 +163,11 @@ would mean fifteen lines. And some basic facts are still missing — how many re
 there are, and whether any ages are missing. Here's the same job in jstats, with a
 function called `jdesc` (short for *descriptives*):
 
-```r
-jdesc(community, Age)
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console("jdesc(community, Age)", fence = TRUE)
 ```
-
-<pre class="jstats-output"><span class="jstats-title">Descriptive Statistics</span>
-
-Variable  Total  Non_missing  Min  Max   Mean     SD
---------  -----  -----------  ---  ---  -----  -----
-Age         103          103   18   71  40.65  11.62
-</pre>
 
 One command, one table — the total number of cases, how many are non-missing, the
 minimum and maximum, the mean, and the standard deviation, together and labeled, laid
@@ -138,8 +200,10 @@ with `j` — but most of what you'll see belongs to the package.)
 This time the function is `jfreq` (short for *frequencies*), and the question is how our
 respondents are distributed across regions:
 
-```r
-jfreq(community, Region)
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block("jfreq(community, Region)", chrome = TRUE)
 ```
 
 Inside the parentheses, `jfreq` takes two things in order: the dataset (`community`) and
@@ -170,6 +234,8 @@ keep, and this is a one-off — so down in the Console, type:
 ```r
 ?jfreq
 ```
+
+![](images/help-pane-jfreq.png){width=620px fig-alt="RStudio's Help pane, in the lower-right, showing the jfreq help page: the tab bar with Help selected, the page title, the Description, and the start of the Usage section."}
 
 A `?` followed by a function's name opens that function's help page in the bottom-right
 pane. Scroll to the bottom and you'll find the **Examples** section: copy one, paste it
@@ -235,14 +301,18 @@ You named `community` explicitly in your `jfreq` call. If you'll work with one d
 a while, you can set it as the default and stop repeating its name. Do that with `juse`
 (short for *use*):
 
-```r
-juse(community)
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block("juse(community)", chrome = TRUE)
 ```
 
 Now rerun the frequency table without naming the dataset:
 
-```r
-jfreq(Region)
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block("jfreq(Region)", chrome = TRUE)
 ```
 
 Same result — jstats fills in `community` for you. And `juse` changes nothing about the
@@ -256,12 +326,14 @@ For numeric variables like age or income, you usually want the mean, the standar
 deviation, and the like rather than a full frequency table — and that's `jdesc` again.
 Because `community` is now the default, we name just the variables:
 
-```r
-jdesc(Age, WellbeingScore, Income)
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block("jdesc(Age, WellbeingScore, Income)", chrome = TRUE)
 ```
 
-jstats returns the same table layout you saw at the start of the tour, now with one row
-per variable — three variables summarized in a single, readable table.
+It's the same table layout you saw at the start of the tour, now with one row per
+variable — three variables summarized in a single, readable table.
 
 ## Screen the whole dataset at once
 
@@ -269,8 +341,10 @@ Before any serious analysis, it's good practice to survey the whole dataset — 
 possible outliers, skewed distributions, missing values, and what *kind* each variable
 seems to be. `jscreen` (short for *screen*) folds that whole first look into one call:
 
-```r
-jscreen()
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block("jscreen()", chrome = TRUE)
 ```
 
 With the `juse` default set, a bare `jscreen()` screens every variable in `community` and
@@ -294,8 +368,10 @@ analysis). If you're an experienced R user, you'll recognize it as a close cousi
 R's own `lm` — the resemblance is deliberate: jstats stays near base R wherever it can, so
 what you practice here carries over. Here's the command in its simplest form:
 
-```r
-jlm(WellbeingScore ~ Age)
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block("jlm(WellbeingScore ~ Age)", chrome = TRUE)
 ```
 
 ::: {.callout-tip collapse="true" title="If you're new to statistics"}
@@ -314,8 +390,10 @@ in effect, and jstats notes which data frame it used at the top of the output.)
 
 Now here's a second way to run the same analysis — one you'll see everywhere in R:
 
-```r
-Results <- jlm(WellbeingScore ~ Age)
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block("Results <- jlm(WellbeingScore ~ Age)", chrome = TRUE, env = TRUE)
 ```
 
 That arrow on the left — typed as a less-than sign followed by a hyphen — is R's
@@ -329,8 +407,9 @@ that formats them into a polished table for a report or article — without runn
 regression again.
 
 And notice what happened in the Console when that second form ran: the full results
-printed again. That's the default behavior of every jstats analysis function — it prints
-its results *and* hands you the stored copy, so the arrow costs you nothing.
+printed again — while `Results` itself appeared in the **Environment** pane, upper right.
+That's the default behavior of every jstats analysis function — it prints its results
+*and* hands you the stored copy, so the arrow costs you nothing.
 
 "Default" is worth dwelling on, because it points to something useful as you go further:
 most jstats functions accept **options**. Open any function's help page and you'll find
@@ -342,7 +421,8 @@ the controls are there, and the help pages show the way.
 
 ## Read the output
 
-Take a moment to look over what jstats printed. If regression is familiar territory,
+Take a moment to look over what jstats printed — in your own Console, or in the box
+above. If regression is familiar territory,
 you'll find the essentials of a standard analysis laid out in this single output — the
 coefficients, their significance tests, the model-fit statistics — with nothing further to
 request or assemble. If regression is new to you, don't try to decode the table today:

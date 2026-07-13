@@ -794,6 +794,32 @@ local({
     invisible(TRUE)
   }
 
+  # ---- warning formatting (S187) -------------------------------------------
+  # Real top-level R does NOT print "Warning: <msg>" inline. It DEFERS warnings
+  # to the end of the top-level call (the default options(warn = 0)) and then
+  # prints them under a header:
+  #     Warning message:            <- one warning
+  #     package 'jstats' was built under R version 4.5.3
+  #     Warning message:            <- one warning raised inside a call
+  #     In g() : with a call attached
+  #     Warning messages:           <- several, numbered
+  #     1: first
+  #     2: second
+  # Warnings are therefore collected in their OWN buffer, not interleaved into
+  # msgbuf, so they land after any message()/packageStartupMessage() output no
+  # matter which order the two were signalled in. Rendered with the message
+  # class -- RStudio colors messages and warnings alike.
+  fmt_warn <- function(w){
+    cl <- conditionCall(w)
+    if (is.null(cl)) conditionMessage(w)
+    else paste0("In ", paste(deparse(cl), collapse = " "), " : ", conditionMessage(w))
+  }
+  warn_block <- function(ws){
+    if (length(ws) == 1L) paste0("Warning message:\n", ws)
+    else paste0("Warning messages:\n",
+                paste0(seq_along(ws), ": ", ws, collapse = "\n"))
+  }
+
   run_block <- function(code, expect_error = FALSE){
     exprs <- parse(text = code, keep.source = TRUE)
     refs  <- attr(exprs, "srcref")
@@ -809,7 +835,7 @@ local({
       srclines <- as.character(refs[[i]]); srclines[1] <- paste0("> ", srclines[1])
       if (length(srclines) > 1) srclines[-1] <- paste0("+ ", srclines[-1])
       add("prompt", paste(srclines, collapse = "\n"))
-      msgbuf <- character(0); errbuf <- character(0)
+      msgbuf <- character(0); warnbuf <- character(0); errbuf <- character(0)
       out <- capture.output(
         withCallingHandlers({
           ev <- if (expect_error)
@@ -819,11 +845,12 @@ local({
           if (isTRUE(ev$visible)) print(ev$value)
         },
         message = function(m){ msgbuf[[length(msgbuf)+1L]] <<- sub("\n$","",conditionMessage(m)); invokeRestart("muffleMessage") },
-        warning = function(w){ msgbuf[[length(msgbuf)+1L]] <<- paste0("Warning: ", conditionMessage(w)); invokeRestart("muffleWarning") })
+        warning = function(w){ warnbuf[[length(warnbuf)+1L]] <<- fmt_warn(w); invokeRestart("muffleWarning") })
       )
       add("stdout", paste(out, collapse = "\n"))
-      if (length(msgbuf)) add("message", paste(msgbuf, collapse = "\n"))
-      if (length(errbuf)) add("error",   paste(errbuf, collapse = "\n"))
+      if (length(msgbuf))  add("message", paste(msgbuf, collapse = "\n"))
+      if (length(warnbuf)) add("message", warn_block(warnbuf))
+      if (length(errbuf))  add("error",   paste(errbuf, collapse = "\n"))
     }
     segs
   }
