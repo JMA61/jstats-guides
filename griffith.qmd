@@ -167,6 +167,29 @@ behind it.
 
 [Get Started →](start-here.qmd){.btn .btn-griffith role="button" target="_blank" rel="noopener"}
 
+## If Windows blocks the installer on a Griffith computer
+
+On a Griffith-managed computer, Windows may show a blue "Windows protected your PC"
+box with **no More info link** — and no way past it — when you run the R or RStudio
+installer. Launching it from your Downloads folder makes no difference. (On your own
+laptop you shouldn't hit this; the [Troubleshooting](troubleshooting.qmd) page covers
+the ordinary More info → Run anyway route.)
+
+Griffith IT has advised that on Griffith-managed computers you can clear this block
+yourself:
+
+1. Open **File Explorer** and go to your **Downloads** folder.
+2. **Right-click** the downloaded installer — `R-4.6.1-win.exe`, or the RStudio one —
+   and choose **Properties**.
+3. On the **General** tab, at the bottom, tick **Unblock**.
+4. Click **OK**, then run the installer again.
+
+![The Security row sits at the bottom of the General tab. Tick **Unblock**, then click **OK**.](images/security-unblock.png){width=405px fig-alt="The Windows file Properties dialog, General tab, showing the Security row with an Unblock checkbox at the bottom right."}
+
+If there's no Unblock box, or the installer is still blocked, call the Griffith IT
+service desk on **5552 5555** and ask them to unblock the R and RStudio installers, or
+to install them for you.
+
 ::: {.callout-tip collapse="true" title="Using a Griffith SAL lab computer?"}
 SAL lab machines are networked but not connected to the open internet. jstats
 runs perfectly there -- every analysis works fully offline. But while jstats is
@@ -216,3 +239,4 @@ and more routine. If you're using jstats in a course -- at Griffith or anywhere
 else -- I'd be glad to hear about it, purely out of interest and so I can get a
 sense of where the package is being used. Email me at
 [SurveyCentre@griffith.edu.au](mailto:SurveyCentre@griffith.edu.au).
+

@@ -8,7 +8,7 @@
 
 ## ---- 1. Load the package and a dataset ---------------------------------
 
-## Load the jstats library (needed once per R session)
+## Load the jstats package (needed once per R session)
 library(jstats)
 
 ## Load the package dataset called community
@@ -216,3 +216,4 @@ joutput(digits = 3)
 ## Passing "" clears it (data.dir = NULL would leave it unchanged)
 ## A finished script leaves your session exactly as it found it
 joptions(data.dir = "")
+

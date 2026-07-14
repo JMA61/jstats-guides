@@ -323,8 +323,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"jstats"</span>,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">"https://jma61.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span>))</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You may see a red WARNING that Rtools is required. That’s normal and not an error — jstats installs without it.</p>
+<p>You may see a red WARNING that Rtools is required. That’s normal and not an error — jstats installs without it. And if R asks whether you want to install from sources, click <strong>No</strong>.</p>
 <p>The <code>repos</code> part just tells R where to look: the first address is the r-universe repository where jstats is published, and the second is an ordinary CRAN mirror that supplies any of jstats’s supporting packages you don’t already have. Both hand over ready-made versions, so nothing is built from source and the install is quick.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="New to R?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>New to R?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Two words are about to start doing a lot of work, and they’re easy to mix up.</p>
+<p>A <strong>package</strong> is the thing you install — jstats is a package. A <strong>library</strong> is a folder on your computer where your installed packages are kept. <code>install.packages()</code> puts jstats into the library; <code>library(jstats)</code> fetches it back out for the session. The command is named after the folder it fetches from.</p>
+<p>That’s also why R can answer a line that says <code>library</code> with an error that says <em>package</em>: it looked in the folder, and the package wasn’t there. And it’s why updating R means installing your packages again — a new version of R starts with a fresh, empty library.</p>
+</div>
+</div>
+</div>
 <p>Installing is normally a <strong>once-per-computer</strong> job — plus once more if you ever update R itself, which comes out in a new version about once a year and starts a fresh package library when it does. <strong>Worth bookmarking:</strong> this page always carries the current install line, so it’s the one to come back to on a new computer or after an R update. (If <code>library(jstats)</code> ever fails after updating R, the <a href="./troubleshooting.html">Troubleshooting</a> page has the details.)</p>
 <p>On the first install — or the first time you load jstats after updating R — you may see a line like <code>package 'jstats' was built under R version 4.x.x</code>. That’s normal and needs no action: it only means the ready-made copy was built on a slightly different R version than the one you’re running. It clears the next time you update R.</p>
 <p>If it loaded cleanly, you’ll see a short jstats startup message — and, if a newer version is already out, a note with the exact lines to update (more on that below). That message is how you know jstats is loaded and ready.</p>
@@ -333,7 +351,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="if-the-install-fails">If the install fails</h3>
 <p>The most common snags are below — scan the titles and open the one that matches your error. If yours isn’t here, the full <a href="./troubleshooting.html">Troubleshooting</a> page has more.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="The install seems half-done or broken">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -342,7 +360,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The simplest fix is to remove jstats and install it fresh:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">remove.packages</span>(<span class="st">"jstats"</span>)</span>
@@ -353,7 +371,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="RStudio hangs or loops every time it starts">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -362,7 +380,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This almost always means an <strong>install command was put in your <code>.Rprofile</code></strong>. That file runs <em>every time R starts</em>, so an install line tries to reinstall on every startup and can loop. Your <code>.Rprofile</code> should only ever hold lightweight startup lines like <code>library(jstats)</code> — never an install command. To recover: close RStudio, open your Project folder in your computer’s file manager, open the <code>.Rprofile</code> file in a plain text editor (Notepad on Windows, TextEdit on Mac), delete the install line, keeping the <code>library(jstats)</code> line (and its reminder comment, if your <code>.Rprofile</code> has one), save, and reopen RStudio.</p>
 </div>
@@ -387,7 +405,7 @@ Reload jstats with library(jstats) (unless loaded automatically on startup).</co
 <p>Follow those and you’re running the new version.</p>
 <p>(This all gets simpler once jstats reaches CRAN: <code>jupdate()</code> keeps working, just updating the ordinary way, and we’ll revise these instructions then.)</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -396,7 +414,7 @@ Reload jstats with library(jstats) (unless loaded automatically on startup).</co
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A couple of extra options. If you’d rather confirm before anything installs, run <code>jupdate(ask = TRUE)</code> — it shows the available and installed versions and waits for your okay. Updates are reliable here because <code>jupdate()</code> installs in a <em>separate</em> R process, so the copy loaded in your session never has to overwrite its own files mid-update (the usual cause of a failed update on Windows). And to silence the startup check entirely — for instance on a machine that’s on a network but has no internet — set <code>options(jstats.check_updates = FALSE)</code>.</p>
 </div>
@@ -416,7 +434,7 @@ Reload jstats with library(jstats) (unless loaded automatically on startup).</co
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="For experienced R users">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -425,7 +443,7 @@ Reload jstats with library(jstats) (unless loaded automatically on startup).</co
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A concrete example of feature-by-request: a researcher wanted to see <em>which cells</em> drive a significant chi-square, so adjusted standardized residuals were added to the cross-tabs function — <code>jcrosstab(Education ~ Volunteer, data = community, residuals = "adjusted")</code>. That kind of targeted addition is exactly what this phase is for.</p>
 </div>

@@ -820,9 +820,20 @@ local({
                 paste0(seq_along(ws), ": ", ws, collapse = "\n"))
   }
 
+  # ECHO FIDELITY (S189). The echo is built from the RAW SOURCE LINES a statement
+  # spans -- src[first_line:last_line] -- NOT from as.character(srcref), which
+  # honors the srcref's COLUMNS and so stops at the last token, silently dropping
+  # any TRAILING comment ("mean(x)  # a poisoned mean" echoed as "> mean(x)").
+  # Whole-line indexing makes the box show each command line AS TYPED, comment and
+  # all, which is what RStudio does. STANDALONE comment lines still do not echo:
+  # they are not expressions, so no srcref points at them -- deliberate, and
+  # disclosed to the reader (data.qmd block 1's box lead and the page-wrap box).
+  # KNOWN CAVEAT: two statements on one physical line, separated by ";", would
+  # echo that line twice (one srcref each). No page does this; keep it that way.
   run_block <- function(code, expect_error = FALSE){
     exprs <- parse(text = code, keep.source = TRUE)
     refs  <- attr(exprs, "srcref")
+    src   <- strsplit(code, "\n", fixed = TRUE)[[1]]
     segs  <- list()
     add   <- function(type, text){
       text <- scrub_wd(text)                  # no real paths reach a box
@@ -832,7 +843,8 @@ local({
       }
     }
     for (i in seq_along(exprs)){
-      srclines <- as.character(refs[[i]]); srclines[1] <- paste0("> ", srclines[1])
+      srclines <- src[refs[[i]][1L]:refs[[i]][3L]]   # whole physical lines (see above)
+      srclines[1] <- paste0("> ", srclines[1])
       if (length(srclines) > 1) srclines[-1] <- paste0("+ ", srclines[-1])
       add("prompt", paste(srclines, collapse = "\n"))
       msgbuf <- character(0); warnbuf <- character(0); errbuf <- character(0)
@@ -1102,10 +1114,10 @@ local({
   # The code still RUNS (same run_block, same publish gate), so the shown result
   # can never drift from what the line actually produces.
   #
-  # KNOWN LIMIT (S186): run_block() does not echo a trailing comment -- the line
-  # "sqrt(144)  # find a square root" echoes as "> sqrt(144)". Real RStudio
-  # echoes the whole line. Do NOT use these helpers to illustrate comments; a
-  # plain code fence is honest there, a facsimile is not.
+  # (The S186 KNOWN LIMIT is GONE as of S189: run_block() now echoes the whole
+  # physical source line, so "sqrt(144)  # find a square root" echoes as typed.
+  # These helpers may therefore be used to illustrate TRAILING comments. A
+  # STANDALONE comment line still does not echo -- see run_block()'s header.)
   show_console <- function(code, expect_error = FALSE, fence = FALSE,
                            env = FALSE, env_mark = NULL,
                            lead = NULL, note = NULL){
@@ -1156,3 +1168,4 @@ local({
 
   invisible(NULL)
 }, envir = .obx)
+

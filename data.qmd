@@ -12,7 +12,8 @@ resources:
 # ---------------------------------------------------------------------------
 # EXPECTED-OUTPUT BOXES ("What you should see") -- render scaffolding.
 # Proven S182; wired + pane facsimiles S183. Hidden (include: false). It (a)
-# pins the console width, (b) loads jstats once for the whole page, (c) clears
+# pins the console width, (b) lets block 1's own library(jstats) print the real
+# startup message (S189 -- see below), (c) clears
 # any artifacts a previous (possibly halted) render left on disk, and (d)
 # sources pane_facsimile.R, which defines the capture-once / display-twice
 # helpers AND the RStudio Console / Environment pane facsimiles in their OWN
@@ -29,7 +30,20 @@ resources:
 # ---------------------------------------------------------------------------
 
 options(width = 80)   # match a default 80-column console for table alignment
-suppressPackageStartupMessages(library(jstats))
+
+# jstats is deliberately NOT pre-loaded here (S189). It used to be, via
+# suppressPackageStartupMessages(library(jstats)) -- which meant that by the time
+# block 1's OWN library(jstats) ran, the package was already attached, and R prints
+# the startup message on FIRST attach only. Block 1's box therefore showed a bare
+# "> library(jstats)" with nothing beneath it: truthful only for a reader who arrived
+# with jstats already loaded. Block 1 is now the genuine first attach.
+#
+# .onAttach() returns early in a non-interactive session (R CMD check, knitr, Quarto),
+# so a plain render would still print nothing. This option opens that gate for the
+# render only, so the box shows the REAL, CURRENT startup message (version number and
+# all) rather than a hard-coded copy that would go stale on every version bump.
+# Requires jstats >= 0.9.103. Same pattern as quickstart.qmd. (S187 zzz.R; wired S189.)
+options(jstats.attach.noninteractive = TRUE)
 
 # Block 5 RUNS ?jload / ?ls / ?jstats -- show_block() always executes its code
 # (box = FALSE hides the OUTPUT, not the execution). Each help() call starts R's
@@ -75,14 +89,14 @@ We'll start by loading the package and one of its built-in practice datasets.
 #| results: asis
 .obx$show_block(r"---(## ---- 1. Load the package and a dataset ---------------------------------
 
-## Load the jstats library (needed once per R session)
+## Load the jstats package (needed once per R session)
 library(jstats)
 
 ## Load the package dataset called community
 ## It's loaded as a data frame into the Environment
 jload("community"))---",
   chrome = TRUE, env = TRUE,
-  lead = "The command lines are shown; the <code>##</code> comment lines aren't -- running a comment just echoes it back and does nothing.")
+  lead = "The command lines are shown; the standalone <code>##</code> comment lines aren't -- running a comment just echoes it back and does nothing.")
 ```
 
 ::: {.callout-note collapse="true" title="What's the point?"}
@@ -476,7 +490,7 @@ why saving straight to Stata format above stops and asks you to convert first.
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
 Base R alone can't write SPSS or Stata files. You'd install and load the
 **haven** package and call `haven::write_sav()` or `haven::write_dta()`
-yourself -- and haven is exactly the proven library jstats uses under the hood,
+yourself -- and haven is exactly the proven package jstats uses under the hood,
 so nothing here reinvents the wheel. What jstats spares you is the setup and
 the sharp edge: loading an extra package in every script, learning its separate
 function set, and handling the missing-value translation by hand -- haven
@@ -650,8 +664,9 @@ to overwrite their earlier files -- that's block 6's lesson again; add
 
 The **What you should see** boxes under some blocks above reproduce that
 Console -- the blue command lines, the gray notices, the colored tables, a red
-error where one is meant to happen. They show the *code* being run, not the
-`##` comment lines (running a comment just echoes it back and does nothing), so
+error where one is meant to happen. They show the *code* being run, along with any
+note written on the end of a command line -- but not the standalone `##` comment
+lines (running one just echoes it back and does nothing), so
 the box stays focused on what actually happens. Reading a block? The commented
 code is in the gray block; the result is in the box beneath it. Several boxes
 also picture your **Environment** pane -- the upper-right one -- so you can
@@ -704,4 +719,5 @@ explains why a finished script is written that way.
 if (dir.exists("Data")) unlink("Data", recursive = TRUE)
 if (file.exists("WhereDidIGo.rds")) file.remove("WhereDidIGo.rds")
 ```
+
 

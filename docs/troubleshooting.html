@@ -265,6 +265,7 @@ available; add a figure line like the one above once the image is in images/). -
 <div class="callout-body-container callout-body">
 <p>On a university or workplace computer you may not be allowed to install software yourself. What happens depends on how the machine is set up:</p>
 <ul>
+<li>The blue box shows <strong>no More info link at all</strong>, even when you launch the installer from your Downloads folder. This one looks worse than it is: the block has been set centrally, so there’s nothing to fix at your end — and it’s a routine request for IT, often settled in a single phone call. Ask your IT service desk to unblock the R and RStudio installers, or to install them for you; going through them keeps everything in line with your organization’s policies. The note below is written for whoever picks it up.</li>
 <li>The install is blocked, but the screen offers a path to <strong>temporary administrator rights</strong> — usually a prompt for your own credentials, sometimes followed by a box asking <em>why</em> you’re installing. Both are routine; fill them in and carry on.</li>
 <li>There’s no self-service path, in which case R and RStudio are requested through your <strong>IT service desk</strong>, a <strong>software catalog</strong>, or your <strong>instructor</strong>. The note below is written for whoever handles that request — you can point them straight to it.</li>
 </ul>
@@ -289,7 +290,7 @@ available; add a figure line like the one above once the image is in images/). -
 <li><strong>Sources.</strong> R is published by the R Foundation through CRAN (<strong>cran.r-project.org</strong>); RStudio Desktop comes from <strong>Posit</strong> (<strong>posit.co</strong> / <strong>docs.posit.co</strong>). Both are long-established and in wide academic and government use.</li>
 <li><strong>Signatures and integrity.</strong> The R for Windows installer is code-signed — the User Account Control dialog shows a verified publisher — and it is downloaded over HTTPS from CRAN, which also publishes checksums for verifying the download. RStudio Desktop is signed by <strong>Posit Software, PBC</strong>.</li>
 <li><strong>Installing without administrator rights.</strong> Administrator rights aren’t strictly required. Run without them, the R for Windows installer installs into the user’s own file area instead of Program Files (administrator rights are needed only for a system-wide install and the optional registry entries). RStudio Desktop is additionally offered as a <strong>Windows <code>.zip</code> archive</strong> that can be unpacked and run without the installer; current deployment guidance is on Posit’s documentation site.</li>
-<li><strong>SmartScreen.</strong> Microsoft SmartScreen may flag a freshly released version until it accumulates download reputation; this resets with each release and is not an indication of malware.</li>
+<li><strong>SmartScreen.</strong> Microsoft SmartScreen may flag a freshly released version until it accumulates download reputation; this resets with each release and is not an indication of malware. Where the user reports the warning with <strong>no More info option at all</strong>, that is typically SmartScreen configured to warn without a bypass rather than the default reputation check; the installers are code-signed and their provenance is above, so clearing it is at your discretion.</li>
 <li>Organizations operating under standards such as <strong>ISO/IEC 27001</strong> will route this through their software-approval process; the information above is provided to support that assessment.</li>
 </ul>
 </div>
@@ -314,8 +315,25 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-warning callout-titled" title="The install seems half-done or broken">
+<div class="callout callout-style-default callout-warning callout-titled" title="R asked whether to install from sources, and I clicked Yes">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>R asked whether to install from sources, and I clicked Yes
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The answer to that question is <strong>No</strong>. Nothing is broken if you clicked Yes — the install may just stall, fail, or fill the Console with red text.</p>
+<p>Run the install line on the <a href="./install-jstats.html">Install jstats</a> page again, and click <strong>No</strong> this time.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="The install seems half-done or broken">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -324,7 +342,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The simplest fix is to remove jstats and install it fresh:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">remove.packages</span>(<span class="st">"jstats"</span>)</span>
@@ -335,7 +353,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="The install fails on Windows: 'not writable', 'cannot create dir', or the message mentions OneDrive">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -344,7 +362,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>On many Windows computers the <strong>Documents</strong> folder is synced by OneDrive — and by default that is where R keeps its <strong>package library</strong> (the folder your installed packages live in). OneDrive can lock files while it syncs, and an install that runs into a lock fails part-way with messages like the ones above.</p>
 <p>Fixes, from simplest to most durable:</p>
@@ -359,7 +377,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="The install asks for an administrator password, or a work network blocks the download">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -368,14 +386,14 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>On managed work or lab computers, two things can stop the install: your account may not be allowed to install software, or the network may block downloads from sites it doesn’t recognize. Neither is anything you did wrong — and the request to your IT support is a small one. jstats installs as a <strong>ready-made binary</strong> (no compilers or build tools are needed), fetched from the two addresses in the install line: the r-universe repository (<code>jma61.r-universe.dev</code>) and an ordinary CRAN mirror (<code>cloud.r-project.org</code>). Ask IT either to allow those two addresses or to run the install line for you; either way it’s a quick job for them.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="Where did jstats install? / I updated, but I still see the old version">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -384,9 +402,9 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>R keeps installed packages in a <strong>library</strong> — a folder on your computer — and there can be more than one. On a fresh Windows setup, the install often lands quietly in R’s <strong>system library</strong> (inside Program Files) rather than in your personal library, without asking. On its own that’s harmless: jstats installs and runs fine from there.</p>
+<p>R keeps installed packages in a <strong>library</strong> — a folder on your computer — and there can be more than one. That’s normally invisible and harmless: jstats installs into one of them and runs fine from there.</p>
 <p>It only matters if you end up with <strong>two copies in two libraries</strong> — then an update can land in one library while R keeps loading the older copy from the other, and you appear stuck on the old version. To see which copy R is using, and every library R searches:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find.package</span>(<span class="st">"jstats"</span>)   <span class="co"># the folder of the copy R loads</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.libPaths</span>()              <span class="co"># every library R searches, in order</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -400,7 +418,7 @@ available; add a figure line like the one above once the image is in images/). -
 <section id="starting-rstudio-and-loading-jstats" class="level2">
 <h2 class="anchored" data-anchor-id="starting-rstudio-and-loading-jstats">Starting RStudio and loading jstats</h2>
 <div class="callout callout-style-default callout-warning callout-titled" title="RStudio hangs or loops every time it starts">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -409,14 +427,14 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This almost always means an <strong>install command was put in your <code>.Rprofile</code></strong>. That file runs <em>every time R starts</em>, so an install line tries to reinstall on every startup and can loop. Your <code>.Rprofile</code> should only ever hold lightweight startup lines like <code>library(jstats)</code> — never an install command. To recover: close RStudio, open your Project folder in your computer’s file manager, open the <code>.Rprofile</code> file in a plain text editor (Notepad on Windows, TextEdit on Mac), delete the install line, keeping the <code>library(jstats)</code> line (and its reminder comment, if your <code>.Rprofile</code> has one), save, and reopen RStudio.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="Loading jstats pauses for several seconds on a no-internet connection">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -425,7 +443,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>While jstats is still in development it installs from an r-universe repository, and each time it loads it briefly checks that repository for a newer version. The package itself works fully offline, but on a machine that is <strong>connected to a network yet has no route to the open internet</strong> – common on locked-down lab or server installations – that check has to time out before loading finishes, so <code>library(jstats)</code> can pause for a few seconds.</p>
 <p>To skip the check and load immediately, set this option <em>before</em> loading the package:</p>
@@ -437,7 +455,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="Error in library(jstats): there is no package called 'jstats'">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -446,9 +464,9 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>This shows up two ways: you run <code>library(jstats)</code> in the Console and get this error, or — if your <code>.Rprofile</code> loads jstats automatically — the same error greets you every time RStudio starts. Either way, the usual cause is that <strong>R itself was updated</strong>, and updating R starts a fresh, empty package library — so jstats (along with any other packages you had installed) is no longer there.</p>
+<p>This shows up two ways: you run <code>library(jstats)</code> in the Console and get this error, or — if your <code>.Rprofile</code> loads jstats automatically — the same error greets you every time RStudio starts. Either way, the usual cause is that <strong>R itself was updated</strong>. Your installed packages live in a folder called a <strong>library</strong>, and each version of R gets its own — so updating R starts a fresh, empty one, and jstats (along with everything else you had installed) is no longer there.</p>
 <p>The rule in plain words: R’s version numbers have three parts, like 4.5.2. Only a change to the <strong>middle</strong> number (4.5 → 4.6) starts a fresh package library; a last-number update (4.5.1 → 4.5.2) changes nothing about your packages. And this is about <strong>R</strong>, not RStudio — RStudio updates are always safe and never touch your packages. R has no built-in update notifier, so updating R is a separate, deliberate act; if you did it recently, this reinstall is the one follow-up chore.</p>
 <p>(Why <code>jupdate()</code> can’t rescue you here: <code>jupdate()</code> is itself a jstats command, and jstats isn’t installed in the new library yet.)</p>
 <p>The fix is the same install line as the first time — run it once and you’re back:</p>
@@ -460,7 +478,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="could not find function 'jfreq' (or another jstats function)">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -469,7 +487,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>jstats probably isn’t loaded in this session. Run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -478,7 +496,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="object 'community' not found">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -487,7 +505,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The shipped datasets become available once the package is loaded. Run <code>library(jstats)</code> first, then try again. (If you’re working with your own data instead, make sure you’ve loaded it — see <a href="./data.html">Loading, Saving, Converting Data</a>.)</p>
 </div>
@@ -497,7 +515,7 @@ available; add a figure line like the one above once the image is in images/). -
 <section id="typing-commands-in-the-console" class="level2">
 <h2 class="anchored" data-anchor-id="typing-commands-in-the-console">Typing commands in the Console</h2>
 <div class="callout callout-style-default callout-warning callout-titled" title="The Console shows a + and nothing runs">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -506,14 +524,14 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If you press Enter and the Console answers with a <code>+</code> instead of the usual <code>&gt;</code> prompt, R thinks your command isn’t finished — nearly always a closing quotation mark or a closing parenthesis is missing. Press the <strong>Escape</strong> key (Esc) to cancel and get a fresh <code>&gt;</code> prompt, then retype or re-paste the whole command. (Typing more into the <code>+</code> line rarely ends well; Escape and a clean start is quicker.)</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="Error: unexpected symbol (or unexpected ',' or ')')">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -522,7 +540,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>These errors are R’s way of saying the punctuation in a command doesn’t add up — most often a missing comma between two inputs, or a missing or extra parenthesis or quotation mark. Compare your line character by character against the example you copied it from; the difference is usually one small mark.</p>
 <p>A reading tip that helps with R errors in general: in a long error message, the most useful part usually comes <strong>after the final colon</strong> — start reading there, then work backward only if you need to.</p>

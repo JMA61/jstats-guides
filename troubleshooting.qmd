@@ -61,6 +61,13 @@ program.
 On a university or workplace computer you may not be allowed to install software
 yourself. What happens depends on how the machine is set up:
 
+- The blue box shows **no More info link at all**, even when you launch the installer
+  from your Downloads folder. This one looks worse than it is: the block has been set
+  centrally, so there's nothing to fix at your end — and it's a routine request for IT,
+  often settled in a single phone call. Ask your IT service desk to unblock the R and
+  RStudio installers, or to install them for you; going through them keeps everything in
+  line with your organization's policies. The note below is written for whoever picks it
+  up.
 - The install is blocked, but the screen offers a path to **temporary administrator
   rights** — usually a prompt for your own credentials, sometimes followed by a box
   asking *why* you're installing. Both are routine; fill them in and carry on.
@@ -91,7 +98,10 @@ teach. This note summarizes their provenance to support a software-approval asse
   without the installer; current deployment guidance is on Posit's documentation site.
 - **SmartScreen.** Microsoft SmartScreen may flag a freshly released version until it
   accumulates download reputation; this resets with each release and is not an
-  indication of malware.
+  indication of malware. Where the user reports the warning with **no More info option
+  at all**, that is typically SmartScreen configured to warn without a bypass rather
+  than the default reputation check; the installers are code-signed and their provenance
+  is above, so clearing it is at your discretion.
 - Organizations operating under standards such as **ISO/IEC 27001** will route this
   through their software-approval process; the information above is provided to support
   that assessment.
@@ -106,6 +116,14 @@ RStudio's general-purpose check for build tools, and it fires on almost any pack
 install on a Windows computer that doesn't have Rtools. jstats doesn't need Rtools
 — it contains no compiled code and installs as a ready-made binary — so the install
 completes and jstats runs fine. You can ignore the warning; there's nothing to fix.
+:::
+
+::: {.callout-warning collapse="true" title="R asked whether to install from sources, and I clicked Yes"}
+The answer to that question is **No**. Nothing is broken if you clicked Yes — the
+install may just stall, fail, or fill the Console with red text.
+
+Run the install line on the [Install jstats](install-jstats.qmd) page again, and click
+**No** this time.
 :::
 
 ::: {.callout-warning collapse="true" title="The install seems half-done or broken"}
@@ -160,10 +178,8 @@ or to run the install line for you; either way it's a quick job for them.
 
 ::: {.callout-warning collapse="true" title="Where did jstats install? / I updated, but I still see the old version"}
 R keeps installed packages in a **library** — a folder on your computer — and
-there can be more than one. On a fresh Windows setup, the install often lands
-quietly in R's **system library** (inside Program Files) rather than in your
-personal library, without asking. On its own that's harmless: jstats installs and
-runs fine from there.
+there can be more than one. That's normally invisible and harmless: jstats
+installs into one of them and runs fine from there.
 
 It only matters if you end up with **two copies in two libraries** — then an
 update can land in one library while R keeps loading the older copy from the
@@ -229,8 +245,10 @@ kind.
 This shows up two ways: you run `library(jstats)` in the Console and get this
 error, or — if your `.Rprofile` loads jstats automatically — the same error
 greets you every time RStudio starts. Either way, the usual cause is that **R
-itself was updated**, and updating R starts a fresh, empty package library — so
-jstats (along with any other packages you had installed) is no longer there.
+itself was updated**. Your installed packages live in a folder called a
+**library**, and each version of R gets its own — so updating R starts a fresh,
+empty one, and jstats (along with everything else you had installed) is no longer
+there.
 
 The rule in plain words: R's version numbers have three parts, like 4.5.2. Only a
 change to the **middle** number (4.5 → 4.6) starts a fresh package library; a
@@ -298,5 +316,6 @@ A reading tip that helps with R errors in general: in a long error message, the
 most useful part usually comes **after the final colon** — start reading there,
 then work backward only if you need to.
 :::
+
 
 

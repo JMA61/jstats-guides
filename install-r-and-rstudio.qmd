@@ -31,10 +31,12 @@ is normal for brand-new software — click **More info**, then **Run anyway**. L
 the downloaded installer from your **Downloads folder** in File Explorer rather than
 from the browser's download list: on some university- or employer-managed computers,
 the browser route can show the blue box with no "More info" link and no way past it,
-while the Downloads-folder method works everywhere. The
+while the Downloads-folder method works on almost every computer. If the box still
+offers no way through even from there, the block has been set centrally by whoever
+manages the machine — clearing it is a quick job for your IT department, often a single
+phone call. The
 [Troubleshooting](troubleshooting.qmd#security-warnings-when-downloading-or-installing)
-page walks through each box — with a short note you can pass to your IT department if
-you're on a managed computer.
+page walks through each box, and has a short note you can pass to IT.
 :::
 
 ## Install R
@@ -85,4 +87,5 @@ for the jstats route the simplest thing is to skip it and keep going here. The
 next page is that orientation — a quick tour of RStudio (the panes, the console,
 and how your data looks once it's loaded) — before you add the jstats package
 itself.
+
 

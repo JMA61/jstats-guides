@@ -44,12 +44,27 @@ library(jstats)
 ```
 
 You may see a red WARNING that Rtools is required. That's normal and not an error —
-jstats installs without it.
+jstats installs without it. And if R asks whether you want to install from sources,
+click **No**.
 
 The `repos` part just tells R where to look: the first address is the r-universe
 repository where jstats is published, and the second is an ordinary CRAN mirror that
 supplies any of jstats's supporting packages you don't already have. Both hand over
 ready-made versions, so nothing is built from source and the install is quick.
+
+::: {.callout-tip collapse="true" title="New to R?"}
+Two words are about to start doing a lot of work, and they're easy to mix up.
+
+A **package** is the thing you install — jstats is a package. A **library** is a
+folder on your computer where your installed packages are kept. `install.packages()`
+puts jstats into the library; `library(jstats)` fetches it back out for the session.
+The command is named after the folder it fetches from.
+
+That's also why R can answer a line that says `library` with an error that says
+*package*: it looked in the folder, and the package wasn't there. And it's why
+updating R means installing your packages again — a new version of R starts with a
+fresh, empty library.
+:::
 
 Installing is normally a **once-per-computer** job — plus once more if you ever
 update R itself, which comes out in a new version about once a year and starts a
@@ -188,4 +203,5 @@ learning a dead end.
 ---
 
 With jstats installed and loaded, the [jstats Quick Start](quickstart.qmd) puts it to work.
+
 
