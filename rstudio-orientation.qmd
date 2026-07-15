@@ -31,7 +31,7 @@ source("pane_facsimile.R")   # defines .obx (dot-named)
 ## RStudio Orientation
 
 Before installing the package, it's worth a few minutes getting comfortable with
-RStudio itself — where things are, and how your data looks once it's loaded. If
+RStudio itself — where things are, and how your dataset looks once it's loaded. If
 you already work in RStudio day to day, you can skim this and move on to
 [Install jstats](install-jstats.qmd).
 

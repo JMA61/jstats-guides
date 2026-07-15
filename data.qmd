@@ -100,7 +100,7 @@ jload("community"))---",
 ```
 
 ::: {.callout-note collapse="true" title="What's the point?"}
-`library(jstats)` switches the package on for the current session -- and once
+`library(jstats)` switches the package on for the current session — and once
 per session is all it takes. If you've just come from the Quick Start page,
 jstats may well be loaded already; running the line again is harmless (it
 simply does nothing the second time). You can check at any point in RStudio's
@@ -112,7 +112,7 @@ while the package is loaded.
 On a fresh load, jstats also prints a short
 version message in the Console; if it was already loaded, the line stays quiet.
 And if you'd rather never
-type the line again, R can run it for you at the start of every session -- the
+type the line again, R can run it for you at the start of every session — the
 [Loading jstats automatically](loading-jstats-automatically.qmd) page shows how.
 :::
 
@@ -120,14 +120,14 @@ type the line again, R can run it for you at the start of every session -- the
 For a dataset that ships inside a package, base R has one too: `data(community)`
 loads it. The difference shows up beyond package data: `data()` only reaches
 datasets bundled in packages, while `jload()` is one loader for everything on
-this page -- package datasets, your saved `.rds` files, and SPSS, Stata, SAS,
-Excel, and CSV files -- with the same one-line call.
+this page — package datasets, your saved `.rds` files, and SPSS, Stata, SAS,
+Excel, and CSV files — with the same one-line call.
 :::
 
 ### 2. Objects, the assignment operator, and the Global Environment
 
 Anything you create in R is stored as an *object*, and objects live in the
-**Global Environment** -- the workspace RStudio shows you in the Environment tab
+**Global Environment** — the workspace RStudio shows you in the Environment tab
 of the upper-right pane. Here we make two objects of our own, and open a second
 dataset alongside the first.
 
@@ -137,11 +137,13 @@ dataset alongside the first.
 .obx$show_block(r"---(## ---- 2. Objects, the assignment operator, and the Global Environment ----
 
 ## "Objects" other than data frames can go into the Environment
-## The "Assignment Operator" (less-than followed by a dash) is a key Base R fundamental
+## The "Assignment Operator" (less-than followed by a dash) is a key
+## base R fundamental
 ## Take the thing on the right and assign it to what's on the left
-## Take the Region variable from the community data frame and assign it to a new object
+## Take the Region variable from the community data frame and assign it
+## to a new object
 ## The new object we'll call "MyObject"
-MyObject <- community$Region ## (Base R code)
+MyObject <- community$Region  # base R
 
 ## The name on the left is entirely yours to choose, and the thing on the
 ## right can be anything at all -- here, just the number 5
@@ -156,14 +158,14 @@ jload("clinic"))---",
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
 The Global Environment has no real SPSS counterpart, and that is the most
 useful thing to know about it. In SPSS everything lives *inside* a dataset:
-`COMPUTE x = 5.` does not create an object called `x` -- it adds a column of
+`COMPUTE x = 5.` does not create an object called `x` — it adds a column of
 5s, one value per case, to whatever dataset is active. There is nowhere for a
 single value, or a single variable, to sit on its own. (SPSS macros come
 closest, and hardly anyone uses them.) In R the Environment is exactly that
 place: a workspace holding objects of any shape, and a data frame is simply one
 of the shapes.
 
-SPSS can have several datasets open too -- but each opens in its own Data
+SPSS can have several datasets open too — but each opens in its own Data
 Editor window, and switching the active one takes a syntax chain most users
 never bother with:
 
@@ -176,21 +178,21 @@ DATASET ACTIVATE community.
 ```
 
 In R there are no windows to juggle: the Environment holds several data frames
-side by side, and every command simply names the one it uses -- the `$` in
+side by side, and every command simply names the one it uses — the `$` in
 `community$Region` means "the Region column, in the community dataset."
 :::
 
 ### 3. Cleaning up
 
 Objects you no longer need can be removed, and there are two ways to do it.
-`rm()` takes out exactly what you name and leaves everything else alone -- which
+`rm()` takes out exactly what you name and leaves everything else alone — which
 is what you want when one object is wrong and the others are fine. The **broom**
 in the Environment pane's toolbar takes out *everything*, in one click; RStudio
 asks you to confirm before it does. The code below uses `rm()`; the red arrow in
 the box points out the broom.
 
 One thing to expect: `rm()` says nothing at all when it works. Silence is
-success -- the Environment pane is where you check.
+success — the Environment pane is where you check.
 
 ```{r}
 #| echo: false
@@ -198,8 +200,8 @@ success -- the Environment pane is where you check.
 .obx$show_block(r"---(## ---- 3. Cleaning up ----------------------------------------------------
 
 ## Remove MyObject from the Environment
-## Note that this is a Base R function (j is not the first letter)
-rm(MyObject)
+## Note that this is a base R function (j is not the first letter)
+rm(MyObject)  # base R
 
 ## Remove x as well
 rm(x)
@@ -215,14 +217,14 @@ rm(clinic))---",
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
 When you have finished with a dataset in SPSS you close its Data Editor window,
-or run `DATASET CLOSE clinic.` -- `rm()` is the R counterpart. The difference is
+or run `DATASET CLOSE clinic.` — `rm()` is the R counterpart. The difference is
 that the Environment holds more than datasets, so `rm()` removes any object you
 name, whatever its shape.
 :::
 
 ### 4. How much output you see
 
-jstats can show more or less detail. The output level controls how much appears --
+jstats can show more or less detail. The output level controls how much appears —
 so with the Environment empty, load `community` again and watch it say less.
 
 ```{r}
@@ -231,7 +233,8 @@ so with the Environment empty, load `community` again and watch it say less.
 .obx$show_block(r"---(## ---- 4. How much output you see ----------------------------------------
 
 ## The output level is set to "standard" by default
-## After you learn more about jstats (and R) you might not want all of that output
+## After you learn more about jstats (and R) you might not want all of
+## that output
 joutput("minimal")
 
 ## With minimal output, you get less information
@@ -243,7 +246,7 @@ joutput("standard"))---",
 ```
 
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
-There isn't one. Base R has no output-level setting -- each function prints
+There isn't one: base R has no output-level setting — each function prints
 whatever it prints, and how much you see varies with each package author's
 choices. `joutput()` is a single, jstats-wide control.
 :::
@@ -258,46 +261,50 @@ Every function also has a help page.
 #| results: asis
 .obx$show_block(r"---(## ---- 5. Functions with no arguments, and getting help ------------------
 
-## A few functions work correctly without input between the parentheses, but most require input
+## A few functions work correctly without input between the parentheses,
+## but most require input
 jload()  # This will cause an error with a message about how you might fix the error
 
 ## But this one will show you the current output settings for jstats
 joutput()
 
-## Here's a Base R function that works without arguments/input
+## Here's a base R function that works without arguments/input
 ## List the objects/data frames in the Environment
-ls()
+ls()  # base R
 
-## Here's another one from Base R
-## A working directory is the "path" to where your project is stored on your computer
+## Here's another one from base R
+## A working directory is the "path" to where your project is stored
+## on your computer
 ## If you're not working in a project, you have to set this yourself (finicky)
-getwd()
+getwd()  # base R
 
 ## The technical name for a function's inputs are "Arguments"
 ## View help files describing necessary and optional Arguments by running...
 ?jload
 
-## The same ? help works for base R functions and functions from any installed package
+## The same ? help works for base R functions and functions from any
+## installed package
 ?ls
 
-## And this one opens the package overview: every jstats function, grouped by purpose
+## And this one opens the package overview: every jstats function,
+## grouped by purpose
 ?jstats)---", box = FALSE, expect_error = TRUE)
 ```
 
 ::: {.callout-note collapse="true" title="Aside: how R writes file paths"}
-A *path* is a folder's address on your computer -- the folders you would click
+A *path* is a folder's address on your computer — the folders you would click
 through, written out on one line. Three spelling quirks are worth thirty seconds
 each, because you will meet all three on this page.
 
 **The `~` shorthand.** Look at the top of your Console: RStudio shows your
 working directory with a squiggle, something like `~/your-working-directory/`.
 The `~` is shorthand for your *home* folder (on Windows, usually your Documents
-folder). `getwd()` prints that same address written out in full -- beginning, on
+folder). `getwd()` prints that same address written out in full — beginning, on
 Windows, with a drive letter such as `C:` or `E:` that names the disk. Short
 spelling in the Console header, long spelling from `getwd()`. Same place.
 
 You have met that squiggle before, on the Quick Start page, doing a completely
-different job -- writing a model, as in `jt(Optimism ~ Gender)`. In a file path
+different job — writing a model, as in `jt(Optimism ~ Gender)`. In a file path
 it has nothing to do with models. Same character, two unrelated jobs.
 
 **The slashes.** R writes paths with forward slashes (`/`) on every kind of
@@ -309,8 +316,8 @@ So: `~` means home, `/` goes between folders, and `getwd()` tells you the full
 address of where you are working.
 
 **And if all of that felt like a lot, don't worry.** You will not have to type a
-path anywhere on this page. As long as you work inside an RStudio Project --
-which is what **Before you start** asks of you -- jstats handles the addresses
+path anywhere on this page. As long as you work inside an RStudio Project —
+which is what **Before you start** asks of you — jstats handles the addresses
 for you. In a moment you will name a folder once, with
 `joptions(data.dir = "Data")`, and jstats creates it inside your project; from
 then on you load and save with plain file names like `"MyData_r.rds"`, and
@@ -319,22 +326,22 @@ prints one. They are not something you need to *write*.
 :::
 
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
-`?` *is* base R -- `?jload`, `?ls`, and `?mean` all work the same way, for base
+`?` *is* base R — `?jload`, `?ls`, and `?mean` all work the same way, for base
 functions and for functions from any installed package. (In RStudio, putting
 the cursor on a function name and pressing F1 does the same thing. On Macs the
-key varies from machine to machine -- F1 on some, fn + F1 on others, and on
+key varies from machine to machine — F1 on some, fn + F1 on others, and on
 some Macs the function keys must first be enabled in System Settings.) What a
 base R setup doesn't have is a grouped
 index: a typical workflow spans functions scattered across many packages, each
 with its own alphabetical help listing. `?jstats` shows the whole toolkit on
-one page, organized by purpose -- one advantage of the functions traveling
+one page, organized by purpose — one advantage of the functions traveling
 together as a package.
 :::
 
 ### 6. The overwrite prompt
 
 When you load a dataset that's already open, jstats checks with you before
-overwriting it -- watch for the y/n prompt in the Console window.
+overwriting it — watch for the y/n prompt in the Console window.
 
 ```{r}
 #| echo: false
@@ -353,23 +360,23 @@ jload("community", overwrite = TRUE))---", box = FALSE)
 The overwrite argument is here to show you two things:
 
 - **What an argument looks like.** Options go inside the parentheses as
-  `name = value` -- here, `overwrite = TRUE`.
+  `name = value` — here, `overwrite = TRUE`.
 - **Prompts can be overridden.** The few times jstats asks for confirmation,
-  the prompt appears in the Console -- and each one can be switched off with
+  the prompt appears in the Console — and each one can be switched off with
   the right argument. That matters when code runs automatically, with nobody
   at the keyboard to answer: it happens in several places behind this website,
   and in the finished script you can download at the bottom of this page.
 :::
 
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
-Base R doesn't ask. Loading or assigning over an existing object replaces it
-silently -- no prompt, no warning, and the old copy is gone. The confirmation
+On its own, base R doesn't ask. Loading or assigning over an existing object replaces it
+silently — no prompt, no warning, and the old copy is gone. The confirmation
 prompt is a jstats safeguard.
 :::
 
 ### 7. Saving to a Data folder
 
-Let's save your work -- first with no folder specified, to see where files go
+Let's save your work — first with no folder specified, to see where files go
 by default, and then to a Data folder of your own.
 
 ```{r}
@@ -377,19 +384,20 @@ by default, and then to a Data folder of your own.
 #| results: asis
 .obx$show_block(r"---(## ---- 7. Saving to a Data folder ----------------------------------------
 
-## Use the assignment operator to copy community to a new data frame called MyData
+## Use the assignment operator to copy community to a new data frame
+## called MyData
 MyData <- community
 
 ## Save it with no folder specified -- where does the file go?
 ## The console message shows the full path: it landed in your project's
 ## working directory, the default location
-## It's the same path the Base R getwd() command showed you earlier
+## It's the same path the base R getwd() command showed you earlier
 jsave(MyData, "WhereDidIGo.rds")
 
 ## Delete that test file
 ## file.remove() is base R -- the file-on-disk equivalent of the rm()
 ## you used for data frames. It replies with a cryptic [1] TRUE
-file.remove("WhereDidIGo.rds")
+file.remove("WhereDidIGo.rds")  # base R
 
 ## Now name a Data folder of your own
 ## jstats will create this folder upon first save
@@ -412,31 +420,31 @@ Why set a data folder at all? Tidiness now, and a payoff later. With
 that's the habit to keep: put `joptions(data.dir = "Data")` near the top of
 your own scripts, then drop a dataset of yours into that folder and
 `jload("YourFile.sav")` opens it by name alone. If you're not sure where the
-folder is on your computer, the jsave message has already told you -- it
+folder is on your computer, the jsave message has already told you — it
 prints the full path each time, ready to paste into File Explorer (Windows)
 or find in Finder (Mac).
 :::
 
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
-Saving to the working directory by default is base R's behavior too --
+Saving to the working directory by default is base R's behavior too —
 `saveRDS(MyData, "MyData_r.rds")` puts the file in the same place; jstats just
 tells you, in full, where it went. To use a folder, base R won't create it for
 you (that's `dir.create("Data")` first), and the folder name gets typed into
-every path from then on -- with any subfolders along for the ride, e.g.
+every path from then on — with any subfolders along for the ride, e.g.
 `saveRDS(MyData, "Data/CommunityStudy/Wave1/MyData_r.rds")`.
 `joptions(data.dir = ...)` sets the location once, and every `jsave()` and
 `jload()` after that already knows where to look.
 
 And note what `file.remove()` didn't do: ask. Like the silent overwrite in
-block 6, base R deletes with no confirmation -- mix up a filename and a real
+block 6, base R deletes with no confirmation — mix up a filename and a real
 data file is gone. jstats's prompts exist precisely because of edges like
 that.
 :::
 
 ### 8. Gone from the Environment
 
-You have just saved `MyData` to a file on disk. Now remove it -- and `community`
--- from the Environment. Before you run the block, make a prediction: is the
+You have just saved `MyData` to a file on disk. Now remove it — and `community`
+— from the Environment. Before you run the block, make a prediction: is the
 file you just saved gone as well?
 
 ```{r}
@@ -446,7 +454,7 @@ file you just saved gone as well?
 
 ## Remove both data frames from the Environment
 ## What happens to the file you just saved? The next block finds out
-rm(MyData)
+rm(MyData)  # base R
 rm(community))---",
   chrome = TRUE, env = TRUE)
 ```
@@ -454,7 +462,7 @@ rm(community))---",
 ### 9. Getting it back, and saving across formats
 
 There it is. The Environment is temporary; the file on disk is not. Load it
-straight back -- then send it out to other formats, where one wrinkle around
+straight back — then send it out to other formats, where one wrinkle around
 missing values needs handling, and jstats handles it for you.
 
 ```{r}
@@ -483,17 +491,17 @@ jsave(MyData_stata, "MyData_stata.dta")  # Now no error)---",
 In SPSS, user-missing values are declared in Variable View and travel with the
 file. When you Save As a different format, those definitions don't always carry
 across cleanly. jstats keeps the equivalent information with your data, and when a
-format needs it in a different form, `jconvert()` does the translation -- which is
+format needs it in a different form, `jconvert()` does the translation — which is
 why saving straight to Stata format above stops and asks you to convert first.
 :::
 
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
-Base R alone can't write SPSS or Stata files. You'd install and load the
-**haven** package and call `haven::write_sav()` or `haven::write_dta()`
-yourself -- and haven is exactly the proven package jstats uses under the hood,
+By itself, base R can't write SPSS, Stata, or SAS files. You'd install and load the
+**haven** package and call `haven::write_sav()`, `haven::write_dta()`, or `haven::write_xpt()`
+yourself — and haven is exactly the proven package jstats uses under the hood,
 so nothing here reinvents the wheel. What jstats spares you is the setup and
 the sharp edge: loading an extra package in every script, learning its separate
-function set, and handling the missing-value translation by hand -- haven
+function set, and handling the missing-value translation by hand — haven
 refuses SPSS-style missing codes headed into Stata format, just as you saw
 above, and converting them yourself is genuinely fiddly. `jconvert()` is that
 translation, done for you.
@@ -512,7 +520,7 @@ Load the saved files back and see how each format keeps its missing-value codes.
 
 ## You removed data frames one at a time earlier; this clears them all at once
 ## It is the code equivalent of the broom button in the Environment pane
-rm(list = ls())
+rm(list = ls())  # base R
 
 ## Load all data sets back
 jload("MyData_r.rds")
@@ -532,7 +540,7 @@ jfreq(MyData_r_with_stata_UDM, Education) # Now the UDMs display in Stata format
 ### 11. Turning up the digits
 
 One more control before the final check: how many decimal places jstats shows.
-The default setting is 3, the maximum is 7 -- and for what comes next, we want
+The default setting is 3, the maximum is 7 — and for what comes next, we want
 all 7. (One exception: p-values keep their own fixed three-decimal convention
 and ignore this setting.)
 
@@ -552,10 +560,10 @@ jdesc(MyData_r, Age)   # the same mean, now with more decimals shown)---",
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
 SPSS output shows a fixed number of decimals, padding with zeros to fill the
-width -- a mean of 40.65 appears as 40.650 in a three-decimal table. jstats
+width — a mean of 40.65 appears as 40.650 in a three-decimal table. jstats
 goes the other way: it never prints trailing zeros, so `digits` sets a
 *maximum*, and each column shows only the decimals it actually needs. That's
-why the mean above reads 40.65 at the default setting of 3 -- its third
+why the mean above reads 40.65 at the default setting of 3 — its third
 decimal happens to be a zero. And if a statistic lands exactly on a round
 value, it displays short even at digits = 7: that's trimming, not truncation
 or a stuck setting.
@@ -571,7 +579,7 @@ The closest is `options(digits = ...)`, and it's a different animal: it sets
 
 Those three data frames each made a round trip through a different file format.
 If the trips were truly lossless, the same statistics should come back from
-every one of them -- right down to the seventh decimal.
+every one of them — right down to the seventh decimal.
 
 ```{r}
 #| echo: false
@@ -588,11 +596,11 @@ jdesc(MyData_stata, Age)
 ## And one base R caution, shown live (the box below explains):
 ## Income carries declared missing-value codes (-99, -98)
 jdesc(MyData_spss, Income)   # the correct mean -- jdesc leaves the codes out
-## Base R gives a bare, unlabeled number, so extra work is needed just to
+## base R gives a bare, unlabeled number, so extra work is needed just to
 ## make it visible: cat() adds a label, and the "\n"s add blank lines to
 ## set it apart. Run line by line (interactively), a plain mean() prints
 ## only a cryptic [1] number; run with Source, it wouldn't appear at all
-cat("\n\nBase R mean of Income:", mean(MyData_spss$Income), "\n\n\n")  # a poisoned mean
+cat("\n\nBase R mean of Income:", mean(MyData_spss$Income), "\n\n\n")  # base R -- a poisoned mean
 
 ## Set the display back to the default before you go
 joutput(digits = 3)
@@ -606,27 +614,27 @@ joptions(data.dir = ""))---",
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
 `jdesc()` is the counterpart of SPSS's Analyze > Descriptive Statistics >
-Descriptives -- the same N, minimum, maximum, mean, and standard deviation you'd
+Descriptives — the same N, minimum, maximum, mean, and standard deviation you'd
 read from that output table. And the check above may feel familiar from
 practice: reopening a dataset that's been through another format, and confirming
 the descriptives still match.
 
-The matching numbers are only half the story -- the missing-value declarations
+The matching numbers are only half the story — the missing-value declarations
 made the round trip too, which is arguably the bigger deal. You saw it back in
 block 10: Education's codes come through meaning the same thing in every file,
 with the Stata copy simply wearing its `.a`/`.b` form. In SPSS terms, your
 MISSING VALUES definitions survived the Save As. (Age itself carries no missing
-codes -- that's exactly why it makes a clean test variable here.)
+codes — that's exactly why it makes a clean test variable here.)
 :::
 
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
 For a clean variable like Age, base R agrees exactly: `mean(MyData_r$Age)`
 returns the same 40.65049. The difference appears with variables that carry
-declared missing-value codes, like `Income` -- those codes are ordinary numbers
+declared missing-value codes, like `Income` — those codes are ordinary numbers
 to base R, and the block's last lines show the damage live:
 `mean(MyData_spss$Income)` folds the -99s and -98s straight into the average,
 while `jdesc()` reads the declarations and leaves the codes out automatically
--- provided the declarations exist: here they
+— provided the declarations exist: here they
 traveled with the files, and when a dataset arrives with codes that were never
 declared, you add the declarations yourself with jstats's `jdeclare_udm()`
 function. It's the same protection you'd expect from commercial statistical
@@ -635,57 +643,57 @@ software.
 
 ::: {.callout-note collapse="true" title="What's the point?"}
 The download at the bottom of this page is the *finished* version of what you
-built -- and finished means something specific. A goal every experienced programmer and statistician
+built — and finished means something specific. A goal every experienced programmer and statistician
 takes for granted, but new researchers are rarely told: a completed script
 should run from beginning to end without errors. On this page you experimented
--- deliberate errors and prompts included, because that's how working scripts
+— deliberate errors and prompts included, because that's how working scripts
 develop. The download shows what the end of that process looks like, and it
 differs from the page blocks in three principled ways: the deliberate error
 lines are commented out, the y/n prompt line is commented out (a prompt would
-pause an unattended run), and the saves -- plus the one reload that could
-collide with an earlier run's leftovers -- carry `overwrite = TRUE` so the
+pause an unattended run), and the saves — plus the one reload that could
+collide with an earlier run's leftovers — carry `overwrite = TRUE` so the
 whole file can be run again and again, exactly the automatic-execution
 override from block 6.
 
 To prove a script is finished, use the **Source** icon (to the right of Run in
 the script toolbar): it runs the entire file, top to bottom, in one go. A few
 things to know. Source shows the *output* without echoing each command back to
-the Console -- that's normal -- and the small arrow beside Source offers
+the Console — that's normal — and the small arrow beside Source offers
 "Source with Echo" if you'd like the commands shown too. jstats functions
 print their own tables, so their output always appears; but a bare base R line
-that merely displays a value -- `ls()`, `getwd()`, `mean()` -- stays quiet
+that merely displays a value — `ls()`, `getwd()`, `mean()` — stays quiet
 under Source, because R only auto-prints results when you run lines
-interactively -- and even interactively, what it prints is a bare, unlabeled
+interactively — and even interactively, what it prints is a bare, unlabeled
 number. That's why the script prints its base R mean with `cat()`, a label,
-and a few blank lines to set it apart -- hand-formatting that jstats tables
+and a few blank lines to set it apart — hand-formatting that jstats tables
 do for you. And if you re-run the script you pasted together yourself, the saves will refuse
-to overwrite their earlier files -- that's block 6's lesson again; add
+to overwrite their earlier files — that's block 6's lesson again; add
 `overwrite = TRUE` just as the finished file does.
 
 The **What you should see** boxes under some blocks above reproduce that
-Console -- the blue command lines, the gray notices, the colored tables, a red
+Console — the blue command lines, the gray notices, the colored tables, a red
 error where one is meant to happen. They show the *code* being run, along with any
-note written on the end of a command line -- but not the standalone `##` comment
+note written on the end of a command line — but not the standalone `##` comment
 lines (running one just echoes it back and does nothing), so
 the box stays focused on what actually happens. Reading a block? The commented
 code is in the gray block; the result is in the box beneath it. Several boxes
-also picture your **Environment** pane -- the upper-right one -- so you can
+also picture your **Environment** pane — the upper-right one — so you can
 watch objects appear and disappear as you work. And where a file path appears,
 the boxes print `~/your-working-directory/` in place of a real folder name: on
 your own screen that reads as the actual path to your project.
 
 Nothing needs deleting between runs, and nothing is deleted: the overwrite
 arguments handle the repeats, and the Data folder with its three saved files
-stays put after every run -- that's what saving is for. Remove the files by
+stays put after every run — that's what saving is for. Remove the files by
 hand if you ever want a clean slate.
 
-One more setup idea if you're keeping the file -- and it's worth keeping:
+One more setup idea if you're keeping the file — and it's worth keeping:
 finished scripts travel. Sooner or later you'll share one with a supervisor or
 collaborator, or receive one from someone else, and a script that runs top to
 bottom on another person's computer is the standard to aim for. So a
 downloaded script deserves a proper home: jstats created the Data folder
 for you during the run-through, but you can also make folders yourself in
-RStudio -- in the **Files** tab of the lower-right pane, click **New Folder**
+RStudio — in the **Files** tab of the lower-right pane, click **New Folder**
 and type a name into the popup. "Scripts" is a good one for storing this
 download, and it will appear right beside the Data folder you created by
 following the steps above.
@@ -698,7 +706,7 @@ adjust, and reuse, download it here:
 
 The file is close to what you have just built: the same code, in the same order,
 as though you had pasted every block above into one script. Three things differ,
-each on purpose -- the lines that raise a deliberate error are commented out, the
+each on purpose — the lines that raise a deliberate error are commented out, the
 line that triggers the y/n prompt is commented out (a prompt would stall a script
 left to run on its own), and the saves carry `overwrite = TRUE` so the whole file
 can be run again and again. The **What's the point?** box under the last block

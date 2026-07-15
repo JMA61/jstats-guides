@@ -219,7 +219,7 @@ While jstats is still in development it installs from an r-universe repository, 
 each time it loads it briefly checks that repository for a newer version. The
 package itself works fully
 offline, but on a machine that is **connected to a network yet has no route to the
-open internet** -- common on locked-down lab or server installations -- that check
+open internet** — common on locked-down lab or server installations — that check
 has to time out before loading finishes, so `library(jstats)` can pause for a few
 seconds.
 
@@ -233,7 +233,7 @@ library(jstats)
 
 Putting the `options(...)` line above the `library(jstats)` line in your
 `.Rprofile` makes it the default every session. On an ordinary internet
-connection you can leave it out -- the check is fast there, and it's how you learn
+connection you can leave it out — the check is fast there, and it's how you learn
 an update is available.
 
 This is specific to this pre-CRAN version. Once jstats reaches CRAN,

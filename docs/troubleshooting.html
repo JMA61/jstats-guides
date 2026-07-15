@@ -449,11 +449,11 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>While jstats is still in development it installs from an r-universe repository, and each time it loads it briefly checks that repository for a newer version. The package itself works fully offline, but on a machine that is <strong>connected to a network yet has no route to the open internet</strong> – common on locked-down lab or server installations – that check has to time out before loading finishes, so <code>library(jstats)</code> can pause for a few seconds.</p>
+<p>While jstats is still in development it installs from an r-universe repository, and each time it loads it briefly checks that repository for a newer version. The package itself works fully offline, but on a machine that is <strong>connected to a network yet has no route to the open internet</strong> — common on locked-down lab or server installations — that check has to time out before loading finishes, so <code>library(jstats)</code> can pause for a few seconds.</p>
 <p>To skip the check and load immediately, set this option <em>before</em> loading the package:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">jstats.check_updates =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Putting the <code>options(...)</code> line above the <code>library(jstats)</code> line in your <code>.Rprofile</code> makes it the default every session. On an ordinary internet connection you can leave it out – the check is fast there, and it’s how you learn an update is available.</p>
+<p>Putting the <code>options(...)</code> line above the <code>library(jstats)</code> line in your <code>.Rprofile</code> makes it the default every session. On an ordinary internet connection you can leave it out — the check is fast there, and it’s how you learn an update is available.</p>
 <p>This is specific to this pre-CRAN version. Once jstats reaches CRAN, installing and updating happen the normal CRAN way, with no startup check of this kind.</p>
 </div>
 </div>

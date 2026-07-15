@@ -138,7 +138,7 @@ it.
 Now, with jstats loaded, here's what it's for. The package ships with a practice
 dataset named `community`, and we'll use it for the whole tour (more on it shortly).
 Suppose you want to describe the ages of the people in the data — the average, how
-spread out they are, and so on. Base R — R as it comes, before any packages — can do
+spread out they are, and so on. Even base R — R as it comes, before any packages — can do
 this, and one common way takes three separate commands. You don't need to learn these;
 we're running them only for the comparison. Leaving a blank line between commands is
 optional — R ignores blank lines entirely, so you can use them to space a script for
@@ -171,7 +171,7 @@ function called `jdesc` (short for *descriptives*):
 
 One command, one table — the total number of cases, how many are non-missing, the
 minimum and maximum, the mean, and the standard deviation, together and labeled, laid
-out the way you'd expect from commercial statistical software like SPSS or Stata. That,
+out the way you'd expect from commercial statistical software like SPSS, Stata, or SAS. That,
 in a nutshell, is what jstats is for: taking the everyday work of data analysis and
 making it simple and readable. The rest of this tour builds on that idea.
 

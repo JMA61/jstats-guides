@@ -49,7 +49,7 @@ the analyses social scientists use most — descriptives, frequencies, t-tests,
 ANOVA, regression, correlation, and more — and presents the results in a clean,
 familiar layout like the one you'd see in commercial statistical software, all from
 a single short command. It also does **type 2** directly, reading and writing
-labelled SPSS, Stata, and SAS files so they work without a separate import step; a
+labeled SPSS, Stata, and SAS files so they work without a separate import step; a
 bit of **type 3**, making basic graphs more quickly and simply than reaching for
 ggplot2 when you don't need its full range of options; and the least of **type 4**
 so far, though it adds a few things base R doesn't include — for example, Gelman

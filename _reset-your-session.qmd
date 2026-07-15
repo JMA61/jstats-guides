@@ -1,5 +1,5 @@
 ::: {.callout-note collapse="true" title="Reset your session"}
-Experimenting means the occasional wrong turn -- a setting changed, the practice
+Experimenting means the occasional wrong turn — a setting changed, the practice
 dataset overwritten, output that suddenly looks different. When something feels
 off and you'd like a clean footing without restarting RStudio, run these two
 lines in the Console:
@@ -13,12 +13,12 @@ joptions(data.dir = "")
 ```
 
 That resets jstats itself. To clear away objects you created while following
-along -- data frames like `MyData_r`, or a value like `MyObject` -- the simplest
+along — data frames like `MyData_r`, or a value like `MyObject` — the simplest
 way is the little **broom** icon at the top of the **Environment** pane
 (upper-right): one click sweeps the pane clean. It clears *everything* in the
 Environment, so use it when you're between run-throughs, not in the middle of
 one. (You can also remove a single object by name, e.g. `rm(MyData_r)`.) The
-built-in practice data comes right back with `jload("community")` whenever you
+built-in practice dataset comes right back with `jload("community")` whenever you
 want it.
 
 This box is the same on every hands-on page in this group.

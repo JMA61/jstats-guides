@@ -19,12 +19,15 @@ jload("community")
 ## ---- 2. Objects, the assignment operator, and the Global Environment ----
 
 ## "Objects" other than data frames can go into the Environment
-## The "Assignment Operator" (less-than followed by a dash) is a key Base R fundamental
+## The "Assignment Operator" (less-than followed by a dash) is a key
+## base R fundamental
 ## Take the thing on the right and assign it to what's on the left
-## Another Base R fundamental is how to refer to one variable within a data frame
-## Take the Region variable from the community data frame and assign it to a new object
+## Another base R fundamental is how to refer to one variable within
+## a data frame
+## Take the Region variable from the community data frame and assign it
+## to a new object
 ## The new object we'll call "MyObject"
-MyObject <- community$Region ## (Base R Code)
+MyObject <- community$Region  # base R
 
 ## The name on the left is entirely yours to choose, and the thing on the
 ## right can be anything at all -- here, just the number 5
@@ -38,8 +41,8 @@ jload("clinic")
 ## ---- 3. Cleaning up ----------------------------------------------------
 
 ## Remove MyObject from the Environment
-## Note that this is a Base R function (j is not the first letter)
-rm(MyObject)
+## Note that this is a base R function (j is not the first letter)
+rm(MyObject)  # base R
 
 ## Remove x as well
 rm(x)
@@ -54,7 +57,8 @@ rm(clinic)
 ## ---- 4. How much output you see ----------------------------------------
 
 ## The output level is set to "standard" by default
-## After you learn more about jstats (and R) you might not want all of that output
+## After you learn more about jstats (and R) you might not want all of
+## that output
 joutput("minimal")
 
 ## With minimal output, you get less information
@@ -66,7 +70,8 @@ joutput("standard")
 
 ## ---- 5. Functions with no arguments, and getting help ------------------
 
-## A few functions work correctly without input between the parentheses, but most require input
+## A few functions work correctly without input between the parentheses,
+## but most require input
 ## On the guide page, the next line demonstrates one of jstats's error
 ## messages -- it is disabled here so this file runs without errors
 # jload()
@@ -74,23 +79,26 @@ joutput("standard")
 ## But this one will show you the current output settings for jstats
 joutput()
 
-## Here's a Base R function that works without arguments/input
+## Here's a base R function that works without arguments/input
 ## List the objects/data frames in the Environment
-ls()
+ls()  # base R
 
-## Here's another one from Base R
-## A working directory is the "path" to where your project is stored on your computer
+## Here's another one from base R
+## A working directory is the "path" to where your project is stored
+## on your computer
 ## If you're not working in a project, you have to set this yourself (finicky)
-getwd()
+getwd()  # base R
 
 ## The technical name for a function's inputs are "Arguments"
 ## View help files describing necessary and optional Arguments by running...
 ?jload
 
-## The same ? help works for base R functions and functions from any installed package
+## The same ? help works for base R functions and functions from any
+## installed package
 ?ls
 
-## And this one opens the package overview: every jstats function, grouped by purpose
+## And this one opens the package overview: every jstats function,
+## grouped by purpose
 ?jstats
 
 
@@ -106,19 +114,20 @@ jload("community", overwrite = TRUE)
 
 ## ---- 7. Saving to a Data folder ----------------------------------------
 
-## Use the assignment operator to copy community to a new data frame called MyData
+## Use the assignment operator to copy community to a new data frame
+## called MyData
 MyData <- community
 
 ## Save it with no folder specified -- where does the file go?
 ## The console message shows the full path: it landed in your project's
 ## working directory, the default location
-## It's the same path the Base R getwd() command showed you earlier
+## It's the same path the base R getwd() command showed you earlier
 jsave(MyData, "WhereDidIGo.rds", overwrite = TRUE)
 
 ## Delete that test file
 ## file.remove() is base R -- the file-on-disk equivalent of the rm()
 ## you used for data frames. It replies with a cryptic [1] TRUE
-file.remove("WhereDidIGo.rds")
+file.remove("WhereDidIGo.rds")  # base R
 
 ## Now name a Data folder of your own
 ## jstats will create this folder upon first save
@@ -135,7 +144,7 @@ jsave(MyData, "MyData_r.rds", overwrite = TRUE)
 
 ## Remove both data frames from the Environment
 ## What happens to the file you just saved? The next block finds out
-rm(MyData)
+rm(MyData)  # base R
 rm(community)
 
 
@@ -164,7 +173,7 @@ jsave(MyData_stata, "MyData_stata.dta", overwrite = TRUE)  # No error
 
 ## You removed data frames one at a time earlier; this clears them all at once
 ## It is the code equivalent of the broom button in the Environment pane
-rm(list = ls())
+rm(list = ls())  # base R
 
 ## Load all data sets back
 jload("MyData_r.rds")
@@ -203,11 +212,11 @@ jdesc(MyData_stata, Age)
 ## And one base R caution, shown live (the guide page explains):
 ## Income carries declared missing-value codes (-99, -98)
 jdesc(MyData_spss, Income)   # the correct mean -- jdesc leaves the codes out
-## Base R gives a bare, unlabeled number, so extra work is needed just to
+## base R gives a bare, unlabeled number, so extra work is needed just to
 ## make it visible: cat() adds a label, and the "\n"s add blank lines to
 ## set it apart. Run line by line (interactively), a plain mean() prints
 ## only a cryptic [1] number; run with Source, it wouldn't appear at all
-cat("\n\nBase R mean of Income:", mean(MyData_spss$Income), "\n\n\n")  # a poisoned mean
+cat("\n\nBase R mean of Income:", mean(MyData_spss$Income), "\n\n\n")  # base R -- a poisoned mean
 
 ## Set the display back to the default before you go
 joutput(digits = 3)

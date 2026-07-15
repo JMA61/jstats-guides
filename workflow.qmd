@@ -11,7 +11,7 @@ library(jstats)
 
 ## A typical jstats workflow
 
-The Quick Start raced to a first result, and *[Loading, Saving, Converting Data](data.qmd)* covered getting files in and out. This page puts those pieces together and shows what an ordinary working session actually looks like — start to finish. The point isn't any one command; it's the **order**: how a real analysis moves from opening the data to a saved result, and where the everyday "working comfortably" tools fall into place along the way.
+The Quick Start raced to a first result; this page shows what an ordinary working session actually looks like — start to finish. The point isn't any one command; it's the **order**: how a real analysis moves from opening the data to a saved result, and where the everyday "working comfortably" tools fall into place along the way.
 
 It runs on the shipped practice datasets, so you can follow along with nothing of your own: `community` for the main thread, with a short detour to its messy companion `clinic` for the one step that needs a dirty column. Swap in your own data wherever you like — the moves are the same.
 
@@ -147,7 +147,7 @@ jlm(WellbeingScore ~ Income + Age + Region)
 ```
 
 ::: {.callout-tip collapse="true" title="For experienced R users"}
-`jdummy()` is doing what you'd otherwise arrange with `factor()` and `contrasts()` / `relevel()`. The difference is that the registration is *non-destructive and persistent*: `Region` stays a plain labelled variable in the data, and the dummy treatment lives in a separate registration that `jlm()`, `jlogistic()`, and the others look up — so you set the reference category in one place, not inside every model call.
+`jdummy()` is doing what you'd otherwise arrange with `factor()` and `contrasts()` / `relevel()`. The difference is that the registration is *non-destructive and persistent*: `Region` stays a plain labeled variable in the data, and the dummy treatment lives in a separate registration that `jlm()`, `jlogistic()`, and the others look up — so you set the reference category in one place, not inside every model call.
 :::
 
 Logistic regression works the same way, with a 0/1 outcome. `Volunteer` is already coded 0/1, so it drops straight in:
@@ -156,7 +156,7 @@ Logistic regression works the same way, with a 0/1 outcome. `Volunteer` is alrea
 jlogistic(Volunteer ~ Age)
 ```
 
-A dichotomy stored as 1/2 (the common Yes/No convention) needs recoding to 0/1 first — jstats will stop with a message telling you exactly that, rather than running something misleading. The recode is a one-liner with `jrecode()`, the same tool we used on the scale item; *[Loading, Saving, Converting Data](data.qmd)* shows that step in context.
+A dichotomy stored as 1/2 (the common Yes/No convention) needs recoding to 0/1 first — jstats will stop with a message telling you exactly that, rather than running something misleading. The recode is a one-liner with `jrecode()`, the same tool we used on the scale item; `?jrecode` documents the options.
 
 ::: {.callout-note collapse="true" title="Going deeper (optional)"}
 Book 1 covers the regression ideas themselves — what the coefficients mean, how dummy variables encode a categorical predictor; Book 2 covers `jlm()` and `jlogistic()`'s options and the reference-category choice in more detail, with worked examples. `?jlm`, `?jlogistic`, and `?jdummy` document the options too.

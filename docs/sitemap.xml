@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jma61.github.io/jstats-guides/workflow.html</loc>
-    <lastmod>2026-07-09T22:07:01.173Z</lastmod>
+    <lastmod>2026-07-15T21:55:49.402Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/updating.html</loc>
@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/start-here.html</loc>
-    <lastmod>2026-07-14T23:33:47.632Z</lastmod>
+    <lastmod>2026-07-15T21:55:49.396Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/reference.html</loc>
@@ -18,7 +18,7 @@
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/loading-jstats-automatically.html</loc>
-    <lastmod>2026-07-04T05:34:52.895Z</lastmod>
+    <lastmod>2026-07-15T21:55:49.331Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/install-jstats.html</loc>
@@ -30,7 +30,7 @@
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/data.html</loc>
-    <lastmod>2026-07-14T23:33:47.678Z</lastmod>
+    <lastmod>2026-07-15T21:55:49.317Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/books.html</loc>
@@ -46,19 +46,19 @@
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/install-r-and-rstudio.html</loc>
-    <lastmod>2026-07-15T04:05:51.980Z</lastmod>
+    <lastmod>2026-07-15T21:55:49.348Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/quickstart.html</loc>
-    <lastmod>2026-07-13T19:20:08.205Z</lastmod>
+    <lastmod>2026-07-15T21:55:49.417Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/rstudio-orientation.html</loc>
-    <lastmod>2026-07-13T03:19:34.672Z</lastmod>
+    <lastmod>2026-07-15T21:55:49.371Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/troubleshooting.html</loc>
-    <lastmod>2026-07-15T04:05:51.984Z</lastmod>
+    <lastmod>2026-07-15T21:55:49.430Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/videos.html</loc>

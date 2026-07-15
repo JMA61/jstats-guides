@@ -14,18 +14,17 @@ you open each session ready to go. This uses a small setup file called an
 **`.Rprofile`** (a file R reads automatically when it starts).
 
 Create a plain text file named `.Rprofile` in your Project folder containing
-these two lines:
+these lines:
 
 ```r
-# To reinstall jstats (new computer, or after updating R) see the install code at: jma61.github.io/jstats-guides/install-jstats.html
+# To reinstall jstats (new computer, or after updating R) see the install
+# code at: jma61.github.io/jstats-guides/install-jstats.html
 library(jstats)
 ```
 
-The second line does the loading. The first is a **comment** — R ignores any
-line that starts with `#` — holding the address of the install page, so the
-reinstall instructions are one glance away on a new computer or after an R update.
-Keep the `#` in place: without it, R would try to run the address as a command at
-every startup and complain; with it, the line is just a note that costs nothing.
+The last line does the loading. The comment above it holds the address of the
+install page, so the reinstall instructions are one glance away on a new
+computer or after an R update.
 
 Save it, then restart R (**Session menu, Restart R**). From now on, every session
 in this Project starts with jstats already loaded.

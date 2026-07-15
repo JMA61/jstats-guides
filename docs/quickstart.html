@@ -346,7 +346,7 @@ Console <span class="obx-loc">(lower-left pane)</span>
 </section>
 <section id="why-jstats-a-quick-contrast" class="level2">
 <h2 class="anchored" data-anchor-id="why-jstats-a-quick-contrast">Why jstats — a quick contrast</h2>
-<p>Now, with jstats loaded, here’s what it’s for. The package ships with a practice dataset named <code>community</code>, and we’ll use it for the whole tour (more on it shortly). Suppose you want to describe the ages of the people in the data — the average, how spread out they are, and so on. Base R — R as it comes, before any packages — can do this, and one common way takes three separate commands. You don’t need to learn these; we’re running them only for the comparison. Leaving a blank line between commands is optional — R ignores blank lines entirely, so you can use them to space a script for readability, or not:</p>
+<p>Now, with jstats loaded, here’s what it’s for. The package ships with a practice dataset named <code>community</code>, and we’ll use it for the whole tour (more on it shortly). Suppose you want to describe the ages of the people in the data — the average, how spread out they are, and so on. Even base R — R as it comes, before any packages — can do this, and one common way takes three separate commands. You don’t need to learn these; we’re running them only for the comparison. Leaving a blank line between commands is optional — R ignores blank lines entirely, so you can use them to space a script for readability, or not:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(community<span class="sc">$</span>Age)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(community<span class="sc">$</span>Age)</span>
@@ -375,7 +375,7 @@ Variable  Total  Non_missing  Min  Max   Mean     SD
 Age         103          103   18   71  40.65  11.62
 </span>
 <span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
-<p>One command, one table — the total number of cases, how many are non-missing, the minimum and maximum, the mean, and the standard deviation, together and labeled, laid out the way you’d expect from commercial statistical software like SPSS or Stata. That, in a nutshell, is what jstats is for: taking the everyday work of data analysis and making it simple and readable. The rest of this tour builds on that idea.</p>
+<p>One command, one table — the total number of cases, how many are non-missing, the minimum and maximum, the mean, and the standard deviation, together and labeled, laid out the way you’d expect from commercial statistical software like SPSS, Stata, or SAS. That, in a nutshell, is what jstats is for: taking the everyday work of data analysis and making it simple and readable. The rest of this tour builds on that idea.</p>
 </section>
 <section id="meet-community" class="level2">
 <h2 class="anchored" data-anchor-id="meet-community">Meet <code>community</code></h2>
