@@ -31,6 +31,8 @@ website:
         href: books.qmd
       - text: "Videos"
         href: videos.qmd
+      - text: "Updating"
+        href: updating.qmd
       - text: "Troubleshooting"
         href: troubleshooting.qmd
     # ---------------------------------------------------------------

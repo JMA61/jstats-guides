@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>jstats:Home</title>
+<title>jstats:Updating</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -72,23 +107,21 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<meta property="og:title" content="jstats:Home">
+<meta property="og:title" content="jstats:Updating">
 <meta property="og:description" content="">
-<meta property="og:image" content="https://jma61.github.io/jstats-guides/images/banner.png">
+<meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
 <meta property="og:site_name" content="jstats">
-<meta property="og:image:alt" content="jstats — Statistics in R, Made Accessible">
-<meta property="og:image:height" content="600">
-<meta property="og:image:width" content="2400">
-<meta name="twitter:title" content="jstats:Home">
+<meta property="og:image:height" content="720">
+<meta property="og:image:width" content="1280">
+<meta name="twitter:title" content="jstats:Updating">
 <meta name="twitter:description" content="">
-<meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/banner.png">
-<meta name="twitter:image:alt" content="jstats — Statistics in R, Made Accessible">
-<meta name="twitter:image-height" content="600">
-<meta name="twitter:image-width" content="2400">
+<meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
+<meta name="twitter:image-height" content="720">
+<meta name="twitter:image-width" content="1280">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -110,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -134,7 +167,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Videos</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./updating.html"> 
+    <a class="nav-link active" href="./updating.html" aria-current="page"> 
 <span class="menu-text">Updating</span></a>
   </li>  
   <li class="nav-item">
@@ -159,49 +192,111 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#updating" id="toc-updating" class="nav-link active" data-scroll-target="#updating">Updating</a></li>
+  <li><a href="#which-versions-am-i-running" id="toc-which-versions-am-i-running" class="nav-link" data-scroll-target="#which-versions-am-i-running">Which versions am I running?</a></li>
+  <li><a href="#a-rule-of-thumb-when-to-update" id="toc-a-rule-of-thumb-when-to-update" class="nav-link" data-scroll-target="#a-rule-of-thumb-when-to-update">A rule of thumb: when to update</a></li>
+  <li><a href="#updating-jstats" id="toc-updating-jstats" class="nav-link" data-scroll-target="#updating-jstats">Updating jstats</a></li>
+  <li><a href="#updating-rstudio" id="toc-updating-rstudio" class="nav-link" data-scroll-target="#updating-rstudio">Updating RStudio</a></li>
+  <li><a href="#updating-r" id="toc-updating-r" class="nav-link" data-scroll-target="#updating-r">Updating R</a></li>
+  <li><a href="#setting-up-a-new-computer" id="toc-setting-up-a-new-computer" class="nav-link" data-scroll-target="#setting-up-a-new-computer">Setting up a new computer</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
-<style>
-  /* Hero banner sizing (this page only; kept here so it live-reloads, and
-     mirrors how the Griffith page scopes its hero CSS). The wordmark and
-     tagline are baked into banner.png, so no CSS text overlay is needed. */
-  .site-banner {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin: 0 0 1.75rem;
-    border-radius: 6px;
-  }
-</style>
-<img src="images/banner.png" class="site-banner" alt="jstats — Statistics in R, Made Accessible">
-<!-- SHARED INCLUDE: an "About jstats" section (package) followed by an
-     "About the developer" section (bio + photo). Pulled into index.qmd (public
-     welcome) and griffith.qmd (course front door) via
-     {{< include _developer-bio.qmd >}}. Edit once here; both pages update. The
-     .jbio styling lives in custom.scss (global); the photo floats right beside
-     the bio paragraph. The leading underscore keeps Quarto from rendering this
-     as a standalone page. American English (the Griffith-specific sections on
-     griffith.qmd stay Australian; this shared block is American on both). -->
-<div class="jbio">
-  <h2 class="jbio-name anchored">About jstats</h2>
-  <p>jstats makes statistical analysis in R approachable for social-science researchers and students. R is powerful, but its learning curve and rough edges can make the move from commercial statistical software like SPSS, Stata, or SAS intimidating. jstats smooths that path: shorter, more consistent syntax; sensible defaults; protection from some of base R's more confusing behaviors; and output styled after the conventions the expensive commercial platforms use, so results look familiar from the first run.</p>
-  <p>Take the hurdle that stops many newcomers in the first ten minutes: simply opening a data file. In jstats, once you've set a single option telling it which folder your dataset lives in, opening that file takes just one command — regardless of whether it came from SPSS, Stata, or Excel — and the value labels, variable labels, and missing-value codes those files carry come in with it, handled automatically and with no manual conversion. In base R the same task is several separate steps: pick and load the right package for that file type, read the data, then work out and declare which values should count as missing. jstats acts as a <em>wrapper</em> — it folds those steps into one function call, doing the busywork behind the scenes so you can get to the analysis. And there's plenty to get to: jstats covers the analyses social scientists reach for most — frequency tables and descriptive statistics, data screening, t-tests and ANOVA, correlation, scale reliability (Cronbach's alpha), cross-tabulations, and both linear and logistic regression — with a fuller list on the Reference page.</p>
-  <p>And for all the steps it folds together, jstats stays close enough to base R that the skills you build transfer to the wider R world rather than locking you into a private dialect — ordinary R is always right there underneath, ready when you need it. None of this was designed in the abstract: jstats grew out of years of teaching statistics to social-science students who wanted the methods, not a programming course, and which analyses it includes, which defaults it sets, and which rough edges it smooths all come from what real students and colleagues run into when they put it to work.</p>
-  <h2 class="jbio-name anchored" style="margin-top: 1.75rem;">About the developer</h2>
-  <div class="jbio-photo">
-    <img src="images/jeff-headshot.jpg" alt="Jeff Ackerman">
-  </div>
-  <p>I'm Jeff Ackerman, a social scientist who teaches quantitative methods at Griffith University in Queensland, Australia. I grew up in Pennsylvania, in the United States, and joined Griffith in 2013; I'm now an Australian citizen. I studied statistics and research methods at the Pennsylvania State University under several well-known methodologists, including C. R. Rao — himself a student of Ronald Fisher, the statistician who developed Analysis of Variance (ANOVA). Alongside statistics, I trained in computer programming at the university level decades ago, and that combination — now paired with modern AI-assisted software engineering and careful testing — is what makes it practical for one person to build and maintain a package this size.</p>
+<section id="updating" class="level2">
+<h2 class="anchored" data-anchor-id="updating">Updating</h2>
+<p>You’re running three separate pieces of software: <strong>R</strong> (the engine that does the statistics), <strong>RStudio</strong> (the window you drive it from), and <strong>jstats</strong> (the package you added on top). They come from three different places, on three different schedules, and — this is the part that trips people up — <strong>updating one does not update the others.</strong></p>
+<p>The single most useful thing to know: <strong>updating RStudio does not update R.</strong> They are separate programs from separate organizations, and the one that keeps <em>nagging</em> you (RStudio pops up an “update available” box on startup) is the harmless one, while the one that stays completely <em>silent</em> (R never tells you anything) is the one with real consequences when it changes. So the noisy update is the safe one, and the quiet update is the one to be a little careful with. Keep that backwards-feeling fact in mind and the rest of this page follows from it.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<section id="new-here" class="level2">
-<h2 class="anchored" data-anchor-id="new-here">New here?</h2>
-<p>The <strong>Get Started</strong> guide takes you from nothing installed to your first real statistical result — an actual regression — in about an hour, with no prior R experience needed. You’ll do a little setup once, then spend your time getting results.</p>
-<p><a href="./start-here.html" class="btn btn-primary" role="button">Get Started →</a></p>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Coming from SPSS, Stata, or SAS?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In commercial statistical software you update <em>the product</em> — one installer from one vendor, everything at once. R works differently: the engine (R), the interface (RStudio), and each add-on package (like jstats) are maintained by different people and update on their own timelines. There’s no single “update everything” button, and that’s normal. This page keeps the three tracks straight so you know which is which.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="which-versions-am-i-running" class="level2">
+<h2 class="anchored" data-anchor-id="which-versions-am-i-running">Which versions am I running?</h2>
+<p>Before updating anything, it helps to know where you stand. Run these in the RStudio Console:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>R.version.string            <span class="co"># which version of R</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">RStudio.Version</span>()<span class="sc">$</span>version   <span class="co"># which version of RStudio (only works inside RStudio)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">"jstats"</span>)    <span class="co"># which version of jstats</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Each prints a version number — something like <code>R version 4.x.x</code>, an RStudio version, and the jstats version. (If <code>RStudio.Version()</code> reports an error, you’re not running inside RStudio; the menu route <strong>Help → About RStudio</strong> works either way, and R prints its own version in the Console every time it starts.) Jot the three down if you’re about to change anything — it makes “did that actually update?” easy to check afterward.</p>
+</section>
+<section id="a-rule-of-thumb-when-to-update" class="level2">
+<h2 class="anchored" data-anchor-id="a-rule-of-thumb-when-to-update">A rule of thumb: when to update</h2>
+<p>There’s one rule worth remembering, and it splits by how much an update costs you:</p>
+<ul>
+<li><strong>Don’t update R or RStudio in the middle of something.</strong> Neither is urgent, and each costs you a little disruption — a restart, and for R a reinstall of your packages (below). Save them for <em>between</em> projects, or the start of a semester — not the week an assignment is due.</li>
+<li><strong>jstats is the exception.</strong> Updating it is one command in a separate process, with nothing else disturbed, so it’s safe to do almost any time — and if your instructor asks you to update jstats, do it whenever they ask — they sometimes know about an important new function that’s just been added and want you using it. The one honest caveat while jstats is still pre-CRAN: an update can occasionally change how a function behaves, so if you’re mid-way through something that’s working, finish today’s task first, <em>then</em> update.</li>
+</ul>
+</section>
+<section id="updating-jstats" class="level2">
+<h2 class="anchored" data-anchor-id="updating-jstats">Updating jstats</h2>
+<p>This is the frequent, painless one. Because jstats is updated often during this phase, it checks for a newer version each time you load it and prints a one-line message at startup when one is available. The command is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jupdate</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That’s the whole thing — one command, run in the Console, in its own separate process. The full details (what it checks, why you restart R afterward, the <code>ask = TRUE</code> option) live on the <a href="./install-jstats.html#keep-jstats-up-to-date">Install jstats</a> page, since that’s where you first meet it.</p>
+</section>
+<section id="updating-rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="updating-rstudio">Updating RStudio</h2>
+<p>RStudio checks for updates on startup and, when there’s a newer version, pops up an <strong>Update Available</strong> box. Two things make this less alarming than it looks:</p>
+<p><strong>You don’t have to take every update.</strong> RStudio can put out a new version as often as monthly, so they come around frequently, and skipping several costs you nothing. <strong>Remind Later</strong> dismisses the box for now. If the reminders bother you, you can turn them off for good: <strong>Tools → Global Options → General</strong>, and untick <strong>Automatically notify me of updates to RStudio</strong>. (You’ll still be able to update whenever you choose — you just won’t be prompted.)</p>
+<p><strong>Updating RStudio never touches R or your packages.</strong> It replaces the interface, not the engine. Your R version, your installed packages, and jstats are all exactly where they were. This is the safe update.</p>
+<p>When you <em>do</em> want the new version, the one confusing step is the button labeled <strong>Quit and Download</strong>. Despite the name, it doesn’t download anything — it closes RStudio and opens the Posit download page in your browser, where you scroll down to the <strong>Direct Downloads</strong> section and pick the installer for your system yourself. The awkward part is <em>finding</em> the right download; the install itself is a formality — launch it, approve the administrator prompt (it names the publisher as <em>Posit Software, PBC</em>), and click through the default screens to the end. When it’s done, open RStudio again and you’re on the new version.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Aside: seeing what changed">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Aside: seeing what changed
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Curious what a new RStudio version actually added? RStudio keeps its own list of changes at <strong>Help → What’s New</strong> — an in-app panel you can open any time. (R has no equivalent, which is part of why R updates slip by unnoticed.)</p>
+</div>
+</div>
+</div>
+<p>If a security box blocks the RStudio installer the first time you run it, that’s the same Windows warning covered in <a href="./troubleshooting.html#security-warnings-when-downloading-or-installing">Troubleshooting</a>.</p>
+</section>
+<section id="updating-r" class="level2">
+<h2 class="anchored" data-anchor-id="updating-r">Updating R</h2>
+<p>Updating R is rare and deliberate — R never prompts you, so it only happens when you decide to do it. Do it from CRAN the same way you installed it (see <a href="./install-r-and-rstudio.html">Install R and RStudio</a>), between projects rather than mid-task.</p>
+<p>The one thing to know: <strong>updating R starts you a fresh, empty package library</strong>, so jstats and everything else you’d installed have to be reinstalled afterward. That’s expected, not a fault — it’s the “reinstall” cost mentioned in the rule of thumb above. The one-time follow-up is the same install line you ran the first time; the full walk-through, including how to tell this apart from a harmless warning, is under <a href="./troubleshooting.html#starting-rstudio-and-loading-jstats"><em>there is no package called ‘jstats’</em></a> on the Troubleshooting page.</p>
+<p>There’s also a reason updating R sometimes becomes necessary rather than optional. jstats installs as a ready-made copy built for <strong>recent</strong> versions of R — roughly the current release and the one before it. If your R is too old for a matching copy to exist, the install can fail, or R may offer to build jstats slowly from source instead (you’ll see a prompt asking whether to <em>install from sources</em> — the answer is still <strong>No</strong>). The fix in that case is exactly what you’d guess: <strong>update R, then try the install again.</strong> Rather than track version numbers, just watch for the symptom — if an install won’t go through on an older R, updating R clears it.</p>
+</section>
+<section id="setting-up-a-new-computer" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-a-new-computer">Setting up a new computer</h2>
+<p>Setting up jstats on a second machine is the same short routine, in order:</p>
+<ol type="1">
+<li>Install <strong>R</strong>, then <strong>RStudio</strong> — see <a href="./install-r-and-rstudio.html">Install R and RStudio</a>.</li>
+<li>Run the jstats install line in the Console:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"jstats"</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">"https://jma61.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That’s it — a fresh machine starts with an empty package library, so this is really the <em>same</em> operation as recovering after an R update: a clean library, and one line to put jstats back. Full detail is on the <a href="./install-jstats.html">Install jstats</a> page.</p>
 
 
 </section>

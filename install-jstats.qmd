@@ -152,6 +152,11 @@ Follow those and you're running the new version.
 (This all gets simpler once jstats reaches CRAN: `jupdate()` keeps working, just
 updating the ordinary way, and we'll revise these instructions then.)
 
+Keeping jstats current is only part of the picture — R and RStudio update on their
+own separate schedules, and they don't work the same way. The
+[Updating](updating.qmd) page pulls all three together, including what to do after an
+R update and when to set up a new computer.
+
 ::: {.callout-note collapse="true" title="Going deeper (optional)"}
 A couple of extra options. If you'd rather confirm before anything installs, run
 `jupdate(ask = TRUE)` — it shows the available and installed versions and waits

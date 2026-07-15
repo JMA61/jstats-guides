@@ -274,6 +274,9 @@ Don't confuse this error with the harmless **warning** that jstats `was built
 under R version 4.x.x` — that one just means the ready-made copy was built on a
 slightly different R patch, needs no action, and clears on its own. This callout
 is about the actual error where jstats can't be found at all.
+
+For the bigger picture on updating R — when to do it, and the fresh-library chore
+that follows — see the [Updating](updating.qmd) page.
 :::
 
 ::: {.callout-warning collapse="true" title="could not find function 'jfreq' (or another jstats function)"}

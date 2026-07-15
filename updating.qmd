@@ -1,0 +1,153 @@
+---
+pagetitle: "jstats:Updating"
+title-prefix: ""
+---
+
+## Updating
+
+You're running three separate pieces of software: **R** (the engine that does the
+statistics), **RStudio** (the window you drive it from), and **jstats** (the package
+you added on top). They come from three different places, on three different
+schedules, and — this is the part that trips people up — **updating one does not
+update the others.**
+
+The single most useful thing to know: **updating RStudio does not update R.** They
+are separate programs from separate organizations, and the one that keeps *nagging*
+you (RStudio pops up an "update available" box on startup) is the harmless one,
+while the one that stays completely *silent* (R never tells you anything) is the one
+with real consequences when it changes. So the noisy update is the safe one, and the
+quiet update is the one to be a little careful with. Keep that backwards-feeling fact
+in mind and the rest of this page follows from it.
+
+::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
+In commercial statistical software you update *the product* — one installer from one
+vendor, everything at once. R works differently: the engine (R), the interface
+(RStudio), and each add-on package (like jstats) are maintained by different people
+and update on their own timelines. There's no single "update everything" button, and
+that's normal. This page keeps the three tracks straight so you know which is which.
+:::
+
+## Which versions am I running?
+
+Before updating anything, it helps to know where you stand. Run these in the RStudio
+Console:
+
+```r
+R.version.string            # which version of R
+RStudio.Version()$version   # which version of RStudio (only works inside RStudio)
+packageVersion("jstats")    # which version of jstats
+```
+
+Each prints a version number — something like `R version 4.x.x`, an RStudio version,
+and the jstats version. (If `RStudio.Version()` reports an error, you're not running
+inside RStudio; the menu route **Help → About RStudio** works either way, and R
+prints its own version in the Console every time it starts.) Jot the three down if
+you're about to change anything — it makes "did that actually update?" easy to check
+afterward.
+
+## A rule of thumb: when to update
+
+There's one rule worth remembering, and it splits by how much an update costs you:
+
+- **Don't update R or RStudio in the middle of something.** Neither is urgent, and
+  each costs you a little disruption — a restart, and for R a reinstall of your
+  packages (below). Save them for *between* projects, or the start of a semester —
+  not the week an assignment is due.
+- **jstats is the exception.** Updating it is one command in a separate process, with
+  nothing else disturbed, so it's safe to do almost any time — and if your instructor
+  asks you to update jstats, do it whenever they ask — they sometimes know about an
+  important new function that's just been added and want you using it. The one honest
+  caveat while jstats is still pre-CRAN: an update can occasionally change how a
+  function behaves, so if you're mid-way through something that's working, finish
+  today's task first, *then* update.
+
+## Updating jstats
+
+This is the frequent, painless one. Because jstats is updated often during this
+phase, it checks for a newer version each time you load it and prints a one-line
+message at startup when one is available. The command is:
+
+```r
+jupdate()
+```
+
+That's the whole thing — one command, run in the Console, in its own separate
+process. The full details (what it checks, why you restart R afterward, the
+`ask = TRUE` option) live on the [Install jstats](install-jstats.qmd#keep-jstats-up-to-date)
+page, since that's where you first meet it.
+
+## Updating RStudio
+
+RStudio checks for updates on startup and, when there's a newer version, pops up an
+**Update Available** box. Two things make this less alarming than it looks:
+
+**You don't have to take every update.** RStudio can put out a new version as often
+as monthly, so they come around frequently, and skipping several costs you nothing. **Remind
+Later** dismisses the box for now. If the reminders bother you, you can turn them off
+for good: **Tools → Global Options → General**, and untick **Automatically notify me
+of updates to RStudio**. (You'll still be able to update whenever you choose — you
+just won't be prompted.)
+
+**Updating RStudio never touches R or your packages.** It replaces the interface, not
+the engine. Your R version, your installed packages, and jstats are all exactly where
+they were. This is the safe update.
+
+When you *do* want the new version, the one confusing step is the button labeled
+**Quit and Download**. Despite the name, it doesn't download anything — it closes
+RStudio and opens the Posit download page in your browser, where you scroll down to
+the **Direct Downloads** section and pick the installer for your system yourself. The
+awkward part is *finding* the right download; the install itself is a formality —
+launch it, approve the administrator prompt (it names the publisher as *Posit
+Software, PBC*), and click through the default screens to the end. When it's done,
+open RStudio again and you're on the new version.
+
+::: {.callout-note collapse="true" title="Aside: seeing what changed"}
+Curious what a new RStudio version actually added? RStudio keeps its own list of
+changes at **Help → What's New** — an in-app panel you can open any time. (R has no
+equivalent, which is part of why R updates slip by unnoticed.)
+:::
+
+If a security box blocks the RStudio installer the first time you run it, that's the
+same Windows warning covered in
+[Troubleshooting](troubleshooting.qmd#security-warnings-when-downloading-or-installing).
+
+## Updating R
+
+Updating R is rare and deliberate — R never prompts you, so it only happens when you
+decide to do it. Do it from CRAN the same way you installed it (see
+[Install R and RStudio](install-r-and-rstudio.qmd)), between projects rather than
+mid-task.
+
+The one thing to know: **updating R starts you a fresh, empty package library**, so
+jstats and everything else you'd installed have to be reinstalled afterward. That's
+expected, not a fault — it's the "reinstall" cost mentioned in the rule of thumb
+above. The one-time follow-up is the same install line you ran the first time; the
+full walk-through, including how to tell this apart from a harmless warning, is under
+[*there is no package called 'jstats'*](troubleshooting.qmd#starting-rstudio-and-loading-jstats)
+on the Troubleshooting page.
+
+There's also a reason updating R sometimes becomes necessary rather than optional.
+jstats installs as a ready-made copy built for **recent** versions of R — roughly the
+current release and the one before it. If your R is too old for a matching copy to
+exist, the install can fail, or R may offer to build jstats slowly from source
+instead (you'll see a prompt asking whether to *install from sources* — the answer is
+still **No**). The fix in that case is exactly what you'd guess: **update R, then try
+the install again.** Rather than track version numbers, just watch for the symptom —
+if an install won't go through on an older R, updating R clears it.
+
+## Setting up a new computer
+
+Setting up jstats on a second machine is the same short routine, in order:
+
+1. Install **R**, then **RStudio** — see [Install R and RStudio](install-r-and-rstudio.qmd).
+2. Run the jstats install line in the Console:
+
+```r
+install.packages("jstats",
+  repos = c("https://jma61.r-universe.dev", "https://cloud.r-project.org"))
+library(jstats)
+```
+
+That's it — a fresh machine starts with an empty package library, so this is really
+the *same* operation as recovering after an R update: a clean library, and one line
+to put jstats back. Full detail is on the [Install jstats](install-jstats.qmd) page.

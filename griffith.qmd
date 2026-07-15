@@ -186,11 +186,27 @@ yourself:
 
 ![The Security row sits at the bottom of the General tab. Tick **Unblock**, then click **OK**.](images/security-unblock.png){width=405px fig-alt="The Windows file Properties dialog, General tab, showing the Security row with an Unblock checkbox at the bottom right."}
 
-If there's no Unblock box, or the installer is still blocked, call the Griffith IT
-service desk on **5552 5555** and ask them to unblock the R and RStudio installers, or
-to install them for you.
+Tick **Unblock** *before* you run the installer — that's the order that matters. If
+it's still blocked afterward, the reliable reset is to delete the file, download it
+again, and Unblock the fresh copy before running it.
+
+If there's no Unblock box, or the installer is still blocked — or you don't have an
+administrator account to install software at all — call the Griffith IT service desk
+on **5552 5555** and ask them to unblock the R and RStudio installers, or to install
+them for you. Once R and RStudio are in place, the
+[Install jstats](install-jstats.qmd) steps run just as they would on any other
+machine.
+
+## Using a SAL lab computer
+
+If you're working in a Griffith SAL lab, there's one small quirk worth knowing about
+— expand the note below.
 
 ::: {.callout-tip collapse="true" title="Using a Griffith SAL lab computer?"}
+*This section is still a rough draft. It will likely change as jstats and this guide
+develop further, and after I've checked with the people who manage the SAL lab how
+they'd prefer this handled.*
+
 SAL lab machines are networked but not connected to the open internet. jstats
 runs perfectly there -- every analysis works fully offline. But while jstats is
 still in development it installs from an r-universe repository, and each time it
@@ -215,16 +231,6 @@ is available.
 This pause is specific to this pre-CRAN version. Once jstats moves to CRAN
 (R's central package archive), it will install and update the normal CRAN way and
 won't make this startup check at all.
-:::
-
-::: {.callout-tip collapse="true" title="On a University-owned computer?"}
-University-managed computers are often locked down so that staff can't install
-software themselves. If you find you can't install R or RStudio — the installer is
-blocked, or asks for an administrator account you don't have — contact **the IT
-helpdesk** and ask them to enable the install, or to install R and RStudio for
-you. Once those are in place, the jstats steps on the
-[Install jstats](install-jstats.qmd) page run just as they would on any other
-machine.
 :::
 
 ## Using jstats in your own teaching?
