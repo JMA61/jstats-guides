@@ -830,7 +830,12 @@ local({
   # disclosed to the reader (data.qmd block 1's box lead and the page-wrap box).
   # KNOWN CAVEAT: two statements on one physical line, separated by ";", would
   # echo that line twice (one srcref each). No page does this; keep it that way.
-  run_block <- function(code, expect_error = FALSE){
+  # ECHO OFF (S192): echo = FALSE drops the "> " prompt segment entirely, for
+  # output that reaches the Console WITHOUT the reader typing anything -- the
+  # model case is the .Rprofile startup message, which appears at session start
+  # with no command line above it. The code still RUNS (same scrub, same leak
+  # gate); only the echo is withheld. Default TRUE preserves every prior page.
+  run_block <- function(code, expect_error = FALSE, echo = TRUE){
     exprs <- parse(text = code, keep.source = TRUE)
     refs  <- attr(exprs, "srcref")
     src   <- strsplit(code, "\n", fixed = TRUE)[[1]]
@@ -843,10 +848,12 @@ local({
       }
     }
     for (i in seq_along(exprs)){
-      srclines <- src[refs[[i]][1L]:refs[[i]][3L]]   # whole physical lines (see above)
-      srclines[1] <- paste0("> ", srclines[1])
-      if (length(srclines) > 1) srclines[-1] <- paste0("+ ", srclines[-1])
-      add("prompt", paste(srclines, collapse = "\n"))
+      if (isTRUE(echo)){
+        srclines <- src[refs[[i]][1L]:refs[[i]][3L]]   # whole physical lines (see above)
+        srclines[1] <- paste0("> ", srclines[1])
+        if (length(srclines) > 1) srclines[-1] <- paste0("+ ", srclines[-1])
+        add("prompt", paste(srclines, collapse = "\n"))
+      }
       msgbuf <- character(0); warnbuf <- character(0); errbuf <- character(0)
       out <- capture.output(
         withCallingHandlers({
@@ -1086,7 +1093,7 @@ local({
     paste0('<pre class="cp-pane sp-pane">', tab,
            '<span class="sp-strip" style="background-image:url(', SOURCE_STRIP_L,
            '),url(', SOURCE_STRIP_R, ')"></span>',
-           '<span class="sp-body">', paste(rows, collapse = "\n"), '</span></pre>')
+           '<span class="sp-body">', paste(rows, collapse = ""), '</span></pre>')
   }
   show_source <- function(code, name = "Untitled1", dirty = TRUE,
                           lead = NULL, note = NULL){
@@ -1120,10 +1127,10 @@ local({
   # STANDALONE comment line still does not echo -- see run_block()'s header.)
   show_console <- function(code, expect_error = FALSE, fence = FALSE,
                            env = FALSE, env_mark = NULL,
-                           lead = NULL, note = NULL){
+                           lead = NULL, note = NULL, echo = TRUE){
     code <- sub("[\n]+$", "", code)
     if (fence) cat("```r\n", code, "\n```\n\n", sep = "")
-    segs <- run_block(code, expect_error = expect_error)
+    segs <- run_block(code, expect_error = expect_error, echo = echo)
     if (!is.null(lead)) cat('<p class="obx-lead"><em>', lead, "</em></p>\n", sep = "")
     cat(cap("Console", "lower-left pane"), "\n\n", console_pane(segs), "\n", sep = "")
     if (env){
