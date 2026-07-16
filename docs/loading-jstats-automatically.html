@@ -110,15 +110,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <meta property="og:title" content="jstats:Auto-load">
 <meta property="og:description" content="">
-<meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
+<meta property="og:image" content="https://jma61.github.io/jstats-guides/images/files-pane-new-text-file.png">
 <meta property="og:site_name" content="jstats">
-<meta property="og:image:height" content="720">
-<meta property="og:image:width" content="1280">
+<meta property="og:image:alt" content="The Files tab in RStudio's lower-right pane with its New File dropdown open and Text File highlighted.">
 <meta name="twitter:title" content="jstats:Auto-load">
 <meta name="twitter:description" content="">
-<meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
-<meta name="twitter:image-height" content="720">
-<meta name="twitter:image-width" content="1280">
+<meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/files-pane-new-text-file.png">
+<meta name="twitter:image:alt" content="The Files tab in RStudio's lower-right pane with its New File dropdown open and Text File highlighted.">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -288,16 +286,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="loading-jstats-automatically" class="level2">
 <h2 class="anchored" data-anchor-id="loading-jstats-automatically">Loading jstats automatically</h2>
 <p>Once jstats is installed, you can have your Project load it for you every time it opens — so you never type <code>library(jstats)</code> by hand. It’s optional (typing the one line at the start of a session works perfectly well), but worth doing: besides saving the keystrokes, it means the package’s automatic update check runs every time you start work — so you’re always told when a new version is available — and you open each session ready to go. This uses a small setup file called an <strong><code>.Rprofile</code></strong> (a file R reads automatically when it starts).</p>
-<p>Create a plain text file named <code>.Rprofile</code> in your Project folder containing these lines:</p>
+<p>The file lives in your Project folder, and the easiest place to create it is the <strong>Files</strong> tab in the lower-right pane, which shows that folder’s contents. Click <strong>New File</strong> and choose <strong>Text File</strong>:</p>
+<p><img src="images/files-pane-new-text-file.png" class="img-fluid" alt="The Files tab in RStudio's lower-right pane with its New File dropdown open and Text File highlighted." width="500"></p>
+<p>RStudio asks for the file name. Type <code>.Rprofile</code> — the leading dot included, nothing after it — and click <strong>OK</strong>:</p>
+<p><img src="images/new-file-name-rprofile.png" class="img-fluid" alt="RStudio's new-file dialog asking for a file name, with .Rprofile typed in." width="450"></p>
+<p>Because the Files tab creates files right in the folder it’s showing, <code>.Rprofile</code> lands exactly where it belongs, and it opens in the Source pane ready to type into. (<strong>File → New File → Text File</strong> from the menu bar, or the <strong>+</strong> button just below it, create the same kind of file — they just wait until you save to ask for the name. Whichever route you take, what matters is choosing <strong>Text File</strong>, not R Script.)</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Aside: started with an R Script instead?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Aside: started with an R Script instead?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>An R Script adds a <code>.R</code> extension when it saves, so a script saved under the name <code>.Rprofile</code> ends up on disk as <code>.Rprofile.R</code> — a name R never looks for, so nothing loads at startup. The fix is a rename: in the <strong>Files</strong> tab, check the box beside the file, click <strong>Rename</strong>, and remove the <code>.R</code> from the end. (Or check the box and click <strong>Delete</strong>, then start again with a Text File.)</p>
+</div>
+</div>
+</div>
+<p>Now put these lines in it:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To reinstall jstats (new computer, or after updating R) see the install</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code at: jma61.github.io/jstats-guides/install-jstats.html</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The last line does the loading. The comment above it holds the address of the install page, so the reinstall instructions are one glance away on a new computer or after an R update.</p>
-<p>Save it, then restart R (<strong>Session menu, Restart R</strong>). From now on, every session in this Project starts with jstats already loaded.</p>
+<p>Save — the disk icon at the top of the Source pane, or <strong>Ctrl+S</strong> (<strong>Cmd+S</strong> on a Mac) — then restart R (<strong>Session menu, Restart R</strong>). From now on, every session in this Project starts with jstats already loaded.</p>
 <p>Keep this to lightweight startup lines — loading a package, and later a setting or two. Do <strong>not</strong> put an install command (an <code>install.packages("jstats", ...)</code> line) in <code>.Rprofile</code>: because the file runs on every startup, an install line there tries to reinstall each time and can send RStudio into a loop. Installing is a one-off you run by hand; loading is the repeatable step that belongs in startup.</p>
 <p>We’re keeping this minimal for now. Later you’ll add a line or two more — where your data lives, and how many digits to show in output — but this is plenty to start.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -306,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This <code>.Rprofile</code> lives inside your Project and applies only to this Project. That’s deliberate — it’s self-contained and safe to edit. There’s also a global, all-Projects version, but it’s better left until you’re juggling several Projects at once; the books cover it.</p>
 </div>

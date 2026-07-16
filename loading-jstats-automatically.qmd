@@ -13,8 +13,33 @@ time you start work — so you're always told when a new version is available �
 you open each session ready to go. This uses a small setup file called an
 **`.Rprofile`** (a file R reads automatically when it starts).
 
-Create a plain text file named `.Rprofile` in your Project folder containing
-these lines:
+The file lives in your Project folder, and the easiest place to create it is the
+**Files** tab in the lower-right pane, which shows that folder's contents. Click
+**New File** and choose **Text File**:
+
+![](images/files-pane-new-text-file.png){width=500px fig-alt="The Files tab in RStudio's lower-right pane with its New File dropdown open and Text File highlighted."}
+
+RStudio asks for the file name. Type `.Rprofile` — the leading dot included,
+nothing after it — and click **OK**:
+
+![](images/new-file-name-rprofile.png){width=450px fig-alt="RStudio's new-file dialog asking for a file name, with .Rprofile typed in."}
+
+Because the Files tab creates files right in the folder it's showing, `.Rprofile`
+lands exactly where it belongs, and it opens in the Source pane ready to type
+into. (**File → New File → Text File** from the menu bar, or the **+** button
+just below it, create the same kind of file — they just wait until you save to
+ask for the name. Whichever route you take, what matters is choosing **Text
+File**, not R Script.)
+
+::: {.callout-note collapse="true" title="Aside: started with an R Script instead?"}
+An R Script adds a `.R` extension when it saves, so a script saved under the name
+`.Rprofile` ends up on disk as `.Rprofile.R` — a name R never looks for, so
+nothing loads at startup. The fix is a rename: in the **Files** tab, check the
+box beside the file, click **Rename**, and remove the `.R` from the end. (Or
+check the box and click **Delete**, then start again with a Text File.)
+:::
+
+Now put these lines in it:
 
 ```r
 # To reinstall jstats (new computer, or after updating R) see the install
@@ -26,7 +51,8 @@ The last line does the loading. The comment above it holds the address of the
 install page, so the reinstall instructions are one glance away on a new
 computer or after an R update.
 
-Save it, then restart R (**Session menu, Restart R**). From now on, every session
+Save — the disk icon at the top of the Source pane, or **Ctrl+S** (**Cmd+S** on a
+Mac) — then restart R (**Session menu, Restart R**). From now on, every session
 in this Project starts with jstats already loaded.
 
 Keep this to lightweight startup lines — loading a package, and later a setting or
