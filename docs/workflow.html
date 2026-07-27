@@ -407,16 +407,15 @@ MoodRating     70           70  -99    9  -4.943  31.477
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>clinic <span class="ot">&lt;-</span> <span class="fu">jdeclare_udm</span>(clinic, MoodRating,</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">codes =</span> <span class="fu">c</span>(<span class="st">"Refused"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">99</span>, <span class="st">"Don't know"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">98</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Declared SPSS-style missing values in:
-  clinic$MoodRating
+<pre><code>Declared SPSS-style missing values on MoodRating:
   -99 ["Refused"]
   -98 ["Don't know"]
 
-Assign the result to keep the declaration:
+This call changes clinic only if you assign the result:
   clinic &lt;- jdeclare_udm(clinic, MoodRating, ...)
 
-To keep it across sessions, save the data frame:
-  jsave(clinic, "clinic.rds")</code></pre>
+To change clinic directly, rerun with modify = TRUE:
+  jdeclare_udm(clinic, MoodRating, ..., modify = TRUE)</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MoodRating)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Descriptive Statistics
@@ -759,7 +758,7 @@ To keep it across sessions, save the data frame in R format (.rds):
   jsave(community, "community.rds")
 
 Next session, load that file to restore the registration:
-  community &lt;- jload("community.rds")</code></pre>
+  jload("community.rds")</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jlm</span>(WellbeingScore <span class="sc">~</span> Income <span class="sc">+</span> Age <span class="sc">+</span> Region)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Linear Regression
@@ -983,7 +982,7 @@ Variable Labels:
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>received <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"community_spss.sav"</span>, <span class="at">package =</span> <span class="st">"jstats"</span>)</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(received, <span class="at">name =</span> <span class="st">"community_received"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Loaded community_received (SPSS format; 103 cases, 15 variables)</code></pre>
+<pre><code>Loading community_received ...</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>5 variables have user-defined missing values:
@@ -996,7 +995,10 @@ These codes are excluded as missing in jstats analyses. For better base R compat
   jconvert(community_received, to = "stata")  - retains missing-value codes, base R compatible (recommended)
   jconvert(community_received, to = "baseR")  - converts to plain NA and removes missing-value codes</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jscreen</span>(community_received, <span class="at">stats =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loaded community_received (SPSS format; 103 cases, 15 variables)</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jscreen</span>(community_received, <span class="at">stats =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Data Screening
 </span>  Cases: 103 
   Variables: 15 

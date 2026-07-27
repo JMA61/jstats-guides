@@ -64,8 +64,9 @@ There's one rule worth remembering, and it splits by how much an update costs yo
 ## Updating jstats
 
 This is the frequent, painless one. Because jstats is updated often during this
-phase, it checks for a newer version each time you load it and prints a one-line
-message at startup when one is available. The command is:
+phase, it checks for a newer version each time you load it and prints a short notice
+at startup when one is available, naming the new version and the command to run. That
+command is:
 
 ```r
 jupdate()

@@ -109,11 +109,29 @@ at the top of the pane:
 .obx$show_console("library(jstats)", fence = TRUE)
 ```
 
-Down in the Console, jstats answers with a short startup message, and that message
-confirms the package is loaded for this session. (Typing one library line per session is
+Down in the Console, jstats answers with a startup message confirming the package is
+loaded for this session, and a second line pointing to a summary of the package's
+conventions — that one you can skip for now. (Typing one library line per session is
 no great burden — but if you'd rather have jstats load itself automatically whenever
 RStudio opens, [Loading jstats automatically](loading-jstats-automatically.qmd) shows you
 how.)
+
+::: {.callout-note collapse="true" title="Aside: that line about AI assistants"}
+The second line — *For jstats conventions (useful to AI assistants too), run `jai()`* —
+isn't something you need to act on, now or later. It's a signpost, and it's aimed past you
+at two other readers.
+
+One is an AI coding assistant. If you use one inside RStudio, it reads what's in your
+Console — and jstats is newer than the material those assistants learned from, so left to
+guess they'll invent commands that don't exist. That line tells the assistant where the
+real conventions are.
+
+The other is an experienced R user who wants the whole package summarized at once.
+`jai()` prints a dense, several-screen reference written for exactly that.
+
+Neither is you, on this page. Running it breaks nothing, but it will fill your Console
+with terminology this tour hasn't reached yet.
+:::
 
 ::: {.callout-note collapse="true" title="If you see a warning"}
 Alongside the startup message, R may also print a **warning** — most often one saying the

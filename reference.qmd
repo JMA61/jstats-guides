@@ -76,6 +76,7 @@ name linking to its full help page.
 - [`joptions`](https://jma61.github.io/jstats/reference/joptions.html) — set or display session-level options, such as the data folder.
 - [`joutput`](https://jma61.github.io/jstats/reference/joutput.html) — set how much detail jstats prints (the output verbosity level).
 - [`jupdate`](https://jma61.github.io/jstats/reference/jupdate.html) — update jstats to the latest version (one command; restart R afterward to load it).
+- [`jai`](https://jma61.github.io/jstats/reference/jai.html) — print a summary of the package's conventions, written to be useful to experienced users and to AI coding assistants working alongside you.
 
 ### Plots
 
