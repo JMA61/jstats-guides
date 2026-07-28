@@ -78,7 +78,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2d5f49987663cd50ae34891c32933042.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-0b90e6b669c8af51c5453a65edf40ce8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -458,8 +458,24 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-warning callout-titled" title="Error in library(jstats): there is no package called 'jstats'">
+<div class="callout callout-style-default callout-warning callout-titled" title="A warning says jstats was built under R version 4.x.x">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>A warning says jstats was built under R version 4.x.x
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When you load jstats, R may print a warning that the package <strong>was built under R version 4.x.x</strong>. It’s normal and not an error: the ready-made copy you downloaded was built on a slightly newer version of R than the one on your computer. jstats is loaded and working, and there’s nothing to fix. The warning will reappear each time you load the package until your own R catches up, and it clears the next time you update R.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Error in library(jstats): there is no package called 'jstats'">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -468,7 +484,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This shows up two ways: you run <code>library(jstats)</code> in the Console and get this error, or — if your <code>.Rprofile</code> loads jstats automatically — the same error greets you every time RStudio starts. Either way, the usual cause is that <strong>R itself was updated</strong>. Your installed packages live in a folder called a <strong>library</strong>, and each version of R gets its own — so updating R starts a fresh, empty one, and jstats (along with everything else you had installed) is no longer there.</p>
 <p>The rule in plain words: R’s version numbers have three parts, like 4.5.2. Only a change to the <strong>middle</strong> number (4.5 → 4.6) starts a fresh package library; a last-number update (4.5.1 → 4.5.2) changes nothing about your packages. And this is about <strong>R</strong>, not RStudio — RStudio updates are always safe and never touch your packages. R has no built-in update notifier, so updating R is a separate, deliberate act; if you did it recently, this reinstall is the one follow-up chore.</p>
@@ -483,7 +499,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="could not find function 'jfreq' (or another jstats function)">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -492,7 +508,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>jstats probably isn’t loaded in this session. Run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -501,7 +517,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="object 'community' not found">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -510,7 +526,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The shipped datasets become available once the package is loaded. Run <code>library(jstats)</code> first, then try again. (If you’re working with your own data instead, make sure you’ve loaded it — see <a href="./data.html">Loading, Saving, Converting Data</a>.)</p>
 </div>
@@ -520,7 +536,7 @@ available; add a figure line like the one above once the image is in images/). -
 <section id="typing-commands-in-the-console" class="level2">
 <h2 class="anchored" data-anchor-id="typing-commands-in-the-console">Typing commands in the Console</h2>
 <div class="callout callout-style-default callout-warning callout-titled" title="The Console shows a + and nothing runs">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -529,14 +545,14 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If you press Enter and the Console answers with a <code>+</code> instead of the usual <code>&gt;</code> prompt, R thinks your command isn’t finished — nearly always a closing quotation mark or a closing parenthesis is missing. Press the <strong>Escape</strong> key (Esc) to cancel and get a fresh <code>&gt;</code> prompt, then retype or re-paste the whole command. (Typing more into the <code>+</code> line rarely ends well; Escape and a clean start is quicker.)</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="Error: unexpected symbol (or unexpected ',' or ')')">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -545,7 +561,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>These errors are R’s way of saying the punctuation in a command doesn’t add up — most often a missing comma between two inputs, or a missing or extra parenthesis or quotation mark. Compare your line character by character against the example you copied it from; the difference is usually one small mark.</p>
 <p>A reading tip that helps with R errors in general: in a long error message, the most useful part usually comes <strong>after the final colon</strong> — start reading there, then work backward only if you need to.</p>

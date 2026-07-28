@@ -351,6 +351,46 @@ pre.cp-pane.cp-bare { border-radius: 6px; }     // no chrome strip: just the fie
   transition: none !important;
 }
 
+// Stop the end-of-page push-up (S211). Both menus are position:sticky inside
+// the page grid, and a sticky element may never extend past the bottom of its
+// grid area, which ends just above the footer. That containment is legitimate
+// on its own -- it exists so a menu taller than the window can't slide down
+// over the footer -- but two Quarto rules inflate the menus to window height
+// regardless of their visible content: the left menu gets min-height:100%
+// (from Quarto's .sidebar.sidebar-navigation), and the right "On this page"
+// menu is stretched by the grid's default item alignment. Either way the
+// menu's invisible bottom edge rides exactly at the bottom of the window, so
+// the moment the footer scrolls into view the containment drags the menu up
+// pixel for pixel until its top disappears under the navbar. Sizing the menus
+// to their content leaves the containment dormant except in the one case it
+// is for (a genuinely window-filling menu on a short screen, where it engages
+// precisely to prevent footer overlap -- keep that). Scoped to the desktop
+// layout: below 992px the left menu becomes the hamburger overlay, which
+// needs its full height.
+@media (min-width: 992px) {
+  #quarto-sidebar.sidebar,
+  #quarto-margin-sidebar.sidebar {
+    min-height: 0 !important;     // left menu: overrides Quarto's min-height:100%
+    align-self: start !important; // right menu: overrides the grid stretch
+  }
+}
+
+// Drop the right menu to the left menu's first line (S211, all pages). Both
+// menu BOXES pin at the same 68px lock line, but the left menu carries about
+// 22px more internal padding above its first entry than the right carries
+// above "On this page", so the right menu reads as starting higher. Give the
+// right menu its own lock line that much lower; the left stays at 68px. This
+// rule sits AFTER the shared pin rule above, so it wins for the right menu.
+// TUNING (one number, appears 2x): 90px is an estimate read off the
+// stylesheet, not measured on a live render -- nudge it until the first lines
+// sit level ("On this page" level with "Step 1" on a Get Started page), and
+// remember custom.scss changes need a `quarto preview` RESTART, not just a
+// browser reload.
+#quarto-margin-sidebar.sidebar {
+  top: 90px !important;
+  max-height: calc(100vh - 90px) !important;
+}
+
 // Stop the page-to-page "jump" on short pages (S142). Tall pages show a
 // vertical scrollbar; short ones (install-R, the stubs) don't -- so navigating
 // between them changes the usable width and the centered layout shifts sideways

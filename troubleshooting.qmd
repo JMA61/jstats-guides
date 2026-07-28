@@ -241,6 +241,15 @@ installing and updating happen the normal CRAN way, with no startup check of thi
 kind.
 :::
 
+::: {.callout-warning collapse="true" title="A warning says jstats was built under R version 4.x.x"}
+When you load jstats, R may print a warning that the package **was built under R
+version 4.x.x**. It's normal and not an error: the ready-made copy you downloaded
+was built on a slightly newer version of R than the one on your computer. jstats is
+loaded and working, and there's nothing to fix. The warning will reappear each time
+you load the package until your own R catches up, and it clears the next time you
+update R.
+:::
+
 ::: {.callout-warning collapse="true" title="Error in library(jstats): there is no package called 'jstats'"}
 This shows up two ways: you run `library(jstats)` in the Console and get this
 error, or — if your `.Rprofile` loads jstats automatically — the same error
