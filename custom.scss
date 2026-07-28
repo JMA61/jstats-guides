@@ -364,15 +364,21 @@ pre.cp-pane.cp-bare { border-radius: 6px; }     // no chrome strip: just the fie
 // pixel for pixel until its top disappears under the navbar. Sizing the menus
 // to their content leaves the containment dormant except in the one case it
 // is for (a genuinely window-filling menu on a short screen, where it engages
-// precisely to prevent footer overlap -- keep that). Scoped to the desktop
-// layout: below 992px the left menu becomes the hamburger overlay, which
-// needs its full height.
+// precisely to prevent footer overlap -- keep that).
+//
+// The two menus are scoped differently ON PURPOSE. The left menu's fix is
+// desktop-only: below 992px it becomes the hamburger overlay and needs its
+// full height. The right menu has no such second life -- it is simply
+// display:none below 768px -- so its fix is left unscoped, which keeps it
+// working in the 768-992px band where the right menu is still on screen and
+// the left has already collapsed.
 @media (min-width: 992px) {
-  #quarto-sidebar.sidebar,
-  #quarto-margin-sidebar.sidebar {
-    min-height: 0 !important;     // left menu: overrides Quarto's min-height:100%
-    align-self: start !important; // right menu: overrides the grid stretch
+  #quarto-sidebar.sidebar {
+    min-height: 0 !important;     // overrides Quarto's min-height:100%
   }
+}
+#quarto-margin-sidebar.sidebar {
+  align-self: start !important;   // overrides the grid's stretch
 }
 
 // Drop the right menu to the left menu's first line (S211, all pages). Both
