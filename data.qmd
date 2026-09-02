@@ -418,8 +418,10 @@ jsave(MyData, "MyData_r.rds"))---",
 Why set a data folder at all? Tidiness now, and a payoff later. With
 `data.dir` set, every save and load on this page knows where to look. And
 that's the habit to keep: put `joptions(data.dir = "Data")` near the top of
-your own scripts, then drop a dataset of yours into that folder and
-`jload("YourFile.sav")` opens it by name alone. If you're not sure where the
+your own scripts — or, once, in your Project's `.Rprofile`, so every session in
+that Project starts with it already set (*[Loading jstats and its options
+automatically](loading-jstats-automatically.qmd)* shows how). Then drop a dataset
+of yours into that folder and `jload("YourFile.sav")` opens it by name alone. If you're not sure where the
 folder is on your computer, the jsave message has already told you — it
 prints the full path each time, ready to paste into File Explorer (Windows)
 or find in Finder (Mac).
@@ -529,11 +531,11 @@ jload("MyData_stata.dta")
 
 ## Examine how the missing codes are kept in the different formats
 jfreq(MyData_r, Education)  # will print whatever was originally stored
-jfreq(MyData_spss, Education)  # SPSS-style user-defined missing codes (UDMs)
-jfreq(MyData_stata, Education) # Stata-style UDMs
+jfreq(MyData_spss, Education)  # SPSS-style declared missing codes
+jfreq(MyData_stata, Education) # Stata-style declared missing codes
 
-MyData_r_with_stata_UDM <- jconvert(MyData_r, to = "stata")
-jfreq(MyData_r_with_stata_UDM, Education) # Now the UDMs display in Stata format)---",
+MyData_r_stata <- jconvert(MyData_r, to = "stata")
+jfreq(MyData_r_stata, Education) # Now the codes display in Stata format)---",
   chrome = TRUE)
 ```
 
@@ -623,7 +625,13 @@ The matching numbers are only half the story — the missing-value declarations
 made the round trip too, which is arguably the bigger deal. You saw it back in
 block 10: Education's codes come through meaning the same thing in every file,
 with the Stata copy simply wearing its `.a`/`.b` form. In SPSS terms, your
-MISSING VALUES definitions survived the Save As. (Age itself carries no missing
+MISSING VALUES definitions survived the Save As.
+
+One thing that may differ on your screen: if you have chosen a missing-value
+convention — on *[Telling jstats about missing values](missing-values.qmd)*, or
+in your Project's `.Rprofile` — jstats notices when a file arrives in a different
+form and adds a line to the load message saying so. That extra line is the
+setting working, not a problem with the file. (Age itself carries no missing
 codes — that's exactly why it makes a clean test variable here.)
 :::
 
@@ -636,8 +644,9 @@ to base R, and the block's last lines show the damage live:
 while `jdesc()` reads the declarations and leaves the codes out automatically
 — provided the declarations exist: here they
 traveled with the files, and when a dataset arrives with codes that were never
-declared, you add the declarations yourself with jstats's `jdeclare_udm()`
-function. It's the same protection you'd expect from commercial statistical
+declared, you add the declarations yourself with jstats's `jdeclare_missing()`
+function — *[Telling jstats about missing values](missing-values.qmd)* walks that
+through live. It's the same protection you'd expect from commercial statistical
 software.
 :::
 

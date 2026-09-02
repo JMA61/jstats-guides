@@ -25,5 +25,8 @@ Cronbach's alpha.
 
 ## Handling missing values across platforms
 
-*Coming soon* — declaring, converting, and preserving user-defined missing values as
-data move between SPSS, Stata, SAS, and R.
+*Coming soon* — what survives when data move between SPSS, Stata, SAS, and R: round
+trips between formats, converting declarations from one convention to another,
+missing-value ranges, and the SAS interchange format. Declaring missing values in the
+first place is covered in
+*[Telling jstats about missing values](missing-values.qmd)*.

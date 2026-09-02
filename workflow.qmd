@@ -44,31 +44,55 @@ A screen like this is where you catch problems early — a variable that should 
 `community` ships clean, which is convenient but not realistic — real data usually need some tidying before they can be trusted. So for this one step we detour to `clinic`, jstats's deliberately messy companion dataset (also shipped, so it's available by name too), clean a column there, and then return to `community` for the rest of the session.
 
 ```{r}
+jload("clinic", overwrite = TRUE)
 juse(clinic)
 ```
 
-The column `MoodRating` is meant to run from 1 to 10, but it arrived with two stand-in codes buried in it as ordinary numbers: `-99` for "Refused" and `-98` for "Don't know" — the usual state of affairs after a plain CSV or Excel import, where the file carries no record of what those numbers mean. Until we tell jstats they stand for missing, they are treated as real values and quietly poison every statistic:
+Loading it first isn't something you'd normally write — `clinic` is there by name as soon as jstats is loaded — but it guarantees a clean copy whatever you did with it elsewhere. Notice what jstats says on the way in: it reports the columns whose missing-value codes were declared before the data reached you, and separately flags codes it *suspects* in columns where nobody declared anything. `MoodRating` is in that second group.
+
+That column is meant to run from 1 to 10, but it arrived with two stand-in codes buried in it as ordinary numbers: `-99` for "Refused" and `-98` for "Don't know" — the usual state of affairs after a plain CSV or Excel import, where the file carries no record of what those numbers mean. Until we tell jstats they stand for missing, they are treated as real values and quietly poison every statistic:
 
 ```{r}
 jdesc(MoodRating)
 ```
 
-The mean is dragged far below the 1–10 range, because those large negative codes are being averaged in as if they were genuine ratings. `jdeclare_udm()` fixes this the careful way — it *declares* the two codes as missing, with labels, without overwriting or deleting anything. The underlying data are untouched; we've only told jstats how to read them.
+The mean is dragged far below the 1–10 range, because those large negative codes are being averaged in as if they were genuine ratings. `jdeclare_missing()` fixes this the careful way — it *declares* the two codes as missing, with labels, without overwriting or deleting anything. The underlying data are untouched; we've only told jstats how to read them.
 
 ```{r}
-clinic <- jdeclare_udm(clinic, MoodRating,
-                       codes = c("Refused" = -99, "Don't know" = -98))
+#| error: true
+clinic <- jdeclare_missing(clinic, MoodRating,
+                           codes = c("Refused" = -99, "Don't know" = -98))
+```
+
+jstats stops rather than guessing. Missing values can be stored in three different forms — one for each of the major statistics programs — and because they behave differently once the data leave jstats, it asks you to choose rather than picking for you. Stata-style is the choice jstats itself recommends for anyone who also runs base R, so that is the one we take here. *[Telling jstats about missing values](missing-values.qmd)* covers what the three forms are and how to choose between them. (If you *didn't* see that error, you have already chosen a convention — on another page, or in your Project's `.Rprofile` — and that is the setting doing its job.)
+
+```{r}
+joptions(missing.convention = "stata")
+clinic <- jdeclare_missing(clinic, MoodRating,
+                           codes = c("Refused" = -99, "Don't know" = -98))
 jdesc(MoodRating)
 ```
 
 Now the codes are set aside as missing and the mean sits sensibly inside the 1–10 range.
 
+::: {.callout-note collapse="true" title="Aside: notes, warnings, and errors"}
+jstats says three different kinds of thing, and it is worth learning to tell them apart at a glance.
+
+A **Note** is information. Something worth knowing happened, and nothing is wrong — the "Default data frame set to" line and the missing-value reports above are notes.
+
+A **Warning** means the command ran, but the result may not be what you expected. Later on this page `jalpha()` warns that an item looks reverse-keyed: the reliability figure it printed is real, and it is also probably not the number you want.
+
+An **Error** means the command did not run at all, and nothing changed. The one you just saw is an error — jstats declined to guess a convention, so no declaration was made until you chose one.
+
+The practical difference is what to do next. A note needs nothing. A warning asks you to look at the result before trusting it. An error asks you to change something and run the line again.
+:::
+
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
-This is the equivalent of setting a variable's missing values in SPSS's Variable View (the `MISSING VALUES` command in syntax), or Stata's extended missing values. The important parallel is that it's **non-destructive**: like declaring missing values rather than recoding them to system-missing, `jdeclare_udm()` leaves the original codes in place and simply flags them, so nothing is lost and the declaration can be changed or undone later.
+This is the equivalent of setting a variable's missing values in SPSS's Variable View (the `MISSING VALUES` command in syntax), or Stata's extended missing values. The important parallel is that it's **non-destructive**: like declaring missing values rather than recoding them to system-missing, `jdeclare_missing()` leaves the original codes in place and simply flags them, so nothing is lost and the declaration can be changed or undone later.
 :::
 
 ::: {.callout-note collapse="true" title="Going deeper (optional)"}
-Declaring missing values is a small move with a lot behind it — different programs (SPSS, Stata, SAS) record missing data in different ways, and jstats keeps those distinctions straight when you read and write files. *[Loading, Saving, Converting Data](data.qmd)* covers the import/export side, and Book 2 covers the cross-program fidelity in more detail, with worked examples. The help page `?jdeclare_udm` documents the options.
+Declaring missing values is a small move with a lot behind it — different programs (SPSS, Stata, SAS) record missing data in different ways, and jstats keeps those distinctions straight when you read and write files. *[Telling jstats about missing values](missing-values.qmd)* walks the whole business live, from choosing a convention to finding undeclared codes in your own data; *[Loading, Saving, Converting Data](data.qmd)* covers the import/export side; and Book 2 covers the cross-program fidelity in more detail, with worked examples. The help page `?jdeclare_missing` documents the options.
 :::
 
 ```{r}
@@ -225,6 +249,8 @@ received <- system.file("extdata", "community_spss.sav", package = "jstats")
 jload(received, name = "community_received", overwrite = TRUE)
 jscreen(community_received, stats = TRUE)
 ```
+
+That file arrives with its missing-value codes stored SPSS-style, and because we chose Stata-style earlier in this session, jstats points out the mismatch as it loads and offers both ways to settle it — switch the setting, or convert the data. Neither is wrong, and nothing is broken; it is the same noticing that flagged `MoodRating` at the top of the page. *[Telling jstats about missing values](missing-values.qmd)* covers which way to go.
 
 And that's a full session, end to end: opened the data, screened it, cleaned a messy column, built and checked a scale, run the models, kept the case base consistent, and saved the result — with the everyday conveniences (`juse()`, `jdummy()`, `jcomplete()`) falling into place as they came up rather than as separate lessons.
 

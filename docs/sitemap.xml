@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jma61.github.io/jstats-guides/workflow.html</loc>
-    <lastmod>2026-07-15T21:55:49.402Z</lastmod>
+    <lastmod>2026-09-02T09:01:52.348Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/updating.html</loc>
@@ -14,39 +14,43 @@
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/reference.html</loc>
-    <lastmod>2026-07-27T00:15:55.455Z</lastmod>
+    <lastmod>2026-09-02T09:01:52.368Z</lastmod>
   </url>
   <url>
-    <loc>https://jma61.github.io/jstats-guides/loading-jstats-automatically.html</loc>
-    <lastmod>2026-07-16T09:54:09.589Z</lastmod>
+    <loc>https://jma61.github.io/jstats-guides/missing-values.html</loc>
+    <lastmod>2026-09-02T09:01:52.345Z</lastmod>
   </url>
   <url>
-    <loc>https://jma61.github.io/jstats-guides/install-jstats.html</loc>
-    <lastmod>2026-07-27T00:15:55.434Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/howtos.html</loc>
-    <lastmod>2026-07-05T18:52:07.039Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/data.html</loc>
-    <lastmod>2026-07-15T21:55:49.317Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/books.html</loc>
-    <lastmod>2026-07-09T22:34:43.222Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/griffith.html</loc>
-    <lastmod>2026-07-15T04:05:51.979Z</lastmod>
+    <loc>https://jma61.github.io/jstats-guides/install-r-and-rstudio.html</loc>
+    <lastmod>2026-07-15T21:55:49.348Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/index.html</loc>
     <lastmod>2026-06-29T10:05:55.529Z</lastmod>
   </url>
   <url>
-    <loc>https://jma61.github.io/jstats-guides/install-r-and-rstudio.html</loc>
-    <lastmod>2026-07-15T21:55:49.348Z</lastmod>
+    <loc>https://jma61.github.io/jstats-guides/griffith.html</loc>
+    <lastmod>2026-07-15T04:05:51.979Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/books.html</loc>
+    <lastmod>2026-07-09T22:34:43.222Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/data.html</loc>
+    <lastmod>2026-09-02T09:01:52.349Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/howtos.html</loc>
+    <lastmod>2026-09-02T09:01:52.367Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/install-jstats.html</loc>
+    <lastmod>2026-07-27T00:15:55.434Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/loading-jstats-automatically.html</loc>
+    <lastmod>2026-09-02T09:01:52.351Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/quickstart.html</loc>

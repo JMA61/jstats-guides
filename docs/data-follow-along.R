@@ -182,11 +182,11 @@ jload("MyData_stata.dta")
 
 ## Examine how the missing codes are kept in the different formats
 jfreq(MyData_r, Education)  # will print whatever was originally stored
-jfreq(MyData_spss, Education)  # SPSS-style user-defined missing codes (UDMs)
-jfreq(MyData_stata, Education) # Stata-style UDMs
+jfreq(MyData_spss, Education)  # SPSS-style declared missing codes
+jfreq(MyData_stata, Education) # Stata-style declared missing codes
 
-MyData_r_with_stata_UDM <- jconvert(MyData_r, to = "stata")
-jfreq(MyData_r_with_stata_UDM, Education) # Now the UDMs display in Stata format
+MyData_r_stata <- jconvert(MyData_r, to = "stata")
+jfreq(MyData_r_stata, Education) # Now the codes display in Stata format
 
 
 ## ---- 11. Turning up the digits -----------------------------------------

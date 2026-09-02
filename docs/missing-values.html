@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>jstats:Missing Values</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./loading-jstats-automatically.html" rel="next">
+<link href="./workflow.html" rel="prev">
+<link href="./images/avatar.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-db6a58c266bbeafa11f2ba93dd0eb26c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<meta property="og:title" content="jstats:Missing Values">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
+<meta property="og:site_name" content="jstats">
+<meta property="og:image:height" content="720">
+<meta property="og:image:width" content="1280">
+<meta name="twitter:title" content="jstats:Missing Values">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/thumbnail.png">
+<meta name="twitter:image-height" content="720">
+<meta name="twitter:image-width" content="1280">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/avatar.png" alt="jstats" class="navbar-logo light-content">
+    <img src="./images/avatar.png" alt="jstats" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">jstats</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./start-here.html" aria-current="page"> 
+<span class="menu-text">Get Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./howtos.html"> 
+<span class="menu-text">How-Tos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./reference.html"> 
+<span class="menu-text">Reference</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./books.html"> 
+<span class="menu-text">Books</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./videos.html"> 
+<span class="menu-text">Videos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./updating.html"> 
+<span class="menu-text">Updating</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./troubleshooting.html"> 
+<span class="menu-text">Troubleshooting</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/jma61/jstats-guides"> <i class="bi bi-github" role="img" aria-label="jstats guides on GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html">Going further</a></li><li class="breadcrumb-item"><a href="./missing-values.html">Declaring missing values</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./start-here.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Step 1 — Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./install-r-and-rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Step 2 — Install R and RStudio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rstudio-orientation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Step 3 — RStudio Orientation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./install-jstats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Step 4 — Install jstats</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quickstart.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Step 5 — jstats Quick Start</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Going further</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Loading, Saving, Converting Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">A typical jstats workflow</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./missing-values.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Declaring missing values</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loading-jstats-automatically.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Loading jstats automatically</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#telling-jstats-about-missing-values" id="toc-telling-jstats-about-missing-values" class="nav-link active" data-scroll-target="#telling-jstats-about-missing-values">Telling jstats about missing values</a>
+  <ul class="collapse">
+  <li><a href="#load-the-data-and-see-what-jstats-already-noticed" id="toc-load-the-data-and-see-what-jstats-already-noticed" class="nav-link" data-scroll-target="#load-the-data-and-see-what-jstats-already-noticed">1. Load the data, and see what jstats already noticed</a></li>
+  <li><a href="#what-a-missing-value-convention-is" id="toc-what-a-missing-value-convention-is" class="nav-link" data-scroll-target="#what-a-missing-value-convention-is">2. What a missing-value convention is</a></li>
+  <li><a href="#declare-and-meet-the-gate" id="toc-declare-and-meet-the-gate" class="nav-link" data-scroll-target="#declare-and-meet-the-gate">3. Declare, and meet the gate</a></li>
+  <li><a href="#choose-declare-check" id="toc-choose-declare-check" class="nav-link" data-scroll-target="#choose-declare-check">4. Choose, declare, check</a></li>
+  <li><a href="#bring-the-rest-in-line" id="toc-bring-the-rest-in-line" class="nav-link" data-scroll-target="#bring-the-rest-in-line">5. Bring the rest in line</a></li>
+  <li><a href="#finding-undeclared-codes-in-your-own-data" id="toc-finding-undeclared-codes-in-your-own-data" class="nav-link" data-scroll-target="#finding-undeclared-codes-in-your-own-data">6. Finding undeclared codes in your own data</a></li>
+  <li><a href="#make-it-permanent" id="toc-make-it-permanent" class="nav-link" data-scroll-target="#make-it-permanent">7. Make it permanent</a></li>
+  </ul></li>
+  <li><a href="#take-the-whole-script-with-you" id="toc-take-the-whole-script-with-you" class="nav-link" data-scroll-target="#take-the-whole-script-with-you">Take the whole script with you</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html">Going further</a></li><li class="breadcrumb-item"><a href="./missing-values.html">Declaring missing values</a></li></ol></nav></header>
+
+
+
+
+<section id="telling-jstats-about-missing-values" class="level2">
+<h2 class="anchored" data-anchor-id="telling-jstats-about-missing-values">Telling jstats about missing values</h2>
+<p>This page is a hands-on run-through of one small move that protects every statistic you compute: telling jstats which numbers in a column are not really data, and choosing the form jstats should keep that information in.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Before you start">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Before you start
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>To follow along you’ll need:</p>
+<ul>
+<li><strong>R, RStudio, and jstats installed.</strong> If they’re not, work through <a href="./start-here.html">Get Started, Steps 1-5</a> first and come back.</li>
+<li><strong>An RStudio Project open</strong>, so your working directory and files are already set up.</li>
+<li><strong>A new, empty R script open</strong> (File &gt; New File &gt; R Script). You’ll copy each numbered block into it, one at a time, running each before moving on.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="How to use this page">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How to use this page
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The blocks on this page build one script. Paste each block into the same R script file as you reach it, in order — by the end, the whole file runs cleanly from top to bottom, except in the few places where a comment says an error is deliberate (so you can see what one looks like).</p>
+<p>A few mechanics worth knowing:</p>
+<ul>
+<li>Every block starts with a dashed comment header (<code>## ---- 1. ... ----</code>). It marks where one block ends and the next begins in your growing script — and RStudio reads those headers as sections, so they appear in the script’s outline for easy jumping around.</li>
+<li>Experiment freely as you go — change a number, rerun a line, poke at things. Building the script yourself is the point.</li>
+<li>We recommend working through the blocks one at a time first — you learn far more by building the script yourself and watching each piece run than by reading a finished file. Once you’ve done that (or if you’d rather grab everything at once), the complete, clean script — without your experiments, and finished so it runs top to bottom — is available to download at the bottom of the page.</li>
+</ul>
+<p>This box is the same on every hands-on page in this group, so once you’ve read it here, you can skip it elsewhere.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="New to R?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>New to R?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You don’t need to memorize any of this yet. Right now the goal is simply to run each line and watch what happens — the ideas settle in as you go. A few things R doesn’t care about, so you don’t have to either: which line numbers your code lands on, and how many blank lines sit between commands — paste each block anywhere below your previous code and it all works the same. Lines starting with <code>#</code> are comments: notes for humans that R skips entirely (extra hash marks, like <code>##</code>, are still just a comment). And running a line a second time is almost always harmless — you’ll simply get the same result again. If a line doesn’t work, check that jstats loaded without errors, then try it again.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Reset your session">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reset your session
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Experimenting means the occasional wrong turn — a setting changed, the practice dataset overwritten, output that suddenly looks different. When something feels off and you’d like a clean footing without restarting RStudio, run these two lines in the Console:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Put jstats' output settings back to their defaults</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"standard"</span>)   <span class="co"># output level, and decimal places back to 3</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Point saving and loading back at your working directory</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">data.dir =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That resets jstats itself. To clear away objects you created while following along — data frames like <code>MyData_r</code>, or a value like <code>MyObject</code> — the simplest way is the little <strong>broom</strong> icon at the top of the <strong>Environment</strong> pane (upper-right): one click sweeps the pane clean. It clears <em>everything</em> in the Environment, so use it when you’re between run-throughs, not in the middle of one. (You can also remove a single object by name, e.g.&nbsp;<code>rm(MyData_r)</code>.) The built-in practice dataset comes right back with <code>jload("community")</code> whenever you want it.</p>
+<p>This box is the same on every hands-on page in this group.</p>
+</div>
+</div>
+</div>
+<section id="load-the-data-and-see-what-jstats-already-noticed" class="level3">
+<h3 class="anchored" data-anchor-id="load-the-data-and-see-what-jstats-already-noticed">1. Load the data, and see what jstats already noticed</h3>
+<p>We’ll work on <code>clinic</code>, the deliberately messy practice dataset that ships with the package. The first two lines are a pair you wouldn’t normally write — <code>clinic</code> is available by name the moment jstats is loaded, and <code>juse()</code> usually comes once per session — but together they guarantee a fresh copy, whatever you did to <code>clinic</code> on another page. Watch what jstats says as the data load, then ask for the descriptives of <code>MoodRating</code>, a column that is meant to run from 1 to 10.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 1. Load the data, and see what jstats already noticed ------------</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Start from a fresh copy of the clinic practice dataset</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## You wouldn't normally write this pair: clinic is there by name as soon</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">## as jstats is loaded, and juse() usually comes once per session. The</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="do">## reload makes this page start clean whatever you did on another page</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"clinic"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">juse</span>(clinic)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="do">## MoodRating is meant to run from 1 to 10. Ask for its descriptives</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MoodRating)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What you should see">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you should see
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p class="obx-lead">
+<em>The command lines are shown; the standalone <code>##</code> comment lines aren’t – running a comment just echoes it back and does nothing.</em>
+</p>
+<div class="obx-cap">
+Console <span class="obx-loc">(lower-left pane)</span>
+</div>
+<pre class="cp-pane cp-chrome"><span class="ep-tabs"><span class="ep-tab on">Console</span><span class="ep-tab">Terminal<span class="ep-x">×</span></span><span class="ep-tab">Background Jobs<span class="ep-x">×</span></span><span class="ep-ctl"><svg width="42" height="16" viewbox="0 0 42 16"><rect x="0.5" y="7.5" width="18" height="7" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="0.5" y="7.5" width="18" height="3.5" fill="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="14" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="3.5" fill="#8A9196"></rect></svg></span></span><span class="cp-strip" style="background-image:url(data:image/png;base64,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)"></span><span class="cp-body"><span class="cp-in">&gt; jload("clinic", overwrite = TRUE)</span>
+<span class="cp-out">
+Suspected missing-value codes detected:
+  MoodRating:  -99 (4), -98 (3)
+  Anxiety2:    -99 (3), -98 (3)
+
+These codes are not formally defined, so they are not treated as missing.
+Declare them as missing if they are; leave as-is if real.
+
+To declare one variable's codes as missing:
+  jdeclare_missing(clinic, MoodRating, codes = c(-99, -98), modify = TRUE)
+To declare and label them in one call, replacing the placeholder names:
+  jdeclare_missing(clinic, MoodRating, codes = c("label1" = -99, "label2" = -98), modify = TRUE)</span>
+<span class="cp-msg">Loaded the jstats example dataset 'clinic'.
+4 variables have SPSS-style missing values:
+  Stress: -99 ["Refused"], -98 ["Don't know"]
+  SleepHours: -99 ["Refused"], -98 ["Don't know"]
+  Medication: -99 ["Refused"]
+  Anxiety4: -99 ["Refused"], -98 ["Don't know"]
+jstats analyses treat these codes as missing. Base R functions do not.
+To make them missing in base R as well, convert:
+  jconvert(clinic, to = "stata", modify = TRUE)</span>
+<span class="cp-in">&gt; juse(clinic)</span>
+<span class="cp-msg">Default data frame set to: clinic</span>
+<span class="cp-in">&gt; jdesc(MoodRating)</span>
+<span class="cp-out"><span style="color: #BB0000;">Descriptive Statistics
+</span><span style="color: #BBBB00;">Using default data frame: clinic
+</span>
+Variable    Total  Non_missing  Min  Max    Mean      SD
+----------  -----  -----------  ---  ---  ------  ------
+MoodRating     70           70  -99    9  -4.943  31.477
+</span>
+<span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
+</div>
+</div>
+</div>
+<p>Two things happened. As <code>clinic</code> loaded, jstats looked over its missing values and reported on two groups of columns. Four of them — <code>Stress</code>, <code>SleepHours</code>, <code>Medication</code>, and <code>Anxiety4</code> — arrived with their codes already <em>declared</em>, and those codes are listed with labels such as “Refused”. Two others, <code>MoodRating</code> and <code>Anxiety2</code>, carry codes that jstats <em>suspects</em> stand for missing values but that nobody has declared; for those it offers a ready-to-run example, naming <code>MoodRating</code>. Then the descriptives showed why that second group matters: the minimum of <code>MoodRating</code> is a large negative number and the mean has been dragged well below the 1–10 range. Those stand-in codes are being averaged in as if they were genuine ratings — the usual state of affairs after a plain CSV or Excel import, where the file carries no record of what the numbers mean.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Coming from SPSS, Stata, or SAS?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Open that same CSV in SPSS and the codes sit in Data View looking like any other number, Variable View shows no missing values defined, and Descriptives averages them in without a word. The check jstats just ran on arrival is one the commercial programs don’t make: they trust the file. The four columns that arrived already declared are the equivalent of a .sav whose Variable View was filled in properly — jstats read those definitions and kept them.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="what-a-missing-value-convention-is" class="level3">
+<h3 class="anchored" data-anchor-id="what-a-missing-value-convention-is">2. What a missing-value convention is</h3>
+<p>Before we fix <code>MoodRating</code>, a piece of background that the rest of the page rests on. Every statistics program needs some way to mark a value as missing while remembering <em>why</em> it is missing — refused, don’t know, not applicable. The three programs jstats reads and writes for do it three different ways, and jstats can keep your missing values in any of the three forms. It calls the choice a <strong>missing-value convention</strong>.</p>
+<ul>
+<li><strong>SPSS-style.</strong> The code stays in the data as a visible number — a −99 is still a −99 in the column — and a note attached to the column says “treat −99 and −98 as missing.” Every jstats function reads that note. The advantage is that nothing is hidden: you can see the codes in a frequency table and in the raw data.</li>
+<li><strong>Stata-style.</strong> The code is replaced by a <em>marker</em>: <code>.a</code> for the first missing reason, <code>.b</code> for the second, and so on up to <code>.z</code>, each with its label. The markers are genuine missing values as far as R is concerned — which is the reason the package recommends this form, as the next block shows.</li>
+<li><strong>SAS-style.</strong> The same idea as Stata, with uppercase markers (<code>.A</code> to <code>.Z</code>).</li>
+</ul>
+<p>jstats will not pick one of these for you, and the next block shows what happens when none has been chosen. To be sure you see that whatever your history, this block starts from the package default — no convention chosen.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 2. What a missing-value convention is ----------------------------</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## jstats can keep missing-value codes in any of three forms, one for each</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">## major program. It will not choose one for you. We start with no</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">## convention chosen -- the package default -- so you see what happens</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="do">## (If you've chosen one on another page or in your Project's .Rprofile,</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">## this line clears it for the current session only; restarting R brings</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">## your .Rprofile choice back)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">missing.convention =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What you should see">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you should see
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="obx-cap">
+Console <span class="obx-loc">(lower-left pane)</span>
+</div>
+<pre class="cp-pane cp-chrome"><span class="ep-tabs"><span class="ep-tab on">Console</span><span class="ep-tab">Terminal<span class="ep-x">×</span></span><span class="ep-tab">Background Jobs<span class="ep-x">×</span></span><span class="ep-ctl"><svg width="42" height="16" viewbox="0 0 42 16"><rect x="0.5" y="7.5" width="18" height="7" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="0.5" y="7.5" width="18" height="3.5" fill="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="14" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="3.5" fill="#8A9196"></rect></svg></span></span><span class="cp-strip" style="background-image:url(data:image/png;base64,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)"></span><span class="cp-body"><span class="cp-in">&gt; joptions(missing.convention = "none")</span>
+<span class="cp-out"><span style="color: #BB0000;">Options Settings
+</span>Missing-value convention: None selected
+Run joptions() to see all settings.
+</span>
+<span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Coming from SPSS, Stata, or SAS?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>These are the three forms you already know, under their own names. SPSS-style is what MISSING VALUES in Variable View produces: the codes stay put and a definition rides alongside. Stata-style is Stata’s extended missing values (<code>.a</code> through <code>.z</code>); SAS-style is SAS’s (<code>.A</code> through <code>.Z</code>). The one new idea is that jstats lets you choose <em>between</em> them for data that are now in R — regardless of which program the file came from — and converts from one form to another on request. Which form suits you is a question about how you work, not a verdict on the programs: it depends on whether your data go back to one of them, and on whether you also use base R alongside jstats.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="declare-and-meet-the-gate" class="level3">
+<h3 class="anchored" data-anchor-id="declare-and-meet-the-gate">3. Declare, and meet the gate</h3>
+<p><code>jdeclare_missing()</code> is the function that tells jstats which codes in a column mean “missing,” and it takes the labels at the same time. Run it now, exactly as you will run it successfully in the next block — with no convention chosen, it stops and asks.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 3. Declare, and meet the gate ------------------------------------</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Declare -99 and -98 as missing on MoodRating, with labels</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">## With no convention chosen, jstats stops and asks instead of guessing</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>clinic <span class="ot">&lt;-</span> <span class="fu">jdeclare_missing</span>(clinic, MoodRating,  <span class="co"># an error, on purpose</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">codes =</span> <span class="fu">c</span>(<span class="at">Refused =</span> <span class="sc">-</span><span class="dv">99</span>, <span class="st">"Don't know"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">98</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What you should see">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you should see
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="obx-cap">
+Console <span class="obx-loc">(lower-left pane)</span>
+</div>
+<pre class="cp-pane cp-chrome"><span class="ep-tabs"><span class="ep-tab on">Console</span><span class="ep-tab">Terminal<span class="ep-x">×</span></span><span class="ep-tab">Background Jobs<span class="ep-x">×</span></span><span class="ep-ctl"><svg width="42" height="16" viewbox="0 0 42 16"><rect x="0.5" y="7.5" width="18" height="7" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="0.5" y="7.5" width="18" height="3.5" fill="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="14" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="3.5" fill="#8A9196"></rect></svg></span></span><span class="cp-strip" style="background-image:url(data:image/png;base64,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)"></span><span class="cp-body"><span class="cp-in">&gt; clinic &lt;- jdeclare_missing(clinic, MoodRating,  # an error, on purpose
++                            codes = c(Refused = -99, "Don't know" = -98))</span>
+<span class="cp-err">Error: jdeclare_missing(): no missing-value convention is selected, so these
+codes cannot be declared.
+Choose one for this session:
+  joptions(missing.convention = "stata")
+      Lowercase markers behave as true NAs in base R.
+      Recommended if you also run base R or AI-generated code.
+  joptions(missing.convention = "spss")
+      Codes stay visible numbers; jstats treats them as missing.
+      Base R does not.
+  joptions(missing.convention = "sas")
+      Like Stata, with uppercase markers (.A-.Z).
+To make the choice permanent, put the same line in your .Rprofile.</span>
+<span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
+</div>
+</div>
+</div>
+<p>This is the one place on the site where jstats refuses to do something it plainly could do, and the refusal is deliberate. The three forms behave differently once the data leave jstats — in base R, in other packages, in a file bound for another program — so silently picking one would be choosing on your behalf a consequence you had not seen. Instead the error lays out the three choices, each with the one fact that separates it from the others, and puts its recommendation first.</p>
+<p>The recommendation is Stata-style, and the reason is the line under it: <em>lowercase markers behave as true NAs in base R</em>. Under SPSS-style, a −99 is still a −99, and base R — which knows nothing about jstats’s notes — will average it in and hand you a plausible-looking wrong number. Under Stata-style the code has become a real missing value, so base R’s <code>mean()</code> returns <code>NA</code> instead: an answer you cannot mistake for a result, and one line fixes it. In short, <strong>SPSS-style fails silently in base R; Stata-style fails loudly, and is fixable.</strong> Block 5 shows both live, on the same column.</p>
+<p>That still leaves room for judgment. If you write base R alongside jstats, or paste in code an AI assistant wrote for you (which will be base R), choose Stata-style. If your data live in SPSS and go back there for a supervisor or a collaborator, staying SPSS-style is a reasonable choice, and jstats will read your declarations correctly either way. And notice the error’s last line: the same <code>joptions()</code> command, placed in your Project’s <code>.Rprofile</code>, makes the choice once and for all — block 7 says where that file lives.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Going deeper (optional)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Why do the programs differ at all? They made different trade-offs. SPSS keeps the code visible as a number and attaches a definition beside it, which suits the survey codebook, where a −99 on the questionnaire is itself the record of the refusal. Stata and SAS fold the reason into the missing value itself, so that arithmetic can never touch it by accident. Neither is wrong; they are answers to different working habits. Book 1 covers what a missing-value code is and why an undeclared one poisons a mean; Book 2 covers the three conventions, how jstats converts between them, and what survives the trip to each file format — in more detail, with worked examples. The help page <code>?jdeclare_missing</code> documents the options.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="choose-declare-check" class="level3">
+<h3 class="anchored" data-anchor-id="choose-declare-check">4. Choose, declare, check</h3>
+<p>Choose the recommended form, then run the same declaration again. It goes through this time, and two checks show what changed: the descriptives, and a frequency table. Then one more call — <code>joptions()</code> with nothing inside the parentheses — shows your current settings, this new one among them.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 4. Choose, declare, check ----------------------------------------</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Choose the Stata-style convention -- the one jstats itself recommends</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## for anyone who also runs base R</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">missing.convention =</span> <span class="st">"stata"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Now the same declaration goes through</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>clinic <span class="ot">&lt;-</span> <span class="fu">jdeclare_missing</span>(clinic, MoodRating,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                           <span class="at">codes =</span> <span class="fu">c</span>(<span class="at">Refused =</span> <span class="sc">-</span><span class="dv">99</span>, <span class="st">"Don't know"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">98</span>))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">## The mean sits inside 1-10 again, and the codes count as missing</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MoodRating)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="do">## A frequency table shows the codes set aside, with their labels</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(MoodRating)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="do">## With nothing in the parentheses, joptions() shows your current</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="do">## settings, including this one</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What you should see">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you should see
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="obx-cap">
+Console <span class="obx-loc">(lower-left pane)</span>
+</div>
+<pre class="cp-pane cp-chrome"><span class="ep-tabs"><span class="ep-tab on">Console</span><span class="ep-tab">Terminal<span class="ep-x">×</span></span><span class="ep-tab">Background Jobs<span class="ep-x">×</span></span><span class="ep-ctl"><svg width="42" height="16" viewbox="0 0 42 16"><rect x="0.5" y="7.5" width="18" height="7" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="0.5" y="7.5" width="18" height="3.5" fill="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="14" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="3.5" fill="#8A9196"></rect></svg></span></span><span class="cp-strip" style="background-image:url(data:image/png;base64,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)"></span><span class="cp-body"><span class="cp-in">&gt; joptions(missing.convention = "stata")</span>
+<span class="cp-out"><span style="color: #BB0000;">Options Settings
+</span>Missing-value convention: Stata-style
+Run joptions() to see all settings.
+
+Note: the clinic data frame uses SPSS-style missing values.
+To convert it to match this setting, run:
+  jconvert(clinic, to = "stata", modify = TRUE)</span>
+<span class="cp-in">&gt; clinic &lt;- jdeclare_missing(clinic, MoodRating,
++                            codes = c(Refused = -99, "Don't know" = -98))</span>
+<span class="cp-out">Declared and converted to Stata-style missing values on MoodRating:
+  .a ["Refused"]  (from -99)
+  .b ["Don't know"]  (from -98)
+
+This call changes clinic only if you assign the result:
+  clinic &lt;- jdeclare_missing(clinic, MoodRating, ...)
+
+To change clinic directly, rerun with modify = TRUE:
+  jdeclare_missing(clinic, MoodRating, ..., modify = TRUE)
+Note: MoodRating uses Stata-style missing values, but other columns in clinic
+are SPSS-style.
+Mixing forms is allowed. To align MoodRating with the rest, run:
+  jconvert(clinic, to = "spss", vars = "MoodRating", modify = TRUE)</span>
+<span class="cp-in">&gt; jdesc(MoodRating)</span>
+<span class="cp-out"><span style="color: #BB0000;">Descriptive Statistics
+</span><span style="color: #BBBB00;">Using default data frame: clinic
+</span>
+Case Processing  Excluded  Remaining
+    Original           --         70
+    Remaining N        --         70
+
+------------------------------------
+
+
+Variable    Total  Non_missing  Min  Max  Mean     SD
+----------  -----  -----------  ---  ---  ----  -----
+MoodRating     70           63    1    9  5.46  1.702
+</span>
+<span class="cp-in">&gt; jfreq(MoodRating)</span>
+<span class="cp-out"><span style="color: #BB0000;">Frequencies
+</span><span style="color: #BBBB00;">Using default data frame: clinic
+</span>
+Case Processing  Excluded  Remaining
+    Original           --         70
+    Remaining N        --         70
+
+------------------------------------
+
+MoodRating
+
+                   Freq  Total %  Valid %  Cum. %
+-----------------  ----  -------  -------  ------
+Valid                                            
+1                     1     1.43     1.59    1.59
+2                     1     1.43     1.59    3.17
+3                     7    10.00    11.11   14.29
+4                     8    11.43    12.70   26.98
+5                    14    20.00    22.22   49.21
+6                    15    21.43    23.81   73.02
+7                    10    14.29    15.87   88.89
+8                     5     7.14     7.94   96.83
+9                     2     2.86     3.17  100.00
+                                                 
+Missing                                          
+.a ["Refused"]        4     5.71       --      --
+.b ["Don't know"]     3     4.29       --      --
+                                                 
+Total                70   100.00                 
+
+</span>
+<span class="cp-in">&gt; joptions()</span>
+<span class="cp-out"><span style="color: #BB0000;">Options Settings
+</span>Missing-value convention: Stata-style
+Data folder: Working directory
+Correlation layout: wide
+Missing-value detail: per_code
+Message width: Auto (currently 79)
+</span>
+<span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
+</div>
+</div>
+</div>
+<p>Read the box from the top. Choosing the convention produced a note straight away: <code>clinic</code> arrived with four SPSS-style columns, and jstats points out that they no longer match your setting — the next block deals with that. The declaration then reports what it did: each code became a marker (<code>.a</code>, <code>.b</code>) carrying its label, and the note beneath reminds you that a call like this changes <code>clinic</code> only because you assigned the result back with the arrow (the <code>modify = TRUE</code> form it mentions does the same job in place — either is fine). It also points out, correctly, that <code>MoodRating</code> now differs in form from the rest of <code>clinic</code>. Mixing forms is allowed; the next block brings the rest in line.</p>
+<p>Then the payoff. The descriptives report a smaller non-missing count, a minimum and maximum inside 1–10, and a mean that finally looks like a mood rating. Both tables now carry a case-processing summary above them, and its arrival is itself a signal — jstats shows that block only once a variable has declared missing values to account for. Read what it says, though: it counts <em>cases</em>, and it reports that none were dropped. The declared codes are missing within <code>MoodRating</code> rather than whole rows knocked out of the dataset, and it is the non-missing count that records them. The frequency table is the clearest view of all: the two codes sit in their own <strong>Missing</strong> section under their markers and labels, counted in the totals and left out of the valid percentages. And the settings listing confirms the convention is in place for the rest of your session.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Coming from SPSS, Stata, or SAS?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The declaration is the equivalent of MISSING VALUES <code>MoodRating (-99, -98)</code> together with the matching VALUE LABELS in SPSS syntax, or of setting them in Variable View — with the same important property, that it is non-destructive. The codes are flagged, not deleted, and the declaration can be changed or undone later. The frequency table that follows is the one SPSS’s Frequencies would give you: a Valid section, a Missing section, and the valid percentages computed on the valid cases alone. What has no counterpart is the settings listing — the convention is a jstats-wide choice, and <code>joptions()</code> is where you see it.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="bring-the-rest-in-line" class="level3">
+<h3 class="anchored" data-anchor-id="bring-the-rest-in-line">5. Bring the rest in line</h3>
+<p><code>clinic</code> arrived with four columns already declared, SPSS-style — the common case, since Qualtrics, LimeSurvey, and most public data archives hand out SPSS-style files. jstats reads those declarations correctly under either setting, so nothing is wrong yet. But base R does not read them, and this block shows what that means before and after one line of conversion. <code>Stress</code> is one of the four columns.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 5. Bring the rest in line ----------------------------------------</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Stress arrived with its codes declared SPSS-style. Ask base R for its</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">## mean, with and without na.rm = TRUE (which tells mean() to drop NAs)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="do">## mean() is base R. It prints a bare, unlabeled number, and under Source</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="do">## it prints nothing at all -- so cat() (also base R) adds a label and</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="do">## blank lines to make it visible</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">Base R mean of Stress:"</span>, <span class="fu">mean</span>(clinic<span class="sc">$</span>Stress),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"   with na.rm = TRUE:"</span>, <span class="fu">mean</span>(clinic<span class="sc">$</span>Stress, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="st">"</span><span class="sc">\n\n\n</span><span class="st">"</span>)  <span class="co"># base R</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="do">## One line converts every SPSS-style column in clinic to the Stata form</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>clinic <span class="ot">&lt;-</span> <span class="fu">jconvert</span>(clinic, <span class="at">to =</span> <span class="st">"stata"</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Now base R sees the missing values too: the mean is NA (loud, not wrong),</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="do">## and na.rm = TRUE gives the right answer</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">Base R mean of Stress now:"</span>, <span class="fu">mean</span>(clinic<span class="sc">$</span>Stress),</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"   with na.rm = TRUE:"</span>, <span class="fu">mean</span>(clinic<span class="sc">$</span>Stress, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="st">"</span><span class="sc">\n\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What you should see">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you should see
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="obx-cap">
+Console <span class="obx-loc">(lower-left pane)</span>
+</div>
+<pre class="cp-pane cp-chrome"><span class="ep-tabs"><span class="ep-tab on">Console</span><span class="ep-tab">Terminal<span class="ep-x">×</span></span><span class="ep-tab">Background Jobs<span class="ep-x">×</span></span><span class="ep-ctl"><svg width="42" height="16" viewbox="0 0 42 16"><rect x="0.5" y="7.5" width="18" height="7" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="0.5" y="7.5" width="18" height="3.5" fill="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="14" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="3.5" fill="#8A9196"></rect></svg></span></span><span class="cp-strip" style="background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAvgAAAAcCAIAAACbClwJAAAfqElEQVR4nO3deZhcRbkw8LfWs/UyM5mFTBKysQRCNgyyBT9AtrBEWVRQ8UOvfIKCERS96oMiKvqBCCheUfnEq14QFSWILEEQCGtCEgIkmBBC9kwymZme7j5L7fePxtwQQkhjYvDj/P7I0zlPd1Wdqp7ut9+qcwplmbTWIoSscxbB2rVrR44cKbWimMC/MmMM51wphRDCGCOEjDEDAwOtra17umlvC8YY5xzainPOWkvIv/a4v9NorRFCAND411rbeLfv6Xblcrnc2wXd0w3YXTDGzrnGg0aUgxAqFAp7ul1vF4wxAGh0UeN70TlHCLHW7uGW5ZrRGMdGnOqco5RuPaa5XC6X+/820Nmika4wxlBKfd+34PZ0i94WMCHOOdcIaxBqJHgIJojgPd20XBO2ZOPAgTUWY2S0AQAEeaCTy+VyAG8h0NFaG2N836eUAkC9XuecU0rrquqs7/u+T4ysDlDkAwtToyyXzuCCX9ACrAZGAGFtrHCINVVvZjVyceS1IkusQQoGPT/IjAMtEHiUeVYBQsaIpMiLRtoKlhgnlGMnCWOU+qEQGQVa5wlCuJAyi0AgqRArOW48AYbUXIKUF2ABuGRJgpUPyDjIQJoEhxHjUtQsiQoudriokWy2695WjNVbHjtwGBAgBDaPAv/FOHBbxowg7IwlaLeEqtukiJwzWmvOudbWOcQ518pgjB3oNyohl8vl9oimAx1CyJaPvCRJgiCw1mqtOfIcZWBQasArdCihEWCP+Ugrax0IxYAYYh0ARgSB56C5KRIkMScRMjaW2vPBJUQbhDHGEFALmlvpUqQl+DTFwiFcxr5Q0kNs0Gc2qQCJLE1F4ltNfESAC5EQKPKCZeCsqGAvMJEqYewcNUIBTWTq8QJzIENJ08AYHyvLAsIxc8UBKbz8F3PuncS5bYJgTCm3FjDGAGCMQhia/aPO5XK5f4KmA53GIt8sy4QQjXW+cRxXq1Wc2sHByqbNGzH3MWGUEJ+SEXsNb+tqodRzCJRRGjJrLbMeJb6F5jIipbJvRYwNCX2ubVLwAm1JzfSFYcglrqRp6EcRjirGSmsJxjYxJipmWRbZuuGeU9KwMmUKIeRh41LDAy4FyYTwPEaLSgjCSSyIzwWx2GCvwDHVGgBlBHnC2YqwoeepOLMBK1itSHMZqdw7ntVaY0wppcYYAEwIsTbPf+Ryudzu1XSgwxiz1vq+TwiJ43j+/PlJkhBCMkXB1Klna9kA474RiiG6Zv1qHuw1dETr+IP2UaCd8q12jhqlBxCNmqq3onUAcUgC5SQCou0g5m2EhIkGV1e8rQTWqVhabALsI4uED0rHbQylwIhlPsZ9qi4IwRinVhQpT5GiWBgeGQV1Pyl65ZQwB1ByJKYuy4Q1OsBEMuo7ip0sB1yqfotCpVOFCrjJQC33DvHqipmt/H1RPEHIEUIai74BQClFSJ4XzOVyud2r6en8xqe2c+65556bO3duvV7XWgshtEPa8UxCW7EcMtxRbqWYAaHVZMWKl5fc++fZcSUJfMR9RTxkEW+2Xg9RhMPYxY7x1ArNqNDaycDDAWIBkuCylLGE2gHfAwoAJAZCM+3XjPNtqjEA6BYLXHsaCoIKa4jkkGaSMoOhzck6E7ygdQYptqpECQkBcBxkmuNMGJwmsm4DQX0slGF5lJN7Q1vmdhtXQsGrV7Qx5xBjDCGktSaE4HzZdy6Xy+1+qNn76DQ+xJ9//vl6vW6MSdOUMeb7fvsQr1Aa3trRBZAExFlFLWY1EYv6wOoV69ev3lAuhu859vCgENRShXkBa9VUQ4nGjpG6rhFUcshyiq2seq6AvF5lPc+FWlvCwFjFuF9PZLFgElUQFnsylj4vIu2SgFBppRM+iR2UCa1jKGPjjFKaY5eFSDrq1w0lJkakQKiVjjmkilRslp41tci0sRAgFRgrgZuO1XLvBFuu1YetAh0A6O3tq9frnZ2dQ4a0GmOMMVpLSvN3US6Xy+1eTQc6zrkVK1b09PRYaymljDFCyOTJkxHz7n1849PL+nHgmBFIcmGs5FmL8g86oO2oqcPuueO2kh9NP3mGY8qwjAivqYYym2RQxEB81wOqK/MkpsgzVlF/gKg2oTFlFQ0tQAezOi8QKWmbVSkXxGIEvrQe1VDzoQOyqnYMBxZcIdsccy+VrMgk0OIAxyWtkaHYyirhZaUcYZgNDCRBC9eZK2CWeRrXNCkxIlye1Mltx5ZAZ5tY59mFz4dREIZhd3d3FAVxXMMYk3ylVy6Xy+1mTWfPrbVJkjRuqmutLRQKBx98MELIKj1v4ap7ntpw94KBPz3T/8fHN81eWL1n3vrfzK9dcfP8C796x9SjP9SfDUrYLGWCVbHZeg0NNTiujO69fVIXay34ER9CgyjgH3q+h0nMJalJL0bWRkFEHSEOGR56rDCgXvzB1LauI65/IRwkeiCl2OIgtBWN5ODD5xei1o7WkX6xJfLIkdev6x8QzEsrwAlkImCeXHrN4W1d5Y52v9ha/tjdUN1AbUSrhsXNtj/3DrT1Yh2E0L777Ecp7enpSdOUEBIEwR5sWy6Xy71DNB3o1Cq1/t5+MGCkMdKMHTXWSEMR1SZeaTPAdRpvqifCeTKzm6lsd2QTKuBn++I/P728LRoaMuSgRI0EAOccxtgY09h5gBBCKbUEKaMBIwBQSnFCA8Y5JhXIfOtMZOM0c+K838Zqs+h3xiz49tITh551DxCtSntBWfg4w3WqueD1GGmhWctffnr5C0maZc4VPN5qMqtlXHeiZAnRZf+Dsyu11UlmXsp6l144rCMQvVlQoKKI/dDCoh/OWPCF6rLahjX1dNUVS8+Z9PNKyrVkqYy0S42zznHrMEIIQSbFIDFcoVQYyzDDTuz64cq9XWGHrdIUUSFSpUSSJBs3bly3bsNLL7384pJlzy1aXCiUBgdrQ9raKwODGzZsZCwwJr9rUS6Xy+12TQc6jR0VrLXW2jAMGwt0lFIBCTzDmNeZodIBQ9ufuenEhdefcse3xqeJrQtLw9Liv20MShGYku8JZ3hjvkxK2QhxhBBKKWstgVdDHIwxpTTLMqW1UqpNCxcpHZvIRQCDRPUnSaoUHPSZr5yDlry0uJLEWZopFmcsCRNkA0eY1Bz99sOn3/PBj+4H1oKK/VhR4oUu8VlXhl3P8gUZGgx9HNvqCNzucC3hfoi0NRjVbWaTcV9a8Luzgi5EGKoXPnvRWYtv+8Na7BjzLPgKM818agnCjsSASTHqwCwuQblEWVVXE9bc3FzuX5rTBLAHzGFMN27s3bRpc6FQKhZKo0aO3n//AyZMmNTd3c05xxhPnDhRa7127dp8t41cLpf7J2g60OGcA4AQwjnXCFOEEFrrhBIbIgHSUetQnGYDzgplRBAEvh9h3dLZAb29G8EypDzfB8YYxhhj3Pi49zyvsWsPxjgMw8DzG8cbuzcQSk3QEcvQcfCUUcipQnvk2SSu1v0hCaesVGTIUcRw4FxIWqykpKghvf9jH19+9fyLxqVAS0Uo1UtQwZnv+0qBtqziEoB6XXLswjTNWBb42HEHBcKyoiQaSRv1YUwCF5J2yoYaiDkBpXjdr9ugAIHNtCDUOllwimEMxrC6TjOUUnCBfivba5x387OPLet/Cy/851jVlxYuuLev/pr1Sav701GXPfjXF/t2SRWHXDnn10+u27Vl/uPedFwYUx4QDXKgv4qAdnZ0gSNBEBnjtLZKGUIIY8w5l6ZpZ2fnsmXLhMhzfrlcLrfbNR3olEqlQqGgtVZKJUmyZMmSKPIopWVLPGdNreJbtKxfHf7ZJ9516SPnfHOZUsomg2G6/oyjx23uWWcQIIaESYUQlFJKaeNqWwDIsswYY5RWQsLfkzqYUSA4lUKbOALrKadQzBhRqWVeCyrQR84+adZHvnnxqLrPUOxkjTCNVVWbxJnSn7942tPX/PKyDp8y8LJ65qQmkaLaFYFBUUu/UMa//be2CA0pe6VLHxkoUqsM5WKzhsSkdQ8IQFFjlYjNRHmzbroL3r332FiHyK+bFClHwFimhABDESUDsTWMR7ymQHm04Df/c/3lTfHyTfG0/dqafuUeFTCyb1dUCnblvmn/eJnX3rfihgde2SWN2ZlxSRBPRF+9kqWp6OjoMgZZC0oZY5zWOo7jNE0bfzVSytWrV3d1dTU2UcnlcrncbtX0R61zbty4cUmSZFkWx/GLL74IAJMmTUgTLSxzGIlkwAQR5iyt97UQrWjQ3SIvPWfyK08+efrJx2kca+t8XABIjDFSSsYYpXTdunWN7I5zzvM8KeXQoUMJIVmWNea2mPUzCpHNNhDQ8rfnhH8mQACqH77DbThlALlQccmAYlm1iJOi5tnv/s+H5n1z4dVjM7uSEhCIhVC0GBut0QBiQT/Rw8+/J/0Eo345Hbjz3PYzhmSzBn92XKXmPK9OFDfMIWWUkiEJ01XXHPLBu2f8sXq01CUuaSFSWaIU90MfgFo0KGIdeZ6OSY13FhGkEMccB3r7V669kR89tOqCY0Y1OyJ7XEeRP/CFw95uZS5ZX5s4orRLGrMz42I4xDQUq3va2/fS2mKMnXNCiDRNq9UK5xwhNGzYMOdMb2+vc278+PHGNHeHhVwul8u9BU1ndChFQRBMmjSpMfeEEFq5cuWdd97Vu2klqYvIOkaIV+czDm45oLNlEBErRakYLV745P86fPywYcOYhzEwBYoQIqVszE9pra+99tqjjjrqxBNPPOn4E4487PDvX/O9xiJl55xxFhHsScj0pli1eq5A+Lm/HazX9OZffBT/6qvfWEdapWIkCYpUgikwGWq54geTz8nuePZz+xULnJu6DzhNIc3QoLIqJEVfuiIqUOhSAiND6ZCzbpp1Btz+H39yxkOG+gVOI6YCgweNF2R/+WTLvlcedFf261N4i0RKkSSzTnHAoEmSWACkCpaI9bdMKx900yowFnwVp01+jVVT/cDi3g8cMvR9P5j35d//rXFw+ca4a+bsSqIAYMn62qnXzx126V+mfP3Rmx9dDQArepPCBfcOJq9WdNRVT9z86Op1A9len3vg9rnrR1/24FV3v7R1FWfc+Mx3/ry88fjCXz5/9o8XNB7/9OFVZ974zHar2EFp//bzRWf96JnG48IF9y5YNRgLM+Si+2e/0Dvl6492X/LA525d3Ljq6PrZr+z7pYdaPn1f4YJ7CxfcO2thzzbn/szKwUOunNN9yQPn3fxsIszWZb6+DUvW14675qmumbOP/PbjT6+oNJ789MsDh1w5p2vm7OOueWrxutonb1n0h/kbvjFrWdfM2Y35rzc9tTfq9i3jsuPhQyptFYGmpPGWNkYtX76sUukPQz50aNeQIa3r16/Psqy3t1cpNW7cuNffQDmXy+Vyu0PTGZ04zhr7P0ydOnXdunWvvPJKlmVSylmPPNw7uBeEWDvVYtITRhdGef6Kv/Qi8Be/vGF899i2fYYT59VqVQIcRQpj1tgf1DlnjPn617/+yCOP9Pf3EwfllpYrrriicRxTwhgzxmQh7JV2pBgYqjuJLdUO2PRbFnxr/8lnf/vMZy8/APkkriWea1OFGrvrJ197GYZ8oFRENdAeYFG2zx9TvP0rc+d+dnIgUsM9kwrQMGhaC9pVsfCiffafrBdnjGS8PwQkoBgimmThmpsmveuLo26pZGf6A0aYYrF9MAGMlfN9R1JhBCM+qNAphzBooHUzmOFyyeJAM3izhI6xzgFQjADglsfWnHNot0fxJ44aMfPWxd88Y3+K0W/mrj91UldLyGJhZtww79ITx/zx4kOW9tRn3DCvs+gdNHz7V+nXMz1nWf+y7x7LXrvDwMkTO299ct2XT9nHOvfw3/oSaVJlAkbufb73lEmd263iXaPKW5e2qi9tFHX73PV//Vvf05dP26Zqoe0fF/TM+fIRfbE64tuPnzShc1R7cPW9y+d+7ajOIv/ITxYe0F04bXLX1i+pZfr0H8770sn7fOrokYvWVGfcMHcHZ5QpM+lrj848fvR9nz/06ZcHPvqTBQu/8R5p3Pt/+MxVZ40794jh81ZUfIZv/viktQPZ9AmdM48fDQA7c2qzFva8vtu3HpcdDyWXPArSEbQrRspa3dOzfuTIEaVysXEHZCklAGzatCnLkilTpsRJHWPseZ5SeVInl8vldq+3shi5ccGU7/vjx48/7LDDpkyZ0t3dPbp9LJJBIlnVchLCxhXrRoS9R+49jCMuSXTnnGeffKGSIcA6DFiKIMAYa60xxoQQ3/fDMJwzZ8748eMnTpz42Jw5URSFYYAQaixGtgiEkDXPqUAiQQB6Sr5FtYzJfb561fkrvnPVH+LYakuLLOUZlcXacd+t9Wer6tW0P8nibPlV+4lJ35vTP//8SQHEmQXdb6iz9SGqpSSlSYp+avylf1sCKnIGshY+SICJTEr08Pnv+n+fWJj88TS7iaASL7TXFBCo6CCxRBLDfRt6FluDY5+w7osfyxZdObZQYFmVMJ/7r++9WqZPuW7u2C8+dMWdyzYMivN/8dyPHlwJAMa6n89Z88n37A0AJ0/swgg9sLgXAG6fu/7j00YAwOwXehnBnz52FCPooGHFTxw14j8fX7ODYfr8SWMaUc51s1d0zZzdNXP2ydfNnT6hc8GqwWqq566oHDSseNiYlkeX9gttH3+pf/qEzh1UsaW0hjX92ed/s+THH5vQUdzOjX0vOWFMwacjhwRTR5VfWFdlBCGEhDLKOG1dS8gwQlu36p7nNgWMfObYUYygqaPKw1q3029b2nDf870hxzOPH00xOnLftokjSg8v7bt70cbuFv/j00ZQjA7fp3Vs57bbqO3MqW2327celx1zNOuTKvVejXK6hw3t6GxnjABYraWUWalUwhg3pn0bPxXyxci5XC73T9B0Rke7V/dbJpwoq8pt5XJbee/Re0syePPzK3m1PzCB56v3feR04HLcwer4K36nUSkLur/764f+61vndBQkJi3VKkKBwRgDgDEGABo/cGfNmtUo3AEIIQEAAwIHxEEV4o7Mw5SLYuBBqUcL4/MSifpP+9Tlw6Ze8OlzTrvlREgjJBNb1BEtZVKEfk0bCgAk8zMrix6nKk6X/9/J777l4vlrPjN+xRXn3PT+31x8kLIUPXnmGbeN/Nbcow3h3v1nF08it5qfHbf+h1/+9alX/6QFu9Av+0JusHHBbyvS4kZJuJMAxgFSTgLBjIC1kgFOwYDCFAWwvamrW59a193i33bBwTc8sOKoqx4f0xFe+6EDAeCuhRsPHdPSWfIAgBF07hHDbntqfVvECUaNNbBrB9Lulv+5Xn1EW3Dngm0ngLYW8lezSZecMOaSE8ZsOT5+WPHRZX3zXqlMn9gJAPe/0MsI2qcrGtbq76CKLaU1HP3dJ8YNLRw/vn3HbxVGkNR2bGf08WnDj736KQA47sD2C44ZuU2rrr1vxYg2H73Z7paNNmysijX9WdfM2Y2D1sJpk7vWV8QbhUcNO3Nq2+32rcdlxxAw7ojznHVq+IihjDGtZSNSZ8zz/XDipFfDL4RQI/ppbPD5piXncrlc7h+xy6774Ki97K8mkFqLw5aywBiMbu9EHzpi6h2zn1HekFfq9pZZiz82/cBWP21pQZlobqFuB29VWnJsqhAL8LoES4nwiQ3JxEu+9+FvfOCMC8+UN05HJaxlUivgFkZkPYs8nyKtqx6GzBd6c8H5lrFQ7l0LBkxizHOXTWGXeRhp6Wb83i09DSrGcLO5aMBIyGy9aOHu90ezHDVMg2OhUckHZ1V/fXzRgkPNtb9hfHfx8LGtpYBePmO/y2fst+X4jQ+t/P7ZB27573nTRhx65WOcovOOHNE4Mrw12FD5nwTA2v507yEBpxgAVDP3nTt5YudfX+x7/KX+P1w8FQCuu39FwPD0CR1vVMV2C5l/xVGnXj/v+tmvXHrimO0+YWvKuJ89svqpy6eNbg+3+4QhBdZb29n9NEYOCSYMLz72lSO3PvjLJ9aumZfu4FU7eWqv7/ZtxuVNIYQopYSQxvK1RhzTWGq284XkcrlcbhfaZRsoRwadd8yYGy6afNPF46+5cEo7TlpxVEbRRaft86srTv7FF4/46ZeOPvOI7g4fmSrWlaZvfp+oQY60jV3LqMuey246wvOLKKoiLuqIn/5f8eDm2061jNVj7JRrrXKd6XIRZcj2cZOOvuip2pKZB+L2OvP0/hfNEY9/tjM0MPor8229N+5Nquu0+ulpRiJHsLb0pP+suZtPh73ouHMXDFal25yogarYXOtfvdnJX8wgWgv1FrcomrZf2+svBZq/cpARNGmr46Pbw0PHtvxhfs9HDh/WOHL8+Hah7Y8fWqWMe2Fd7edz1vzvI4cPLXutEbvr2Y3KuN8/s2FpT/1NGzB9YuddC3sYwd0tfneLXwzo75/ZMH1i1xtVsd1CWkL2s/MmXnX3Sy+sq71pjYygA7uL7/nOE10zZ+/373/999+9aF/7rX/sge2r+9K7F210Dm6fu35l745Clvce2L65Jn/1xFptXSzMrU+t66vLkyd0bhgUv3xirbFu9gu9D724GQAiTlZsitcOZKkyO3lq23T768dlxxq7XDWuItyy45W1trGF5+ufn0c/uVwu90+wywIdQewhE1rfPaZ8zAHD9+8MRZYJg8BHhbKeMLZw5P6FaWOLoztDbTLtQeI1vSNmhCKDieJgNc1c3ELAMRIg8MrEJv2aEKWJkr4XeQRDqIhjAmyBAtEeTywwpbNM+8SAALC6yD3toSxQgReYhFKnBLVcIUKQgLaqsUAFkDj0GQFZYAAmHUIKLBo0Rqe06IW78g4oNz74yqePHbXNwWn7Djl5YueWRTAFn/7pc4fcvWjjqMse/OhPF3751H3eN2UvgtF/nDvh6nuWj7rswUWrqydP7HzTuqbsXQaAGVNeXQ582uQuZdy7RpbfqIo3Kmfafm0XvXf0+bcskvpN7hf0m6fXD23x1lx73MYbTrj/C4fe8tiaZT2v2Sls77bgxnMnXHLr4jFffHBDRZxwUMcOSgs5ufOzh9w+d/3ILzw48fJH5r1S8RlpL/LbLzz4xr+s7L7kgetmr2hMY33iPXvfMb9n+rVPL9+Y7Pypbd3t2x2XHUMINXI58No4pvG4MZPVVIG5XC6X+wc1vXv5GzEWCOE21eBTi42DTFlWpMYYT0nBPU85hDlyANgJq+rENbevJ3EcMUjNIAepZQdBJrN1bARGTJVKRSmV8hixiErJsBukwJDmcYRKIhks8nKKQJB6oEmWqBKP4igzNROFpl8XWwlmSlW5h4QjasD5BYSqwpSURwJpwWNM9jrcKiylVBqNIikSHxO7a2Id5+AXj68578gRW38DOgeTv/7o988+8L0Hvsk6mLe/62aveHDJ5ls/dXDRpw++uPmTtyxa/K2jI++tTPztblt3+3bHZWc0Zqy2RDa7paG5XC6X22m7LjOBdIiwo9I6YaxOtPR42aSYQBqGrJ5WsRcg5SED1BDmClmTkz91I4sO+4RqU8ShA5F6jpFiaA0LNWgU4MhK4YoaVa3PwjUiK1PtCxWHuJwQTRR4lidURBEfZASLCBhUnS4AlcINerhoEx2G1SRoR6hGy1iJogIPF6pZReH2ApVcUIdqZeJtCkJscQBNJ6W2320IGhf4bO2+FzYBwDEHDNklVexZFxwz8qWeeOLXHlHGHTSseMdnpr49oxx4bbdvd1x2bOuwZkug01hxvyX0ef0T/uFW53K5XG5HdllGR3DT6sjAwEC53OoEMR5RBLAEQsACaK09RrUA34dEKsAKueZiLGwwCqlOBin1TerhQs1g32SaYsYAg1d3LnDCWUvBYYgskchx51vcJ+UQRTYHNkKJ02WKjTVEcklT4jNd0RB6oCWjnrWGIFwPoFjJsnJo+mqRRx0JlKkZLwjiuAqex32GjATpO7JrAp1cLpfL5XK7zy5boxOqQNYwbylXbKI5ERJU3B9CYoRB4IAaaRJtB5OkrnXmmt/lxxILBiJHBp3hAQSpsKmWgc8c5djWqqQisowQaVNBaiTOmMjSDNdd1mJJtSCMpp5VwoDRVR+BlNYyg7HnLHLO+C5zxmKJdIJriYoor6a0ECWMZjwjxYD2UWjhznMuyrBWJCG7bBkpQoSRFCMOBsBjLI0dELAZMlx7BhssDXWZlV5aV0CBW50xzjOUcgBKeIqQsswShxGjjhPFCapSwx2qA3aOMKw5xeBLjF1mwaWWYKhijAnlCmhMKwTzQHJjU0G5QpnTEDIcYa5AK7CR4MoSbBVoFgLBnCPGnYbMs5Ryo3mkGeeUgNSO2tQFHrFIEJc4BByolcwjXMCAZykmOgYZOS6RBFYLGKdaAoDjxqRpxLi2nGKbWlfjJqJcm8RaayjT1kSCO6WpI9zj1pOJVJISApIYR4ACzTDhVtUx0UZTbLLQcYmNn3EKqUYccXCMI2N9plPEfSqcM1UKCjhFyhk+SFUMEhOeKXCGe9QEnCsHRPckmHvGUgxAuLYGI+65KlJc8FhQzjKeGmYgo9gaCxR4pmoIcWRoP+KANNhMIZcA+IhTRwJQ1WyAMiBKIU1im3iUY5pS4M5inHKHwENce1hZjpjQVjkzoD0bMeRnXGMwVCkbO24cSRHiWnHAjhCurYmZooCUYBoprVCIDIpRP7ECVYOMC8IQVShNMiYx5UgIgXREuZQSWbf10qKt01GNHdcbq6rh7yko59w2643c3+2qv4tcLpfbVdBApUoIaexJboxZunRpe3t7vV4nUZKkkacTVWjl0oTGVSjhtqZciRJBKc0ySTHyeEGmFkBj/IYZDmtt4zaDAKCU4pxrrfOkfS6Xy+Vyud3tvwHu9ktuTaLcKwAAAABJRU5ErkJggg==)"></span><span class="cp-body"><span class="cp-in">&gt; cat("\n\nBase R mean of Stress:", mean(clinic$Stress),
++     "   with na.rm = TRUE:", mean(clinic$Stress, na.rm = TRUE), "\n\n\n")  # base R</span>
+<span class="cp-out">
+
+Base R mean of Stress: 8.685714    with na.rm = TRUE: 8.685714 
+
+</span>
+<span class="cp-in">&gt; clinic &lt;- jconvert(clinic, to = "stata")</span>
+<span class="cp-msg">Converted to Stata-style missing values in 4 variables:
+  Stress      (-99 "Refused" -&gt; .a, -98 "Don't know" -&gt; .b)
+  SleepHours  (-99 "Refused" -&gt; .a, -98 "Don't know" -&gt; .b)
+  Medication  (-99 "Refused" -&gt; .a)
+  Anxiety4    (-99 "Refused" -&gt; .a, -98 "Don't know" -&gt; .b)
+
+This call changes clinic only if you assign the result:
+  clinic &lt;- jconvert(clinic, ...)
+
+To change clinic directly, rerun with modify = TRUE:
+  jconvert(clinic, ..., modify = TRUE)</span>
+<span class="cp-in">&gt; cat("\n\nBase R mean of Stress now:", mean(clinic$Stress),
++     "   with na.rm = TRUE:", mean(clinic$Stress, na.rm = TRUE), "\n\n\n")</span>
+<span class="cp-out">
+
+Base R mean of Stress now: NA    with na.rm = TRUE: 15.18182 
+
+</span>
+<span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
+</div>
+</div>
+</div>
+<p>There is the argument from block 3, live. Before the conversion, base R returned a mean for <code>Stress</code> that looks perfectly reasonable and is wrong — the −99s and −98s went into it — and <code>na.rm = TRUE</code> changed nothing, because to base R those codes are not NAs; they are numbers. After <code>jconvert()</code> the same column, holding the same information, gives <code>NA</code>: base R now <em>sees</em> the missing values, refuses to average across them, and <code>na.rm = TRUE</code> does exactly what it is for. The conversion report lists what moved, column by column. This is a change to the data as they sit in R; what happens to declarations when you save to a file and load it back is covered on <em><a href="./data.html">Loading, Saving, Converting Data</a></em>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The block <em>is</em> the base R equivalent, shown live. <code>mean()</code> and its <code>na.rm</code> argument are base R’s whole toolkit for missing values, and they only know one kind: <code>NA</code>. A declared SPSS-style code is a jstats (and haven) idea layered on top — base R never looks at the note, which is why the first mean is quietly wrong. The conversion itself is haven’s <code>tagged_na()</code> under the hood: the same proven library the other pages mention, doing the fiddly part (one marker per code, labels carried across, all four columns at once) so you don’t. If you would rather see the effect on one column than on all four, <code>jconvert()</code> takes a <code>vars</code> argument; <code>?jconvert</code> has the details.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="finding-undeclared-codes-in-your-own-data" class="level3">
+<h3 class="anchored" data-anchor-id="finding-undeclared-codes-in-your-own-data">6. Finding undeclared codes in your own data</h3>
+<p><code>clinic</code> announced its problem columns at the door, because it arrived through <code>jload()</code>. Your own data will not always be so polite — a data frame handed to you by a colleague, or built by other code, comes with no message attached. So it is worth knowing what an undeclared code looks like from the inside. <code>jscreen()</code> screens the whole data frame; then a frequency table of the one column still carrying the problem.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 6. Finding undeclared codes in your own data ---------------------</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">## jstats named MoodRating and Anxiety2 as clinic loaded. Data that arrive</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## some other way come with no message, so learn the symptoms: screen the</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">## whole data frame...</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">jscreen</span>()</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="do">## ...then look at the one column still carrying the problem</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">jfreq</span>(Anxiety2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What you should see">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you should see
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="obx-cap">
+Console <span class="obx-loc">(lower-left pane)</span>
+</div>
+<pre class="cp-pane cp-chrome"><span class="ep-tabs"><span class="ep-tab on">Console</span><span class="ep-tab">Terminal<span class="ep-x">×</span></span><span class="ep-tab">Background Jobs<span class="ep-x">×</span></span><span class="ep-ctl"><svg width="42" height="16" viewbox="0 0 42 16"><rect x="0.5" y="7.5" width="18" height="7" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="0.5" y="7.5" width="18" height="3.5" fill="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="14" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="3.5" fill="#8A9196"></rect></svg></span></span><span class="cp-strip" style="background-image:url(data:image/png;base64,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)"></span><span class="cp-body"><span class="cp-in">&gt; jscreen()</span>
+<span class="cp-out"><span style="color: #BB0000;">Data Screening
+</span><span style="color: #BBBB00;">Using default data frame: clinic
+</span>  Cases: 70 
+  Variables: 16 
+  Cases with missing data: 24 
+  Variables with outliers: 3 
+
+Variable Types
+Variable       jstats Class  Sub-class   Unique Values
+-------------  ------------  ----------  -------------
+ClientID       Categorical   identifier             70
+Stress         Numeric                              25
+SocialSupport  Numeric                              21
+SleepHours     Numeric                              37
+Flourishing    Numeric                              39
+ScreenTime     Numeric                              43
+PriorTherapy   Categorical   dichotomy*              2
+SoughtHelp     Categorical   dichotomy               2
+Medication     Categorical   dichotomy               2
+Condition      Categorical   4-category              4
+MoodRating     Numeric                               9
+Anxiety1       Categorical   Likert                  5
+Anxiety2       Numeric                               7
+Anxiety3       Categorical   5-category              5
+Anxiety4       Categorical   Likert                  5
+Anxiety5       Categorical   Likert                  5
+* coded other than 0/1; mean is not a proportion
+
+Missing Data &amp; Outliers (outliers &gt; 3 SD from mean)
+Variable     Missing  % Missing  Outliers
+-----------  -------  ---------  --------
+Stress             4        5.7         1
+SleepHours         4        5.7        --
+Flourishing       --         --         1
+Medication         5        7.1        --
+MoodRating         7       10.0        --
+Anxiety2          --         --         6
+Anxiety4           6        8.6        --
+</span>
+<span class="cp-in">&gt; jfreq(Anxiety2)</span>
+<span class="cp-out"><span style="color: #BB0000;">Frequencies
+</span><span style="color: #BBBB00;">Using default data frame: clinic
+</span>Anxiety2
+
+                Freq  Total %  Valid %  Cum. %
+--------------  ----  -------  -------  ------
+-99                3     4.29     4.29    4.29
+-98                3     4.29     4.29    8.57
+1: Not at all      8    11.43    11.43   20.00
+2: A little       13    18.57    18.57   38.57
+3: Moderately     20    28.57    28.57   67.14
+4: Quite a bit    16    22.86    22.86   90.00
+5: Extremely       7    10.00    10.00  100.00
+                                              
+Total             70   100.00                 
+
+</span>
+<span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
+</div>
+</div>
+</div>
+<p>Nothing in the screen says “undeclared code” in so many words — that message came with the load. What the screen shows is the <em>symptoms</em>, and they are worth learning because they are what you will see in a data frame that arrived some other way. Look at <code>Anxiety2</code> against its neighbors. <code>Anxiety1</code>, <code>Anxiety4</code>, and <code>Anxiety5</code> are classified as Likert items; <code>Anxiety2</code> is classified as plain Numeric, because two stray values have stretched its range past anything a five-point scale could hold. The same two values show up again in the outliers column, where an item like this should have none. And in the missing-data column <code>Anxiety2</code> reports nothing at all, while <code>Anxiety4</code> — the same kind of item, with its codes declared — reports the missing cases it has. A frequency table then settles it: the two codes sit in the table as rows of their own, each with a valid percentage, counted as if they were answers.</p>
+<p>There are two ways to deal with a column like that, and jstats’s own messages always suggest the first. <strong>Declare</strong> the codes, as you did for <code>MoodRating</code>: nothing is deleted, the labels are kept, and the declaration can be revised or removed later. Or <strong>recode</strong> them to <code>NA</code> with <code>jrecode()</code>: that also removes them from every statistic, but it throws away the distinction between a refusal and a don’t-know, and there is no undo. Declaring is the careful default; recoding is for when the reason genuinely does not matter.</p>
+<p>So here is the exercise the page has been building toward. jstats told you at the top of the page that <code>Anxiety2</code> carries the same two codes as <code>MoodRating</code>; the screen and the frequency table have just shown you what that does. Declare them yourself — the call is the one from block 4 with the column name changed — then run the frequency table again and watch the codes move into the Missing section. The finished script at the bottom of the page carries the answer, if you want to check your work.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the Base R equivalent?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the Base R equivalent?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Base R has no way to <em>declare</em> a missing value; its only move is the recode. The idiom is <code>clinic$Anxiety2[clinic$Anxiety2 %in% c(-99, -98)] &lt;- NA</code>, and it does exactly what the paragraph above warns about: both codes become the same anonymous <code>NA</code>, so the difference between a refusal and a don’t-know is gone, and the original values are gone with it. It is the right tool when the reason for the missingness is irrelevant. <code>jdeclare_missing()</code> exists because in most research it is not — the difference between “refused” and “not applicable” is often the finding — and commercial statistical software has always let you keep it.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="make-it-permanent" class="level3">
+<h3 class="anchored" data-anchor-id="make-it-permanent">7. Make it permanent</h3>
+<p>The convention you chose is a session setting: it lasts until you restart R. This page leaves it switched on when you go, which is the recommendation doing its job — one last look confirms it. To have jstats make the choice for you at the start of every session in this Project, put the same <code>joptions(missing.convention = "stata")</code> line in your Project’s <code>.Rprofile</code> file; the error in block 3 told you as much. <em><a href="./loading-jstats-automatically.html">Loading jstats automatically</a></em> shows where that file lives and how to create it.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 7. Make it permanent ---------------------------------------------</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">## The convention you chose is a session setting: it lasts until you</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">## restart R. This page leaves it switched on -- one last look</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">## To have it chosen automatically at the start of every session in this</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Project, put the same joptions(missing.convention = "stata") line in</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">## your Project's .Rprofile file. The Loading jstats automatically page</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">## shows where that file lives and how to create it</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What you should see">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you should see
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="obx-cap">
+Console <span class="obx-loc">(lower-left pane)</span>
+</div>
+<pre class="cp-pane cp-chrome"><span class="ep-tabs"><span class="ep-tab on">Console</span><span class="ep-tab">Terminal<span class="ep-x">×</span></span><span class="ep-tab">Background Jobs<span class="ep-x">×</span></span><span class="ep-ctl"><svg width="42" height="16" viewbox="0 0 42 16"><rect x="0.5" y="7.5" width="18" height="7" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="0.5" y="7.5" width="18" height="3.5" fill="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="14" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="3.5" fill="#8A9196"></rect></svg></span></span><span class="cp-strip" style="background-image:url(data:image/png;base64,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)"></span><span class="cp-body"><span class="cp-in">&gt; joptions()</span>
+<span class="cp-out"><span style="color: #BB0000;">Options Settings
+</span>Missing-value convention: Stata-style
+Data folder: Working directory
+Correlation layout: wide
+Missing-value detail: per_code
+Message width: Auto (currently 79)
+</span>
+<span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="What's the point?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What’s the point?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The download at the bottom of this page is the <em>finished</em> version of what you built — and finished means something specific. A goal every experienced programmer and statistician takes for granted, but new researchers are rarely told: a completed script should run from beginning to end without errors. On this page you met one error on purpose, because meeting it is how the choice gets explained. The download shows what the end of that process looks like, and it differs from the page blocks in two principled ways: the deliberate error in block 3 is commented out, with a note saying why, and block 6 carries the answer to the closing exercise — the <code>Anxiety2</code> declaration you were asked to write yourself — so the file runs clean and complete. Nothing else changes: this page saves no files, so there are no overwrite arguments to add, and the reload at the top already guards against a second run.</p>
+<p>To prove a script is finished, use the <strong>Source</strong> icon (to the right of Run in the script toolbar): it runs the entire file, top to bottom, in one go. Source shows the <em>output</em> without echoing each command back to the Console — that’s normal — and the small arrow beside Source offers “Source with Echo” if you’d like the commands shown too. jstats functions print their own tables, so their output always appears; but a bare base R line that merely displays a value — <code>mean()</code> on its own — stays quiet under Source, because R only auto-prints results when you run lines interactively. That’s why block 5 prints its base R means with <code>cat()</code>, a label, and a few blank lines: hand-formatting that jstats tables do for you.</p>
+<p>The <strong>What you should see</strong> boxes under the blocks above reproduce that Console — the blue command lines, the gray notes, the colored tables, and one red error where it is meant to happen. They show the <em>code</em> being run, along with any note written on the end of a command line, but not the standalone <code>##</code> comment lines (running one just echoes it back and does nothing).</p>
+<p>One thing this page leaves behind, deliberately: the missing-value convention stays set for the rest of your session, because the whole point of choosing it is to have it in place. Nothing else is changed and nothing is written to disk. If you set a convention in your Project’s <code>.Rprofile</code> and block 2 cleared it, restarting R brings it back.</p>
+<p>If you’re keeping the file — and it’s worth keeping, since finished scripts travel — give it a proper home. In the <strong>Files</strong> tab of the lower-right pane, click <strong>New Folder</strong> and type a name into the popup. “Scripts” is a good one, and it will sit alongside whatever else your project folder holds.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="take-the-whole-script-with-you" class="level2">
+<h2 class="anchored" data-anchor-id="take-the-whole-script-with-you">Take the whole script with you</h2>
+<p>That’s the full run-through. If you’d like the entire script in one file to keep, adjust, and reuse, download it here:</p>
+<p>The file is close to what you have just built: the same code, in the same order, as though you had pasted every block above into one script. Two things differ, each on purpose — the line that raises the deliberate error is commented out, and the finished file includes the answer to block 6’s exercise. The <strong>What’s the point?</strong> box under the last block explains why a finished script is written that way.</p>
+<div style="margin: 1rem 0 2rem;">
+<p><a href="missing-values-follow-along.R" download="" class="btn btn-primary">Download the full script (.R)</a></p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("^(?:http:|https:)\/\/jma61\.github\.io\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./workflow.html" class="pagination-link" aria-label="A typical jstats workflow">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">A typical jstats workflow</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./loading-jstats-automatically.html" class="pagination-link" aria-label="Loading jstats automatically">
+        <span class="nav-page-text">Loading jstats automatically</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Jeff Ackerman</p>
+</div>   
+    <div class="nav-footer-center">
+<p>jstats is an independent project that I develop and maintain in my own time; it began as a teaching tool in a university setting. Views expressed and any errors are my own.</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  function syncFooter(){
+    var c = document.querySelector('main.content')
+         || document.querySelector('#quarto-document-content');
+    var f = document.querySelector('.nav-footer-center');
+    if (c && f) {
+      var w = Math.round(c.getBoundingClientRect().width);
+      f.style.flexGrow = '0';
+      f.style.flexShrink = '0';
+      f.style.flexBasis = w + 'px';
+    }
+  }
+  window.addEventListener('DOMContentLoaded', syncFooter);
+  window.addEventListener('load', syncFooter);
+  window.addEventListener('resize', syncFooter);
+})();
+</script>
+
+
+
+
+</body></html>

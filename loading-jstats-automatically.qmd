@@ -42,7 +42,10 @@ options(jstats.attach.noninteractive = TRUE)
 source("pane_facsimile.R")   # defines .obx (dot-named)
 ```
 
-## Loading jstats automatically
+## Loading jstats and its options automatically
+
+As well as loading the package itself, the same setup file can carry the settings
+you want in place every time you work in this Project.
 
 Once jstats is installed, you can have your Project load it for you every time it
 opens — so you never type `library(jstats)` by hand. It's optional (typing the one
@@ -83,6 +86,12 @@ Now copy and paste these lines into your new `.Rprofile`:
 # To reinstall jstats (new computer, or after updating R) see the install
 # code at: jma61.github.io/jstats-guides/install-jstats.html
 library(jstats)
+
+# Explained on the Declaring missing values page
+joptions(missing.convention = "stata")
+
+# Explained on the Loading, Saving, Converting Data page
+joptions(data.dir = "Data")
 ```
 
 Pasted in, the file looks like this:
@@ -92,12 +101,28 @@ Pasted in, the file looks like this:
 #| results: asis
 .obx$show_source(r"---(# To reinstall jstats (new computer, or after updating R) see the install
 # code at: jma61.github.io/jstats-guides/install-jstats.html
-library(jstats))---", name = ".Rprofile", dirty = FALSE)
+library(jstats)
+
+# Explained on the Declaring missing values page
+joptions(missing.convention = "stata")
+
+# Explained on the Loading, Saving, Converting Data page
+joptions(data.dir = "Data"))---", name = ".Rprofile", dirty = FALSE)
 ```
 
-The last line does the loading. The comment above it holds the address of the
-install page, so the reinstall instructions are one glance away on a new
-computer or after an R update.
+`library(jstats)` does the loading. The comment above it holds the address of the
+install page, so the reinstall instructions are one glance away on a new computer
+or after an R update.
+
+The two `joptions()` lines below it are settings, and they work the same way as
+the load: anything you put in this file applies to every session you open in this
+Project, so you choose once instead of at the start of each session. Both are
+optional, and neither is explained here — each belongs to its own page.
+*[Telling jstats about missing values](missing-values.qmd)* covers what a
+missing-value convention is and why Stata-style is the one jstats recommends;
+*[Loading, Saving, Converting Data](data.qmd)* covers the data folder. If you
+haven't read those yet, leave the two lines out for now and add them later; the
+file works perfectly well with just the load.
 
 Save — the disk icon at the top of the Source pane, or **Ctrl+S** (**Cmd+S** on a
 Mac) — and check that the tab reads `.Rprofile`, nothing more. (Picked up a `.R`
@@ -128,9 +153,8 @@ in `.Rprofile`: because the file runs on every startup, an install line there tr
 to reinstall each time and can send RStudio into a loop. Installing is a one-off you
 run by hand; loading is the repeatable step that belongs in startup.
 
-We're keeping this minimal for now. Later you'll add a line or two more — where
-your data lives, and how many digits to show in output — but this is plenty to
-start.
+You can keep adding to the file as you settle on more preferences — how many
+digits to show in output is a common next one — but this is plenty to start.
 
 ::: {.callout-note collapse="true" title="Going deeper (optional)"}
 This `.Rprofile` lives inside your Project and applies only to this Project.

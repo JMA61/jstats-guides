@@ -74,6 +74,8 @@ website:
               href: data.qmd
             - text: "A typical jstats workflow"
               href: workflow.qmd
+            - text: "Declaring missing values"
+              href: missing-values.qmd
             - text: "Loading jstats automatically"
               href: loading-jstats-automatically.qmd
   page-footer:

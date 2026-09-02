@@ -1,0 +1,486 @@
+---
+pagetitle: "jstats:Missing Values"
+title-prefix: ""
+resources:
+  - missing-values-follow-along.R
+---
+
+```{r}
+#| label: obx-setup
+#| include: false
+
+# ---------------------------------------------------------------------------
+# EXPECTED-OUTPUT BOXES ("What you should see") -- render scaffolding, hidden
+# (include: false). Same mechanism as data.qmd: pane_facsimile.R defines the
+# capture-once / display-twice helpers in their own dot-named environment
+# (.obx); each block below is one .obx$show_block() call whose code STRING is
+# both printed into the page and executed once, so the shown code and the run
+# code can never drift. An unexpected error in any block HALTS the render (the
+# publish gate); block 3's error is deliberate and is caught with
+# expect_error = TRUE.
+#
+# Differences from data.qmd's setup, each on purpose:
+#   - jstats IS pre-loaded here. data.qmd leaves it unloaded because its block 1
+#     teaches library(jstats) and wants the real startup message in the box;
+#     this page's block 1 is a jload()/juse() pair, so a startup message would
+#     be noise the reader did not ask for.
+#   - No on-disk cleanup and no teardown. This page never saves a file: its
+#     scope ends where the data leave R (that is data.qmd's territory), so there
+#     is nothing on disk to clear and no real path can reach a box.
+#   - The missing-value convention is put back to the package default before
+#     any block runs. A first-time reader has no convention chosen; if the render
+#     machine has one set (a .Rprofile, a previous page in the same session),
+#     block 1's load message would phrase itself for that setting and block 2's
+#     "none" line would have nothing to show. This is restoring the default a
+#     reader arrives with, not setting a non-default.
+# ---------------------------------------------------------------------------
+
+options(width = 80)   # match a default 80-column console for table alignment
+suppressPackageStartupMessages(library(jstats))
+joptions(missing.convention = "none")
+source("pane_facsimile.R")   # defines .obx (dot-named -> survives rm(list = ls()))
+```
+
+## Telling jstats about missing values
+
+This page is a hands-on run-through of one small move that protects every
+statistic you compute: telling jstats which numbers in a column are not really
+data, and choosing the form jstats should keep that information in.
+
+{{< include _before-you-start.qmd >}}
+
+{{< include _how-to-use-this-page.qmd >}}
+
+{{< include _new-to-r.qmd >}}
+
+{{< include _reset-your-session.qmd >}}
+
+### 1. Load the data, and see what jstats already noticed
+
+We'll work on `clinic`, the deliberately messy practice dataset that ships with
+the package. The first two lines are a pair you wouldn't normally write —
+`clinic` is available by name the moment jstats is loaded, and `juse()` usually
+comes once per session — but together they guarantee a fresh copy, whatever you
+did to `clinic` on another page. Watch what jstats says as the data load, then
+ask for the descriptives of `MoodRating`, a column that is meant to run from 1
+to 10.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 1. Load the data, and see what jstats already noticed ------------
+
+## Start from a fresh copy of the clinic practice dataset
+## You wouldn't normally write this pair: clinic is there by name as soon
+## as jstats is loaded, and juse() usually comes once per session. The
+## reload makes this page start clean whatever you did on another page
+jload("clinic", overwrite = TRUE)
+juse(clinic)
+
+## MoodRating is meant to run from 1 to 10. Ask for its descriptives
+jdesc(MoodRating))---",
+  chrome = TRUE,
+  lead = "The command lines are shown; the standalone <code>##</code> comment lines aren't -- running a comment just echoes it back and does nothing.")
+```
+
+Two things happened. As `clinic` loaded, jstats looked over its missing values
+and reported on two groups of columns. Four of them — `Stress`, `SleepHours`,
+`Medication`, and `Anxiety4` — arrived with their codes already *declared*, and
+those codes are listed with labels such as "Refused". Two others, `MoodRating`
+and `Anxiety2`, carry codes that jstats *suspects* stand for missing values but
+that nobody has declared; for those it offers a ready-to-run example, naming
+`MoodRating`. Then the descriptives showed why that second group matters: the
+minimum of `MoodRating` is a large negative number and the mean has been dragged
+well below the 1–10 range.
+Those stand-in codes are being averaged in as if they were genuine ratings —
+the usual state of affairs after a plain CSV or Excel import, where the file
+carries no record of what the numbers mean.
+
+::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
+Open that same CSV in SPSS and the codes sit in Data View looking like any
+other number, Variable View shows no missing values defined, and Descriptives
+averages them in without a word. The check jstats just ran on arrival is one
+the commercial programs don't make: they trust the file. The four columns that
+arrived already declared are the equivalent of a .sav whose Variable View was
+filled in properly — jstats read those definitions and kept them.
+:::
+
+### 2. What a missing-value convention is
+
+Before we fix `MoodRating`, a piece of background that the rest of the page
+rests on. Every statistics program needs some way to mark a value as missing
+while remembering *why* it is missing — refused, don't know, not applicable.
+The three programs jstats reads and writes for do it three different ways, and
+jstats can keep your missing values in any of the three forms. It calls the
+choice a **missing-value convention**.
+
+- **SPSS-style.** The code stays in the data as a visible number — a −99 is
+  still a −99 in the column — and a note attached to the column says "treat
+  −99 and −98 as missing." Every jstats function reads that note. The
+  advantage is that nothing is hidden: you can see the codes in a frequency
+  table and in the raw data.
+- **Stata-style.** The code is replaced by a *marker*: `.a` for the first
+  missing reason, `.b` for the second, and so on up to `.z`, each with its
+  label. The markers are genuine missing values as far as R is concerned — which
+  is the reason the package recommends this form, as the next block shows.
+- **SAS-style.** The same idea as Stata, with uppercase markers (`.A` to `.Z`).
+
+jstats will not pick one of these for you, and the next block shows what
+happens when none has been chosen. To be sure you see that whatever your
+history, this block starts from the package default — no convention chosen.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 2. What a missing-value convention is ----------------------------
+
+## jstats can keep missing-value codes in any of three forms, one for each
+## major program. It will not choose one for you. We start with no
+## convention chosen -- the package default -- so you see what happens
+## (If you've chosen one on another page or in your Project's .Rprofile,
+## this line clears it for the current session only; restarting R brings
+## your .Rprofile choice back)
+joptions(missing.convention = "none"))---",
+  chrome = TRUE)
+```
+
+::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
+These are the three forms you already know, under their own names. SPSS-style is
+what MISSING VALUES in Variable View produces: the codes stay put and a
+definition rides alongside. Stata-style is Stata's extended missing values
+(`.a` through `.z`); SAS-style is SAS's (`.A` through `.Z`). The one new idea
+is that jstats lets you choose *between* them for data that are now in R —
+regardless of which program the file came from — and converts from one form to
+another on request. Which form suits you is a question about how you work, not
+a verdict on the programs: it depends on whether your data go back to one of
+them, and on whether you also use base R alongside jstats.
+:::
+
+### 3. Declare, and meet the gate
+
+`jdeclare_missing()` is the function that tells jstats which codes in a column
+mean "missing," and it takes the labels at the same time. Run it now, exactly
+as you will run it successfully in the next block — with no convention chosen,
+it stops and asks.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 3. Declare, and meet the gate ------------------------------------
+
+## Declare -99 and -98 as missing on MoodRating, with labels
+## With no convention chosen, jstats stops and asks instead of guessing
+clinic <- jdeclare_missing(clinic, MoodRating,  # an error, on purpose
+                           codes = c(Refused = -99, "Don't know" = -98)))---",
+  chrome = TRUE, expect_error = TRUE)
+```
+
+This is the one place on the site where jstats refuses to do something it
+plainly could do, and the refusal is deliberate. The three forms behave
+differently once the data leave jstats — in base R, in other packages, in a
+file bound for another program — so silently picking one would be choosing on
+your behalf a consequence you had not seen. Instead the error lays out the three
+choices, each with the one fact that separates it from the others, and puts its
+recommendation first.
+
+The recommendation is Stata-style, and the reason is the line under it:
+*lowercase markers behave as true NAs in base R*. Under SPSS-style, a −99 is
+still a −99, and base R — which knows nothing about jstats's notes — will
+average it in and hand you a plausible-looking wrong number. Under Stata-style
+the code has become a real missing value, so base R's `mean()` returns `NA`
+instead: an answer you cannot mistake for a result, and one line fixes it. In
+short, **SPSS-style fails silently in base R; Stata-style fails loudly, and is
+fixable.** Block 5 shows both live, on the same column.
+
+That still leaves room for judgment. If you write base R alongside jstats, or
+paste in code an AI assistant wrote for you (which will be base R), choose
+Stata-style. If your data live in SPSS and go back there for a supervisor or a
+collaborator, staying SPSS-style is a reasonable choice, and jstats will read
+your declarations correctly either way. And notice the error's last line: the
+same `joptions()` command, placed in your Project's `.Rprofile`, makes the
+choice once and for all — block 7 says where that file lives.
+
+::: {.callout-note collapse="true" title="Going deeper (optional)"}
+Why do the programs differ at all? They made different trade-offs. SPSS keeps
+the code visible as a number and attaches a definition beside it, which suits
+the survey codebook, where a −99 on the questionnaire is itself the record of
+the refusal. Stata and SAS fold the reason into the missing value itself, so
+that arithmetic can never touch it by accident. Neither is wrong; they are
+answers to different working habits. Book 1 covers what a
+missing-value code is and why an undeclared one poisons a mean; Book 2 covers
+the three conventions, how jstats converts between them, and what survives the
+trip to each file format — in more detail, with worked examples. The help page
+`?jdeclare_missing` documents the options.
+:::
+
+### 4. Choose, declare, check
+
+Choose the recommended form, then run the same declaration again. It goes
+through this time, and two checks show what changed: the descriptives, and a
+frequency table. Then one more call — `joptions()` with nothing inside the
+parentheses — shows your current settings, this new one among them.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 4. Choose, declare, check ----------------------------------------
+
+## Choose the Stata-style convention -- the one jstats itself recommends
+## for anyone who also runs base R
+joptions(missing.convention = "stata")
+
+## Now the same declaration goes through
+clinic <- jdeclare_missing(clinic, MoodRating,
+                           codes = c(Refused = -99, "Don't know" = -98))
+
+## The mean sits inside 1-10 again, and the codes count as missing
+jdesc(MoodRating)
+
+## A frequency table shows the codes set aside, with their labels
+jfreq(MoodRating)
+
+## With nothing in the parentheses, joptions() shows your current
+## settings, including this one
+joptions())---",
+  chrome = TRUE)
+```
+
+Read the box from the top. Choosing the convention produced a note straight
+away: `clinic` arrived with four SPSS-style columns, and jstats points out that
+they no longer match your setting — the next block deals with that. The
+declaration then reports what it did: each code became a marker (`.a`, `.b`)
+carrying its label, and the note beneath reminds you that a call like this
+changes `clinic` only because you assigned the result back with the arrow (the
+`modify = TRUE` form it mentions does the same job in place — either is fine).
+It also points out, correctly, that `MoodRating` now differs in form from the
+rest of `clinic`. Mixing forms is allowed; the next block brings the rest in
+line.
+
+Then the payoff. The descriptives report a smaller non-missing count, a
+minimum and maximum inside 1–10, and a mean that finally looks like a mood
+rating. Both tables now carry a case-processing summary above them, and its
+arrival is itself a signal — jstats shows that block only once a variable has
+declared missing values to account for. Read what it says, though: it counts
+*cases*, and it reports that none were dropped. The declared codes are missing
+within `MoodRating` rather than whole rows knocked out of the dataset, and it is
+the non-missing count that records them. The frequency table is the clearest view of all: the
+two codes sit in their own **Missing** section under their markers and labels,
+counted in the totals and left out of the valid percentages. And the settings
+listing confirms the convention is in place for the rest of your session.
+
+::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
+The declaration is the equivalent of MISSING VALUES `MoodRating (-99, -98)`
+together with the matching VALUE LABELS in SPSS syntax, or of setting them in
+Variable View — with the same important property, that it is non-destructive.
+The codes are flagged, not deleted, and the declaration can be changed or
+undone later. The frequency table that follows is the one SPSS's Frequencies
+would give you: a Valid section, a Missing section, and the valid percentages
+computed on the valid cases alone. What has no counterpart is the settings
+listing — the convention is a jstats-wide choice, and `joptions()` is where you
+see it.
+:::
+
+### 5. Bring the rest in line
+
+`clinic` arrived with four columns already declared, SPSS-style — the common
+case, since Qualtrics, LimeSurvey, and most public data archives hand out
+SPSS-style files. jstats reads those declarations correctly under either
+setting, so nothing is wrong yet. But base R does not read them, and this block
+shows what that means before and after one line of conversion. `Stress` is one
+of the four columns.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 5. Bring the rest in line ----------------------------------------
+
+## Stress arrived with its codes declared SPSS-style. Ask base R for its
+## mean, with and without na.rm = TRUE (which tells mean() to drop NAs)
+## mean() is base R. It prints a bare, unlabeled number, and under Source
+## it prints nothing at all -- so cat() (also base R) adds a label and
+## blank lines to make it visible
+cat("\n\nBase R mean of Stress:", mean(clinic$Stress),
+    "   with na.rm = TRUE:", mean(clinic$Stress, na.rm = TRUE), "\n\n\n")  # base R
+
+## One line converts every SPSS-style column in clinic to the Stata form
+clinic <- jconvert(clinic, to = "stata")
+
+## Now base R sees the missing values too: the mean is NA (loud, not wrong),
+## and na.rm = TRUE gives the right answer
+cat("\n\nBase R mean of Stress now:", mean(clinic$Stress),
+    "   with na.rm = TRUE:", mean(clinic$Stress, na.rm = TRUE), "\n\n\n"))---",
+  chrome = TRUE)
+```
+
+There is the argument from block 3, live. Before the conversion, base R
+returned a mean for `Stress` that looks perfectly reasonable and is wrong — the
+−99s and −98s went into it — and `na.rm = TRUE` changed nothing, because to base
+R those codes are not NAs; they are numbers. After `jconvert()` the same
+column, holding the same information, gives `NA`: base R now *sees* the missing
+values, refuses to average across them, and `na.rm = TRUE` does exactly what it
+is for. The conversion report lists what moved, column by column. This is a
+change to the data as they sit in R; what happens to declarations when you save
+to a file and load it back is covered on
+*[Loading, Saving, Converting Data](data.qmd)*.
+
+::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
+The block *is* the base R equivalent, shown live. `mean()` and its `na.rm`
+argument are base R's whole toolkit for missing values, and they only know one
+kind: `NA`. A declared SPSS-style code is a jstats (and haven) idea layered on
+top — base R never looks at the note, which is why the first mean is quietly
+wrong. The conversion itself is haven's `tagged_na()` under the hood: the same
+proven library the other pages mention, doing the fiddly part (one marker per
+code, labels carried across, all four columns at once) so you don't. If you
+would rather see the effect on one column than on all four, `jconvert()` takes
+a `vars` argument; `?jconvert` has the details.
+:::
+
+### 6. Finding undeclared codes in your own data
+
+`clinic` announced its problem columns at the door, because it arrived through
+`jload()`. Your own data will not always be so polite — a data frame handed to
+you by a colleague, or built by other code, comes with no message attached.
+So it is worth knowing what an undeclared code looks like from the inside.
+`jscreen()` screens the whole data frame; then a frequency table of the one
+column still carrying the problem.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 6. Finding undeclared codes in your own data ---------------------
+
+## jstats named MoodRating and Anxiety2 as clinic loaded. Data that arrive
+## some other way come with no message, so learn the symptoms: screen the
+## whole data frame...
+jscreen()
+
+## ...then look at the one column still carrying the problem
+jfreq(Anxiety2))---",
+  chrome = TRUE)
+```
+
+Nothing in the screen says "undeclared code" in so many words — that message
+came with the load. What the screen shows is the *symptoms*, and they are worth
+learning because they are what you will see in a data frame that arrived some
+other way. Look at `Anxiety2` against its neighbors. `Anxiety1`, `Anxiety4`, and
+`Anxiety5` are classified as Likert items; `Anxiety2` is classified as plain
+Numeric, because two stray values have stretched its range past anything a
+five-point scale could hold. The same two values show up again in the outliers
+column, where an item like this should have none. And in the missing-data
+column `Anxiety2` reports nothing at all, while `Anxiety4` — the same kind of
+item, with its codes declared — reports the missing cases it has. A frequency
+table then settles it: the two codes sit in the table as rows of their own,
+each with a valid percentage, counted as if they were answers.
+
+There are two ways to deal with a column like that, and jstats's own messages
+always suggest the first. **Declare** the codes, as you did for `MoodRating`:
+nothing is deleted, the labels are kept, and the declaration can be revised or
+removed later. Or **recode** them to `NA` with `jrecode()`: that also removes
+them from every statistic, but it throws away the distinction between a refusal
+and a don't-know, and there is no undo. Declaring is the careful default;
+recoding is for when the reason genuinely does not matter.
+
+So here is the exercise the page has been building toward. jstats told you at
+the top of the page that `Anxiety2` carries the same two codes as `MoodRating`;
+the screen and the frequency table have just shown you what that does. Declare
+them yourself — the call is the one from block 4 with the column name changed —
+then run the frequency table again and watch the codes move into the Missing
+section. The finished script at the bottom of the page carries the answer, if
+you want to check your work.
+
+::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
+Base R has no way to *declare* a missing value; its only move is the recode.
+The idiom is `clinic$Anxiety2[clinic$Anxiety2 %in% c(-99, -98)] <- NA`, and it
+does exactly what the paragraph above warns about: both codes become the same
+anonymous `NA`, so the difference between a refusal and a don't-know is gone,
+and the original values are gone with it. It is the right tool when the reason for the missingness is irrelevant.
+`jdeclare_missing()` exists because in most research it is not — the difference
+between "refused" and "not applicable" is often the finding — and commercial
+statistical software has always let you keep it.
+:::
+
+### 7. Make it permanent
+
+The convention you chose is a session setting: it lasts until you restart R.
+This page leaves it switched on when you go, which is the recommendation doing
+its job — one last look confirms it. To have jstats make the choice for you at
+the start of every session in this Project, put the same
+`joptions(missing.convention = "stata")` line in your Project's `.Rprofile` file;
+the error in block 3 told you as much. *[Loading jstats
+automatically](loading-jstats-automatically.qmd)* shows where that file lives and
+how to create it.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 7. Make it permanent ---------------------------------------------
+
+## The convention you chose is a session setting: it lasts until you
+## restart R. This page leaves it switched on -- one last look
+joptions()
+
+## To have it chosen automatically at the start of every session in this
+## Project, put the same joptions(missing.convention = "stata") line in
+## your Project's .Rprofile file. The Loading jstats automatically page
+## shows where that file lives and how to create it)---",
+  chrome = TRUE)
+```
+
+::: {.callout-note collapse="true" title="What's the point?"}
+The download at the bottom of this page is the *finished* version of what you
+built — and finished means something specific. A goal every experienced
+programmer and statistician takes for granted, but new researchers are rarely
+told: a completed script should run from beginning to end without errors. On
+this page you met one error on purpose, because meeting it is how the choice
+gets explained. The download shows what the end of that process looks like, and
+it differs from the page blocks in two principled ways: the deliberate error in
+block 3 is commented out, with a note saying why, and block 6 carries the answer
+to the closing exercise — the `Anxiety2` declaration you were asked to write
+yourself — so the file runs clean and complete. Nothing else changes: this page
+saves no files, so there are no overwrite arguments to add, and the reload at
+the top already guards against a second run.
+
+To prove a script is finished, use the **Source** icon (to the right of Run in
+the script toolbar): it runs the entire file, top to bottom, in one go. Source
+shows the *output* without echoing each command back to the Console — that's
+normal — and the small arrow beside Source offers "Source with Echo" if you'd
+like the commands shown too. jstats functions print their own tables, so their
+output always appears; but a bare base R line that merely displays a value —
+`mean()` on its own — stays quiet under Source, because R only auto-prints
+results when you run lines interactively. That's why block 5 prints its base R
+means with `cat()`, a label, and a few blank lines: hand-formatting that jstats
+tables do for you.
+
+The **What you should see** boxes under the blocks above reproduce that
+Console — the blue command lines, the gray notes, the colored tables, and one
+red error where it is meant to happen. They show the *code* being run, along
+with any note written on the end of a command line, but not the standalone
+`##` comment lines (running one just echoes it back and does nothing).
+
+One thing this page leaves behind, deliberately: the missing-value convention
+stays set for the rest of your session, because the whole point of choosing it
+is to have it in place. Nothing else is changed and nothing is written to disk.
+If you set a convention in your Project's `.Rprofile` and block 2 cleared it,
+restarting R brings it back.
+
+If you're keeping the file — and it's worth keeping, since finished scripts
+travel — give it a proper home. In the **Files** tab of the lower-right pane,
+click **New Folder** and type a name into the popup. "Scripts" is a good one,
+and it will sit alongside whatever else your project folder holds.
+:::
+
+## Take the whole script with you
+
+That's the full run-through. If you'd like the entire script in one file to
+keep, adjust, and reuse, download it here:
+
+The file is close to what you have just built: the same code, in the same
+order, as though you had pasted every block above into one script. Two things
+differ, each on purpose — the line that raises the deliberate error is
+commented out, and the finished file includes the answer to block 6's exercise.
+The **What's the point?** box under the last block explains why a finished
+script is written that way.
+
+<div style="margin: 1rem 0 2rem;">
+<a href="missing-values-follow-along.R" download class="btn btn-primary">Download the full script (.R)</a>
+</div>
