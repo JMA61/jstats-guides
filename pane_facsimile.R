@@ -9,11 +9,12 @@
 # working directory painted to the teaching placeholder "~/your-working-directory/".
 #
 # Public entry points:
-#   .obx$show_block(code, box, expect_error, chrome, env, lead, files)
+#   .obx$show_block(code, box, expect_error, chrome, env, lead, files,
+#                   expect_error_match)
 #       the "What you should see" box -- a collapsed callout. The Going-further
 #       device (data.qmd is the model page).
 #   .obx$show_source(code, name, dirty, lead, note)
-#   .obx$show_console(code, expect_error, lead, note)
+#   .obx$show_console(code, expect_error, lead, note, expect_error_match)
 #       bare captioned pane FIGURES, no callout wrapper. Together they carry the
 #       source-vs-console beat on the spine pages (Step 3): the same line shown
 #       sitting unrun in a script, then having been run in the Console.
@@ -835,7 +836,51 @@ local({
   # model case is the .Rprofile startup message, which appears at session start
   # with no command line above it. The code still RUNS (same scrub, same leak
   # gate); only the echo is withheld. Default TRUE preserves every prior page.
-  run_block <- function(code, expect_error = FALSE, echo = TRUE){
+  # TRUE ORDER ACROSS THE TWO STREAMS (S273). A single statement can write to
+  # stdout AND signal a message, and the reader's console shows them in the
+  # order they were produced. capture.output() cannot: it hands back one
+  # finished character vector once the statement is over, so a message
+  # signalled midway could only ever be appended AFTER all of that statement's
+  # printed output. Every both-streams statement therefore rendered inverted.
+  # The live case is jload() on a declaration-bearing dataset -- the load
+  # confirmation is signalled FIRST (S227/E17, so the narrative reads as detail
+  # beneath it) and was rendered LAST.
+  # The fix sinks stdout to a temp FILE instead, which can be flushed and read
+  # WHILE the statement is still running: the message handler flushes pending
+  # stdout before recording its own text, so segments accumulate in true signal
+  # order. Adjacent same-type events are then coalesced, so a statement with no
+  # interleaving produces exactly the segment structure earlier pages rendered.
+  # NOT INTERLEAVED, DELIBERATELY: warnings and errors. See the S187 note above
+  # -- real top-level R DEFERS warnings to the end of the call (default
+  # options(warn = 0)), so end-of-statement is their faithful position, not a
+  # second instance of this defect. An error terminates the statement, so it is
+  # last by nature. Only messages move.
+  # KNOWN CAVEAT: a message signalled part-way through an unfinished output
+  # line (cat() with no trailing newline) is rendered on its own line, where a
+  # real console would continue the same one. The relative ORDER is right; only
+  # the line break is added. No page does this -- jstats output is line-oriented
+  # -- and fixing it would mean teaching console_field() to join segments
+  # without a separator.
+  #
+  # EXPECT_ERROR_MATCH (S273). expect_error = TRUE asserts only that AN error
+  # occurred, never which one, so a broken install could satisfy it and publish
+  # its error in the box as though it were the package's considered refusal
+  # (S272 hit exactly this: "could not find function jdeclare_missing" standing
+  # in for the choose-first gate). Naming the expected phrase IS the assertion:
+  # expect_error_match implies expect_error, requires that an error actually
+  # fire, and HALTS the render when the wrong one does -- reporting both the
+  # phrase wanted and the error received, so the cause is visible without a
+  # re-run. Plain substring, matched literally: guide authors should not have to
+  # think about regex metacharacters, and error messages are full of them.
+  run_block <- function(code, expect_error = FALSE, echo = TRUE,
+                        expect_error_match = NULL){
+    if (!is.null(expect_error_match)){
+      if (!is.character(expect_error_match) || length(expect_error_match) != 1L ||
+          is.na(expect_error_match) || !nzchar(expect_error_match))
+        stop("pane_facsimile: expect_error_match must be a single non-empty string.",
+             call. = FALSE)
+      expect_error <- TRUE                    # naming the error IS the assertion
+    }
     exprs <- parse(text = code, keep.source = TRUE)
     refs  <- attr(exprs, "srcref")
     src   <- strsplit(code, "\n", fixed = TRUE)[[1]]
@@ -847,6 +892,57 @@ local({
         segs[[length(segs)+1L]] <<- list(type=type, text=text)
       }
     }
+
+    # One statement, sunk to a flushable file. Scoped as its own function so the
+    # sink/connection unwind is per-statement on.exit rather than accumulating
+    # across the loop -- and so an unexpected error (the publish gate) cannot
+    # leave a sink standing.
+    # Takes exprs and i rather than the expression itself so that the literal
+    # eval(exprs[[i]], globalenv()) below is UNCHANGED from the pre-S273 code.
+    # fmt_warn() deparses conditionCall(), so a warning whose call is the eval
+    # renders that text into the box: renaming the argument would have silently
+    # rewritten warning text on any page that has one.
+    run_one <- function(exprs, i){
+      pending <- list(); warnbuf <- character(0); errbuf <- character(0)
+      tf  <- tempfile("obx-out-"); con <- file(tf, open = "w"); off <- 0
+      n0  <- sink.number()
+      on.exit({ while (sink.number() > n0) sink()
+                try(close(con), silent = TRUE); unlink(tf) }, add = TRUE)
+      flush_out <- function(){
+        flush(con)
+        sz <- file.size(tf)
+        if (is.na(sz) || sz <= off) return(invisible(NULL))
+        raw <- readBin(tf, "raw", n = sz)
+        txt <- rawToChar(raw[(off + 1):sz])
+        off <<- sz
+        if (validUTF8(txt)) Encoding(txt) <- "UTF-8"
+        txt <- gsub("\r\n", "\n", txt, fixed = TRUE)   # text-mode sink on Windows
+        txt <- sub("\n$", "", txt)
+        if (nzchar(txt))
+          pending[[length(pending) + 1L]] <<- list(type = "stdout", text = txt)
+        invisible(NULL)
+      }
+      sink(con)
+      withCallingHandlers({
+        ev <- if (expect_error)
+                tryCatch(withVisible(eval(exprs[[i]], globalenv())),
+                         error = function(e){ errbuf[[length(errbuf)+1L]] <<- paste0("Error: ", conditionMessage(e)); list(visible=FALSE, value=NULL) })
+              else withVisible(eval(exprs[[i]], globalenv()))
+        if (isTRUE(ev$visible)) print(ev$value)
+      },
+      message = function(m){
+        flush_out()                           # what printed first renders first
+        pending[[length(pending)+1L]] <<- list(type = "message",
+                                               text = sub("\n$","",conditionMessage(m)))
+        invokeRestart("muffleMessage")
+      },
+      warning = function(w){ warnbuf[[length(warnbuf)+1L]] <<- fmt_warn(w); invokeRestart("muffleWarning") })
+      while (sink.number() > n0) sink()
+      flush_out()
+      list(pending = pending, warnbuf = warnbuf, errbuf = errbuf)
+    }
+
+    seen_err <- character(0)
     for (i in seq_along(exprs)){
       if (isTRUE(echo)){
         srclines <- src[refs[[i]][1L]:refs[[i]][3L]]   # whole physical lines (see above)
@@ -854,22 +950,41 @@ local({
         if (length(srclines) > 1) srclines[-1] <- paste0("+ ", srclines[-1])
         add("prompt", paste(srclines, collapse = "\n"))
       }
-      msgbuf <- character(0); warnbuf <- character(0); errbuf <- character(0)
-      out <- capture.output(
-        withCallingHandlers({
-          ev <- if (expect_error)
-                  tryCatch(withVisible(eval(exprs[[i]], globalenv())),
-                           error = function(e){ errbuf[[length(errbuf)+1L]] <<- paste0("Error: ", conditionMessage(e)); list(visible=FALSE, value=NULL) })
-                else withVisible(eval(exprs[[i]], globalenv()))
-          if (isTRUE(ev$visible)) print(ev$value)
-        },
-        message = function(m){ msgbuf[[length(msgbuf)+1L]] <<- sub("\n$","",conditionMessage(m)); invokeRestart("muffleMessage") },
-        warning = function(w){ warnbuf[[length(warnbuf)+1L]] <<- fmt_warn(w); invokeRestart("muffleWarning") })
-      )
-      add("stdout", paste(out, collapse = "\n"))
-      if (length(msgbuf))  add("message", paste(msgbuf, collapse = "\n"))
-      if (length(warnbuf)) add("message", warn_block(warnbuf))
-      if (length(errbuf))  add("error",   paste(errbuf, collapse = "\n"))
+      res <- run_one(exprs, i)
+      p   <- res$pending
+      if (length(p)){
+        # Whole-statement leak gate as well as the per-segment one in add():
+        # a flush can split stdout, and a path split across the boundary might
+        # match neither half on its own.
+        leak_check(scrub_wd(paste(vapply(p, function(s) s$text, character(1)),
+                                  collapse = "\n")))
+        merged <- list(p[[1]])
+        if (length(p) > 1) for (k in 2:length(p)){
+          last <- merged[[length(merged)]]
+          if (identical(p[[k]]$type, last$type))
+            merged[[length(merged)]]$text <- paste(last$text, p[[k]]$text, sep = "\n")
+          else merged[[length(merged)+1L]] <- p[[k]]
+        }
+        for (s in merged) add(s$type, s$text)
+      }
+      if (length(res$warnbuf)) add("message", warn_block(res$warnbuf))
+      if (length(res$errbuf)){
+        add("error", paste(res$errbuf, collapse = "\n"))
+        seen_err <- c(seen_err, res$errbuf)
+      }
+    }
+    if (!is.null(expect_error_match)){
+      if (!length(seen_err))
+        stop("pane_facsimile: expect_error_match was set, but the block raised NO ",
+             "error -- the box would show a demonstration that did not happen.\n",
+             "  expected an error containing: ", expect_error_match,
+             call. = FALSE)
+      if (!any(grepl(expect_error_match, seen_err, fixed = TRUE)))
+        stop("pane_facsimile: the block raised the WRONG error. The box would ",
+             "publish it as though it were the intended one.\n",
+             "  expected to contain: ", expect_error_match, "\n",
+             "  actually raised:     ", paste(seen_err, collapse = "\n                       "),
+             call. = FALSE)
     }
     segs
   }
@@ -1127,10 +1242,12 @@ local({
   # STANDALONE comment line still does not echo -- see run_block()'s header.)
   show_console <- function(code, expect_error = FALSE, fence = FALSE,
                            env = FALSE, env_mark = NULL,
-                           lead = NULL, note = NULL, echo = TRUE){
+                           lead = NULL, note = NULL, echo = TRUE,
+                           expect_error_match = NULL){
     code <- sub("[\n]+$", "", code)
     if (fence) cat("```r\n", code, "\n```\n\n", sep = "")
-    segs <- run_block(code, expect_error = expect_error, echo = echo)
+    segs <- run_block(code, expect_error = expect_error, echo = echo,
+                      expect_error_match = expect_error_match)
     if (!is.null(lead)) cat('<p class="obx-lead"><em>', lead, "</em></p>\n", sep = "")
     cat(cap("Console", "lower-left pane"), "\n\n", console_pane(segs), "\n", sep = "")
     if (env){
@@ -1147,10 +1264,12 @@ local({
   show_block <- function(code, box = TRUE, expect_error = FALSE,
                          chrome = FALSE, env = FALSE, lead = NULL,
                          env_mark = NULL, note = NULL, files = NULL,
-                         files_path = "your-working-directory"){
+                         files_path = "your-working-directory",
+                         expect_error_match = NULL){
     code <- sub("[\n]+$", "", code)
     cat("```r\n", code, "\n```\n\n", sep = "")
-    segs <- run_block(code, expect_error = expect_error)   # always run: side effects + publish gate
+    segs <- run_block(code, expect_error = expect_error,          # always run: side effects + publish gate
+                      expect_error_match = expect_error_match)
     if (!box) return(invisible(NULL))
     cat('::: {.callout-note collapse="true" title="What you should see"}\n\n')
     if (!is.null(lead)) cat('<p class="obx-lead"><em>', lead, "</em></p>\n", sep = "")
