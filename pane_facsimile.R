@@ -872,6 +872,9 @@ local({
   # phrase wanted and the error received, so the cause is visible without a
   # re-run. Plain substring, matched literally: guide authors should not have to
   # think about regex metacharacters, and error messages are full of them.
+  # Whitespace is flattened on both sides before comparing (S274) so that a
+  # phrase spanning a width-wrap still matches -- see the comment at the
+  # comparison itself.
   run_block <- function(code, expect_error = FALSE, echo = TRUE,
                         expect_error_match = NULL){
     if (!is.null(expect_error_match)){
@@ -979,7 +982,18 @@ local({
              "error -- the box would show a demonstration that did not happen.\n",
              "  expected an error containing: ", expect_error_match,
              call. = FALSE)
-      if (!any(grepl(expect_error_match, seen_err, fixed = TRUE)))
+      # WRAP-PROOF COMPARISON (S274). The jstats emitters width-wrap every
+      # message, so a phrase that happens to span a wrap point would fail a
+      # literal match even though the intended error fired -- and would fail
+      # only at some console widths, surfacing as a render halt on one machine
+      # and not another. Both sides are flattened (runs of whitespace,
+      # newlines included, collapsed to a single space) before comparing, so
+      # an author writes the phrase as it READS rather than as some width
+      # happens to break it. The reported strings below stay unflattened: the
+      # author should see the phrase as written and the error as raised.
+      flat_ws <- function(x) trimws(gsub("[[:space:]]+", " ", x))
+      if (!any(grepl(flat_ws(expect_error_match), flat_ws(seen_err),
+                     fixed = TRUE)))
         stop("pane_facsimile: the block raised the WRONG error. The box would ",
              "publish it as though it were the intended one.\n",
              "  expected to contain: ", expect_error_match, "\n",

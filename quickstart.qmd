@@ -414,7 +414,7 @@ Now here's a second way to run the same analysis — one you'll see everywhere i
 .obx$show_block("Results <- jlm(WellbeingScore ~ Age)", chrome = TRUE, env = TRUE)
 ```
 
-That arrow on the left — typed as a less-than sign followed by a hyphen — is R's
+That arrow on the left — typed as a less-than sign followed by a dash — is R's
 **assignment operator**. It stores whatever is produced on its right under the name on its
 left: here, the complete results of the regression, saved under the name `Results`. That
 name is our own choice, by the way — there's nothing special about the word `Results`; we

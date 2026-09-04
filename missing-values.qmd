@@ -47,6 +47,20 @@ This page is a hands-on run-through of one small move that protects every
 statistic you compute: telling jstats which numbers in a column are not really
 data, and choosing the form jstats should keep that information in.
 
+This page is about **coded** missing values — a −99 or a 999 standing in for a
+refusal or a "not applicable." You need this page if the data you use, now or
+later, may carry such codes, and most survey data do, whatever the format: a CSV
+file (comma-separated values, the plainest spreadsheet format) brings the codes
+with nothing to say what they mean, and a file from SPSS, Stata, or SAS usually
+arrives with them declared, but not always. If your data have no missing values
+at all, leave this page for later. Missing entries that are simply blank need no
+declaring — they usually load as R's ordinary `NA` (short for "not available")
+— but every analysis still
+has to decide what to do with them, a topic of its own that the books cover in
+full. No copy of SPSS, Stata, or SAS is needed to follow along; those names
+appear only because the three ways of recording a missing value are named after
+the programs that introduced them.
+
 {{< include _before-you-start.qmd >}}
 
 {{< include _how-to-use-this-page.qmd >}}
@@ -109,10 +123,15 @@ filled in properly — jstats read those definitions and kept them.
 
 Before we fix `MoodRating`, a piece of background that the rest of the page
 rests on. Every statistics program needs some way to mark a value as missing
-while remembering *why* it is missing — refused, don't know, not applicable.
-The three programs jstats reads and writes for do it three different ways, and
-jstats can keep your missing values in any of the three forms. It calls the
-choice a **missing-value convention**.
+while also remembering *why* — refused, don't know, not applicable. Base R was
+not built with that need in mind: it has a single `NA` that says "missing" and
+nothing more. The commercial programs came earlier and each solved the problem
+in its own way, so three ways exist, one per program — and since much of the
+data you will meet still arrive in SPSS, Stata, or SAS files, or from survey
+platforms that export to them, one of those three is usually what your data
+already use. jstats supports all three rather than inventing a fourth, and
+leaves the choice of which to use to you. It calls that choice a
+**missing-value convention**.
 
 - **SPSS-style.** The code stays in the data as a visible number — a −99 is
   still a −99 in the column — and a note attached to the column says "treat
@@ -122,12 +141,14 @@ choice a **missing-value convention**.
 - **Stata-style.** The code is replaced by a *marker*: `.a` for the first
   missing reason, `.b` for the second, and so on up to `.z`, each with its
   label. The markers are genuine missing values as far as R is concerned — which
-  is the reason the package recommends this form, as the next block shows.
+  is why the package recommends this form; block 3 explains, and block 5 shows
+  it live.
 - **SAS-style.** The same idea as Stata, with uppercase markers (`.A` to `.Z`).
 
-jstats will not pick one of these for you, and the next block shows what
-happens when none has been chosen. To be sure you see that whatever your
-history, this block starts from the package default — no convention chosen.
+jstats will not pick one of these for you. The next block clears any convention
+you may already have chosen, so that whatever you did on another page, this page
+starts where a first-time reader starts — with no choice made. Block 3 then
+shows what happens when you try to work without one.
 
 ```{r}
 #| echo: false
@@ -145,7 +166,8 @@ joptions(missing.convention = "none"))---",
 ```
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
-These are the three forms you already know, under their own names. SPSS-style is
+If you have handled missing values in SPSS, Stata, or SAS, one of these three
+will already be familiar — here it is under its own name. SPSS-style is
 what MISSING VALUES in Variable View produces: the codes stay put and a
 definition rides alongside. Stata-style is Stata's extended missing values
 (`.a` through `.z`); SAS-style is SAS's (`.A` through `.Z`). The one new idea
@@ -172,7 +194,8 @@ it stops and asks.
 ## With no convention chosen, jstats stops and asks instead of guessing
 clinic <- jdeclare_missing(clinic, MoodRating,  # an error, on purpose
                            codes = c(Refused = -99, "Don't know" = -98)))---",
-  chrome = TRUE, expect_error = TRUE)
+  chrome = TRUE, expect_error = TRUE,
+  expect_error_match = "missing-value convention is selected")
 ```
 
 This is the one place on the site where jstats refuses to do something it
@@ -183,34 +206,40 @@ your behalf a consequence you had not seen. Instead the error lays out the three
 choices, each with the one fact that separates it from the others, and puts its
 recommendation first.
 
-The recommendation is Stata-style, and the reason is the line under it:
-*lowercase markers behave as true NAs in base R*. Under SPSS-style, a −99 is
-still a −99, and base R — which knows nothing about jstats's notes — will
-average it in and hand you a plausible-looking wrong number. Under Stata-style
-the code has become a real missing value, so base R's `mean()` returns `NA`
+The recommendation is Stata-style, and the reason is the line under it in the
+error: the markers behave as true NAs in base R. That holds for the SAS-style
+markers just as much — both forms replace the code with a genuine missing value,
+and the only difference between them is which letters they use. The real divide
+is between those two and SPSS-style. Under SPSS-style, a −99 is still a −99,
+and base R — which knows nothing about jstats's notes — will average it in and
+hand you a plausible-looking wrong number. Under either marker
+form the code has become a real missing value, so base R's `mean()` returns `NA`
 instead: an answer you cannot mistake for a result, and one line fixes it. In
-short, **SPSS-style fails silently in base R; Stata-style fails loudly, and is
-fixable.** Block 5 shows both live, on the same column.
+short, **SPSS-style fails silently in base R; the marker forms fail loudly, and
+are fixable.** Stata-style is the one the recommendation names because it is the
+more widely used of the two. Block 5 shows the contrast live, on the same column.
 
 That still leaves room for judgment. If you write base R alongside jstats, or
-paste in code an AI assistant wrote for you (which will be base R), choose
-Stata-style. If your data live in SPSS and go back there for a supervisor or a
-collaborator, staying SPSS-style is a reasonable choice, and jstats will read
-your declarations correctly either way. And notice the error's last line: the
-same `joptions()` command, placed in your Project's `.Rprofile`, makes the
-choice once and for all — block 7 says where that file lives.
+paste in code an AI assistant wrote for you — which today will usually be base R
+— choose Stata-style. If your data live in SPSS and go back there for a
+supervisor or a collaborator, staying SPSS-style is a reasonable choice, and
+jstats will read your declarations correctly either way. And notice the error's
+last line: the same `joptions()` command, placed in your Project's `.Rprofile`,
+makes the choice once and for all — block 7 says where that file lives.
 
 ::: {.callout-note collapse="true" title="Going deeper (optional)"}
 Why do the programs differ at all? They made different trade-offs. SPSS keeps
-the code visible as a number and attaches a definition beside it, which suits
-the survey codebook, where a −99 on the questionnaire is itself the record of
-the refusal. Stata and SAS fold the reason into the missing value itself, so
-that arithmetic can never touch it by accident. Neither is wrong; they are
-answers to different working habits. Book 1 covers what a
-missing-value code is and why an undeclared one poisons a mean; Book 2 covers
-the three conventions, how jstats converts between them, and what survives the
-trip to each file format — in more detail, with worked examples. The help page
-`?jdeclare_missing` documents the options.
+the code visible as a number and attaches a definition beside it, which can suit
+a survey codebook in the tradition that grew up around paper questionnaires,
+where the code written on the form is itself the record of the refusal. Stata
+and SAS fold the reason into the missing value itself, so that arithmetic can
+never touch it by accident. Neither is wrong; they are answers to different
+working habits. Book 1 covers what a missing-value code is, and what an
+undeclared one does to any statistic that treats it as an ordinary number — the
+mean is simply the easiest place to see it; Book 2 covers the three conventions,
+how jstats converts between them, and what survives the trip to each file format
+— in more detail, with worked examples. The help page `?jdeclare_missing`
+documents the options.
 :::
 
 ### 4. Choose, declare, check
@@ -250,11 +279,10 @@ away: `clinic` arrived with four SPSS-style columns, and jstats points out that
 they no longer match your setting — the next block deals with that. The
 declaration then reports what it did: each code became a marker (`.a`, `.b`)
 carrying its label, and the note beneath reminds you that a call like this
-changes `clinic` only because you assigned the result back with the arrow (the
-`modify = TRUE` form it mentions does the same job in place — either is fine).
-It also points out, correctly, that `MoodRating` now differs in form from the
-rest of `clinic`. Mixing forms is allowed; the next block brings the rest in
-line.
+changes `clinic` only because you assigned the result back with the assignment
+operator, `<-` (the `modify = TRUE` form it mentions does the same job in
+place — either is fine). It also points out, correctly, that `MoodRating` now
+differs in form from the rest of `clinic`.
 
 Then the payoff. The descriptives report a smaller non-missing count, a
 minimum and maximum inside 1–10, and a mean that finally looks like a mood
@@ -269,15 +297,22 @@ counted in the totals and left out of the valid percentages. And the settings
 listing confirms the convention is in place for the rest of your session.
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
-The declaration is the equivalent of MISSING VALUES `MoodRating (-99, -98)`
-together with the matching VALUE LABELS in SPSS syntax, or of setting them in
-Variable View — with the same important property, that it is non-destructive.
-The codes are flagged, not deleted, and the declaration can be changed or
-undone later. The frequency table that follows is the one SPSS's Frequencies
-would give you: a Valid section, a Missing section, and the valid percentages
-computed on the valid cases alone. What has no counterpart is the settings
-listing — the convention is a jstats-wide choice, and `joptions()` is where you
-see it.
+Every one of the commercial programs has a version of this move, and all three
+share the property that matters: the codes are flagged, not deleted, so the
+declaration can be revised or undone later. In SPSS it is
+`MISSING VALUES MoodRating (-99, -98)` with the matching VALUE LABELS, or the
+same thing entered in Variable View. Stata and SAS reach the same place by
+converting the codes to their own markers — `.a` and `.b` in Stata, `.A` and
+`.B` in SAS. The difference here is that the
+declaration you just made is not tied to any of the three: it can be converted
+to either of the other forms without going back to the raw data.
+
+The frequency table above is close to what SPSS's Frequencies, or Stata's
+`tabulate` with missing values shown, would give you — a Valid section, a
+Missing section, and valid percentages computed on the valid cases alone —
+though the layouts are not identical. What has no counterpart in any of them is
+the settings listing. Each program has only its own form, so there is nothing
+to choose; in jstats there is, and `joptions()` is where you see what you chose.
 :::
 
 ### 5. Bring the rest in line
@@ -402,8 +437,9 @@ statistical software has always let you keep it.
 ### 7. Make it permanent
 
 The convention you chose is a session setting: it lasts until you restart R.
-This page leaves it switched on when you go, which is the recommendation doing
-its job — one last look confirms it. To have jstats make the choice for you at
+This page deliberately leaves it switched on when you move away — you chose it,
+so it should still be there on the next page you visit, and one last look
+confirms it is. To have jstats make the choice for you at
 the start of every session in this Project, put the same
 `joptions(missing.convention = "stata")` line in your Project's `.Rprofile` file;
 the error in block 3 told you as much. *[Loading jstats

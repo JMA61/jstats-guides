@@ -119,7 +119,7 @@ You'll also see **Terminal** and **Background Jobs** tabs sharing this pane with
 
 ### The Environment — what you've loaded
 
-The Console also runs commands that *create* things and keep them around. Let's load a dataset, so the **Environment** has something to show. R ships with several built-in datasets for practice; one is `mtcars` (data on some classic car models). Copy it into a name of your own using R's **assignment operator**, `<-`, which means "put what's on the right into the name on the left." Type this in the Console and press Enter — and watch the **top-right** of the screen as you do:
+The Console also runs commands that *create* things and keep them around. Let's load a dataset, so the **Environment** has something to show. R ships with several built-in datasets for practice; one is `mtcars` (data on some classic car models). Copy it into a name of your own using R's **assignment operator**, `<-` — typed as a less-than sign followed by a dash, which is why it looks like an arrow — meaning "put what's on the right into the name on the left." Type this in the Console and press Enter — and watch the **top-right** of the screen as you do:
 
 ```{r}
 #| echo: false

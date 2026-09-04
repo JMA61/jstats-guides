@@ -1,5 +1,6 @@
 # pane_facsimile_check.R -- machine assertion battery for pane_facsimile.R's
-# run_block(): stream ordering (S273) and expect_error_match (S273).
+# run_block(): stream ordering (S273) and expect_error_match (S273, wrap-proof
+# matching S274).
 #
 # WHY THIS FILE EXISTS. run_block() is a shared asset: every "What you should
 # see" box (show_block) and every Console facsimile (show_console) on the guide
@@ -211,6 +212,30 @@ ck("M5", "non-scalar match is rejected up front",
 M6 <- run('stop("boom")', echo = FALSE, expect_error_match = "boom")
 ck("M6", "expect_error_match implies expect_error (not passed here)",
    types(M6), "error")
+
+# WRAP-PROOF MATCHING (S274). The jstats emitters width-wrap, so any phrase
+# long enough to be specific is long enough to straddle a wrap point. M8 and
+# M9 fail on the pre-S274 file -- that is what makes them evidence rather than
+# decoration; M10 is their negative control, confirming the flattening did not
+# loosen the match into a word-soup that accepts anything.
+# halted() rather than a bare run() throughout: on the unflattened file these
+# calls HALT, and a bare run() would abort the battery instead of recording a
+# failure and continuing.
+
+M8 <- halted(run('stop("No missing-value convention is\\nselected, so choose one")',
+                 echo = FALSE, expect_error_match = "convention is selected"))
+ck("M8", "phrase spanning a wrapped line still matches",
+   is.null(M8), TRUE)
+
+M9 <- halted(run('stop("Choose one for this session:\\n      Lowercase markers behave as true NAs.")',
+                 echo = FALSE, expect_error_match = "session: Lowercase markers"))
+ck("M9", "  ... including across an indented continuation line",
+   is.null(M9), TRUE)
+
+M10 <- halted(run('stop("No missing-value convention is\\nselected")',
+                  echo = FALSE, expect_error_match = "convention selected"))
+ck("M10", "flattening does not loosen the match: absent phrase still halts",
+   !is.null(M10) && grepl("raised the WRONG error", M10), TRUE)
 
 }   # end section 4
 

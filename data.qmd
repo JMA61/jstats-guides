@@ -288,7 +288,8 @@ getwd()  # base R
 
 ## And this one opens the package overview: every jstats function,
 ## grouped by purpose
-?jstats)---", box = FALSE, expect_error = TRUE)
+?jstats)---", box = FALSE, expect_error = TRUE,
+  expect_error_match = "Provide a filename")
 ```
 
 ::: {.callout-note collapse="true" title="Aside: how R writes file paths"}
@@ -486,7 +487,8 @@ jsave(MyData_r, "MyData_stata.dta")  # This will draw an error
 ## Convert to Stata format (.dta)
 MyData_stata <- jconvert(MyData_r, to = "stata")
 jsave(MyData_stata, "MyData_stata.dta")  # Now no error)---",
-  chrome = TRUE, env = TRUE, expect_error = TRUE)
+  chrome = TRUE, env = TRUE, expect_error = TRUE,
+  expect_error_match = "incompatible with the .dta format")
 ```
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
