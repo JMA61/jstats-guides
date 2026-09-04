@@ -212,11 +212,9 @@ jdesc(MyData_stata, Age)
 ## And one base R caution, shown live (the guide page explains):
 ## Income carries declared missing-value codes (-99, -98)
 jdesc(MyData_spss, Income)   # the correct mean -- jdesc leaves the codes out
-## base R gives a bare, unlabeled number, so extra work is needed just to
-## make it visible: cat() adds a label, and the "\n"s add blank lines to
-## set it apart. Run line by line (interactively), a plain mean() prints
-## only a cryptic [1] number; run with Source, it wouldn't appear at all
-cat("\n\nBase R mean of Income:", mean(MyData_spss$Income), "\n\n\n")  # base R -- a poisoned mean
+## Now ask base R's mean() for the same column. It knows nothing about the
+## declarations, so the -99s and -98s go straight into the average
+mean(MyData_spss$Income)  # base R -- a poisoned mean
 
 ## Set the display back to the default before you go
 joutput(digits = 3)

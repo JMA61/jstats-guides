@@ -5,8 +5,15 @@ title-prefix: ""
 
 ```{r setup, include=FALSE}
 options(crayon.enabled = TRUE)
+options(width = 80)          # match a default 80-column console
 old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
 library(jstats)
+# A first-time reader has no missing-value convention chosen. If the render
+# machine has one set (a .Rprofile, a previous page in the same session), the
+# deliberate error below would not fire and the prose around it would go
+# stale. This restores the default a reader arrives with; the page sets
+# "stata" visibly at the point where the reader does.
+joptions(missing.convention = "none")
 ```
 
 ## A typical jstats workflow
@@ -50,7 +57,7 @@ juse(clinic)
 
 Loading it first isn't something you'd normally write — `clinic` is there by name as soon as jstats is loaded — but it guarantees a clean copy whatever you did with it elsewhere. Notice what jstats says on the way in: it reports the columns whose missing-value codes were declared before the data reached you, and separately flags codes it *suspects* in columns where nobody declared anything. `MoodRating` is in that second group.
 
-That column is meant to run from 1 to 10, but it arrived with two stand-in codes buried in it as ordinary numbers: `-99` for "Refused" and `-98` for "Don't know" — the usual state of affairs after a plain CSV or Excel import, where the file carries no record of what those numbers mean. Until we tell jstats they stand for missing, they are treated as real values and quietly poison every statistic:
+That column is meant to run from 1 to 10, but it arrived with two stand-in codes buried in it as ordinary numbers: `-99` for "Refused" and `-98` for "Don't know" — the usual state of affairs after an import from Excel or from a CSV file (comma-separated values, a plain-text spreadsheet), where the file carries no record of what those numbers mean. Until we tell jstats they stand for missing, they are treated as real values and quietly poison every statistic:
 
 ```{r}
 jdesc(MoodRating)
@@ -62,6 +69,29 @@ The mean is dragged far below the 1–10 range, because those large negative cod
 #| error: true
 clinic <- jdeclare_missing(clinic, MoodRating,
                            codes = c("Refused" = -99, "Don't know" = -98))
+```
+
+```{r}
+#| include: false
+# Guard for the deliberate error above. knitr's `error: true` publishes
+# WHATEVER error fires, so a broken install or a renamed function would go up
+# as though it were the choose-first gate. Re-running the call names the error
+# we expect; the render stops if a different one arrives (or none does).
+# Re-running is safe: the error means nothing was assigned. Whitespace is
+# flattened on both sides because the jstats emitters wrap their messages -- a
+# phrase can span a line break at one console width and not another.
+.want <- "no missing-value convention is selected"
+.got  <- tryCatch({
+  jdeclare_missing(clinic, MoodRating,
+                   codes = c("Refused" = -99, "Don't know" = -98))
+  NULL
+}, error = function(e) conditionMessage(e))
+.flat <- function(x) trimws(gsub("[[:space:]]+", " ", x))
+if (is.null(.got) || !grepl(.flat(.want), .flat(.got), fixed = TRUE))
+  stop("workflow.qmd: the deliberate-error block did not raise the ",
+       "choose-first gate.\n  expected to contain: ", .want,
+       "\n  actually raised:     ", if (is.null(.got)) "no error" else .got)
+rm(.want, .got, .flat)
 ```
 
 jstats stops rather than guessing. Missing values can be stored in three different forms — one for each of the major statistics programs — and because they behave differently once the data leave jstats, it asks you to choose rather than picking for you. Stata-style is the choice jstats itself recommends for anyone who also runs base R, so that is the one we take here. *[Telling jstats about missing values](missing-values.qmd)* covers what the three forms are and how to choose between them. (If you *didn't* see that error, you have already chosen a convention — on another page, or in your Project's `.Rprofile` — and that is the setting doing its job.)

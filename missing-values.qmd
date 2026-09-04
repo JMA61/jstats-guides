@@ -298,14 +298,24 @@ listing confirms the convention is in place for the rest of your session.
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
 Every one of the commercial programs has a version of this move, and all three
-share the property that matters: the codes are flagged, not deleted, so the
-declaration can be revised or undone later. In SPSS it is
-`MISSING VALUES MoodRating (-99, -98)` with the matching VALUE LABELS, or the
-same thing entered in Variable View. Stata and SAS reach the same place by
-converting the codes to their own markers — `.a` and `.b` in Stata, `.A` and
-`.B` in SAS. The difference here is that the
-declaration you just made is not tied to any of the three: it can be converted
-to either of the other forms without going back to the raw data.
+get to the same analytical place: the codes stop counting as data, and no rows
+are thrown away. They get there differently, though, and the difference is
+worth knowing before you migrate. SPSS *declares*:
+`MISSING VALUES MoodRating (-99, -98)`, with the matching VALUE LABELS, leaves
+the −99s sitting in the cells and flags them — clear the declaration and they
+are ordinary values again. Stata and SAS *replace*: the code is overwritten by
+the program's own marker. In Stata that is
+`mvdecode MoodRating, mv(-99=.a \ -98=.b)`, with `label define` supplying the
+matching labels; in SAS it is a data-step assignment —
+`if MoodRating = -99 then MoodRating = .A;`, and the same for `.B` — with
+`PROC FORMAT` for the labels. Afterward the original number is not recoverable
+from the data, though the labels still record what each marker meant. The
+difference here is that the declaration you just made is not tied to any of
+the three: it can be converted to either of the other forms without going back
+to the raw data. Converting to the SPSS form puts numeric codes back, but which
+numbers get used is set by a `joptions()` setting (`missing.convention.codes`),
+because the original values are gone. The value labels, however, survive every
+conversion unchanged.
 
 The frequency table above is close to what SPSS's Frequencies, or Stata's
 `tabulate` with missing values shown, would give you — a Valid section, a
@@ -329,21 +339,19 @@ of the four columns.
 #| results: asis
 .obx$show_block(r"---(## ---- 5. Bring the rest in line ----------------------------------------
 
-## Stress arrived with its codes declared SPSS-style. Ask base R for its
-## mean, with and without na.rm = TRUE (which tells mean() to drop NAs)
-## mean() is base R. It prints a bare, unlabeled number, and under Source
-## it prints nothing at all -- so cat() (also base R) adds a label and
-## blank lines to make it visible
-cat("\n\nBase R mean of Stress:", mean(clinic$Stress),
-    "   with na.rm = TRUE:", mean(clinic$Stress, na.rm = TRUE), "\n\n\n")  # base R
+## Stress arrived with its codes declared SPSS-style. Ask base R's mean()
+## for its average, with and without na.rm = TRUE (which tells mean() to
+## drop NAs). To base R the codes are ordinary numbers, so both go in
+mean(clinic$Stress)  # base R -- the codes are averaged in
+mean(clinic$Stress, na.rm = TRUE)  # na.rm has no NAs to drop yet
 
 ## One line converts every SPSS-style column in clinic to the Stata form
 clinic <- jconvert(clinic, to = "stata")
 
 ## Now base R sees the missing values too: the mean is NA (loud, not wrong),
 ## and na.rm = TRUE gives the right answer
-cat("\n\nBase R mean of Stress now:", mean(clinic$Stress),
-    "   with na.rm = TRUE:", mean(clinic$Stress, na.rm = TRUE), "\n\n\n"))---",
+mean(clinic$Stress)
+mean(clinic$Stress, na.rm = TRUE))---",
   chrome = TRUE)
 ```
 
@@ -425,7 +433,7 @@ you want to check your work.
 
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
 Base R has no way to *declare* a missing value; its only move is the recode.
-The idiom is `clinic$Anxiety2[clinic$Anxiety2 %in% c(-99, -98)] <- NA`, and it
+The syntax is `clinic$Anxiety2[clinic$Anxiety2 %in% c(-99, -98)] <- NA`, and it
 does exactly what the paragraph above warns about: both codes become the same
 anonymous `NA`, so the difference between a refusal and a don't-know is gone,
 and the original values are gone with it. It is the right tool when the reason for the missingness is irrelevant.
@@ -483,9 +491,7 @@ normal — and the small arrow beside Source offers "Source with Echo" if you'd
 like the commands shown too. jstats functions print their own tables, so their
 output always appears; but a bare base R line that merely displays a value —
 `mean()` on its own — stays quiet under Source, because R only auto-prints
-results when you run lines interactively. That's why block 5 prints its base R
-means with `cat()`, a label, and a few blank lines: hand-formatting that jstats
-tables do for you.
+results when you run lines interactively.
 
 The **What you should see** boxes under the blocks above reproduce that
 Console — the blue command lines, the gray notes, the colored tables, and one

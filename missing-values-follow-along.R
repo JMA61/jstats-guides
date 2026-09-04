@@ -63,21 +63,19 @@ joptions()
 
 ## ---- 5. Bring the rest in line ----------------------------------------
 
-## Stress arrived with its codes declared SPSS-style. Ask base R for its
-## mean, with and without na.rm = TRUE (which tells mean() to drop NAs)
-## mean() is base R. It prints a bare, unlabeled number, and under Source
-## it prints nothing at all -- so cat() (also base R) adds a label and
-## blank lines to make it visible
-cat("\n\nBase R mean of Stress:", mean(clinic$Stress),
-    "   with na.rm = TRUE:", mean(clinic$Stress, na.rm = TRUE), "\n\n\n")  # base R
+## Stress arrived with its codes declared SPSS-style. Ask base R's mean()
+## for its average, with and without na.rm = TRUE (which tells mean() to
+## drop NAs). To base R the codes are ordinary numbers, so both go in
+mean(clinic$Stress)  # base R -- the codes are averaged in
+mean(clinic$Stress, na.rm = TRUE)  # na.rm has no NAs to drop yet
 
 ## One line converts every SPSS-style column in clinic to the Stata form
 clinic <- jconvert(clinic, to = "stata")
 
 ## Now base R sees the missing values too: the mean is NA (loud, not wrong),
 ## and na.rm = TRUE gives the right answer
-cat("\n\nBase R mean of Stress now:", mean(clinic$Stress),
-    "   with na.rm = TRUE:", mean(clinic$Stress, na.rm = TRUE), "\n\n\n")
+mean(clinic$Stress)
+mean(clinic$Stress, na.rm = TRUE)
 
 
 ## ---- 6. Finding undeclared codes in your own data ---------------------

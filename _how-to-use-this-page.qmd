@@ -10,8 +10,11 @@ A few mechanics worth knowing:
   marks where one block ends and the next begins in your growing script — and
   RStudio reads those headers as sections, so they appear in the script's
   outline for easy jumping around.
-- Experiment freely as you go — change a number, rerun a line, poke at things.
-  Building the script yourself is the point.
+- Run lines the way the [RStudio Orientation](rstudio-orientation.qmd) showed:
+  cursor on the line, then Ctrl+Enter (Cmd+Enter on a Mac) or the Run button;
+  highlight several lines to run them together. Experiment freely as you go —
+  change a number, rerun a line, poke at things. Building the script yourself
+  is the point.
 - We recommend working through the blocks one at a time first — you learn far
   more by building the script yourself and watching each piece run than by
   reading a finished file. Once you've done that (or if you'd rather grab
