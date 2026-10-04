@@ -13,15 +13,58 @@ functions. Each one stands on its own, so read whichever you need; for now,
 The articles below are on the way. They go beyond the Get Started on-ramp and point
 toward the fuller treatment in the books.
 
+## Using your own data
+
+*Coming soon* — the bridge from the practice datasets to a file of your own: opening
+an Excel, CSV, or commercial-software file, keeping it in a data folder, and taking
+a first look with `jscreen()`.
+
 ## Working with data from commercial statistical software
 
 *Coming soon* — importing and working with data from SPSS, Stata, and SAS, including
 value and variable labels and the different missing-value conventions.
 
+## Reading jstats output: Case Processing and Missing data
+
+*Coming soon* — not how to interpret the statistics, but how to read the accounting
+printed above them: the Case Processing lines and tables that say how many cases an
+analysis used and which were set aside, and the Missing data breakdown that shows
+where each variable's missing values went.
+
+## Recoding and relabeling variables
+
+*Coming soon* — reverse-coding an item, collapsing categories, and fixing variable
+and value labels with `jrecode()` and `jrelabel()`, keeping the original column
+intact.
+
+## Text answers into coded variables
+
+*Coming soon* — turning a column of words ("Yes", "No", "Don't know") from a
+spreadsheet or survey export into a labeled, coded variable with `jencode()`.
+
 ## Building and checking a scale
 
 *Coming soon* — combining Likert items into a scale and checking its reliability with
 Cronbach's alpha.
+
+## Working on part of your data
+
+*Coming soon* — analyzing a subgroup with `jsubset()`, and using `jcomplete()` so a
+set of analyses all run on the same cases.
+
+## Comparing groups
+
+*Coming soon* — t-tests, one-way ANOVA, and cross-tabulations with `jt()`, `jaov()`,
+and `jcrosstab()`: one formula style for all three, how to read what comes back, and
+the Welch versions of the t-test and ANOVA (`welch = TRUE`), which do not assume
+equal variances.
+
+## Regression with categorical predictors
+
+*Coming soon* — linear and logistic regression with `jlm()` and `jlogistic()`.
+`jdummy()` is the quick way in for a categorical variable: register its dummy coding
+and reference category once, and it goes into a model by name — no building dummy
+variables by hand, and no converting to base R's factors.
 
 ## Handling missing values across platforms
 

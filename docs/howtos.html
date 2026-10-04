@@ -166,8 +166,15 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#how-tos" id="toc-how-tos" class="nav-link active" data-scroll-target="#how-tos">How-Tos</a></li>
+  <li><a href="#using-your-own-data" id="toc-using-your-own-data" class="nav-link" data-scroll-target="#using-your-own-data">Using your own data</a></li>
   <li><a href="#working-with-data-from-commercial-statistical-software" id="toc-working-with-data-from-commercial-statistical-software" class="nav-link" data-scroll-target="#working-with-data-from-commercial-statistical-software">Working with data from commercial statistical software</a></li>
+  <li><a href="#reading-jstats-output-case-processing-and-missing-data" id="toc-reading-jstats-output-case-processing-and-missing-data" class="nav-link" data-scroll-target="#reading-jstats-output-case-processing-and-missing-data">Reading jstats output: Case Processing and Missing data</a></li>
+  <li><a href="#recoding-and-relabeling-variables" id="toc-recoding-and-relabeling-variables" class="nav-link" data-scroll-target="#recoding-and-relabeling-variables">Recoding and relabeling variables</a></li>
+  <li><a href="#text-answers-into-coded-variables" id="toc-text-answers-into-coded-variables" class="nav-link" data-scroll-target="#text-answers-into-coded-variables">Text answers into coded variables</a></li>
   <li><a href="#building-and-checking-a-scale" id="toc-building-and-checking-a-scale" class="nav-link" data-scroll-target="#building-and-checking-a-scale">Building and checking a scale</a></li>
+  <li><a href="#working-on-part-of-your-data" id="toc-working-on-part-of-your-data" class="nav-link" data-scroll-target="#working-on-part-of-your-data">Working on part of your data</a></li>
+  <li><a href="#comparing-groups" id="toc-comparing-groups" class="nav-link" data-scroll-target="#comparing-groups">Comparing groups</a></li>
+  <li><a href="#regression-with-categorical-predictors" id="toc-regression-with-categorical-predictors" class="nav-link" data-scroll-target="#regression-with-categorical-predictors">Regression with categorical predictors</a></li>
   <li><a href="#handling-missing-values-across-platforms" id="toc-handling-missing-values-across-platforms" class="nav-link" data-scroll-target="#handling-missing-values-across-platforms">Handling missing values across platforms</a></li>
   </ul>
 </nav>
@@ -183,13 +190,41 @@ ul.task-list li input[type="checkbox"] {
 <p>These how-tos assume you’ve worked through <a href="./start-here.html">Get Started</a> — you’ll be comfortable loading jstats, using <code>juse()</code> and <code>jload()</code>, and running the basic functions. Each one stands on its own, so read whichever you need; for now, <a href="./start-here.html">Get Started</a> is the place to begin.</p>
 <p>The articles below are on the way. They go beyond the Get Started on-ramp and point toward the fuller treatment in the books.</p>
 </section>
+<section id="using-your-own-data" class="level2">
+<h2 class="anchored" data-anchor-id="using-your-own-data">Using your own data</h2>
+<p><em>Coming soon</em> — the bridge from the practice datasets to a file of your own: opening an Excel, CSV, or commercial-software file, keeping it in a data folder, and taking a first look with <code>jscreen()</code>.</p>
+</section>
 <section id="working-with-data-from-commercial-statistical-software" class="level2">
 <h2 class="anchored" data-anchor-id="working-with-data-from-commercial-statistical-software">Working with data from commercial statistical software</h2>
 <p><em>Coming soon</em> — importing and working with data from SPSS, Stata, and SAS, including value and variable labels and the different missing-value conventions.</p>
 </section>
+<section id="reading-jstats-output-case-processing-and-missing-data" class="level2">
+<h2 class="anchored" data-anchor-id="reading-jstats-output-case-processing-and-missing-data">Reading jstats output: Case Processing and Missing data</h2>
+<p><em>Coming soon</em> — not how to interpret the statistics, but how to read the accounting printed above them: the Case Processing lines and tables that say how many cases an analysis used and which were set aside, and the Missing data breakdown that shows where each variable’s missing values went.</p>
+</section>
+<section id="recoding-and-relabeling-variables" class="level2">
+<h2 class="anchored" data-anchor-id="recoding-and-relabeling-variables">Recoding and relabeling variables</h2>
+<p><em>Coming soon</em> — reverse-coding an item, collapsing categories, and fixing variable and value labels with <code>jrecode()</code> and <code>jrelabel()</code>, keeping the original column intact.</p>
+</section>
+<section id="text-answers-into-coded-variables" class="level2">
+<h2 class="anchored" data-anchor-id="text-answers-into-coded-variables">Text answers into coded variables</h2>
+<p><em>Coming soon</em> — turning a column of words (“Yes”, “No”, “Don’t know”) from a spreadsheet or survey export into a labeled, coded variable with <code>jencode()</code>.</p>
+</section>
 <section id="building-and-checking-a-scale" class="level2">
 <h2 class="anchored" data-anchor-id="building-and-checking-a-scale">Building and checking a scale</h2>
 <p><em>Coming soon</em> — combining Likert items into a scale and checking its reliability with Cronbach’s alpha.</p>
+</section>
+<section id="working-on-part-of-your-data" class="level2">
+<h2 class="anchored" data-anchor-id="working-on-part-of-your-data">Working on part of your data</h2>
+<p><em>Coming soon</em> — analyzing a subgroup with <code>jsubset()</code>, and using <code>jcomplete()</code> so a set of analyses all run on the same cases.</p>
+</section>
+<section id="comparing-groups" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-groups">Comparing groups</h2>
+<p><em>Coming soon</em> — t-tests, one-way ANOVA, and cross-tabulations with <code>jt()</code>, <code>jaov()</code>, and <code>jcrosstab()</code>: one formula style for all three, how to read what comes back, and the Welch versions of the t-test and ANOVA (<code>welch = TRUE</code>), which do not assume equal variances.</p>
+</section>
+<section id="regression-with-categorical-predictors" class="level2">
+<h2 class="anchored" data-anchor-id="regression-with-categorical-predictors">Regression with categorical predictors</h2>
+<p><em>Coming soon</em> — linear and logistic regression with <code>jlm()</code> and <code>jlogistic()</code>. <code>jdummy()</code> is the quick way in for a categorical variable: register its dummy coding and reference category once, and it goes into a model by name — no building dummy variables by hand, and no converting to base R’s factors.</p>
 </section>
 <section id="handling-missing-values-across-platforms" class="level2">
 <h2 class="anchored" data-anchor-id="handling-missing-values-across-platforms">Handling missing values across platforms</h2>

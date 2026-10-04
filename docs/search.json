@@ -814,5 +814,54 @@
     "title": "jstats",
     "section": "",
     "text": "NoteComing soon\n\n\n\nShort, focused video walkthroughs — one narrow topic each — will be linked here as they’re published.\n\n\nFor now, the Get Started guide covers the essentials in written form."
+  },
+  {
+    "objectID": "howtos.html#using-your-own-data",
+    "href": "howtos.html#using-your-own-data",
+    "title": "jstats",
+    "section": "Using your own data",
+    "text": "Using your own data\nComing soon — the bridge from the practice datasets to a file of your own: opening an Excel, CSV, or commercial-software file, keeping it in a data folder, and taking a first look with jscreen()."
+  },
+  {
+    "objectID": "howtos.html#reading-jstats-output-case-processing-and-missing-data",
+    "href": "howtos.html#reading-jstats-output-case-processing-and-missing-data",
+    "title": "jstats",
+    "section": "Reading jstats output: Case Processing and Missing data",
+    "text": "Reading jstats output: Case Processing and Missing data\nComing soon — not how to interpret the statistics, but how to read the accounting printed above them: the Case Processing lines and tables that say how many cases an analysis used and which were set aside, and the Missing data breakdown that shows where each variable’s missing values went."
+  },
+  {
+    "objectID": "howtos.html#recoding-and-relabeling-variables",
+    "href": "howtos.html#recoding-and-relabeling-variables",
+    "title": "jstats",
+    "section": "Recoding and relabeling variables",
+    "text": "Recoding and relabeling variables\nComing soon — reverse-coding an item, collapsing categories, and fixing variable and value labels with jrecode() and jrelabel(), keeping the original column intact."
+  },
+  {
+    "objectID": "howtos.html#text-answers-into-coded-variables",
+    "href": "howtos.html#text-answers-into-coded-variables",
+    "title": "jstats",
+    "section": "Text answers into coded variables",
+    "text": "Text answers into coded variables\nComing soon — turning a column of words (“Yes”, “No”, “Don’t know”) from a spreadsheet or survey export into a labeled, coded variable with jencode()."
+  },
+  {
+    "objectID": "howtos.html#working-on-part-of-your-data",
+    "href": "howtos.html#working-on-part-of-your-data",
+    "title": "jstats",
+    "section": "Working on part of your data",
+    "text": "Working on part of your data\nComing soon — analyzing a subgroup with jsubset(), and using jcomplete() so a set of analyses all run on the same cases."
+  },
+  {
+    "objectID": "howtos.html#comparing-groups",
+    "href": "howtos.html#comparing-groups",
+    "title": "jstats",
+    "section": "Comparing groups",
+    "text": "Comparing groups\nComing soon — t-tests, one-way ANOVA, and cross-tabulations with jt(), jaov(), and jcrosstab(): one formula style for all three, how to read what comes back, and the Welch versions of the t-test and ANOVA (welch = TRUE), which do not assume equal variances."
+  },
+  {
+    "objectID": "howtos.html#regression-with-categorical-predictors",
+    "href": "howtos.html#regression-with-categorical-predictors",
+    "title": "jstats",
+    "section": "Regression with categorical predictors",
+    "text": "Regression with categorical predictors\nComing soon — linear and logistic regression with jlm() and jlogistic(). jdummy() is the quick way in for a categorical variable: register its dummy coding and reference category once, and it goes into a model by name — no building dummy variables by hand, and no converting to base R’s factors."
   }
 ]
