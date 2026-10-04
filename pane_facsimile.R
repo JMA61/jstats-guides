@@ -888,9 +888,9 @@ local({
     refs  <- attr(exprs, "srcref")
     src   <- strsplit(code, "\n", fixed = TRUE)[[1]]
     segs  <- list()
-    add   <- function(type, text){
+    add   <- function(type, text, keep_empty = FALSE){
       text <- scrub_wd(text)                  # no real paths reach a box
-      if (nzchar(text)){
+      if (nzchar(text) || isTRUE(keep_empty)){
         leak_check(text)
         segs[[length(segs)+1L]] <<- list(type=type, text=text)
       }
@@ -920,8 +920,20 @@ local({
         off <<- sz
         if (validUTF8(txt)) Encoding(txt) <- "UTF-8"
         txt <- gsub("\r\n", "\n", txt, fixed = TRUE)   # text-mode sink on Windows
+        # A LONE NEWLINE IS A BLANK LINE, NOT NOTHING (S334). A flush that
+        # holds only "\n" is a blank line the statement printed on its own --
+        # in practice the one a jstats call writes AFTER a note, so that the
+        # note does not sit against the next prompt (joptions(data.dir = ),
+        # v0.9.211; the blank goes to stdout because the RStudio console
+        # does not show a blank line that travels with a message). Stripping
+        # the final newline left "", which was then dropped, and the box
+        # showed the note against the next prompt where the Console shows a
+        # blank line. Kept as an EMPTY stdout segment, which console_field()
+        # renders as an empty line. A statement that prints nothing still
+        # flushes nothing (sz <= off above), so it still adds no segment.
+        lone_nl <- identical(txt, "\n")
         txt <- sub("\n$", "", txt)
-        if (nzchar(txt))
+        if (nzchar(txt) || lone_nl)
           pending[[length(pending) + 1L]] <<- list(type = "stdout", text = txt)
         invisible(NULL)
       }
@@ -968,7 +980,10 @@ local({
             merged[[length(merged)]]$text <- paste(last$text, p[[k]]$text, sep = "\n")
           else merged[[length(merged)+1L]] <- p[[k]]
         }
-        for (s in merged) add(s$type, s$text)
+        # keep_empty: only a stdout segment can be legitimately empty (the
+        # lone blank line above); every other type is still dropped when empty.
+        for (s in merged) add(s$type, s$text,
+                              keep_empty = identical(s$type, "stdout"))
       }
       if (length(res$warnbuf)) add("message", warn_block(res$warnbuf))
       if (length(res$errbuf)){

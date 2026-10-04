@@ -1,6 +1,6 @@
 # pane_facsimile_check.R -- machine assertion battery for pane_facsimile.R's
-# run_block(): stream ordering (S273) and expect_error_match (S273, wrap-proof
-# matching S274).
+# run_block(): stream ordering (S273), expect_error_match (S273, wrap-proof
+# matching S274), and a blank line printed after a message (S334).
 #
 # WHY THIS FILE EXISTS. run_block() is a shared asset: every "What you should
 # see" box (show_block) and every Console facsimile (show_console) on the guide
@@ -278,6 +278,38 @@ ck("X1", "partial line flushed in true order, not held back",
    types(X1), c("stdout", "message", "stdout"))
 ck("X1b", "  ... partial line kept whole in its own segment",
    texts(X1), c("abc", "note", "def"))
+
+# ---- 7. A BLANK LINE PRINTED AFTER A MESSAGE (S334) -----------------------
+# jstats writes a blank line to stdout after a note that would otherwise sit
+# against the next prompt (joptions(data.dir = ), v0.9.211). The flush that
+# carries it holds one newline and nothing else; until S334 that became "" and
+# was dropped, so the box showed the note against the prompt where the Console
+# shows a blank line. B1 and B2 fail on the unrepaired file; B3-B5 hold what
+# must not change.
+
+cat("\n7. A BLANK LINE PRINTED AFTER A MESSAGE\n")
+
+B1 <- run('{ cat("echo\\n"); message("note"); cat("\\n") }', echo = FALSE)
+ck("B1", "a lone newline after a message is kept as an empty segment",
+   types(B1), c("stdout", "message", "stdout"))
+ck("B1b", "  ... whose text is empty: one blank line, no more",
+   texts(B1), c("echo", "note", ""))
+
+B2 <- run('{ message("a"); cat("\\n"); message("b") }', echo = FALSE)
+ck("B2", "a blank line between two messages keeps them apart",
+   texts(B2), c("a", "", "b"))
+
+B3 <- run('invisible(1)', echo = FALSE)
+ck("B3", "a statement that prints nothing still adds no segment",
+   length(B3), 0L)
+
+B4 <- run('{ cat("a\\n"); cat("\\n") }', echo = FALSE)
+ck("B4", "a blank line straight after printed text rides in its segment",
+   texts(B4), "a\n")
+
+B5 <- run('message("")', echo = FALSE)
+ck("B5", "an empty MESSAGE is still dropped: only stdout can be empty",
+   length(B5), 0L)
 
 # ---- foot -----------------------------------------------------------------
 cat("\n", strrep("-", 78), "\n", sep = "")
