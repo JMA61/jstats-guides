@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -77,10 +80,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-db6a58c266bbeafa11f2ba93dd0eb26c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-8d3f76c4056070a30d229a91414c2fcc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -346,51 +349,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>With the data loaded, <code>jscreen()</code> is the orientation pass — one call that lists every variable, its type, its range, and anything that looks off (odd values, missing data). <code>stats = TRUE</code> adds a center-and-spread column for the numeric variables.</p>
+<p>With the data loaded, <code>jscreen()</code> is the orientation pass — one call that lists every variable, its type, how many distinct values it has, and anything that looks off (odd values, missing data). <code>stats = TRUE</code> adds the mean and median for the numeric variables.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jscreen</span>(<span class="at">stats =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Data Screening
 </span><span style="color: #BBBB00;">Using default data frame: community
-</span>  Cases: 103 
-  Variables: 15 
-  Cases with missing data: 34 
-  Variables with outliers: 0 
+</span>  Cases: 103
+  Variables: 15
+  Cases with missing data: 34
+  Variables with outliers: 0
 
 Variable Types
-Variable        jstats Class  Sub-class   Unique Values       Mean  Median
---------------  ------------  ----------  -------------  ---------  ------
-RespondentID    Categorical   identifier            103                   
-Income          Numeric                              49  49855.670   49000
-Education       Categorical   5-category              5                   
-Age             Numeric                              41     40.650      40
-WellbeingScore  Numeric                              41     50.893      50
-Volunteer       Categorical   dichotomy               2      0.476        
-OwnsHome        Categorical   dichotomy*              2      1.534        
-Smoker          Categorical   dichotomy               2      0.337        
-CommuteTime     Numeric                              42     30.738      30
-Region          Categorical   4-category              4                   
-Environment1    Categorical   Likert                  5                   
-Environment2    Categorical   Likert                  5                   
-Environment3    Categorical   Likert                  5                   
-Environment4    Categorical   Likert                  5                   
-Environment5    Categorical   Likert                  5                   
+Variable        jstats Class  Sub-class   Unique Values     Mean      Median
+--------------  ------------  ----------  -------------  ---------  ---------
+RespondentID    Categorical   identifier       103
+Income          Numeric                         49       49855.670  49000.000
+Education       Categorical   5-category         5
+Age             Numeric                         41          40.650     40.000
+WellbeingScore  Numeric                         41          50.893     50.000
+Volunteer       Categorical   dichotomy          2           0.476
+OwnsHome        Categorical   dichotomy*         2           1.534
+Smoker          Categorical   dichotomy          2           0.337
+CommuteTime     Numeric                         42          30.738     30.000
+Region          Categorical   4-category         4
+Environment1    Categorical   Likert             5
+Environment2    Categorical   Likert             5
+Environment3    Categorical   Likert             5
+Environment4    Categorical   Likert             5
+Environment5    Categorical   Likert             5
 * coded other than 0/1; mean is not a proportion
 
 Missing Data &amp; Outliers (outliers &gt; 3 SD from mean)
 Variable      Missing  % Missing
 ------------  -------  ---------
-Income              6        5.8
-Education           6        5.8
-Smoker              5        4.9
-Environment1       12       11.7
-Environment3       12       11.7
+Income            6        5.8
+Education         6        5.8
+Smoker            5        4.9
+Environment1     12       11.7
+Environment3     12       11.7
 
 Note: SPSS-style declared missing values on: Income, Education, Smoker,
 Environment1, Environment3.
 jstats treats these as missing; base R functions do not.
 </code></pre>
 </div>
-<p>A screen like this is where you catch problems early — a variable that should be a 0/1 dichotomy showing values of 1 and 2, say, or a “score” whose minimum is an impossible negative number. That second one is exactly what we tackle next.</p>
+<p>A screen like this is where you catch problems early — a variable that should be a 0/1 dichotomy showing values of 1 and 2, say, or a “score” with values far outside its possible range. That second one is exactly what we tackle next.</p>
 </section>
 <section id="a-column-that-arrived-messy" class="level2">
 <h2 class="anchored" data-anchor-id="a-column-that-arrived-messy">A column that arrived messy</h2>
@@ -436,18 +439,19 @@ To declare and label them in one call, replacing the placeholder names:
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Descriptive Statistics
 </span><span style="color: #BBBB00;">Using default data frame: clinic
 </span>
-Variable    Total  Non_missing  Min  Max    Mean      SD
+70 Cases in the 1 Variable Pool
+
+Variable    Total  Non_missing  Min  Max   Mean     SD
 ----------  -----  -----------  ---  ---  ------  ------
-MoodRating     70           70  -99    9  -4.943  31.477
+MoodRating    70        70      -99   9   -4.943  31.477
 </code></pre>
 </div>
-<p>The mean is dragged far below the 1–10 range, because those large negative codes are being averaged in as if they were genuine ratings. <code>jdeclare_missing()</code> fixes this the careful way — it <em>declares</em> the two codes as missing, with labels, without overwriting or deleting anything. The underlying data are untouched; we’ve only told jstats how to read them.</p>
+<p>The mean is dragged far below the 1–10 range, because those large negative codes are being averaged in as if they were genuine ratings. <code>jdeclare_missing()</code> fixes this the careful way — it <em>declares</em> the two codes as missing, with labels, so jstats sets them aside and still knows which was “Refused” and which “Don’t know.” No case is deleted.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>clinic <span class="ot">&lt;-</span> <span class="fu">jdeclare_missing</span>(clinic, MoodRating,</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">codes =</span> <span class="fu">c</span>(<span class="st">"Refused"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">99</span>, <span class="st">"Don't know"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">98</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>[1m[33mError[39m:[22m
-[33m![39m jdeclare_missing(): no missing-value convention is selected, so these
+<pre><code>Error: jdeclare_missing(): no missing-value convention is selected, so these
 codes cannot be declared.
 Choose one for this session:
   joptions(missing.convention = "stata")
@@ -484,25 +488,21 @@ This call changes clinic only if you assign the result:
 
 To change clinic directly, rerun with modify = TRUE:
   jdeclare_missing(clinic, MoodRating, ..., modify = TRUE)
+
 Note: MoodRating uses Stata-style missing values, but other columns in clinic
 are SPSS-style.
-Mixing forms is allowed. To align MoodRating with the rest, run:
+To align MoodRating with the rest, run:
   jconvert(clinic, to = "spss", vars = "MoodRating", modify = TRUE)</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MoodRating)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Descriptive Statistics
 </span><span style="color: #BBBB00;">Using default data frame: clinic
 </span>
-Case Processing  Excluded  Remaining
-    Original           --         70
-    Remaining N        --         70
+70 Cases in the 1 Variable Pool
 
-------------------------------------
-
-
-Variable    Total  Non_missing  Min  Max  Mean     SD
-----------  -----  -----------  ---  ---  ----  -----
-MoodRating     70           63    1    9  5.46  1.702
+Variable    Total  Non_missing  Min  Max   Mean    SD
+----------  -----  -----------  ---  ---  -----  -----
+MoodRating    70        63       1    9   5.460  1.702
 </code></pre>
 </div>
 <p>Now the codes are set aside as missing and the mean sits sensibly inside the 1–10 range.</p>
@@ -538,7 +538,7 @@ MoodRating     70           63    1    9  5.46  1.702
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>This is the equivalent of setting a variable’s missing values in SPSS’s Variable View (the <code>MISSING VALUES</code> command in syntax), or Stata’s extended missing values. The important parallel is that it’s <strong>non-destructive</strong>: like declaring missing values rather than recoding them to system-missing, <code>jdeclare_missing()</code> leaves the original codes in place and simply flags them, so nothing is lost and the declaration can be changed or undone later.</p>
+<p>This is the equivalent of setting a variable’s missing values in SPSS’s Variable View (the <code>MISSING VALUES</code> command in syntax), or Stata’s extended missing values. The important parallel is that the <em>reason</em> survives: unlike recoding to system-missing, which collapses every code into one blank, <code>jdeclare_missing()</code> keeps “Refused” and “Don’t know” distinct and labeled — as flagged codes under the SPSS-style convention, as <code>.a</code> and <code>.b</code> markers under the Stata-style one chosen here — and the declaration can be converted to the other forms later.</p>
 </div>
 </div>
 </div>
@@ -573,23 +573,11 @@ MoodRating     70           63    1    9  5.46  1.702
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="at">variable.id =</span> <span class="st">"legend"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Output Settings
-</span>Level: standard
-  effect.size: ON
-  regression.ci: OFF
-  means.ci: ON
-  levene: OFF
-  posthoc: OFF
-  diagnostics: OFF
-  case.processing: AUTO
-  case.processing.detail: TOTALS
-  variable.id: LEGEND (override)
-  value.id: BOTH
-  ref.categories: ON
-  missing.notice: ON
-  digits: 3
+</span>  variable.id: LEGEND (override)
+Run joutput() to see all settings.
 </code></pre>
 </div>
-<p>Running <code>joutput()</code> prints its full settings panel — every output setting, not only the one you changed — so the screenful you see here is expected, not a sign anything went wrong. The setting you changed, <code>variable.id</code>, is now marked <code>(override)</code>, flagging that it differs from the default; the others stay at their usual values.</p>
+<p>jstats answers with the one setting you changed. <code>(override)</code> flags that <code>variable.id</code> now differs from its default; every other setting is untouched. To see them all, run <code>joutput()</code> with nothing in the parentheses.</p>
 <p>You can also set this for a single call, by passing <code>variable.id = "legend"</code> to that function directly instead of session-wide.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
@@ -618,21 +606,20 @@ Case Processing    Excluded  Remaining
     Auto-listwise        19         84
     Analysis N           --         84
 
-Missing-data breakdown  From 103     %
+Missing data   From 103    %
     Environment1
-      Missing              12     11.7
+      Missing     12     11.7
     Environment3
-      Missing              12     11.7
-
+      Missing     12     11.7
 --------------------------------------
 
 Reliability Statistics
 Cronbach's Alpha  N of Items
 ----------------  ----------
-           0.348           5
+      0.348            5
 
 Item Statistics
-Item           Mean     SD   N
+Item           Mean    SD    N
 ------------  -----  -----  --
 Environment1  3.131  1.180  84
 Environment2  2.869  1.180  84
@@ -647,15 +634,14 @@ It may need reverse-coding, or may not belong in the scale -- check the
 item-total table and the item wording.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Item-Total Statistics
+<pre><code>Item-Total Statistics
 Item          Corrected Item-Total r  Alpha if Item Deleted
 ------------  ----------------------  ---------------------
-Environment1                   0.510                 -0.006
-Environment2                  -0.660                  0.783
-Environment3                   0.539                 -0.052
-Environment4                   0.447                  0.056
-Environment5                   0.455                 -0.030
+Environment1           0.510                  -0.006
+Environment2          -0.660                   0.783
+Environment3           0.539                  -0.052
+Environment4           0.447                   0.056
+Environment5           0.455                  -0.030
 
 Variable Labels:
   Environment1 = Climate change is a serious threat.
@@ -704,21 +690,20 @@ Case Processing    Excluded  Remaining
     Auto-listwise        19         84
     Analysis N           --         84
 
-Missing-data breakdown  From 103     %
+Missing data   From 103    %
     Environment1
-      Missing              12     11.7
+      Missing     12     11.7
     Environment3
-      Missing              12     11.7
-
+      Missing     12     11.7
 --------------------------------------
 
 Reliability Statistics
 Cronbach's Alpha  N of Items
 ----------------  ----------
-           0.827           5
+      0.827            5
 
 Item Statistics
-Item            Mean     SD   N
+Item            Mean    SD    N
 -------------  -----  -----  --
 Environment1   3.131  1.180  84
 Environment2R  3.131  1.180  84
@@ -729,11 +714,11 @@ Environment5   2.762  1.470  84
 Item-Total Statistics
 Item           Corrected Item-Total r  Alpha if Item Deleted
 -------------  ----------------------  ---------------------
-Environment1                    0.691                  0.774
-Environment2R                   0.660                  0.783
-Environment3                    0.694                  0.773
-Environment4                    0.679                  0.778
-Environment5                    0.445                  0.854
+Environment1            0.691                  0.774
+Environment2R           0.660                  0.783
+Environment3            0.694                  0.773
+Environment4            0.679                  0.778
+Environment5            0.445                  0.854
 
 Variable Labels:
   Environment1  = Climate change is a serious threat.
@@ -743,7 +728,7 @@ Variable Labels:
   Environment5  = Pollution is a major cause of public health problems.
 </code></pre>
 </div>
-<p>With the item reversed, reliability improves — but the diagnostics now point at <code>Environment5</code>: it has the weakest corrected item-total correlation and the highest “alpha if item dropped,” meaning the scale would be a touch <em>more</em> reliable without it. So we drop it and build the scale from the four items that hang together, as a per-case mean with <code>javg()</code>, requiring at least three of the four present so a respondent who skipped one still gets a score:</p>
+<p>With the item reversed, reliability improves — but the diagnostics now point at <code>Environment5</code>: it has the weakest corrected item-total correlation and the highest “Alpha if Item Deleted,” meaning the scale would be a touch <em>more</em> reliable without it. So we drop it and build the scale from the four items that hang together, as a per-case mean with <code>javg()</code>, requiring at least three of the four present so a respondent who skipped one still gets a score:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>community<span class="sc">$</span>EnvScale <span class="ot">&lt;-</span> <span class="fu">javg</span>(Environment1, Environment2R, Environment3, Environment4,</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">min.valid =</span> <span class="dv">3</span>, <span class="at">var.label =</span> <span class="st">"Environment scale (mean)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -762,16 +747,11 @@ For the full distribution (min, max, SD), run jdesc() on the new column.</code><
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Descriptive Statistics
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
-Case Processing  Excluded  Remaining
-    Original           --        103
-    Remaining N        --        103
+103 Cases in the 1 Variable Pool
 
-------------------------------------
-
-
-Variable  Total  Non_missing  Min  Max   Mean     SD
---------  -----  -----------  ---  ---  -----  -----
-EnvScale    103           98    1    5  3.178  0.973
+Variable  Total  Non_missing   Min    Max    Mean    SD
+--------  -----  -----------  -----  -----  -----  -----
+EnvScale   103        98      1.000  5.000  3.178  0.973
 
 Variable Labels:
   EnvScale = Environment scale (mean)
@@ -807,15 +787,13 @@ Case Processing    Excluded  Remaining
     Auto-listwise         6         97
     Analysis N           --         97
 
-Missing-data breakdown  From 103    %
+Missing data   From 103   %
     Income
-      Missing              6      5.8
-
+      Missing      6     5.8
 --------------------------------------
 
-
 Coefficients
-               b      SE      t      β      p  
+                b      SE     t      β      p
 -----------  ------  -----  -----  -----  -----
 (Intercept)  24.815  3.749  6.620         &lt;.001
 Income        0.000  0.000  6.813  0.564  &lt;.001
@@ -843,7 +821,7 @@ Sum of Squares:
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Dummy Variable Registration
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
-  Variable: Region (haven_labelled)
+  Variable: Region
   Reference category: Region_West
   Dummy variables: Region_North, Region_South, Region_East
   Cases: 103 (0 missing)
@@ -865,20 +843,18 @@ Case Processing    Excluded  Remaining
     Auto-listwise         6         97
     Analysis N           --         97
 
-Missing-data breakdown  From 103    %
+Missing data   From 103   %
     Income
-      Missing              6      5.8
-
+      Missing      6     5.8
 --------------------------------------
 
-
 Coefficients
-                          b      SE      t       β      p  
+                           b      SE      t      β      p
 ----------------------  ------  -----  ------  -----  -----
 (Intercept)             22.404  4.318   5.188         &lt;.001
 Income                   0.000  0.000   6.941  0.572  &lt;.001
 Age                      0.193  0.082   2.342  0.195   .021
-Region (ref = 4: West)                                     
+Region (ref = 4: West)
   1: North               4.905  2.554   1.921          .058
   2: South              -0.546  2.866  -0.191          .849
   3: East                1.250  2.509   0.498          .620
@@ -922,8 +898,10 @@ Sum of Squares:
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Logistic Regression
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
+Analysis N: 103
+
 Coefficients
-               b      SE    Wald   df   p    Exp(B)
+                b      SE    Wald  df    p   Exp(B)
 -----------  ------  -----  -----  --  ----  ------
 (Intercept)  -2.347  0.811  8.382   1  .004   0.096
 Age           0.055  0.019  8.216   1  .004   1.057
@@ -934,14 +912,14 @@ Predictors:
   Age       = Age (years)
 
 Omnibus Test of Model Coefficients
-Chi-Square  df  p   
+Chi-Square  df    p
 ----------  --  ----
-     9.283   1  .002
+   9.283     1  .002
 
 Model Summary
--2 Log Likelihood  Cox &amp; Snell R²  Nagelkerke R²      AIC
+-2 Log Likelihood  Cox &amp; Snell R²  Nagelkerke R²    AIC
 -----------------  --------------  -------------  -------
-          133.263           0.086          0.115  137.263
+     133.263            0.086          0.115      137.263
 
 Dependent Variable Encoding
   Modeled (1):   Yes
@@ -974,11 +952,11 @@ Dependent Variable Encoding
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Listwise Case Filter
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
-Variable     N  Missing  % Missing
+Variable    N   Missing  % Missing
 ---------  ---  -------  ---------
-Income     103        6  5.8%     
-Education  103        6  5.8%     
-Age        103        0  0.0%     
+Income     103     6        5.8%
+Education  103     6        5.8%
+Age        103     0        0.0%
 
   Complete cases: 91 of 103 (88.3%)
   Listwise filter activated -- 12 cases will be excluded from
@@ -990,15 +968,13 @@ Age        103        0  0.0%
 </span>
 Case Processing  Excluded  Remaining
     Original           --        103
-    jcomplete          12         91  Income, Education, +1 more
+    jcomplete()        12         91  Income, Education, +1 more
     Remaining N        --         91
-
 ----------------------------------------------------------------
 
-
-Variable  Total  Non_missing  Min  Max    Mean      SD
+Variable  Total  Non_missing  Min  Max   Mean     SD
 --------  -----  -----------  ---  ---  ------  ------
-Age          91           91   18   71  40.484  11.933
+Age         91        91       18   71  40.484  11.933
 
 Variable Labels:
   Age = Age (years)
@@ -1014,9 +990,9 @@ Variable Labels:
 <div class="cell-output cell-output-stderr">
 <pre><code>jcomplete cleared for community (had: Income, Education, Age).</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdummy</span>(community, <span class="cn">NULL</span>)    <span class="co"># drop the dummy registrations</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdummy</span>(<span class="cn">NULL</span>)               <span class="co"># drop the dummy registrations</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Dummy registrations cleared for community: Region.</code></pre>
+<pre><code>Dummy registrations cleared for community (the default data frame): Region.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">juse</span>(<span class="cn">NULL</span>)                 <span class="co"># clear the session default</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -1097,39 +1073,39 @@ To use Stata-style missing values, run:
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jscreen</span>(community_received, <span class="at">stats =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Data Screening
-</span>  Cases: 103 
-  Variables: 15 
-  Cases with missing data: 34 
-  Variables with outliers: 0 
+</span>  Cases: 103
+  Variables: 15
+  Cases with missing data: 34
+  Variables with outliers: 0
 
 Variable Types
-Variable        jstats Class  Sub-class   Unique Values       Mean  Median
---------------  ------------  ----------  -------------  ---------  ------
-RespondentID    Categorical   identifier            103                   
-Income          Numeric                              49  49855.670   49000
-Education       Categorical   5-category              5                   
-Age             Numeric                              41     40.650      40
-WellbeingScore  Numeric                              41     50.893      50
-Volunteer       Categorical   dichotomy               2      0.476        
-OwnsHome        Categorical   dichotomy*              2      1.534        
-Smoker          Categorical   dichotomy               2      0.337        
-CommuteTime     Numeric                              42     30.738      30
-Region          Categorical   4-category              4                   
-Environment1    Categorical   Likert                  5                   
-Environment2    Categorical   Likert                  5                   
-Environment3    Categorical   Likert                  5                   
-Environment4    Categorical   Likert                  5                   
-Environment5    Categorical   Likert                  5                   
+Variable        jstats Class  Sub-class   Unique Values     Mean      Median
+--------------  ------------  ----------  -------------  ---------  ---------
+RespondentID    Categorical   identifier       103
+Income          Numeric                         49       49855.670  49000.000
+Education       Categorical   5-category         5
+Age             Numeric                         41          40.650     40.000
+WellbeingScore  Numeric                         41          50.893     50.000
+Volunteer       Categorical   dichotomy          2           0.476
+OwnsHome        Categorical   dichotomy*         2           1.534
+Smoker          Categorical   dichotomy          2           0.337
+CommuteTime     Numeric                         42          30.738     30.000
+Region          Categorical   4-category         4
+Environment1    Categorical   Likert             5
+Environment2    Categorical   Likert             5
+Environment3    Categorical   Likert             5
+Environment4    Categorical   Likert             5
+Environment5    Categorical   Likert             5
 * coded other than 0/1; mean is not a proportion
 
 Missing Data &amp; Outliers (outliers &gt; 3 SD from mean)
 Variable      Missing  % Missing
 ------------  -------  ---------
-Income              6        5.8
-Education           6        5.8
-Smoker              5        4.9
-Environment1       12       11.7
-Environment3       12       11.7
+Income            6        5.8
+Education         6        5.8
+Smoker            5        4.9
+Environment1     12       11.7
+Environment3     12       11.7
 
 Note: SPSS-style declared missing values on: Income, Education, Smoker,
 Environment1, Environment3.
@@ -1155,7 +1131,7 @@ Variable Labels:
 </div>
 <p>That file arrives with its missing-value codes stored SPSS-style, and because we chose Stata-style earlier in this session, jstats points out the mismatch as it loads and offers both ways to settle it — switch the setting, or convert the data. Neither is wrong, and nothing is broken; it is the same noticing that flagged <code>MoodRating</code> at the top of the page. <em><a href="./missing-values.html">Telling jstats about missing values</a></em> covers which way to go.</p>
 <p>And that’s a full session, end to end: opened the data, screened it, cleaned a messy column, built and checked a scale, run the models, kept the case base consistent, and saved the result — with the everyday conveniences (<code>juse()</code>, <code>jdummy()</code>, <code>jcomplete()</code>) falling into place as they came up rather than as separate lessons.</p>
-<p>This page is the <em>narrative</em> of a session, not a manual: to keep it moving it left a good deal unexplained — including output you saw but we didn’t stop on, like the <strong>Case Processing Summary</strong> that headed several of the analyses (the small table reporting how many cases an analysis used and how missing values were handled). For looking a single task up while you work — “how do I reverse-code an item,” “how do I get a correlation matrix” — see the <a href="./reference.html">Reference</a> page, which links every function to its full help and its options. And to go further than these guides, the book series covers the analyses and their output in full: Book 1 builds the statistics and R together from the start, and Book 2 is the option-by-option guide — output settings, the Case Processing Summary, and the rest — for readers who already know the statistics. <!-- future: link a YouTube full-session walkthrough here --></p>
+<p>This page is the <em>narrative</em> of a session, not a manual: to keep it moving it left a good deal unexplained — including output you saw but we didn’t stop on, like the case-processing block that heads each analysis (sometimes one line, sometimes a small table, reporting how many cases the analysis used and how missing values were handled). For looking a single task up while you work — “how do I reverse-code an item,” “how do I get a correlation matrix” — see the <a href="./reference.html">Reference</a> page, which links every function to its full help and its options. And to go further than these guides, the book series covers the analyses and their output in full: Book 1 builds the statistics and R together from the start, and Book 2 is the option-by-option guide — output settings, the Case Processing Summary, and the rest — for readers who already know the statistics. <!-- future: link a YouTube full-session walkthrough here --></p>
 
 
 </section>

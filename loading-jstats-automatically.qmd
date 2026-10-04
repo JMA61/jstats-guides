@@ -147,6 +147,13 @@ RStudio's sign that the package is loaded for this session:
 
 ![](images/packages-jstats-loaded.png){width=440px fig-alt="RStudio's Packages tab, showing the jstats entry with its checkbox ticked."}
 
+If you kept the two `joptions()` lines, each one also prints a short
+confirmation of its setting in the Console at every start, just below the
+startup message. And the first time the Project opens, jstats creates the Data
+folder and says so. If you would rather not see the confirmations, add
+`quiet = TRUE` inside the parentheses —
+`joptions(data.dir = "Data", quiet = TRUE)`, for example.
+
 Keep your `.Rprofile` to lightweight startup lines — loading a package, and later a setting or
 two. Do **not** put an install command (an `install.packages("jstats", ...)` line)
 in `.Rprofile`: because the file runs on every startup, an install line there tries

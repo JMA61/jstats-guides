@@ -9,7 +9,7 @@ lines in the Console:
 joutput("standard")   # output level, and decimal places back to 3
 
 ## Point saving and loading back at your working directory
-joptions(data.dir = "")
+joptions(data.dir = NULL)
 ```
 
 That resets jstats itself. To clear away objects you created while following

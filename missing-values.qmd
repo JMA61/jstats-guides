@@ -286,15 +286,16 @@ differs in form from the rest of `clinic`.
 
 Then the payoff. The descriptives report a smaller non-missing count, a
 minimum and maximum inside 1–10, and a mean that finally looks like a mood
-rating. Both tables now carry a case-processing summary above them, and its
-arrival is itself a signal — jstats shows that block only once a variable has
-declared missing values to account for. Read what it says, though: it counts
-*cases*, and it reports that none were dropped. The declared codes are missing
-within `MoodRating` rather than whole rows knocked out of the dataset, and it is
-the non-missing count that records them. The frequency table is the clearest view of all: the
+rating. The line above each table still reads 70 cases, exactly as it did
+before the declaration, and that is worth noticing: no rows were dropped. The
+declared codes are missing within `MoodRating` rather than whole rows knocked
+out of the dataset, and it is the non-missing count — 63 of 70 — that records
+them. The frequency table is the clearest view of all: the
 two codes sit in their own **Missing** section under their markers and labels,
 counted in the totals and left out of the valid percentages. And the settings
 listing confirms the convention is in place for the rest of your session.
+(The row beneath it is always listed: those are the numbers jstats would use if
+you ever converted your markers to the SPSS form.)
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
 Every one of the commercial programs has a version of this move, and all three

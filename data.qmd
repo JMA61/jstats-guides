@@ -402,13 +402,11 @@ jsave(MyData, "WhereDidIGo.rds")
 file.remove("WhereDidIGo.rds")  # base R
 
 ## Now name a Data folder of your own
-## jstats will create this folder upon first save
-## Or you can create it manually
+## jstats creates the folder right away (if it isn't already there)
 joptions(data.dir = "Data")
 
 ## Save the dataset to the Data folder and call it MyData_r.rds
 ## Specify R native format with the .rds extension
-## The Data folder is created now, on this first save
 jsave(MyData, "MyData_r.rds"))---",
   chrome = TRUE,
   files = c("Data/"),
@@ -554,7 +552,7 @@ and ignore this setting.)
 #| results: asis
 .obx$show_block(r"---(## ---- 11. Turning up the digits -----------------------------------------
 
-## By default, jstats shows up to 3 decimal places
+## By default, jstats shows 3 decimal places
 jdesc(MyData_r, Age)   # see the Age mean below -- the callouts explain the decimals
 
 ## Turn the display up to the maximum of 7 decimal places
@@ -564,14 +562,11 @@ jdesc(MyData_r, Age)   # the same mean, now with more decimals shown)---",
 ```
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
-SPSS output shows a fixed number of decimals, padding with zeros to fill the
-width — a mean of 40.65 appears as 40.650 in a three-decimal table. jstats
-goes the other way: it never prints trailing zeros, so `digits` sets a
-*maximum*, and each column shows only the decimals it actually needs. That's
-why the mean above reads 40.65 at the default setting of 3 — its third
-decimal happens to be a zero. And if a statistic lands exactly on a round
-value, it displays short even at digits = 7: that's trimming, not truncation
-or a stuck setting.
+jstats prints every statistic to the number of decimal places `digits` asks
+for, zeros included — so the mean above reads 40.650 at the default setting of
+3, the way an SPSS table would pad it. Stata's default display format goes the
+other way and drops trailing zeros. Counts, and the Min and Max (values from
+the data, not statistics), print as they are at any setting.
 :::
 
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}
@@ -609,9 +604,9 @@ mean(MyData_spss$Income)  # base R -- a poisoned mean
 joutput(digits = 3)
 
 ## Put the data folder setting back to its default (the working directory) too
-## Passing "" clears it (data.dir = NULL would leave it unchanged)
+## NULL clears the setting
 ## A finished script leaves your session exactly as it found it
-joptions(data.dir = ""))---",
+joptions(data.dir = NULL))---",
   chrome = TRUE)
 ```
 

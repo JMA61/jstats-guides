@@ -7,6 +7,18 @@ title-prefix: ""
 options(crayon.enabled = TRUE)
 options(width = 80)          # match a default 80-column console
 old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
+# Show the deliberate error below the way the Console prints it. Newer knitr
+# formats an error as "Error:" on one line and "! <message>" on the next, in
+# color codes the fansi hook above (output only) leaves raw on the page. This
+# puts back the plain one-line "Error: <message>" a reader sees in RStudio.
+local({
+  .err <- knitr::knit_hooks$get("error")
+  knitr::knit_hooks$set(error = function(x, options) {
+    x <- fansi::strip_sgr(x)
+    x <- sub("Error:\\s*\n\\s*(##\\s*)?!\\s+", "Error: ", x)
+    .err(x, options)
+  })
+})
 library(jstats)
 # A first-time reader has no missing-value convention chosen. If the render
 # machine has one set (a .Rprofile, a previous page in the same session), the
@@ -38,13 +50,13 @@ juse(community)
 `juse()` plays the role Stata's `use` does: it names the active dataset once, and the analysis commands that follow assume it. In SPSS terms, it's a bit like having a single data file open in Data View that every menu command then acts on — except you can load several data frames at once and switch which is the default whenever you like.
 :::
 
-With the data loaded, `jscreen()` is the orientation pass — one call that lists every variable, its type, its range, and anything that looks off (odd values, missing data). `stats = TRUE` adds a center-and-spread column for the numeric variables.
+With the data loaded, `jscreen()` is the orientation pass — one call that lists every variable, its type, how many distinct values it has, and anything that looks off (odd values, missing data). `stats = TRUE` adds the mean and median for the numeric variables.
 
 ```{r}
 jscreen(stats = TRUE)
 ```
 
-A screen like this is where you catch problems early — a variable that should be a 0/1 dichotomy showing values of 1 and 2, say, or a "score" whose minimum is an impossible negative number. That second one is exactly what we tackle next.
+A screen like this is where you catch problems early — a variable that should be a 0/1 dichotomy showing values of 1 and 2, say, or a "score" with values far outside its possible range. That second one is exactly what we tackle next.
 
 ## A column that arrived messy
 
@@ -63,7 +75,7 @@ That column is meant to run from 1 to 10, but it arrived with two stand-in codes
 jdesc(MoodRating)
 ```
 
-The mean is dragged far below the 1–10 range, because those large negative codes are being averaged in as if they were genuine ratings. `jdeclare_missing()` fixes this the careful way — it *declares* the two codes as missing, with labels, without overwriting or deleting anything. The underlying data are untouched; we've only told jstats how to read them.
+The mean is dragged far below the 1–10 range, because those large negative codes are being averaged in as if they were genuine ratings. `jdeclare_missing()` fixes this the careful way — it *declares* the two codes as missing, with labels, so jstats sets them aside and still knows which was "Refused" and which "Don't know." No case is deleted.
 
 ```{r}
 #| error: true
@@ -118,7 +130,7 @@ The practical difference is what to do next. A note needs nothing. A warning ask
 :::
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
-This is the equivalent of setting a variable's missing values in SPSS's Variable View (the `MISSING VALUES` command in syntax), or Stata's extended missing values. The important parallel is that it's **non-destructive**: like declaring missing values rather than recoding them to system-missing, `jdeclare_missing()` leaves the original codes in place and simply flags them, so nothing is lost and the declaration can be changed or undone later.
+This is the equivalent of setting a variable's missing values in SPSS's Variable View (the `MISSING VALUES` command in syntax), or Stata's extended missing values. The important parallel is that the *reason* survives: unlike recoding to system-missing, which collapses every code into one blank, `jdeclare_missing()` keeps "Refused" and "Don't know" distinct and labeled — as flagged codes under the SPSS-style convention, as `.a` and `.b` markers under the Stata-style one chosen here — and the declaration can be converted to the other forms later.
 :::
 
 ::: {.callout-note collapse="true" title="Going deeper (optional)"}
@@ -141,7 +153,7 @@ By default jstats prints variable *names*, which keeps output uncluttered. But a
 joutput(variable.id = "legend")
 ```
 
-Running `joutput()` prints its full settings panel — every output setting, not only the one you changed — so the screenful you see here is expected, not a sign anything went wrong. The setting you changed, `variable.id`, is now marked `(override)`, flagging that it differs from the default; the others stay at their usual values.
+jstats answers with the one setting you changed. `(override)` flags that `variable.id` now differs from its default; every other setting is untouched. To see them all, run `joutput()` with nothing in the parentheses.
 
 You can also set this for a single call, by passing `variable.id = "legend"` to that function directly instead of session-wide.
 
@@ -172,7 +184,7 @@ Run `jalpha()` again with the reversed item in place of the original:
 jalpha(Environment1, Environment2R, Environment3, Environment4, Environment5)
 ```
 
-With the item reversed, reliability improves — but the diagnostics now point at `Environment5`: it has the weakest corrected item-total correlation and the highest "alpha if item dropped," meaning the scale would be a touch *more* reliable without it. So we drop it and build the scale from the four items that hang together, as a per-case mean with `javg()`, requiring at least three of the four present so a respondent who skipped one still gets a score:
+With the item reversed, reliability improves — but the diagnostics now point at `Environment5`: it has the weakest corrected item-total correlation and the highest "Alpha if Item Deleted," meaning the scale would be a touch *more* reliable without it. So we drop it and build the scale from the four items that hang together, as a per-case mean with `javg()`, requiring at least three of the four present so a respondent who skipped one still gets a score:
 
 ```{r}
 community$EnvScale <- javg(Environment1, Environment2R, Environment3, Environment4,
@@ -233,7 +245,7 @@ The session default, the dummy registration, and the listwise filter all persist
 
 ```{r}
 jcomplete(NULL)            # drop the listwise filter
-jdummy(community, NULL)    # drop the dummy registrations
+jdummy(NULL)               # drop the dummy registrations
 juse(NULL)                 # clear the session default
 ```
 
@@ -284,6 +296,6 @@ That file arrives with its missing-value codes stored SPSS-style, and because we
 
 And that's a full session, end to end: opened the data, screened it, cleaned a messy column, built and checked a scale, run the models, kept the case base consistent, and saved the result — with the everyday conveniences (`juse()`, `jdummy()`, `jcomplete()`) falling into place as they came up rather than as separate lessons.
 
-This page is the *narrative* of a session, not a manual: to keep it moving it left a good deal unexplained — including output you saw but we didn't stop on, like the **Case Processing Summary** that headed several of the analyses (the small table reporting how many cases an analysis used and how missing values were handled). For looking a single task up while you work — "how do I reverse-code an item," "how do I get a correlation matrix" — see the [Reference](reference.qmd) page, which links every function to its full help and its options. And to go further than these guides, the book series covers the analyses and their output in full: Book 1 builds the statistics and R together from the start, and Book 2 is the option-by-option guide — output settings, the Case Processing Summary, and the rest — for readers who already know the statistics.
+This page is the *narrative* of a session, not a manual: to keep it moving it left a good deal unexplained — including output you saw but we didn't stop on, like the case-processing block that heads each analysis (sometimes one line, sometimes a small table, reporting how many cases the analysis used and how missing values were handled). For looking a single task up while you work — "how do I reverse-code an item," "how do I get a correlation matrix" — see the [Reference](reference.qmd) page, which links every function to its full help and its options. And to go further than these guides, the book series covers the analyses and their output in full: Book 1 builds the statistics and R together from the start, and Book 2 is the option-by-option guide — output settings, the Case Processing Summary, and the rest — for readers who already know the statistics.
 <!-- future: link a YouTube full-session walkthrough here -->
 

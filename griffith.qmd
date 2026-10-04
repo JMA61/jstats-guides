@@ -138,14 +138,11 @@ format:
 Welcome, and thank you for taking a look at jstats. This site is a hands-on tour
 of the tools your Honours and Masters students began using in my class -- though
 jstats has been refined substantially since then. By following the short setup
-steps on this site, you'll be ready to follow along during our Teams session on
-Thursday 9 July, where I'll lead you through the Quick Start. By the end of the
-hour, I expect you'll be able to open a dataset in R and run analyses including
+steps on this site (see "Setting up" below) and then working through the Quick
+Start, I expect you'll be able to open a dataset in R and run analyses including
 linear regression, with no prior R experience needed. Behind the short,
 intuitive commands you'll type, jstats is currently more than 23,000 lines of
 computer code -- including its extensive help files -- doing the work for you.
-Please set up R, RStudio, and jstats before we meet (see "Setting up"
-below). I look forward to seeing you on Teams at 10.00 am on Thursday 9 July.
 
 ## Students in 7036CCJ/CCJ736
 

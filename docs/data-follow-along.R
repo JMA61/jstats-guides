@@ -130,13 +130,11 @@ jsave(MyData, "WhereDidIGo.rds", overwrite = TRUE)
 file.remove("WhereDidIGo.rds")  # base R
 
 ## Now name a Data folder of your own
-## jstats will create this folder upon first save
-## Or you can create it manually
+## jstats creates the folder right away (if it isn't already there)
 joptions(data.dir = "Data")
 
 ## Save the dataset to the Data folder and call it MyData_r.rds
 ## Specify R native format with the .rds extension
-## The Data folder is created now, on this first save
 jsave(MyData, "MyData_r.rds", overwrite = TRUE)
 
 
@@ -191,8 +189,7 @@ jfreq(MyData_r_stata, Education) # Now the codes display in Stata format
 
 ## ---- 11. Turning up the digits -----------------------------------------
 
-## By default, jstats shows up to 3 decimal places
-## (jstats never prints trailing zeros, so a mean can show fewer than that)
+## By default, jstats shows 3 decimal places
 jdesc(MyData_r, Age)   # note how many decimals the Age mean shows here
 
 ## Turn the display up to the maximum of 7 decimal places
@@ -220,7 +217,7 @@ mean(MyData_spss$Income)  # base R -- a poisoned mean
 joutput(digits = 3)
 
 ## Put the data folder setting back to its default (the working directory) too
-## Passing "" clears it (data.dir = NULL would leave it unchanged)
+## NULL clears the setting
 ## A finished script leaves your session exactly as it found it
-joptions(data.dir = "")
+joptions(data.dir = NULL)
 
