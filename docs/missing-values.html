@@ -645,7 +645,8 @@ Run joptions() to see all settings.
 
 Note: the clinic data frame uses SPSS-style missing values.
 To convert it to match this setting, run:
-  jconvert(clinic, to = "stata", modify = TRUE)</span>
+  jconvert(clinic, to = "stata", modify = TRUE)
+</span>
 <span class="cp-in">&gt; clinic &lt;- jdeclare_missing(clinic, MoodRating,
 +                            codes = c(Refused = -99, "Don't know" = -98))</span>
 <span class="cp-out">Declared and converted to Stata-style missing values on MoodRating:
@@ -775,7 +776,7 @@ Console <span class="obx-loc">(lower-left pane)</span>
               -98 ["Don't know"]  -&gt; .b
   SleepHours  -99 ["Refused"]     -&gt; .a
               -98 ["Don't know"]  -&gt; .b
-  Medication  -99 ["Refused"]  -&gt; .a
+  Medication  -99 ["Refused"]     -&gt; .a
   Anxiety4    -99 ["Refused"]     -&gt; .a
               -98 ["Don't know"]  -&gt; .b
 
