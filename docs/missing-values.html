@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8d3f76c4056070a30d229a91414c2fcc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-b60af2d24e4b1d763b4580bec0caf010.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -583,7 +583,7 @@ To make the choice permanent, put the same line in your .Rprofile.</span>
 </div>
 <p>This is the one place on the site where jstats refuses to do something it plainly could do, and the refusal is deliberate. The three forms behave differently once the data leave jstats — in base R, in other packages, in a file bound for another program — so silently picking one would be choosing on your behalf a consequence you had not seen. Instead the error lays out the three choices, each with the one fact that separates it from the others, and puts its recommendation first.</p>
 <p>The recommendation is Stata-style, and the reason is the line under it in the error: the markers behave as true NAs in base R. That holds for the SAS-style markers just as much — both forms replace the code with a genuine missing value, and the only difference between them is which letters they use. The real divide is between those two and SPSS-style. Under SPSS-style, a −99 is still a −99, and base R — which knows nothing about jstats’s notes — will average it in and hand you a plausible-looking wrong number. Under either marker form the code has become a real missing value, so base R’s <code>mean()</code> returns <code>NA</code> instead: an answer you cannot mistake for a result, and one line fixes it. In short, <strong>SPSS-style fails silently in base R; the marker forms fail loudly, and are fixable.</strong> Stata-style is the one the recommendation names because it is the more widely used of the two. Block 5 shows the contrast live, on the same column.</p>
-<p>That still leaves room for judgment. If you write base R alongside jstats, or paste in code an AI assistant wrote for you — which today will usually be base R — choose Stata-style. If your data live in SPSS and go back there for a supervisor or a collaborator, staying SPSS-style is a reasonable choice, and jstats will read your declarations correctly either way. And notice the error’s last line: the same <code>joptions()</code> command, placed in your Project’s <code>.Rprofile</code>, makes the choice once and for all — block 7 says where that file lives.</p>
+<p>That still leaves room for judgment. If you write base R alongside jstats, or paste in code an AI assistant wrote for you — which today will usually be base R — choose Stata-style. If your data live in SPSS and go back there for a collaborator, staying SPSS-style is a reasonable choice, and jstats will read your declarations correctly either way. And notice the error’s last line: the same <code>joptions()</code> command, placed in your Project’s <code>.Rprofile</code>, makes the choice once and for all — block 7 says where that file lives.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -650,8 +650,8 @@ To convert it to match this setting, run:
 <span class="cp-in">&gt; clinic &lt;- jdeclare_missing(clinic, MoodRating,
 +                            codes = c(Refused = -99, "Don't know" = -98))</span>
 <span class="cp-out">Declared and converted to Stata-style missing values on MoodRating:
-  .a ["Refused"]  (from -99)
-  .b ["Don't know"]  (from -98)
+  .a ["Refused"] (from -99)
+  .b ["Don't know"] (from -98)
 
 This call changes clinic only if you assign the result:
   clinic &lt;- jdeclare_missing(clinic, MoodRating, ...)

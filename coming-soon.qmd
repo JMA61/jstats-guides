@@ -1,0 +1,69 @@
+---
+pagetitle: "jstats:How-Tos coming soon"
+title-prefix: ""
+---
+
+## Coming soon
+
+These How-Tos are on the way. Each will stand on its own, like the ones already
+listed on the [How-Tos](howtos.qmd) page.
+
+## Using your own data
+
+The bridge from the practice datasets to a file of your own: opening an Excel,
+CSV, or commercial-software file, keeping it in a data folder, and taking a first
+look with `jscreen()`.
+
+## Working with data from commercial statistical software
+
+Importing and working with data from SPSS, Stata, and SAS, including value and
+variable labels and the different missing-value conventions.
+
+## Reading jstats output: Case Processing and Missing data
+
+Not how to interpret the statistics, but how to read the accounting printed above
+them: the Case Processing lines and tables that say how many cases an analysis
+used and which were set aside, and the Missing data breakdown that shows where
+each variable's missing values went.
+
+## Recoding and relabeling variables
+
+Reverse-coding an item, collapsing categories, and fixing variable and value
+labels with `jrecode()` and `jrelabel()`, keeping the original column intact.
+
+## Text answers into coded variables
+
+Turning a column of words ("Yes", "No", "Don't know") from a spreadsheet or survey
+export into a labeled, coded variable with `jencode()`.
+
+## Building and checking a scale
+
+Combining Likert items into a scale and checking its reliability with Cronbach's
+alpha.
+
+## Working on part of your data
+
+Analyzing a subgroup with `jsubset()`, and using `jcomplete()` so a set of
+analyses all run on the same cases.
+
+## Comparing groups: t-tests and cross-tabulations
+
+t-tests with `jt()` and cross-tabulations with `jcrosstab()`: the same formula
+style as `jaov()`, how to read what comes back, and the Welch version of the
+t-test (`welch = TRUE`), which does not assume equal variances.
+[One-way ANOVA](anova.qmd) is already available.
+
+## Regression with categorical predictors
+
+Linear and logistic regression with `jlm()` and `jlogistic()`. `jdummy()` is the
+quick way in for a categorical variable: register its dummy coding and reference
+category once, and it goes into a model by name — no building dummy variables by
+hand, and no converting to base R's factors.
+
+## Handling missing values across platforms
+
+What survives when data move between SPSS, Stata, SAS, and R: round trips between
+formats, converting declarations from one convention to another, missing-value
+ranges, and the SAS interchange format. Declaring missing values in the first
+place is covered in
+*[Telling jstats about missing values](missing-values.qmd)*.

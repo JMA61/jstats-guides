@@ -7,69 +7,107 @@ title-prefix: ""
 
 These how-tos assume you've worked through [Get Started](start-here.qmd) — you'll be
 comfortable loading jstats, using `juse()` and `jload()`, and running the basic
-functions. Each one stands on its own, so read whichever you need; for now,
-[Get Started](start-here.qmd) is the place to begin.
+functions. Each one stands on its own, so read whichever you need.
 
-The articles below are on the way. They go beyond the Get Started on-ramp and point
-toward the fuller treatment in the books.
+The How-Tos go beyond the Get Started on-ramp and point toward the fuller treatment
+in the books. The menu on the left lists them by topic. The first article is
+ready: [One-way ANOVA](anova.qmd), under Comparing groups. More are on the way,
+and [Coming soon](coming-soon.qmd) describes them.
 
-## Using your own data
+## Using the How-To pages {#using-the-how-to-pages}
 
-*Coming soon* — the bridge from the practice datasets to a file of your own: opening
-an Excel, CSV, or commercial-software file, keeping it in a data folder, and taking
-a first look with `jscreen()`.
+Every How-To is built the same way, so what follows is said once, here, and not
+repeated on each page.
 
-## Working with data from commercial statistical software
+::: {.callout-note collapse="false" title="Before you start"}
+To follow along with any How-To you'll need:
 
-*Coming soon* — importing and working with data from SPSS, Stata, and SAS, including
-value and variable labels and the different missing-value conventions.
+- **R, RStudio, and jstats installed.** If they're not, work through
+  [Get Started, Steps 1-5](start-here.qmd) first and come back.
+- **An RStudio Project open**, so your working directory and files are already
+  set up.
+- **A new, empty R script open** (File > New File > R Script). You'll copy each
+  numbered block into it, one at a time, running each before moving on.
+:::
 
-## Reading jstats output: Case Processing and Missing data
+::: {.callout-note collapse="true" title="How to use the How-To pages"}
+The numbered blocks on a How-To page build one script. Paste each block into the
+same R script file as you reach it, in order. By the end, the whole file runs
+from top to bottom, except where a comment says an error is deliberate (so you
+can see what one looks like).
 
-*Coming soon* — not how to interpret the statistics, but how to read the accounting
-printed above them: the Case Processing lines and tables that say how many cases an
-analysis used and which were set aside, and the Missing data breakdown that shows
-where each variable's missing values went.
+- Every block starts with a dashed comment header (`## ---- 1. ... ----`). The
+  header marks where one block ends and the next begins in your growing script,
+  and RStudio reads those headers as sections, so they appear in the script's
+  outline for easy jumping around.
+- Block 1 of every page loads jstats and chooses the practice dataset that page
+  uses, so each page's script runs on its own, in a fresh session.
+- Run lines the way the [RStudio Orientation](rstudio-orientation.qmd) showed:
+  cursor on the line, then Ctrl+Enter (Cmd+Enter on a Mac) or the Run button;
+  highlight several lines to run them together. Experiment freely as you go.
+- Under most blocks, a Console pane shows what you should see when you run the
+  block: the blue command lines, the gray notices, the tables with their red
+  titles, and a red error where one is meant to happen. The panes show the code
+  being run, along with any note written on the end of a command line, but not
+  the standalone `##` comment lines (running one just echoes it back and does
+  nothing).
+- The boxes under an output are optional reading, and each title says who the
+  box is for. **If you're new to statistics** explains what the analysis is
+  for. **Reading this output** walks through what was printed. **Why jstats
+  does it this way** explains the design, and how base R differs. **Coming from
+  SPSS, Stata, or SAS?** gives the parallels in commercial statistical software.
+:::
 
-## Recoding and relabeling variables
+::: {.callout-note collapse="true" title="The finished script on each page"}
+Each How-To ends with a download: the *finished* version of the script you built
+on that page. Finished means something specific. A goal every experienced
+programmer and statistician takes for granted, but new researchers are rarely
+told: a completed script should run from beginning to end without errors. Where
+a page shows an error on purpose, the download has that line commented out, with
+a note saying why, so the file runs clean.
 
-*Coming soon* — reverse-coding an item, collapsing categories, and fixing variable
-and value labels with `jrecode()` and `jrelabel()`, keeping the original column
-intact.
+To prove a script is finished, use the **Source** icon (to the right of Run in
+the script toolbar): it runs the whole file, top to bottom, in one go. Source
+shows the *output* without echoing each command back to the Console — that is
+normal — and the small arrow beside Source offers "Source with Echo" if you
+would like the commands shown too.
 
-## Text answers into coded variables
+We recommend working through a page's blocks one at a time first: you learn far
+more by building the script yourself and watching each piece run than by reading
+a finished file. If you're keeping the download — and it's worth keeping, since
+finished scripts travel — give it a proper home. In the **Files** tab of the
+lower-right pane, click **New Folder** and type a name into the popup. "Scripts"
+is a good one.
+:::
 
-*Coming soon* — turning a column of words ("Yes", "No", "Don't know") from a
-spreadsheet or survey export into a labeled, coded variable with `jencode()`.
+::: {.callout-note collapse="true" title="Reset your session"}
+Experimenting means the occasional wrong turn — a setting changed, a practice
+dataset overwritten, output that suddenly looks different. When something feels
+off and you'd like a clean footing without restarting RStudio, run these two
+lines in the Console:
 
-## Building and checking a scale
+```r
+## Put jstats' output settings back to their defaults
+joutput("standard")   # output level, and decimal places back to 3
 
-*Coming soon* — combining Likert items into a scale and checking its reliability with
-Cronbach's alpha.
+## Point saving and loading back at your working directory
+joptions(data.dir = NULL)
+```
 
-## Working on part of your data
+That resets jstats itself. To clear away objects you created while following
+along, the simplest way is the little **broom** icon at the top of the
+**Environment** pane (upper-right): one click sweeps the pane clean. It clears
+*everything* in the Environment, so use it when you're between run-throughs, not
+in the middle of one. The built-in practice datasets come right back whenever
+you want them, with `jload("community")` or `jload("clinic")`.
+:::
 
-*Coming soon* — analyzing a subgroup with `jsubset()`, and using `jcomplete()` so a
-set of analyses all run on the same cases.
-
-## Comparing groups
-
-*Coming soon* — t-tests, one-way ANOVA, and cross-tabulations with `jt()`, `jaov()`,
-and `jcrosstab()`: one formula style for all three, how to read what comes back, and
-the Welch versions of the t-test and ANOVA (`welch = TRUE`), which do not assume
-equal variances.
-
-## Regression with categorical predictors
-
-*Coming soon* — linear and logistic regression with `jlm()` and `jlogistic()`.
-`jdummy()` is the quick way in for a categorical variable: register its dummy coding
-and reference category once, and it goes into a model by name — no building dummy
-variables by hand, and no converting to base R's factors.
-
-## Handling missing values across platforms
-
-*Coming soon* — what survives when data move between SPSS, Stata, SAS, and R: round
-trips between formats, converting declarations from one convention to another,
-missing-value ranges, and the SAS interchange format. Declaring missing values in the
-first place is covered in
-*[Telling jstats about missing values](missing-values.qmd)*.
+**Missing values, on every page.** Every jstats function sets aside the missing
+values in your data before it computes anything. That includes codes such as −99
+that have been *declared* as missing, whether the declaration arrived with an
+SPSS, Stata, or SAS file or you made it yourself with `jdeclare_missing()`. Base
+R does not do this for a code declared the SPSS way, and neither do many add-on
+packages: to them the −99 is an ordinary number, and it goes into the mean. The
+declaring is your part.
+*[Telling jstats about missing values](missing-values.qmd)* shows how to declare
+codes, and how to find codes that nobody has declared.

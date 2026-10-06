@@ -1,0 +1,717 @@
+---
+pagetitle: "jstats:One-way ANOVA"
+title-prefix: ""
+resources:
+  - anova-follow-along.R
+---
+
+```{r}
+#| label: obx-setup
+#| include: false
+
+# ---------------------------------------------------------------------------
+# CONSOLE FACSIMILES -- render scaffolding, hidden (include: false). Same
+# mechanism as quickstart.qmd and data.qmd: pane_facsimile.R defines the
+# capture-once / display-twice helpers in their own dot-named environment
+# (.obx). Each block below is one call whose code STRING is both printed into
+# the page and executed once, so the shown code and the run code cannot drift.
+# An unexpected error in any block HALTS the render (the publish gate); block
+# 10's error is deliberate and is caught with expect_error = TRUE.
+#
+# Devices, by the OUTPUT-REGISTER rule: the page's prose and its "Reading this
+# output" boxes READ the output of blocks 1-7, 9 and 10, so those panes render
+# OPEN (.obx$show_console(fence = TRUE));
+# block 11 repeats output already read and is the reader's own result to check,
+# so it is a collapsed "What you should see" box (.obx$show_block()). Block 8's
+# result is a plot, not Console output: its code is a plain fence and the
+# figure is drawn by a chunk that runs the same code string.
+#
+# jstats is NOT pre-loaded, for data.qmd's reason: block 1 teaches
+# library(jstats), and R prints the startup message on first attach only.
+# joutput()/joptions() are left alone: a first-time reader runs on package
+# defaults. The page writes nothing to disk, so there is no teardown.
+#
+# HOW-TO LAYOUT (S344). No top boxes: the shared material (before you start, how
+# to use the pages, the finished script, reset your session) lives once on
+# howtos.qmd, and this page points there. Under the first output: "If you're
+# new to statistics", "Reading this output", "Why jstats does it this way".
+# Under later outputs: one plain sentence of result in the main text, then a
+# "Reading this output" box where there is something new to read.
+# ---------------------------------------------------------------------------
+
+options(width = 80)   # match a default 80-column console for table alignment
+options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real startup message
+source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color on
+```
+
+## One-way ANOVA
+
+This page is a hands-on run-through of a one-way ANOVA with `jaov()`: which
+version of the test to run, how to check the assumption that decides between
+the two versions, which follow-up comparisons go with each, and what to put in
+your write-up.
+
+A one-way ANOVA (analysis of variance) compares the average of a numeric outcome
+across the categories of one categorical variable — usually three or more
+groups. The page assumes you have met the test in a course or a textbook, and
+concentrates on running the test and reporting it.
+
+This page follows the pattern of every How-To: numbered blocks that build one
+script, with the finished script to download at the bottom.
+[Using the How-To pages](howtos.qmd#using-the-how-to-pages) explains the
+pattern, and how to reset your session if something goes wrong.
+
+### 1. Load jstats and choose the data
+
+We'll work on `clinic`, one of the two practice datasets that ship with the
+package: 70 simulated clients in a study of four treatment conditions — a
+control group, cognitive behavioral therapy (CBT), mindfulness training, and a
+support group. `juse()` makes `clinic` the default data frame, so the commands
+that follow can leave its name out.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 1. Load jstats and choose the data -------------------------------
+
+## Load jstats for this session, then make the clinic practice dataset
+## the default, so the commands below can leave its name out
+library(jstats)
+juse(clinic))---", fence = TRUE,
+  lead = "The command lines are shown; the standalone <code>##</code> comment lines aren't -- running a comment just echoes it back and does nothing.")
+```
+
+### 2. Run the standard ANOVA
+
+The outcome is `Flourishing`, a wellbeing score from 0 to 100, and the grouping
+variable is `Condition`. `jaov()` takes a formula, with the outcome on the left
+of the tilde (`~`) and the grouping variable on the right.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 2. Run the standard ANOVA ----------------------------------------
+
+## Is there evidence that average flourishing differs across the four
+## treatment conditions? The outcome goes left of the ~, the groups right
+jaov(Flourishing ~ Condition))---", fence = TRUE)
+```
+
+The result is in the first row of the ANOVA table. The *p* is below .05, the
+usual threshold, so the test is statistically significant: evidence that average
+flourishing differs across the four conditions in the population from which the
+sample was selected, and not only in the sample.
+
+::: {.callout-tip collapse="true" title="If you're new to statistics"}
+The four group means in the output differ; in real data they always do. That is
+not the question. These 70 clients are a sample, and the question is about the
+population from which the sample was selected: if the four conditions made no
+difference in that population, could differences this size have turned up in the
+sample simply through the luck of who was selected? The ANOVA is a test of
+exactly that. (With data on a whole population, a census, there would be nothing
+to test. The means you see would simply be the population's means.)
+:::
+
+::: {.callout-note collapse="true" title="Reading this output"}
+- **The title** names the test. "One-Way ANOVA" is the standard version. The
+  line under the title confirms which data frame was used, since the command
+  left the data frame's name out.
+- **Analysis N** is the number of cases the test used — all 70 here, because
+  neither variable has missing values. When cases are set aside, a small Case
+  Processing table takes this line's place and says how many and why (block 9
+  has one).
+- **Group Descriptives** gives each group's size, mean, and standard deviation,
+  with a 95% confidence interval for the mean. Look here first: these are the
+  differences in your sample.
+- **The ANOVA table** is the test itself. Two numbers in its first row carry the
+  result, *F* and *p*. The larger the *F* and the smaller the *p*, the stronger
+  the evidence that the means differ in the population and not only in the
+  sample. By the usual convention, a *p* below .05 counts as statistically
+  significant. A significant result does not say the difference is large or
+  important, and a non-significant result does not show the groups are the same
+  in the population. The rest of the table, and the Eta-squared line under it,
+  are covered in the books and in most statistics courses. You will need some of
+  those numbers for a write-up; the last section of this page shows where to
+  find them.
+:::
+
+::: {.callout-note collapse="true" title="Why jstats does it this way"}
+One function runs both versions of this test, the standard ANOVA and Welch's
+ANOVA, and one argument, `welch = TRUE`, switches between them. The same
+argument does the same job in jstats's t-test, `jt()`. Both functions default to
+the standard version, so a t-test and an ANOVA on the same two groups give the
+same answer.
+
+Base R arranges things differently. Its standard ANOVA is `aov()`; Welch's
+version is a separate function, `oneway.test()`, with different output. Base R's
+t-test, `t.test()`, runs Welch's version unless told otherwise, while `aov()`
+runs the standard version, so on the same two groups the two functions give
+different answers until you change a default. Levene's test and the Games-Howell
+comparisons, both used later on this page, are not in base R at all. Add-on
+packages fill those gaps, each with its own syntax, defaults, and output.
+
+Base R also has to be told that the grouping variable is categorical.
+`Condition` holds the codes 1 to 4 with labels attached, which is how data from
+commercial statistical software usually arrive. Hand `Condition` to `aov()` as
+it is, and R treats the codes as a measured quantity and runs a different
+analysis, with no warning. `jaov()` reads the labels, makes the conversion for
+you, and then runs base R's own `aov()` underneath — the same proven code, with
+the setup done.
+:::
+
+### 3. The other version, Welch's ANOVA
+
+jstats offers two versions of the test. The **standard ANOVA** you just ran
+assumes that the scores are about equally spread out in every group — *equal
+variances*, also called homogeneity of variance. **Welch's ANOVA** drops that
+assumption.
+
+The standard version is the default because it is the traditional one: the test
+most courses and textbooks teach, the table commercial statistical software
+prints first, and the one most readers of your work will expect unless you say
+otherwise. Welch's version is one argument away: `welch = TRUE`.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 3. The other version, Welch's ANOVA ------------------------------
+
+## The same question, without assuming the groups are equally spread out
+jaov(Flourishing ~ Condition, welch = TRUE))---", fence = TRUE)
+```
+
+Welch's ANOVA is significant too, so on these data the two versions lead to the
+same conclusion. The two versions will not always agree, and the next two blocks
+are about choosing between them.
+
+::: {.callout-note collapse="true" title="Reading this output"}
+The title now says Welch's. The test table is shorter than the standard one: it
+shows *F*, two degrees-of-freedom values, and *p*, and the note under the table
+says that sums of squares and mean squares do not apply to Welch's ANOVA. The
+second degrees-of-freedom value carries a decimal, which is normal for this
+test. *F* and *p* are read as in block 2. The Group Descriptives table is the
+same as in block 2, because Welch's ANOVA changes how the means are *tested*,
+not the means. The Eta-squared line has a note of its own, because the effect
+size is still worked out the standard way.
+:::
+
+::: {.callout-note collapse="true" title="Going deeper (optional)"}
+Some statisticians now recommend running Welch's version as a matter of routine,
+on the grounds that it costs little when the variances are equal and protects
+you when the variances are not. Others, and most courses, keep the standard test
+unless there is a reason to leave it. Either position is defensible. What
+matters is that you say which test you ran and why, and that you follow the
+preference of your field, or of whoever will assess your work, where there is
+one. The help page `?jaov` documents every option used on this page; Book 1
+covers what the *F* test is doing and why unequal variances matter, in more
+detail, with worked examples.
+:::
+
+### 4. Check equal variances with Levene's test
+
+Whether the variances are equal is something you can check. Levene's test
+compares the spread of the groups, and `levene = TRUE` adds Levene's test to the
+output.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 4. Check equal variances with Levene's test ----------------------
+
+## Levene's test asks whether the groups differ in spread. It is off by
+## default, so ask for it
+jaov(Flourishing ~ Condition, levene = TRUE))---", fence = TRUE)
+```
+
+Levene's test is not significant here: its *p* is above .05. The test found no
+evidence that the four conditions differ in spread in the population, so there
+is no reason to doubt the standard ANOVA's assumption, and the standard ANOVA
+from block 2 is the one to report.
+
+Equal variances is the assumption most people have in mind when they talk about
+checking an ANOVA, and it is the assumption that decides between the two
+versions of the test. Both versions make two other assumptions as well: that the
+cases are independent of one another, and that the scores within each group are
+roughly normally distributed. The box plot in block 8 gives a first look at the
+second of those.
+
+::: {.callout-note collapse="true" title="Reading this output"}
+The new table sits at the top, above the descriptives. Levene's test has an *F*
+and a *p* of its own, and its *p* is read the other way around from most tests:
+a *p* **above** .05 is the reassuring result. When Levene's test is not
+significant, jstats adds nothing further, and the rest of the output is what
+block 2 printed.
+
+Glance at the SD column of Group Descriptives as well. Levene's test is a guide,
+not a verdict: with small groups the test can miss a real difference in spread,
+and with very large groups the test can flag a trivial one. Here the Control
+group's SD is the largest of the four, though not by enough for Levene's test to
+flag it; block 8 shows where that extra spread comes from.
+:::
+
+### 5. When Levene's test is significant
+
+To see the other outcome of Levene's test we need a different variable.
+`ScreenTime` is each client's daily screen time, in hours.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 5. When Levene's test is significant -----------------------------
+
+## A different outcome, daily screen time, whose spread does differ
+## across the conditions. Watch for the note under the Levene table
+jaov(ScreenTime ~ Condition, levene = TRUE))---", fence = TRUE)
+```
+
+This time Levene's test is significant: evidence that the four conditions differ
+in spread. jstats adds a note under the Levene table, and because the four
+groups are close to the same size, the note says the standard ANOVA remains
+appropriate.
+
+That gives the conventional rule for choosing between the two versions:
+
+- Levene's test **not significant**: report the standard ANOVA.
+- Levene's test **significant, group sizes about equal**: the standard ANOVA is
+  usually still acceptable. Welch's ANOVA is the safer choice when the SDs are
+  far apart, as some of the SDs are here. Say which version you used.
+- Levene's test **significant, group sizes unequal**: use Welch's ANOVA.
+
+The rule is a rule of thumb, not a guarantee. Whichever version you choose, say
+what you did and why.
+
+::: {.callout-note collapse="true" title="Reading this output"}
+Levene's *p* is below .05, and the SD column shows why: the Control group's
+screen time is bunched more tightly than the other groups'.
+
+The note under the Levene table is there because unequal variances matter more
+in some situations than in others. The standard ANOVA is least affected by
+unequal variances when the groups are about the same size, and most affected
+when the group sizes are unequal as well. So jstats checks the group sizes for
+you. jstats treats the group sizes as approximately equal when the largest group
+is no more than 1.5 times the size of the smallest, a rule of thumb. Here the
+largest group has 21 clients and the smallest has 14, which is exactly 1.5. Had
+the group sizes been further apart, the note would have said instead that the
+unequal variances may affect the results, and suggested `welch = TRUE`.
+
+The ANOVA itself is not significant in this output: the test gives no evidence
+that average screen time differs across the conditions in the population.
+Levene's test and the ANOVA answer different questions, one about spread and
+one about means.
+:::
+
+### 6. Which groups differ, Tukey HSD
+
+Back to `Flourishing`. A significant ANOVA is evidence that the group means are
+not all the same in the population. A significant ANOVA does not say which
+groups differ. That is the job of *post-hoc comparisons*: every pair of groups
+compared, with the *p*-values adjusted so that making several comparisons at
+once does not inflate the chance of a false alarm. `posthoc = TRUE` adds the
+comparisons, and after the standard ANOVA the method is Tukey HSD (the letters
+stand for "honestly significant difference").
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 6. Which groups differ, Tukey HSD --------------------------------
+
+## Post-hoc comparisons test every pair of groups. After the standard
+## ANOVA, the method is Tukey HSD
+jaov(Flourishing ~ Condition, posthoc = TRUE))---", fence = TRUE)
+```
+
+Two of the six comparisons are significant: clients in CBT and clients in
+Mindfulness each scored higher on flourishing than clients in the Control group.
+None of the other four comparisons reaches significance, CBT against Mindfulness
+included.
+
+::: {.callout-note collapse="true" title="Reading this output"}
+The new table is at the bottom. Each row is one pair of groups, and the row's
+name says which way the subtraction runs: `CBT-Control` is the CBT mean minus
+the Control mean, so a positive difference means CBT scored higher. Next comes
+the 95% confidence interval for that difference, and then the adjusted *p*.
+Because the adjustment is built in, you read each *p* against .05 as it stands.
+The interval tells the same story: an interval that does not include zero goes
+with a *p* below .05.
+
+Four groups make six pairs, and five groups would make ten, so this table grows
+quickly. If the table's lines wrap in your Console, drag the Console pane wider
+and run the line again.
+:::
+
+### 7. Which groups differ after Welch's, Games-Howell
+
+Tukey HSD carries the same equal-variances assumption as the standard ANOVA. If
+you used Welch's ANOVA, the matching method is Games-Howell, which does not
+assume equal variances either. You don't ask for Games-Howell by name:
+`posthoc = TRUE` gives Tukey HSD after the standard ANOVA and Games-Howell after
+Welch's ANOVA.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 7. Which groups differ after Welch's, Games-Howell ---------------
+
+## The same request after Welch's ANOVA gives Games-Howell comparisons,
+## which do not assume equal variances either
+jaov(Flourishing ~ Condition, welch = TRUE, posthoc = TRUE))---", fence = TRUE)
+```
+
+The conclusion is the same on these data: the same two comparisons are
+significant, with somewhat larger *p*-values. Where the groups' variances really
+do differ, the two methods can disagree, which is the reason to match the
+post-hoc method to the test.
+
+::: {.callout-note collapse="true" title="Reading this output"}
+The table has the same layout as the Tukey HSD table, with one more column,
+`df`. Games-Howell judges each pair on those two groups' own variances, so each
+comparison has a degrees-of-freedom value of its own. You need the `df` column
+only if your write-up reports it. The mean differences are the same as in the
+Tukey HSD table, because they are simply differences between group means. The
+intervals and, as a rule, the *p*-values are not the same.
+
+One caution. Games-Howell has to estimate each group's variance from that group
+alone, and with very small groups its *p*-values can come out too small. A rule
+of thumb you will see quoted is at least six cases in every group.
+:::
+
+### 8. Look at the groups with jplot()
+
+A table of means summarizes each group in a few numbers; a plot shows what the
+numbers are summarizing. Save the ANOVA's result under a name with the
+assignment operator, `<-`, and hand that name to `jplot()`.
+
+```{r}
+#| echo: false
+#| results: asis
+.b8 <- r"---(## ---- 8. Look at the groups with jplot() -------------------------------
+
+## Save the result under a name, then hand it to jplot() for a box plot
+## of each group. The plot appears in the Plots tab (lower-right pane)
+Results <- jaov(Flourishing ~ Condition)
+jplot(Results))---"
+.fence <- strrep("`", 3)
+cat(.fence, "r\n", .b8, "\n", .fence, "\n", sep = "")
+```
+
+The first line prints the same output as block 2 while saving the result as
+`Results`. The second line draws a box plot of each group in the **Plots** tab
+of the lower-right pane:
+
+```{r}
+#| label: anova-boxplot
+#| echo: false
+#| results: hide
+#| message: false
+#| fig-width: 7
+#| fig-height: 4.5
+#| fig-alt: "Four box plots of the flourishing score, one for each treatment condition, numbered 1 to 4 along the horizontal axis, with a diamond marking each group's mean. Condition 1 has one separate point far below its box, at a score of 0."
+eval(parse(text = .b8))
+```
+
+One thing stands out: a single client in the Control group, far below everyone
+else, with a flourishing score of 0. A score like that deserves a look at the
+data before you rely on the result — is the score real, or a typing slip? (In
+these practice data the score is simply very low.)
+
+::: {.callout-note collapse="true" title="Reading this output"}
+Each box spans the middle half of that group's scores, the heavy line across the
+box is the median, and the diamond marks the mean — the number the ANOVA
+compares. The lines above and below the box reach to the lowest and highest
+scores that are not unusually far from the box, and any score beyond those lines
+is drawn as a separate point. The horizontal axis shows each condition by its
+code; the Group Descriptives table has the names (1 is Control, 2 CBT, 3
+Mindfulness, 4 Support group).
+
+Two things are worth looking for, because either can distort a mean and a
+standard deviation. **Skew**: a median line well off the center of its box, or a
+diamond some distance from the median line, means the scores are stretched out
+in one direction. **Outliers**: the separate points. The Control client with a
+score of 0 drags the Control group's mean down and stretches the Control group's
+standard deviation; that one client is the main reason Control's SD is the
+largest in the Group Descriptives table.
+:::
+
+### 9. A group with one case
+
+Sometimes a category turns up with a single case in it: one respondent who
+checked "Other," one site that recruited one participant. It is worth knowing
+what each version of the test does then. No group in `clinic` is that small, so
+this block makes one. The `subset =` argument keeps only some of the cases, for
+this one call, and the rule written here keeps every client who is not in CBT,
+plus one client who is.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 9. A group with one case -----------------------------------------
+
+## No group in clinic is that small, so make one for this call only:
+## subset = keeps every client who is not in CBT (condition 2), plus one
+## who is (!= means "is not equal to", and | means "or")
+jaov(Flourishing ~ Condition, posthoc = TRUE,
+     subset = Condition != 2 | ClientID == "C016"))---", fence = TRUE)
+```
+
+The standard ANOVA still runs when a group has one case. But the test learns
+very little about that group, as the wide intervals on the CBT rows of the Tukey
+HSD table show.
+
+::: {.callout-note collapse="true" title="Reading this output"}
+A Case Processing table has replaced the one-line N at the top. The table
+reports that the `subset =` rule set aside 13 clients and left 57.
+
+In Group Descriptives, the CBT row shows an N of 1 and a mean (that one client's
+score) and then nothing. One case has no standard deviation, so the CBT row has
+no confidence interval either. The standard ANOVA can still run because it
+estimates the spread from the other three groups and applies that estimate to
+all four. In the Tukey HSD table, the three rows that involve CBT have intervals
+far wider than the other rows.
+:::
+
+### 10. One case under Welch's ANOVA
+
+Welch's ANOVA cannot do the same. Welch's ANOVA needs each group's own variance,
+and a single case does not have one. Run the same analysis as a Welch's ANOVA
+and jstats stops — the one deliberate error on this page.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 10. One case under Welch's ANOVA ---------------------------------
+
+## The same cases as a Welch's ANOVA. It needs each group's own variance,
+## and one case has none, so jstats stops and says so
+jaov(Flourishing ~ Condition, welch = TRUE,  # an error, on purpose
+     subset = Condition != 2 | ClientID == "C016"))---", fence = TRUE,
+  expect_error = TRUE, expect_error_match = "only 1 case")
+```
+
+The error names the category, says what Welch's ANOVA requires (at least two
+cases in every category), and gives the way out. Which way to take is a judgment
+about your study, not about the software: keep the one-case group and use the
+standard ANOVA, combine that group with a category it belongs with, or leave
+that group out. Whichever you choose, say so in your write-up.
+
+### 11. Everything in one call
+
+Once you know the pieces, `full = TRUE` asks for all of them together: Levene's
+test, the confidence intervals, the effect size, and the post-hoc comparisons.
+Add `welch = TRUE` to the same call for the Welch route.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_block(r"---(## ---- 11. Everything in one call ---------------------------------------
+
+## full = TRUE asks for Levene's test, the confidence intervals, the
+## effect size, and the post-hoc comparisons together
+jaov(Flourishing ~ Condition, full = TRUE))---",
+  chrome = TRUE)
+```
+
+::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
+Everything on this page has a counterpart in the commercial programs, though
+the pieces are arranged differently in each.
+
+In **SPSS** the tests are all in one dialog: One-Way ANOVA, in the Analyze menu
+under Compare Means (Compare Means and Proportions in recent versions). The
+*Options* button holds the descriptives, the homogeneity of variance test
+(Levene's), and Welch's test; the *Post Hoc* button holds Tukey and, in its
+"Equal Variances Not Assumed" group, Games-Howell. SPSS labels the rows of its
+ANOVA table Between Groups and Within Groups, where jstats names the grouping
+variable and `Residual`. In recent versions SPSS's Levene table has several
+rows; the test jstats runs is the classic one, built on each score's distance
+from its own group's mean, which is the row SPSS labels "Based on Mean."
+
+In **Stata**, `oneway Flourishing Condition, tabulate` runs the standard ANOVA
+with the group means. The equal-variances test that command prints is
+Bartlett's, a different test; Levene's comes from
+`robvar Flourishing, by(Condition)`, where it is the statistic labeled W0. Tukey
+comparisons are `pwmean Flourishing, over(Condition) mcompare(tukey) effects`.
+Welch's ANOVA and Games-Howell are not part of those commands;
+community-contributed commands exist for both.
+
+In **SAS**, a `PROC GLM` step with `CLASS Condition;` and
+`MODEL Flourishing = Condition;` runs the standard ANOVA, and one more
+statement, `MEANS Condition / HOVTEST=LEVENE(TYPE=ABS) WELCH TUKEY;`, adds
+Levene's test, Welch's ANOVA, and Tukey comparisons. The `TYPE=ABS` matters:
+left to its default, SAS's Levene's test works from squared distances and gives
+a different result from the one on this page. That `MEANS` statement has no
+Games-Howell option.
+
+One thing jstats adds is the pairing: ask for post-hoc comparisons and you get
+the method that matches the test you ran.
+:::
+
+
+```{r}
+#| label: prose-gates
+#| include: false
+
+# ---------------------------------------------------------------------------
+# PROSE GATES AND WRITE-UP NUMBERS -- hidden.
+# The prose on this page makes statements about what the output shows (which
+# test is significant, which pairs differ, which note prints). The practice
+# data are fixed, so the statements are true today; if clinic is ever rebuilt,
+# or jaov() changes, a statement could go false while the page still renders.
+# Each stopifnot() below is one such statement: a false one HALTS the render,
+# the same publish gate the blocks have. The reporting examples under "What to
+# write up" are built here from the returned objects, so their numbers are the
+# ones the Console panes show.
+# ---------------------------------------------------------------------------
+
+.q <- function(expr) {            # run a jstats call quietly, keep what it printed
+  out <- utils::capture.output(res <- suppressMessages(expr))
+  attr(res, "printed") <- out
+  res
+}
+.std <- .q(jaov(Flourishing ~ Condition, data = clinic, posthoc = TRUE, levene = TRUE))
+.wel <- .q(jaov(Flourishing ~ Condition, data = clinic, welch = TRUE, posthoc = TRUE))
+.scr <- .q(jaov(ScreenTime ~ Condition, data = clinic, levene = TRUE))
+.one <- .q(jaov(Flourishing ~ Condition, data = clinic, posthoc = TRUE,
+                subset = Condition != 2 | ClientID == "C016"))
+
+# Levene's row, read from what jaov() printed (the returned object holds none)
+.lev <- function(res) {
+  out <- fansi::strip_sgr(attr(res, "printed"))
+  i <- grep("Levene's Test for Homogeneity of Variance", out, fixed = TRUE)
+  stopifnot(length(i) == 1L)
+  v <- strsplit(trimws(out[i + 3L]), "\\s+")[[1]]
+  stopifnot(length(v) == 4L)
+  list(f = as.numeric(v[1]), df1 = v[2], df2 = v[3], p = v[4],
+       note = paste(out[(i + 4L):(i + 7L)], collapse = " "))
+}
+.lev_std <- .lev(.std); .lev_scr <- .lev(.scr)
+.pnum <- function(p) as.numeric(sub("^<", "", p))
+
+.wd  <- .one$posthoc$upper - .one$posthoc$lower   # interval widths, block 9
+.sig <- function(res) res$posthoc$comparison[res$posthoc$p < .05]
+.two <- c("CBT-Control", "Mindfulness-Control")
+.n   <- function(res) stats::setNames(res$descriptives$N, sub("^[0-9]+: ", "", res$descriptives$Group))
+
+stopifnot(
+  # block 2: all 70 cases, a significant F
+  .std$n == 70, .std$p < .05,
+  # block 3: Welch's agrees, and its second df carries a decimal
+  .wel$p < .05, .wel$df2 != round(.wel$df2),
+  # block 4: Levene's test not significant for Flourishing
+  .pnum(.lev_std$p) > .05,
+  # block 4: Control's SD is the largest of the four
+  which.max(.std$descriptives$SD) == 1,
+  # block 5: some SDs are "far apart" (largest more than twice the smallest)
+  max(.scr$descriptives$SD) / min(.scr$descriptives$SD) > 2,
+  # block 5: significant for ScreenTime; largest group 21, smallest 14, the
+  # "approximately equal" note; Control the least spread; the ANOVA itself n.s.
+  .pnum(.lev_scr$p) < .05, max(.n(.scr)) == 21, min(.n(.scr)) == 14,
+  grepl("approximately", .lev_scr$note), grepl("standard test remains appropriate", .lev_scr$note),
+  which.min(.scr$descriptives$SD) == 1, .scr$p > .05,
+  # blocks 6 and 7: six comparisons; the same two pairs, and only those,
+  # significant under both methods
+  nrow(.std$posthoc) == 6, nrow(.wel$posthoc) == 6,
+  setequal(.sig(.std), .two), setequal(.sig(.wel), .two),
+  all(.std$posthoc$diff[.std$posthoc$comparison %in% .two] > 0),
+  all(.wel$posthoc$p[.wel$posthoc$comparison %in% .two] >
+      .std$posthoc$p[.std$posthoc$comparison %in% .two]),
+  # block 8: one Control client at 0, the group's mean below its median
+  sum(clinic$Flourishing == 0) == 1,
+  as.numeric(clinic$Condition)[clinic$Flourishing == 0] == 1,
+  mean(clinic$Flourishing[as.numeric(clinic$Condition) == 1]) <
+    stats::median(clinic$Flourishing[as.numeric(clinic$Condition) == 1]),
+  # block 8: without that client, Control's SD is in line with the others
+  stats::sd(clinic$Flourishing[as.numeric(clinic$Condition) == 1 & clinic$Flourishing > 0]) < 13,
+  # block 9: 13 clients set aside, 57 left, CBT down to one case, and the
+  # three CBT rows of the Tukey table "far wider" than the other three
+  .one$n == 57, .n(.one)[["CBT"]] == 1,
+  min(.wd[grepl("CBT", .one$posthoc$comparison)]) >
+    2 * max(.wd[!grepl("CBT", .one$posthoc$comparison)])
+)
+
+# ---- the reporting examples -------------------------------------------------
+.f2  <- function(x) formatC(x, format = "f", digits = 2)
+.p3  <- function(p) if (p < .001) "*p* < .001" else
+  paste0("*p* = ", sub("^0", "", formatC(p, format = "f", digits = 3)))
+.code <- c(Control = 1, CBT = 2, Mindfulness = 3)
+.msd <- function(res, g) {         # from the data, so the rounding is exact
+  y <- clinic$Flourishing[as.numeric(clinic$Condition) == .code[[g]]]
+  paste0("*M* = ", .f2(mean(y)), ", *SD* = ", .f2(stats::sd(y)))
+}
+.pp  <- function(res, cmp) .p3(res$posthoc$p[res$posthoc$comparison == cmp])
+.pps <- function(res) {           # "p = .017 for each", or the two in order
+  a <- .pp(res, "CBT-Control"); b <- .pp(res, "Mindfulness-Control")
+  if (identical(a, b)) paste0(a, " for each") else paste0(a, " and ", b, " respectively")
+}
+.groups <- function(res) paste0(
+  "higher scores in the CBT group (", .msd(res, "CBT"), ") and the Mindfulness group (",
+  .msd(res, "Mindfulness"), ") than in the Control group (", .msd(res, "Control"), "), ",
+  .pps(res), "; no other pair of conditions differed significantly.")
+
+.wu_std <- paste0(
+  "Levene's test gave no indication of unequal variances, *F*(", .lev_std$df1, ", ",
+  .lev_std$df2, ") = ", .f2(.lev_std$f), ", *p* = ", .lev_std$p,
+  ", so a standard one-way ANOVA was used. Flourishing scores differed across the four ",
+  "treatment conditions, *F*(", .std$df1, ", ", .std$df2, ") = ", .f2(.std$f), ", ",
+  .p3(.std$p), ", η² = ", sub("^0", "", .f2(.std$eta_squared)),
+  ". Tukey HSD comparisons showed ", .groups(.std))
+
+.wu_wel <- paste0(
+  "Welch's ANOVA, which does not assume equal variances, showed that flourishing scores ",
+  "differed across the four treatment conditions, *F*(", .wel$df1, ", ",
+  formatC(.wel$df2, format = "f", digits = 1), ") = ", .f2(.wel$f), ", ", .p3(.wel$p),
+  ". Games-Howell comparisons showed ", .groups(.wel))
+```
+
+
+## What to write up
+
+A results paragraph for a one-way ANOVA usually carries five things: which test
+you ran, the *F* with its two degrees-of-freedom values, the *p*, an effect
+size, and — when the test is significant — which groups differed, with their
+means and standard deviations. If you checked equal variances, say what you
+found: that check is the reason for your choice of test. The two examples below
+follow the general pattern of APA style, common in the social sciences.
+Conventions differ between fields and journals, so check what yours expects.
+
+**The standard route**, from the output of blocks 4 and 6:
+
+> `r .wu_std`
+
+**The Welch route**, from the output of block 7:
+
+> `r .wu_wel`
+
+Every number comes from the output. The statistics are rounded to two decimal
+places, a common convention; the *p*-values are left at three, and Welch's
+second degrees-of-freedom value keeps the one decimal jstats prints. The two
+values in parentheses after *F* are its degrees of freedom: in the standard
+ANOVA table, the `df` of the first row and of the `Residual` row; in Welch's
+table, `df1` and `df2`. η² is the Eta-squared line. *M* and *SD* come from Group
+Descriptives, and the *p*-values of the comparisons come from the post-hoc
+table. A paragraph like these usually sits beside a table of every group's mean
+and standard deviation, so the reader can see the groups the sentences leave
+out.
+
+Two notes on the Welch example. In your own write-up, the first sentence would
+also give your reason for choosing Welch's ANOVA, typically a significant
+Levene's test with unequal group sizes. And the Welch example reports no effect
+size: the eta-squared that jstats prints under Welch's table is worked out the
+standard way, as the note under it says, so if you report that eta-squared, say
+so.
+
+## Take the whole script with you
+
+That's the full run-through. If you'd like the entire script in one file to
+keep, adjust, and reuse, download it here. Put your own data frame and variable
+names in place of `clinic`, `Flourishing`, and `Condition`, drop the blocks you
+don't need, and the script is the outline of your own analysis.
+
+The file is the finished version of the script you built: the same code, in the
+same order, with one difference made on purpose. The line in block 10 that
+raises the deliberate error is commented out, with a note saying why, so the
+file runs from top to bottom without stopping.
+[Using the How-To pages](howtos.qmd#using-the-how-to-pages) says more about
+finished scripts and how to run one.
+
+<div style="margin: 1rem 0 2rem;">
+<a href="anova-follow-along.R" download class="btn btn-primary">Download the full script (.R)</a>
+</div>

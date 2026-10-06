@@ -141,7 +141,7 @@ jstats has been refined substantially since then. By following the short setup
 steps on this site (see "Setting up" below) and then working through the Quick
 Start, I expect you'll be able to open a dataset in R and run analyses including
 linear regression, with no prior R experience needed. Behind the short,
-intuitive commands you'll type, jstats is currently more than 23,000 lines of
+intuitive commands you'll type, jstats is currently more than 40,000 lines of
 computer code -- including its extensive help files -- doing the work for you.
 
 ## Students in 7036CCJ/CCJ736

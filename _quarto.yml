@@ -78,6 +78,18 @@ website:
               href: missing-values.qmd
             - text: "Loading jstats automatically"
               href: loading-jstats-automatically.qmd
+    - title: "How-Tos"
+      style: "floating"
+      contents:
+        - text: "All How-Tos"
+          href: howtos.qmd
+        - text: "---"
+        - section: "Comparing groups"
+          contents:
+            - text: "One-way ANOVA"
+              href: anova.qmd
+        - text: "Coming soon"
+          href: coming-soon.qmd
   page-footer:
     border: true
     left: "© 2026 Jeff Ackerman"

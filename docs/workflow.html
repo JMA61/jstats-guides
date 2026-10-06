@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8d3f76c4056070a30d229a91414c2fcc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-b60af2d24e4b1d763b4580bec0caf010.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -480,8 +480,8 @@ To convert it to match this setting, run:
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">codes =</span> <span class="fu">c</span>(<span class="st">"Refused"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">99</span>, <span class="st">"Don't know"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">98</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Declared and converted to Stata-style missing values on MoodRating:
-  .a ["Refused"]  (from -99)
-  .b ["Don't know"]  (from -98)
+  .a ["Refused"] (from -99)
+  .b ["Don't know"] (from -98)
 
 This call changes clinic only if you assign the result:
   clinic &lt;- jdeclare_missing(clinic, MoodRating, ...)
@@ -1003,7 +1003,7 @@ Variable Labels:
 </section>
 <section id="dialing-the-detail-up-or-down" class="level2">
 <h2 class="anchored" data-anchor-id="dialing-the-detail-up-or-down">Dialing the detail up or down</h2>
-<p>Everything you’ve seen this session came out at jstats’s <strong>standard</strong> detail level — the default. <code>joutput()</code> also takes an overall level, so you can trim the output or expand it in a single move:</p>
+<p>Everything you’ve seen this session came out at jstats’s <strong>standard</strong> detail level — the default (a bare <code>joutput()</code> names the level on its first line). <code>joutput()</code> also takes an overall level, so you can trim the output or expand it in a single move:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"minimal"</span>)    <span class="co"># core results only — leanest output</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"standard"</span>)   <span class="co"># the default you've been seeing</span></span>

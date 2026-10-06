@@ -137,7 +137,7 @@ keeps running the old one until you restart R. You don't have to remember how
 — when the update finishes, `jupdate()` prints the exact steps:
 
 ```
-jstats has been updated.
+jstats has been updated to version x.y.z.
 
 Restart R to load it in RStudio:
   - open the Session menu > choose Restart R

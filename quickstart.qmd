@@ -355,9 +355,9 @@ variable — three variables summarized in a single, readable table.
 
 ## Screen the whole dataset at once
 
-Before any serious analysis, it's good practice to survey the whole dataset — its ranges,
-possible outliers, skewed distributions, missing values, and what *kind* each variable
-seems to be. `jscreen` (short for *screen*) folds that whole first look into one call:
+Before any serious analysis, it's good practice to survey the whole dataset — how many
+cases and variables it holds, what *kind* each variable seems to be, where the missing
+values are, and whether any variable has outliers. `jscreen` (short for *screen*) folds that whole first look into one call:
 
 ```{r}
 #| echo: false

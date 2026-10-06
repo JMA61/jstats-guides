@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8d3f76c4056070a30d229a91414c2fcc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-b60af2d24e4b1d763b4580bec0caf010.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -407,7 +407,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jupdate</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Run it in the Console and jstats updates itself: one command, with nothing to copy or keep track of. <code>jupdate()</code> first checks that you’re online and that you aren’t already on the latest version (if you are, it just says so and stops), then downloads and installs the new version. It doesn’t pause to ask “are you sure?” — it goes ahead and updates.</p>
 <p>One thing to know: <em>installing</em> the new version and <em>loading</em> it are two separate steps. <code>jupdate()</code> puts the new version on your computer, but the session you’re in keeps running the old one until you restart R. You don’t have to remember how — when the update finishes, <code>jupdate()</code> prints the exact steps:</p>
-<pre><code>jstats has been updated.
+<pre><code>jstats has been updated to version x.y.z.
 
 Restart R to load it in RStudio:
   - open the Session menu &gt; choose Restart R

@@ -5,6 +5,10 @@ title-prefix: ""
 
 ```{r setup, include=FALSE}
 options(crayon.enabled = TRUE)
+# jstats colors its titles and notes only in the RStudio Console (v0.9.214 on);
+# a render is not one, so this page asks for the color. Without this line the
+# page renders, in black.
+options(jstats.color = TRUE)
 options(width = 80)          # match a default 80-column console
 old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
 # Show the deliberate error below the way the Console prints it. Newer knitr
@@ -257,7 +261,7 @@ juse(community)
 
 ## Dialing the detail up or down
 
-Everything you've seen this session came out at jstats's **standard** detail level — the default. `joutput()` also takes an overall level, so you can trim the output or expand it in a single move:
+Everything you've seen this session came out at jstats's **standard** detail level — the default (a bare `joutput()` names the level on its first line). `joutput()` also takes an overall level, so you can trim the output or expand it in a single move:
 
 ```{r, eval=FALSE}
 joutput("minimal")    # core results only — leanest output

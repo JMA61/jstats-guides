@@ -61,6 +61,11 @@ program.
 On a university or workplace computer you may not be allowed to install software
 yourself. What happens depends on how the machine is set up:
 
+- **Look first in your organization's self-service software catalog** — on Windows
+  this is often an app called **Company Portal**. If R is listed there, install it
+  from the catalog: it goes in with your organization's approval already in place,
+  so you never meet the security boxes described above. Look for RStudio in the same
+  place. Anything the catalog doesn't offer goes through one of the routes below.
 - The blue box shows **no More info link at all**, even when you launch the installer
   from your Downloads folder. This one looks worse than it is: the block has been set
   centrally, so there's nothing to fix at your end — and it's a routine request for IT,
@@ -181,10 +186,12 @@ R keeps installed packages in a **library** — a folder on your computer — an
 there can be more than one. That's normally invisible and harmless: jstats
 installs into one of them and runs fine from there.
 
-It only matters if you end up with **two copies in two libraries** — then an
-update can land in one library while R keeps loading the older copy from the
-other, and you appear stuck on the old version. To see which copy R is using,
-and every library R searches:
+It only matters if you end up with **two copies in two libraries** — then R can
+keep loading an older copy from one while a newer copy sits unused in the other,
+and you appear stuck on the old version. `jupdate()` does not cause this: it
+updates the copy of jstats that R is using, wherever that copy lives. A second
+copy usually comes from running the install line again by hand. To see which
+copy R is using, and every library R searches:
 
 ```r
 find.package("jstats")   # the folder of the copy R loads
@@ -201,6 +208,32 @@ remove.packages("jstats", lib = "paste-the-other-library-path-here")
 Then load jstats again and confirm the version with `packageVersion("jstats")`.
 :::
 
+::: {.callout-warning collapse="true" title="jupdate() says R cannot write to the folder, or that the update did not complete"}
+**"R cannot write to the folder where jstats is installed."** The message names
+the folder, and it means your account isn't allowed to change files there —
+common when jstats sits in a system-wide folder, or on a work or lab computer.
+Nothing has been changed. The message gives the two usual ways through: run R
+with permission to write to that folder, or ask your IT department to run the
+update, which is a quick job for them.
+
+If neither is open to you, there is a third way: run the install line again.
+
+```r
+install.packages("jstats",
+  repos = c("https://jma61.r-universe.dev", "https://cloud.r-project.org"))
+```
+
+This puts the new version in your own personal library (if R asks whether to
+create one, answer **Yes**), and R loads that newer copy from then on. The old
+copy stays where it was, unused. That is the two-copies situation from the entry
+above, entered on purpose; it does no harm as long as you know it is there.
+
+**"The update did not complete."** The copy on your computer is unchanged. Read
+the line under **R reported:** — it is R's own account of what stopped the
+download, usually a web address it could not reach. On a university or work
+network, that line is the one to show your IT department.
+:::
+
 ## Starting RStudio and loading jstats
 
 ::: {.callout-warning collapse="true" title="RStudio hangs or loops every time it starts"}
@@ -212,6 +245,26 @@ open your Project folder in your computer's file manager, open the `.Rprofile` f
 in a plain text editor (Notepad on Windows, TextEdit on Mac), delete the install
 line, keeping the `library(jstats)` line (and its reminder comment, if your
 `.Rprofile` has one), save, and reopen RStudio.
+:::
+
+::: {.callout-warning collapse="true" title="RStudio opened in a different project, or the working directory isn't the folder I expected"}
+Two things account for most surprises here, and neither means anything is wrong.
+
+**RStudio reopens your last Project.** By default, RStudio starts up inside
+whichever Project you had open last time, so your working directory is that
+Project's folder. To work somewhere else, open the Project you want (**File >
+Open Project**) or close the current one (**File > Close Project**). To stop
+RStudio doing this, go to **Tools > Global Options > General** and untick
+**Restore most recently opened project at startup**.
+
+**The Console header and `getwd()` spell the same folder differently.** The top
+of the Console shows your working directory in a short form that begins with
+`~`, which stands for your home folder. `getwd()` prints the same address written
+out in full. On most Windows computers home is your Documents folder; on some it
+has been moved elsewhere, such as a OneDrive folder or another drive, so the full
+address can look unfamiliar. To see where `~` points on your computer, run
+`path.expand("~")`.
+[Loading, Saving, Converting Data](data.qmd) has more on how R writes file paths.
 :::
 
 ::: {.callout-warning collapse="true" title="Loading jstats pauses for several seconds on a no-internet connection"}
@@ -329,5 +382,46 @@ most useful part usually comes **after the final colon** — start reading there
 then work backward only if you need to.
 :::
 
+::: {.callout-warning collapse="true" title="A file path gives 'used without hex digits', 'is an unrecognized escape', or 'exceeds maximum allowed octal value'"}
+You typed or pasted a Windows file path with backslashes — something like
+`jload("C:\Users\you\Documents\survey.csv")` — and R answered with one of
+these:
 
+```
+Error: '\U' used without hex digits in character string
+Error: '\J' is an unrecognized escape in character string
+Error: \500 exceeds maximum allowed octal value \377
+```
 
+(The letter or number after the backslash will be whatever follows a backslash
+in your own path.) Nothing is wrong with your file. Inside quotation marks, R
+reads a backslash as the start of a special character, not as part of a path, so
+it stops before the command runs at all.
+
+The fix is to type the path with forward slashes:
+
+```r
+jload("C:/Users/you/Documents/survey.csv")
+```
+
+Forward slashes work in R on every kind of computer, Windows included.
+:::
+
+## Using jstats outside RStudio
+
+::: {.callout-warning collapse="true" title="The red titles and yellow notes are missing"}
+jstats colors its table titles and notes only in the RStudio Console. Anywhere
+else — Positron, VS Code, a terminal window, or a document rendered with Quarto
+or R Markdown — the same output prints in plain text, because not every one of
+those displays color properly. Nothing is missing from the results.
+
+If your program does show color and you would like it, run this once per
+session, or put it in your `.Rprofile`:
+
+```r
+options(jstats.color = TRUE)
+```
+
+(`options(jstats.color = FALSE)` does the opposite, and turns the color off in
+RStudio too.)
+:::

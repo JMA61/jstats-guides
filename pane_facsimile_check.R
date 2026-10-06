@@ -1,6 +1,7 @@
 # pane_facsimile_check.R -- machine assertion battery for pane_facsimile.R's
 # run_block(): stream ordering (S273), expect_error_match (S273, wrap-proof
-# matching S274), and a blank line printed after a message (S334).
+# matching S274), a blank line printed after a message (S334), and the color
+# switch (S344).
 #
 # WHY THIS FILE EXISTS. run_block() is a shared asset: every "What you should
 # see" box (show_block) and every Console facsimile (show_console) on the guide
@@ -12,6 +13,8 @@
 #
 # NO jstats REQUIRED. Every fixture below is synthetic base R, so the check runs
 # anywhere R runs -- no package install, no datasets, no render environment.
+# (Section 8's second check uses fansi when it is installed, and says so and
+# skips when it is not.)
 # That is deliberate: a check that needed the full render stack would be run
 # rarely, and this one guards an asset that changes rarely but breaks quietly.
 #
@@ -310,6 +313,28 @@ ck("B4", "a blank line straight after printed text rides in its segment",
 B5 <- run('message("")', echo = FALSE)
 ck("B5", "an empty MESSAGE is still dropped: only stdout can be empty",
    length(B5), 0L)
+
+# ---- 8. THE COLOR SWITCH (S344) -------------------------------------------
+# Since jstats 0.9.214 the package writes its red titles and yellow notes only
+# in the RStudio Console, and plain text everywhere else, a render included.
+# Every box takes its color from those codes, so the generator asks for them:
+# options(jstats.color = TRUE), set when this file is sourced. Lose that line
+# and nothing fails -- every page renders, in black. K1 is the line; K2 is the
+# step that turns a color code into the span a page shows.
+
+cat("\n8. THE COLOR SWITCH\n")
+
+ck("K1", "sourcing the generator asks jstats for color",
+   isTRUE(getOption("jstats.color")), TRUE)
+
+if (requireNamespace("fansi", quietly = TRUE)){
+  K2 <- .obx$ansi_html("\033[31mTitle\033[0m")
+  ck("K2", "a red code becomes a color span, with no raw code left",
+     c(grepl("color:", K2, fixed = TRUE), grepl("\033", K2, fixed = TRUE)),
+     c(TRUE, FALSE))
+} else {
+  cat("K2     skipped: the fansi package is not installed here\n")
+}
 
 # ---- foot -----------------------------------------------------------------
 cat("\n", strrep("-", 78), "\n", sep = "")

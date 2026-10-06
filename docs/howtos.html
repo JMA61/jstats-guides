@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -46,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8d3f76c4056070a30d229a91414c2fcc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-b60af2d24e4b1d763b4580bec0caf010.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -89,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -155,10 +190,57 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./howtos.html">All How-Tos</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./howtos.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">All How-Tos</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Comparing groups</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">One-way ANOVA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./coming-soon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Coming soon</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -166,16 +248,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#how-tos" id="toc-how-tos" class="nav-link active" data-scroll-target="#how-tos">How-Tos</a></li>
-  <li><a href="#using-your-own-data" id="toc-using-your-own-data" class="nav-link" data-scroll-target="#using-your-own-data">Using your own data</a></li>
-  <li><a href="#working-with-data-from-commercial-statistical-software" id="toc-working-with-data-from-commercial-statistical-software" class="nav-link" data-scroll-target="#working-with-data-from-commercial-statistical-software">Working with data from commercial statistical software</a></li>
-  <li><a href="#reading-jstats-output-case-processing-and-missing-data" id="toc-reading-jstats-output-case-processing-and-missing-data" class="nav-link" data-scroll-target="#reading-jstats-output-case-processing-and-missing-data">Reading jstats output: Case Processing and Missing data</a></li>
-  <li><a href="#recoding-and-relabeling-variables" id="toc-recoding-and-relabeling-variables" class="nav-link" data-scroll-target="#recoding-and-relabeling-variables">Recoding and relabeling variables</a></li>
-  <li><a href="#text-answers-into-coded-variables" id="toc-text-answers-into-coded-variables" class="nav-link" data-scroll-target="#text-answers-into-coded-variables">Text answers into coded variables</a></li>
-  <li><a href="#building-and-checking-a-scale" id="toc-building-and-checking-a-scale" class="nav-link" data-scroll-target="#building-and-checking-a-scale">Building and checking a scale</a></li>
-  <li><a href="#working-on-part-of-your-data" id="toc-working-on-part-of-your-data" class="nav-link" data-scroll-target="#working-on-part-of-your-data">Working on part of your data</a></li>
-  <li><a href="#comparing-groups" id="toc-comparing-groups" class="nav-link" data-scroll-target="#comparing-groups">Comparing groups</a></li>
-  <li><a href="#regression-with-categorical-predictors" id="toc-regression-with-categorical-predictors" class="nav-link" data-scroll-target="#regression-with-categorical-predictors">Regression with categorical predictors</a></li>
-  <li><a href="#handling-missing-values-across-platforms" id="toc-handling-missing-values-across-platforms" class="nav-link" data-scroll-target="#handling-missing-values-across-platforms">Handling missing values across platforms</a></li>
+  <li><a href="#using-the-how-to-pages" id="toc-using-the-how-to-pages" class="nav-link" data-scroll-target="#using-the-how-to-pages">Using the How-To pages</a></li>
   </ul>
 </nav>
     </div>
@@ -187,48 +260,97 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="how-tos" class="level2">
 <h2 class="anchored" data-anchor-id="how-tos">How-Tos</h2>
-<p>These how-tos assume you’ve worked through <a href="./start-here.html">Get Started</a> — you’ll be comfortable loading jstats, using <code>juse()</code> and <code>jload()</code>, and running the basic functions. Each one stands on its own, so read whichever you need; for now, <a href="./start-here.html">Get Started</a> is the place to begin.</p>
-<p>The articles below are on the way. They go beyond the Get Started on-ramp and point toward the fuller treatment in the books.</p>
+<p>These how-tos assume you’ve worked through <a href="./start-here.html">Get Started</a> — you’ll be comfortable loading jstats, using <code>juse()</code> and <code>jload()</code>, and running the basic functions. Each one stands on its own, so read whichever you need.</p>
+<p>The How-Tos go beyond the Get Started on-ramp and point toward the fuller treatment in the books. The menu on the left lists them by topic. The first article is ready: <a href="./anova.html">One-way ANOVA</a>, under Comparing groups. More are on the way, and <a href="./coming-soon.html">Coming soon</a> describes them.</p>
 </section>
-<section id="using-your-own-data" class="level2">
-<h2 class="anchored" data-anchor-id="using-your-own-data">Using your own data</h2>
-<p><em>Coming soon</em> — the bridge from the practice datasets to a file of your own: opening an Excel, CSV, or commercial-software file, keeping it in a data folder, and taking a first look with <code>jscreen()</code>.</p>
-</section>
-<section id="working-with-data-from-commercial-statistical-software" class="level2">
-<h2 class="anchored" data-anchor-id="working-with-data-from-commercial-statistical-software">Working with data from commercial statistical software</h2>
-<p><em>Coming soon</em> — importing and working with data from SPSS, Stata, and SAS, including value and variable labels and the different missing-value conventions.</p>
-</section>
-<section id="reading-jstats-output-case-processing-and-missing-data" class="level2">
-<h2 class="anchored" data-anchor-id="reading-jstats-output-case-processing-and-missing-data">Reading jstats output: Case Processing and Missing data</h2>
-<p><em>Coming soon</em> — not how to interpret the statistics, but how to read the accounting printed above them: the Case Processing lines and tables that say how many cases an analysis used and which were set aside, and the Missing data breakdown that shows where each variable’s missing values went.</p>
-</section>
-<section id="recoding-and-relabeling-variables" class="level2">
-<h2 class="anchored" data-anchor-id="recoding-and-relabeling-variables">Recoding and relabeling variables</h2>
-<p><em>Coming soon</em> — reverse-coding an item, collapsing categories, and fixing variable and value labels with <code>jrecode()</code> and <code>jrelabel()</code>, keeping the original column intact.</p>
-</section>
-<section id="text-answers-into-coded-variables" class="level2">
-<h2 class="anchored" data-anchor-id="text-answers-into-coded-variables">Text answers into coded variables</h2>
-<p><em>Coming soon</em> — turning a column of words (“Yes”, “No”, “Don’t know”) from a spreadsheet or survey export into a labeled, coded variable with <code>jencode()</code>.</p>
-</section>
-<section id="building-and-checking-a-scale" class="level2">
-<h2 class="anchored" data-anchor-id="building-and-checking-a-scale">Building and checking a scale</h2>
-<p><em>Coming soon</em> — combining Likert items into a scale and checking its reliability with Cronbach’s alpha.</p>
-</section>
-<section id="working-on-part-of-your-data" class="level2">
-<h2 class="anchored" data-anchor-id="working-on-part-of-your-data">Working on part of your data</h2>
-<p><em>Coming soon</em> — analyzing a subgroup with <code>jsubset()</code>, and using <code>jcomplete()</code> so a set of analyses all run on the same cases.</p>
-</section>
-<section id="comparing-groups" class="level2">
-<h2 class="anchored" data-anchor-id="comparing-groups">Comparing groups</h2>
-<p><em>Coming soon</em> — t-tests, one-way ANOVA, and cross-tabulations with <code>jt()</code>, <code>jaov()</code>, and <code>jcrosstab()</code>: one formula style for all three, how to read what comes back, and the Welch versions of the t-test and ANOVA (<code>welch = TRUE</code>), which do not assume equal variances.</p>
-</section>
-<section id="regression-with-categorical-predictors" class="level2">
-<h2 class="anchored" data-anchor-id="regression-with-categorical-predictors">Regression with categorical predictors</h2>
-<p><em>Coming soon</em> — linear and logistic regression with <code>jlm()</code> and <code>jlogistic()</code>. <code>jdummy()</code> is the quick way in for a categorical variable: register its dummy coding and reference category once, and it goes into a model by name — no building dummy variables by hand, and no converting to base R’s factors.</p>
-</section>
-<section id="handling-missing-values-across-platforms" class="level2">
-<h2 class="anchored" data-anchor-id="handling-missing-values-across-platforms">Handling missing values across platforms</h2>
-<p><em>Coming soon</em> — what survives when data move between SPSS, Stata, SAS, and R: round trips between formats, converting declarations from one convention to another, missing-value ranges, and the SAS interchange format. Declaring missing values in the first place is covered in <em><a href="./missing-values.html">Telling jstats about missing values</a></em>.</p>
+<section id="using-the-how-to-pages" class="level2">
+<h2 class="anchored" data-anchor-id="using-the-how-to-pages">Using the How-To pages</h2>
+<p>Every How-To is built the same way, so what follows is said once, here, and not repeated on each page.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Before you start">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Before you start
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>To follow along with any How-To you’ll need:</p>
+<ul>
+<li><strong>R, RStudio, and jstats installed.</strong> If they’re not, work through <a href="./start-here.html">Get Started, Steps 1-5</a> first and come back.</li>
+<li><strong>An RStudio Project open</strong>, so your working directory and files are already set up.</li>
+<li><strong>A new, empty R script open</strong> (File &gt; New File &gt; R Script). You’ll copy each numbered block into it, one at a time, running each before moving on.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="How to use the How-To pages">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How to use the How-To pages
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The numbered blocks on a How-To page build one script. Paste each block into the same R script file as you reach it, in order. By the end, the whole file runs from top to bottom, except where a comment says an error is deliberate (so you can see what one looks like).</p>
+<ul>
+<li>Every block starts with a dashed comment header (<code>## ---- 1. ... ----</code>). The header marks where one block ends and the next begins in your growing script, and RStudio reads those headers as sections, so they appear in the script’s outline for easy jumping around.</li>
+<li>Block 1 of every page loads jstats and chooses the practice dataset that page uses, so each page’s script runs on its own, in a fresh session.</li>
+<li>Run lines the way the <a href="./rstudio-orientation.html">RStudio Orientation</a> showed: cursor on the line, then Ctrl+Enter (Cmd+Enter on a Mac) or the Run button; highlight several lines to run them together. Experiment freely as you go.</li>
+<li>Under most blocks, a Console pane shows what you should see when you run the block: the blue command lines, the gray notices, the tables with their red titles, and a red error where one is meant to happen. The panes show the code being run, along with any note written on the end of a command line, but not the standalone <code>##</code> comment lines (running one just echoes it back and does nothing).</li>
+<li>The boxes under an output are optional reading, and each title says who the box is for. <strong>If you’re new to statistics</strong> explains what the analysis is for. <strong>Reading this output</strong> walks through what was printed. <strong>Why jstats does it this way</strong> explains the design, and how base R differs. <strong>Coming from SPSS, Stata, or SAS?</strong> gives the parallels in commercial statistical software.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="The finished script on each page">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The finished script on each page
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Each How-To ends with a download: the <em>finished</em> version of the script you built on that page. Finished means something specific. A goal every experienced programmer and statistician takes for granted, but new researchers are rarely told: a completed script should run from beginning to end without errors. Where a page shows an error on purpose, the download has that line commented out, with a note saying why, so the file runs clean.</p>
+<p>To prove a script is finished, use the <strong>Source</strong> icon (to the right of Run in the script toolbar): it runs the whole file, top to bottom, in one go. Source shows the <em>output</em> without echoing each command back to the Console — that is normal — and the small arrow beside Source offers “Source with Echo” if you would like the commands shown too.</p>
+<p>We recommend working through a page’s blocks one at a time first: you learn far more by building the script yourself and watching each piece run than by reading a finished file. If you’re keeping the download — and it’s worth keeping, since finished scripts travel — give it a proper home. In the <strong>Files</strong> tab of the lower-right pane, click <strong>New Folder</strong> and type a name into the popup. “Scripts” is a good one.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Reset your session">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reset your session
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Experimenting means the occasional wrong turn — a setting changed, a practice dataset overwritten, output that suddenly looks different. When something feels off and you’d like a clean footing without restarting RStudio, run these two lines in the Console:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Put jstats' output settings back to their defaults</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"standard"</span>)   <span class="co"># output level, and decimal places back to 3</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Point saving and loading back at your working directory</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">data.dir =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That resets jstats itself. To clear away objects you created while following along, the simplest way is the little <strong>broom</strong> icon at the top of the <strong>Environment</strong> pane (upper-right): one click sweeps the pane clean. It clears <em>everything</em> in the Environment, so use it when you’re between run-throughs, not in the middle of one. The built-in practice datasets come right back whenever you want them, with <code>jload("community")</code> or <code>jload("clinic")</code>.</p>
+</div>
+</div>
+</div>
+<p><strong>Missing values, on every page.</strong> Every jstats function sets aside the missing values in your data before it computes anything. That includes codes such as −99 that have been <em>declared</em> as missing, whether the declaration arrived with an SPSS, Stata, or SAS file or you made it yourself with <code>jdeclare_missing()</code>. Base R does not do this for a code declared the SPSS way, and neither do many add-on packages: to them the −99 is an ordinary number, and it goes into the mean. The declaring is your part. <em><a href="./missing-values.html">Telling jstats about missing values</a></em> shows how to declare codes, and how to find codes that nobody has declared.</p>
 
 
 </section>

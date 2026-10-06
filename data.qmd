@@ -544,8 +544,9 @@ jfreq(MyData_r_stata, Education) # Now the codes display in Stata format)---",
 
 One more control before the final check: how many decimal places jstats shows.
 The default setting is 3, the maximum is 7 — and for what comes next, we want
-all 7. (One exception: p-values keep their own fixed three-decimal convention
-and ignore this setting.)
+all 7. (Not everything follows the setting: p-values keep their own three
+decimals, percentages their one, and counts and a variable's minimum and maximum
+print as they are.)
 
 ```{r}
 #| echo: false
@@ -691,8 +692,8 @@ stays put after every run — that's what saving is for. Remove the files by
 hand if you ever want a clean slate.
 
 One more setup idea if you're keeping the file — and it's worth keeping:
-finished scripts travel. Sooner or later you'll share one with a supervisor or
-collaborator, or receive one from someone else, and a script that runs top to
+finished scripts travel. Sooner or later you'll share one with a collaborator,
+or receive one from someone else, and a script that runs top to
 bottom on another person's computer is the standard to aim for. So a
 downloaded script deserves a proper home: jstats created the Data folder
 for you during the run-through, but you can also make folders yourself in

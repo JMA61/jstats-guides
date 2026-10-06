@@ -19,6 +19,13 @@
 #       source-vs-console beat on the spine pages (Step 3): the same line shown
 #       sitting unrun in a script, then having been run in the Console.
 
+# COLOR. Since v0.9.214 jstats writes its red titles and yellow notes only in
+# the RStudio Console, and as plain text everywhere else. A render is not the
+# Console, so without this line every box on the site comes out in black. Set
+# here, once, so every page that sources this file gets it; the option is
+# documented in ?joutput.
+options(jstats.color = TRUE)
+
 .obx <- new.env(parent = globalenv())
 
 # Define everything DIRECTLY into .obx so the ONLY object this file leaves in

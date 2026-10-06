@@ -222,7 +222,7 @@ more widely used of the two. Block 5 shows the contrast live, on the same column
 That still leaves room for judgment. If you write base R alongside jstats, or
 paste in code an AI assistant wrote for you — which today will usually be base R
 — choose Stata-style. If your data live in SPSS and go back there for a
-supervisor or a collaborator, staying SPSS-style is a reasonable choice, and
+collaborator, staying SPSS-style is a reasonable choice, and
 jstats will read your declarations correctly either way. And notice the error's
 last line: the same `joptions()` command, placed in your Project's `.Rprofile`,
 makes the choice once and for all — block 7 says where that file lives.
