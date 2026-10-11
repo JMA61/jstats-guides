@@ -31,14 +31,14 @@ jaov(Flourishing ~ Condition, welch = TRUE)
 
 ## Levene's test asks whether the groups differ in spread. It is off by
 ## default, so ask for it
-jaov(Flourishing ~ Condition, levene = TRUE)
+jaov(Flourishing ~ Condition, diagnostics = TRUE)
 
 
 ## ---- 5. When Levene's test is significant -----------------------------
 
 ## A different outcome, daily screen time, whose spread does differ
 ## across the conditions. Watch for the note under the Levene table
-jaov(ScreenTime ~ Condition, levene = TRUE)
+jaov(ScreenTime ~ Condition, diagnostics = TRUE)
 
 
 ## ---- 6. Which groups differ, Tukey HSD --------------------------------
@@ -84,6 +84,6 @@ jaov(Flourishing ~ Condition, posthoc = TRUE,
 
 ## ---- 11. Everything in one call ---------------------------------------
 
-## full = TRUE asks for Levene's test, the confidence intervals, the
-## effect size, and the post-hoc comparisons together
-jaov(Flourishing ~ Condition, full = TRUE)
+## full = TRUE asks for the confidence intervals, the effect size, and the
+## post-hoc comparisons; diagnostics = TRUE adds Levene's test
+jaov(Flourishing ~ Condition, full = TRUE, diagnostics = TRUE)

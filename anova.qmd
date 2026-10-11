@@ -210,8 +210,10 @@ detail, with worked examples.
 ### 4. Check equal variances with Levene's test
 
 Whether the variances are equal is something you can check. Levene's test
-compares the spread of the groups, and `levene = TRUE` adds Levene's test to the
-output.
+compares the spread of the groups, and `diagnostics = TRUE` adds Levene's test
+to the output. Levene's test is one of jstats's *diagnostics*, checks on the
+assumptions behind an analysis, and the diagnostics stay off unless you ask for
+them.
 
 ```{r}
 #| echo: false
@@ -220,7 +222,7 @@ output.
 
 ## Levene's test asks whether the groups differ in spread. It is off by
 ## default, so ask for it
-jaov(Flourishing ~ Condition, levene = TRUE))---", fence = TRUE)
+jaov(Flourishing ~ Condition, diagnostics = TRUE))---", fence = TRUE)
 ```
 
 Levene's test is not significant here: its *p* is above .05. The test found no
@@ -261,38 +263,47 @@ To see the other outcome of Levene's test we need a different variable.
 
 ## A different outcome, daily screen time, whose spread does differ
 ## across the conditions. Watch for the note under the Levene table
-jaov(ScreenTime ~ Condition, levene = TRUE))---", fence = TRUE)
+jaov(ScreenTime ~ Condition, diagnostics = TRUE))---", fence = TRUE)
 ```
 
 This time Levene's test is significant: evidence that the four conditions differ
-in spread. jstats adds a note under the Levene table, and because the four
-groups are close to the same size, the note says the standard ANOVA remains
-appropriate.
+in spread in the population. jstats adds a note under the Levene table. The
+note's second sentence states the two things that decide how much unequal
+spread matters: how far apart the group sizes are, and how far apart the
+standard deviations are. Here the note says that guidelines differ on whether
+the standard ANOVA is acceptable, and points to Welch's ANOVA.
 
-That gives the conventional rule for choosing between the two versions:
+That gives a rule for choosing between the two versions:
 
 - Levene's test **not significant**: report the standard ANOVA.
-- Levene's test **significant, group sizes about equal**: the standard ANOVA is
-  usually still acceptable. Welch's ANOVA is the safer choice when the SDs are
-  far apart, as some of the SDs are here. Say which version you used.
-- Levene's test **significant, group sizes unequal**: use Welch's ANOVA.
+- Levene's test significant, and the note says the standard ANOVA **is usually
+  still acceptable** (group sizes and SDs both close): the standard ANOVA is a
+  reasonable choice. Say which version you used.
+- The note says **guidelines differ**, as here: Welch's ANOVA is the safer
+  choice.
+- The note says the standard ANOVA's ***p*-value may not be reliable** (group
+  sizes and SDs both far apart): use Welch's ANOVA.
 
-The rule is a rule of thumb, not a guarantee. Whichever version you choose, say
-what you did and why.
+The rule is a rule of thumb, not a guarantee, and textbooks draw its lines in
+different places. The help page `?jaov`, in its section
+[Unequal variances](https://jma61.github.io/jstats/reference/jaov.html#unequal-variances),
+gives the lines jstats draws and the sources behind them. Whichever version you
+choose, say what you did and why.
 
 ::: {.callout-note collapse="true" title="Reading this output"}
 Levene's *p* is below .05, and the SD column shows why: the Control group's
 screen time is bunched more tightly than the other groups'.
 
-The note under the Levene table is there because unequal variances matter more
-in some situations than in others. The standard ANOVA is least affected by
-unequal variances when the groups are about the same size, and most affected
-when the group sizes are unequal as well. So jstats checks the group sizes for
-you. jstats treats the group sizes as approximately equal when the largest group
-is no more than 1.5 times the size of the smallest, a rule of thumb. Here the
-largest group has 21 clients and the smallest has 14, which is exactly 1.5. Had
-the group sizes been further apart, the note would have said instead that the
-unequal variances may affect the results, and suggested `welch = TRUE`.
+The note's second sentence gives two ratios. The first compares the largest
+group with the smallest: 21 clients against 14, which is 1.5. The second
+compares the largest standard deviation with the smallest: 2.463 (CBT) against
+1.151 (Control), which is 2.1. Unequal spread matters least when the groups are about
+the same size and the SDs are not far apart, and most when both are far apart.
+These group sizes sit at the edge of one common guideline, a largest group no
+more than 1.5 times the smallest, and the SDs just past another, a largest SD no
+more than twice the smallest. So the note does not choose for you: it says that
+guidelines differ, and names the version of the test that does not assume equal
+variances.
 
 The ANOVA itself is not significant in this output: the test gives no evidence
 that average screen time differs across the conditions in the population.
@@ -405,7 +416,7 @@ of the lower-right pane:
 #| message: false
 #| fig-width: 7
 #| fig-height: 4.5
-#| fig-alt: "Four box plots of the flourishing score, one for each treatment condition, numbered 1 to 4 along the horizontal axis, with a diamond marking each group's mean. Condition 1 has one separate point far below its box, at a score of 0."
+#| fig-alt: "Four box plots of the flourishing score, one for each treatment condition, labeled 1: Control, 2: CBT, 3: Mindfulness, and 4: Support group along the horizontal axis, with a diamond marking each group's mean. The Control group has one separate point far below its box, at a score of 0."
 eval(parse(text = .b8))
 ```
 
@@ -419,9 +430,8 @@ Each box spans the middle half of that group's scores, the heavy line across the
 box is the median, and the diamond marks the mean — the number the ANOVA
 compares. The lines above and below the box reach to the lowest and highest
 scores that are not unusually far from the box, and any score beyond those lines
-is drawn as a separate point. The horizontal axis shows each condition by its
-code; the Group Descriptives table has the names (1 is Control, 2 CBT, 3
-Mindfulness, 4 Support group).
+is drawn as a separate point. The horizontal axis labels each condition with its
+code and its name, as the Group Descriptives table does.
 
 Two things are worth looking for, because either can distort a mean and a
 standard deviation. **Skew**: a median line well off the center of its box, or a
@@ -495,18 +505,20 @@ that group out. Whichever you choose, say so in your write-up.
 
 ### 11. Everything in one call
 
-Once you know the pieces, `full = TRUE` asks for all of them together: Levene's
-test, the confidence intervals, the effect size, and the post-hoc comparisons.
-Add `welch = TRUE` to the same call for the Welch route.
+Once you know the pieces, two arguments ask for all of them together.
+`full = TRUE` brings the confidence intervals, the effect size, and the post-hoc
+comparisons. Levene's test is a diagnostic, and no level of detail includes the
+diagnostics, so it keeps its own argument, `diagnostics = TRUE`. Add
+`welch = TRUE` to the same call for the Welch route.
 
 ```{r}
 #| echo: false
 #| results: asis
 .obx$show_block(r"---(## ---- 11. Everything in one call ---------------------------------------
 
-## full = TRUE asks for Levene's test, the confidence intervals, the
-## effect size, and the post-hoc comparisons together
-jaov(Flourishing ~ Condition, full = TRUE))---",
+## full = TRUE asks for the confidence intervals, the effect size, and the
+## post-hoc comparisons; diagnostics = TRUE adds Levene's test
+jaov(Flourishing ~ Condition, full = TRUE, diagnostics = TRUE))---",
   chrome = TRUE)
 ```
 
@@ -566,9 +578,17 @@ the method that matches the test you ran.
   attr(res, "printed") <- out
   res
 }
-.std <- .q(jaov(Flourishing ~ Condition, data = clinic, posthoc = TRUE, levene = TRUE))
+.std <- .q(jaov(Flourishing ~ Condition, data = clinic, posthoc = TRUE, diagnostics = TRUE))
 .wel <- .q(jaov(Flourishing ~ Condition, data = clinic, welch = TRUE, posthoc = TRUE))
-.scr <- .q(jaov(ScreenTime ~ Condition, data = clinic, levene = TRUE))
+.scr <- .q(jaov(ScreenTime ~ Condition, data = clinic, diagnostics = TRUE))
+.ful <- .q(jaov(Flourishing ~ Condition, data = clinic, full = TRUE))
+
+# block 8: the box plot's axis labels, read from the plot jplot() builds
+# (drawn on a null device, so the render writes no stray figure file)
+grDevices::pdf(NULL)
+utils::capture.output(.p8 <- suppressMessages(jplot(.std)))
+invisible(grDevices::dev.off())
+.ax <- ggplot2::ggplot_build(.p8)$layout$panel_params[[1]]$x$get_labels()
 .one <- .q(jaov(Flourishing ~ Condition, data = clinic, posthoc = TRUE,
                 subset = Condition != 2 | ClientID == "C016"))
 
@@ -579,8 +599,10 @@ the method that matches the test you ran.
   stopifnot(length(i) == 1L)
   v <- strsplit(trimws(out[i + 3L]), "\\s+")[[1]]
   stopifnot(length(v) == 4L)
+  j <- grep("^Group Descriptives", out)   # the note, if any, ends above this
+  stopifnot(length(j) == 1L, j > i + 3L)
   list(f = as.numeric(v[1]), df1 = v[2], df2 = v[3], p = v[4],
-       note = paste(out[(i + 4L):(i + 7L)], collapse = " "))
+       note = trimws(paste(out[seq.int(i + 4L, length.out = j - i - 4L)], collapse = " ")))
 }
 .lev_std <- .lev(.std); .lev_scr <- .lev(.scr)
 .pnum <- function(p) as.numeric(sub("^<", "", p))
@@ -601,11 +623,23 @@ stopifnot(
   which.max(.std$descriptives$SD) == 1,
   # block 5: some SDs are "far apart" (largest more than twice the smallest)
   max(.scr$descriptives$SD) / min(.scr$descriptives$SD) > 2,
-  # block 5: significant for ScreenTime; largest group 21, smallest 14, the
-  # "approximately equal" note; Control the least spread; the ANOVA itself n.s.
+  # block 4: no note under a non-significant Levene's test
+  !nzchar(.lev_std$note),
+  # block 5: significant for ScreenTime; largest group 21, smallest 14; SDs
+  # 2.463 (CBT, the largest) and 1.151 (Control, the smallest); the note
+  # gives 1.5 and 2.1 and says "Guidelines differ", pointing to Welch's;
+  # the ANOVA itself n.s.
   .pnum(.lev_scr$p) < .05, max(.n(.scr)) == 21, min(.n(.scr)) == 14,
-  grepl("approximately", .lev_scr$note), grepl("standard test remains appropriate", .lev_scr$note),
-  which.min(.scr$descriptives$SD) == 1, .scr$p > .05,
+  which.max(.scr$descriptives$SD) == 2, round(max(.scr$descriptives$SD), 3) == 2.463,
+  which.min(.scr$descriptives$SD) == 1, round(min(.scr$descriptives$SD), 3) == 1.151,
+  grepl("group is 1.5 times the smallest", .lev_scr$note, fixed = TRUE),
+  grepl("SD is 2.1 times the smallest", .lev_scr$note, fixed = TRUE),
+  grepl("Guidelines differ on whether the standard ANOVA", .lev_scr$note, fixed = TRUE),
+  grepl("welch = TRUE", .lev_scr$note, fixed = TRUE),
+  .scr$p > .05,
+  # block 11: full = TRUE alone brings the post-hoc table but not Levene's test
+  !is.null(.ful$posthoc),
+  !any(grepl("Levene", attr(.ful, "printed"), fixed = TRUE)),
   # blocks 6 and 7: six comparisons; the same two pairs, and only those,
   # significant under both methods
   nrow(.std$posthoc) == 6, nrow(.wel$posthoc) == 6,
@@ -613,6 +647,9 @@ stopifnot(
   all(.std$posthoc$diff[.std$posthoc$comparison %in% .two] > 0),
   all(.wel$posthoc$p[.wel$posthoc$comparison %in% .two] >
       .std$posthoc$p[.std$posthoc$comparison %in% .two]),
+  # block 8: the axis labels each condition as Group Descriptives does
+  identical(as.character(.ax), as.character(.std$descriptives$Group)),
+  .ax[1] == "1: Control",
   # block 8: one Control client at 0, the group's mean below its median
   sum(clinic$Flourishing == 0) == 1,
   as.numeric(clinic$Condition)[clinic$Flourishing == 0] == 1,
@@ -693,7 +730,7 @@ out.
 
 Two notes on the Welch example. In your own write-up, the first sentence would
 also give your reason for choosing Welch's ANOVA, typically a significant
-Levene's test with unequal group sizes. And the Welch example reports no effect
+Levene's test whose note points to Welch's ANOVA, as in block 5. And the Welch example reports no effect
 size: the eta-squared that jstats prints under Welch's table is worked out the
 standard way, as the note under it says, so if you report that eta-squared, say
 so.

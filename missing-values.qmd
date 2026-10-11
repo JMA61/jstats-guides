@@ -292,7 +292,8 @@ declared codes are missing within `MoodRating` rather than whole rows knocked
 out of the dataset, and it is the non-missing count — 63 of 70 — that records
 them. The frequency table is the clearest view of all: the
 two codes sit in their own **Missing** section under their markers and labels,
-counted in the totals and left out of the valid percentages. And the settings
+counted in the totals and left out of the valid percentages, and each section
+ends on a total line of its own. And the settings
 listing confirms the convention is in place for the rest of your session.
 (The row beneath it is always listed: those are the numbers jstats would use if
 you ever converted your markers to the SPSS form.)
@@ -318,10 +319,14 @@ numbers get used is set by a `joptions()` setting (`missing.convention.codes`),
 because the original values are gone. The value labels, however, survive every
 conversion unchanged.
 
-The frequency table above is close to what SPSS's Frequencies, or Stata's
-`tabulate` with missing values shown, would give you — a Valid section, a
-Missing section, and valid percentages computed on the valid cases alone —
-though the layouts are not identical. What has no counterpart in any of them is
+The frequency table above is close to what SPSS's Frequencies gives you: a
+Valid section and a Missing section, each closed by its own total, with valid
+percentages computed on the valid cases alone. In SAS, `PROC FREQ` with the
+`MISSPRINT` option comes nearest, listing the missing values in the table but
+leaving them out of the percentages. Stata's `tabulate` gives one view or the
+other: without the `missing` option it leaves the markers out of the table, and
+with it, it counts them in the percentages like any other value. What has no
+counterpart in any of them is
 the settings listing. Each program has only its own form, so there is nothing
 to choose; in jstats there is, and `joptions()` is where you see what you chose.
 :::
@@ -478,10 +483,12 @@ programmer and statistician takes for granted, but new researchers are rarely
 told: a completed script should run from beginning to end without errors. On
 this page you met one error on purpose, because meeting it is how the choice
 gets explained. The download shows what the end of that process looks like, and
-it differs from the page blocks in two principled ways: the deliberate error in
-block 3 is commented out, with a note saying why, and block 6 carries the answer
-to the closing exercise — the `Anxiety2` declaration you were asked to write
-yourself — so the file runs clean and complete. Nothing else changes: this page
+it differs from the page blocks in three principled ways: it opens with
+`library(jstats)`, which the page assumes you have already run, so the file
+works in a fresh session; the deliberate error in block 3 is commented out, with
+a note saying why; and block 6 carries the answer to the closing exercise — the
+`Anxiety2` declaration you were asked to write yourself — so the file runs clean
+and complete. Nothing else changes: this page
 saves no files, so there are no overwrite arguments to add, and the reload at
 the top already guards against a second run.
 
@@ -518,9 +525,10 @@ That's the full run-through. If you'd like the entire script in one file to
 keep, adjust, and reuse, download it here:
 
 The file is close to what you have just built: the same code, in the same
-order, as though you had pasted every block above into one script. Two things
-differ, each on purpose — the line that raises the deliberate error is
-commented out, and the finished file includes the answer to block 6's exercise.
+order, as though you had pasted every block above into one script. Three
+things differ, each on purpose — the file opens with `library(jstats)`, the
+line that raises the deliberate error is commented out, and the finished file
+includes the answer to block 6's exercise.
 The **What's the point?** box under the last block explains why a finished
 script is written that way.
 

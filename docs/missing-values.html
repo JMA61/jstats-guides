@@ -387,7 +387,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Point saving and loading back at your working directory</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">data.dir =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>That resets jstats itself. To clear away objects you created while following along — data frames like <code>MyData_r</code>, or a value like <code>MyObject</code> — the simplest way is the little <strong>broom</strong> icon at the top of the <strong>Environment</strong> pane (upper-right): one click sweeps the pane clean. It clears <em>everything</em> in the Environment, so use it when you’re between run-throughs, not in the middle of one. (You can also remove a single object by name, e.g.&nbsp;<code>rm(MyData_r)</code>.) The built-in practice dataset comes right back with <code>jload("community")</code> whenever you want it.</p>
+<p>That resets jstats itself. To clear away objects you created while following along — data frames like <code>MyData_r</code>, or a value like <code>MyObject</code> — the simplest way is the little <strong>broom</strong> icon at the top of the <strong>Environment</strong> pane (upper-right): one click sweeps the pane clean. It clears <em>everything</em> in the Environment, so use it when you’re between run-throughs, not in the middle of one. (You can also remove a single object by name, e.g.&nbsp;<code>rm(MyData_r)</code>.) The built-in practice datasets come right back whenever you want them: <code>jload("community")</code>, or <code>jload("clinic")</code>.</p>
 <p>This box is the same on every hands-on page in this group.</p>
 </div>
 </div>
@@ -684,19 +684,21 @@ MoodRating
                    Freq  Total %  Valid %  Cum. %
 -----------------  ----  -------  -------  ------
 Valid
-1                    1      1.43    1.59     1.59
-2                    1      1.43    1.59     3.17
-3                    7     10.00   11.11    14.29
-4                    8     11.43   12.70    26.98
-5                   14     20.00   22.22    49.21
-6                   15     21.43   23.81    73.02
-7                   10     14.29   15.87    88.89
-8                    5      7.14    7.94    96.83
-9                    2      2.86    3.17   100.00
+1                    1      1.43     1.59    1.59
+2                    1      1.43     1.59    3.17
+3                    7     10.00    11.11   14.29
+4                    8     11.43    12.70   26.98
+5                   14     20.00    22.22   49.21
+6                   15     21.43    23.81   73.02
+7                   10     14.29    15.87   88.89
+8                    5      7.14     7.94   96.83
+9                    2      2.86     3.17  100.00
+Total valid         63     90.00   100.00
 
 Missing
-.a ["Refused"]       4      5.71      --       --
-.b ["Don't know"]    3      4.29      --       --
+.a ["Refused"]       4      5.71       --      --
+.b ["Don't know"]    3      4.29       --      --
+Total missing        7     10.00
 
 Total               70    100.00
 </span>
@@ -714,7 +716,7 @@ Message width: Auto (currently 79)
 </div>
 </div>
 <p>Read the box from the top. Choosing the convention produced a note straight away: <code>clinic</code> arrived with four SPSS-style columns, and jstats points out that they no longer match your setting — the next block deals with that. The declaration then reports what it did: each code became a marker (<code>.a</code>, <code>.b</code>) carrying its label, and the note beneath reminds you that a call like this changes <code>clinic</code> only because you assigned the result back with the assignment operator, <code>&lt;-</code> (the <code>modify = TRUE</code> form it mentions does the same job in place — either is fine). It also points out, correctly, that <code>MoodRating</code> now differs in form from the rest of <code>clinic</code>.</p>
-<p>Then the payoff. The descriptives report a smaller non-missing count, a minimum and maximum inside 1–10, and a mean that finally looks like a mood rating. The line above each table still reads 70 cases, exactly as it did before the declaration, and that is worth noticing: no rows were dropped. The declared codes are missing within <code>MoodRating</code> rather than whole rows knocked out of the dataset, and it is the non-missing count — 63 of 70 — that records them. The frequency table is the clearest view of all: the two codes sit in their own <strong>Missing</strong> section under their markers and labels, counted in the totals and left out of the valid percentages. And the settings listing confirms the convention is in place for the rest of your session. (The row beneath it is always listed: those are the numbers jstats would use if you ever converted your markers to the SPSS form.)</p>
+<p>Then the payoff. The descriptives report a smaller non-missing count, a minimum and maximum inside 1–10, and a mean that finally looks like a mood rating. The line above each table still reads 70 cases, exactly as it did before the declaration, and that is worth noticing: no rows were dropped. The declared codes are missing within <code>MoodRating</code> rather than whole rows knocked out of the dataset, and it is the non-missing count — 63 of 70 — that records them. The frequency table is the clearest view of all: the two codes sit in their own <strong>Missing</strong> section under their markers and labels, counted in the totals and left out of the valid percentages, and each section ends on a total line of its own. And the settings listing confirms the convention is in place for the rest of your session. (The row beneath it is always listed: those are the numbers jstats would use if you ever converted your markers to the SPSS form.)</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -728,7 +730,7 @@ Message width: Auto (currently 79)
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Every one of the commercial programs has a version of this move, and all three get to the same analytical place: the codes stop counting as data, and no rows are thrown away. They get there differently, though, and the difference is worth knowing before you migrate. SPSS <em>declares</em>: <code>MISSING VALUES MoodRating (-99, -98)</code>, with the matching VALUE LABELS, leaves the −99s sitting in the cells and flags them — clear the declaration and they are ordinary values again. Stata and SAS <em>replace</em>: the code is overwritten by the program’s own marker. In Stata that is <code>mvdecode MoodRating, mv(-99=.a \ -98=.b)</code>, with <code>label define</code> supplying the matching labels; in SAS it is a data-step assignment — <code>if MoodRating = -99 then MoodRating = .A;</code>, and the same for <code>.B</code> — with <code>PROC FORMAT</code> for the labels. Afterward the original number is not recoverable from the data, though the labels still record what each marker meant. The difference here is that the declaration you just made is not tied to any of the three: it can be converted to either of the other forms without going back to the raw data. Converting to the SPSS form puts numeric codes back, but which numbers get used is set by a <code>joptions()</code> setting (<code>missing.convention.codes</code>), because the original values are gone. The value labels, however, survive every conversion unchanged.</p>
-<p>The frequency table above is close to what SPSS’s Frequencies, or Stata’s <code>tabulate</code> with missing values shown, would give you — a Valid section, a Missing section, and valid percentages computed on the valid cases alone — though the layouts are not identical. What has no counterpart in any of them is the settings listing. Each program has only its own form, so there is nothing to choose; in jstats there is, and <code>joptions()</code> is where you see what you chose.</p>
+<p>The frequency table above is close to what SPSS’s Frequencies gives you: a Valid section and a Missing section, each closed by its own total, with valid percentages computed on the valid cases alone. In SAS, <code>PROC FREQ</code> with the <code>MISSPRINT</code> option comes nearest, listing the missing values in the table but leaving them out of the percentages. Stata’s <code>tabulate</code> gives one view or the other: without the <code>missing</code> option it leaves the markers out of the table, and with it, it counts them in the percentages like any other value. What has no counterpart in any of them is the settings listing. Each program has only its own form, so there is nothing to choose; in jstats there is, and <code>joptions()</code> is where you see what you chose.</p>
 </div>
 </div>
 </div>
@@ -975,7 +977,7 @@ Message width: Auto (currently 79)
 </div>
 <div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The download at the bottom of this page is the <em>finished</em> version of what you built — and finished means something specific. A goal every experienced programmer and statistician takes for granted, but new researchers are rarely told: a completed script should run from beginning to end without errors. On this page you met one error on purpose, because meeting it is how the choice gets explained. The download shows what the end of that process looks like, and it differs from the page blocks in two principled ways: the deliberate error in block 3 is commented out, with a note saying why, and block 6 carries the answer to the closing exercise — the <code>Anxiety2</code> declaration you were asked to write yourself — so the file runs clean and complete. Nothing else changes: this page saves no files, so there are no overwrite arguments to add, and the reload at the top already guards against a second run.</p>
+<p>The download at the bottom of this page is the <em>finished</em> version of what you built — and finished means something specific. A goal every experienced programmer and statistician takes for granted, but new researchers are rarely told: a completed script should run from beginning to end without errors. On this page you met one error on purpose, because meeting it is how the choice gets explained. The download shows what the end of that process looks like, and it differs from the page blocks in three principled ways: it opens with <code>library(jstats)</code>, which the page assumes you have already run, so the file works in a fresh session; the deliberate error in block 3 is commented out, with a note saying why; and block 6 carries the answer to the closing exercise — the <code>Anxiety2</code> declaration you were asked to write yourself — so the file runs clean and complete. Nothing else changes: this page saves no files, so there are no overwrite arguments to add, and the reload at the top already guards against a second run.</p>
 <p>To prove a script is finished, use the <strong>Source</strong> icon (to the right of Run in the script toolbar): it runs the entire file, top to bottom, in one go. Source shows the <em>output</em> without echoing each command back to the Console — that’s normal — and the small arrow beside Source offers “Source with Echo” if you’d like the commands shown too. jstats functions print their own tables, so their output always appears; but a bare base R line that merely displays a value — <code>mean()</code> on its own — stays quiet under Source, because R only auto-prints results when you run lines interactively.</p>
 <p>The <strong>What you should see</strong> boxes under the blocks above reproduce that Console — the blue command lines, the gray notes, the colored tables, and one red error where it is meant to happen. They show the <em>code</em> being run, along with any note written on the end of a command line, but not the standalone <code>##</code> comment lines (running one just echoes it back and does nothing).</p>
 <p>One thing this page leaves behind, deliberately: the missing-value convention stays set for the rest of your session, because the whole point of choosing it is to have it in place. Nothing else is changed and nothing is written to disk. If you set a convention in your Project’s <code>.Rprofile</code> and block 2 cleared it, restarting R brings it back.</p>
@@ -988,7 +990,7 @@ Message width: Auto (currently 79)
 <section id="take-the-whole-script-with-you" class="level2">
 <h2 class="anchored" data-anchor-id="take-the-whole-script-with-you">Take the whole script with you</h2>
 <p>That’s the full run-through. If you’d like the entire script in one file to keep, adjust, and reuse, download it here:</p>
-<p>The file is close to what you have just built: the same code, in the same order, as though you had pasted every block above into one script. Two things differ, each on purpose — the line that raises the deliberate error is commented out, and the finished file includes the answer to block 6’s exercise. The <strong>What’s the point?</strong> box under the last block explains why a finished script is written that way.</p>
+<p>The file is close to what you have just built: the same code, in the same order, as though you had pasted every block above into one script. Three things differ, each on purpose — the file opens with <code>library(jstats)</code>, the line that raises the deliberate error is commented out, and the finished file includes the answer to block 6’s exercise. The <strong>What’s the point?</strong> box under the last block explains why a finished script is written that way.</p>
 <div style="margin: 1rem 0 2rem;">
 <p><a href="missing-values-follow-along.R" download="" class="btn btn-primary">Download the full script (.R)</a></p>
 </div>

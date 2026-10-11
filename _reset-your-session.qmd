@@ -18,8 +18,8 @@ way is the little **broom** icon at the top of the **Environment** pane
 (upper-right): one click sweeps the pane clean. It clears *everything* in the
 Environment, so use it when you're between run-throughs, not in the middle of
 one. (You can also remove a single object by name, e.g. `rm(MyData_r)`.) The
-built-in practice dataset comes right back with `jload("community")` whenever you
-want it.
+built-in practice datasets come right back whenever you want them:
+`jload("community")`, or `jload("clinic")`.
 
 This box is the same on every hands-on page in this group.
 :::

@@ -266,10 +266,10 @@ Everything you've seen this session came out at jstats's **standard** detail lev
 ```{r, eval=FALSE}
 joutput("minimal")    # core results only — leanest output
 joutput("standard")   # the default you've been seeing
-joutput("full")       # fullest detail — diagnostics, extra tests, complete processing summaries
+joutput("full")       # fullest detail — extra tests and notes, complete processing summaries
 ```
 
-`minimal` strips the output down to the essential result tables — handy for a clean report or a production script; `full` turns on the additional diagnostics and notes that `standard` leaves off. Important warnings and errors always appear, whatever level you choose.
+`minimal` strips the output down to the essential result tables — handy for a clean report or a production script; `full` turns on the additional tests and notes that `standard` leaves off. Diagnostics such as Levene's test are the one exception: no level turns them on, and `joutput(diagnostics = TRUE)` is their own setting. Important warnings and errors always appear, whatever level you choose.
 
 ::: {.callout-note collapse="true" title="Going deeper (optional)"}
 Each level is a preset for a whole set of individual switches — effect sizes, confidence intervals, the Case Processing Summary, and more — and you can override any one of them on its own, as you did earlier with `variable.id`. `?joutput` lists every setting and what each level turns on; Book 2 covers output control in more detail, with worked examples.

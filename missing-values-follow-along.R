@@ -2,11 +2,17 @@
 ## This is the completed version of the script built on the guide page.
 ## It runs from top to bottom, repeatedly, without errors: the deliberate
 ## error line from block 3 is commented out below (with a note), and block
-## 6 carries the answer to the page's closing exercise. Run the whole file
-## with the Source icon, to the right of Run in the script toolbar.
+## 6 carries the answer to the page's closing exercise. It also opens with
+## library(jstats), which the page assumes you have already run, so it
+## works in a fresh session. Run the whole file with the Source icon, to
+## the right of Run in the script toolbar.
 
 
 ## ---- 1. Load the data, and see what jstats already noticed ------------
+
+## Load jstats for this session. The page assumes you already have; a
+## script run in a fresh session has to do it itself
+library(jstats)
 
 ## Start from a fresh copy of the clinic practice dataset
 ## You wouldn't normally write this pair: clinic is there by name as soon
