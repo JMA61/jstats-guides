@@ -134,7 +134,7 @@ file.remove("WhereDidIGo.rds")  # base R
 joptions(data.dir = "Data")
 
 ## Save the dataset to the Data folder and call it MyData_r.rds
-## Specify R native format with the .rds extension
+## Specify R format with the .rds extension
 jsave(MyData, "MyData_r.rds", overwrite = TRUE)
 
 

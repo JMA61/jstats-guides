@@ -210,10 +210,11 @@ detail, with worked examples.
 ### 4. Check equal variances with Levene's test
 
 Whether the variances are equal is something you can check. Levene's test
-compares the spread of the groups, and `diagnostics = TRUE` adds Levene's test
-to the output. Levene's test is one of jstats's *diagnostics*, checks on the
+compares the spread of the groups, and `diagnostics = "levene"` adds it to the
+output. Levene's test is one of jstats's *diagnostics*, checks on the
 assumptions behind an analysis, and the diagnostics stay off unless you ask for
-them.
+them. `diagnostics = TRUE` asks for all of them at once (for `jaov()`, Levene's
+test and a normal Q-Q plot); this page asks for Levene's test by name.
 
 ```{r}
 #| echo: false
@@ -221,8 +222,8 @@ them.
 .obx$show_console(r"---(## ---- 4. Check equal variances with Levene's test ----------------------
 
 ## Levene's test asks whether the groups differ in spread. It is off by
-## default, so ask for it
-jaov(Flourishing ~ Condition, diagnostics = TRUE))---", fence = TRUE)
+## default, so ask for it by name
+jaov(Flourishing ~ Condition, diagnostics = "levene"))---", fence = TRUE)
 ```
 
 Levene's test is not significant here: its *p* is above .05. The test found no
@@ -235,7 +236,7 @@ checking an ANOVA, and it is the assumption that decides between the two
 versions of the test. Both versions make two other assumptions as well: that the
 cases are independent of one another, and that the scores within each group are
 roughly normally distributed. The box plot in block 8 gives a first look at the
-second of those.
+second of those, and `diagnostics = "qq"` draws a normal Q-Q plot, a closer one.
 
 ::: {.callout-note collapse="true" title="Reading this output"}
 The new table sits at the top, above the descriptives. Levene's test has an *F*
@@ -263,7 +264,7 @@ To see the other outcome of Levene's test we need a different variable.
 
 ## A different outcome, daily screen time, whose spread does differ
 ## across the conditions. Watch for the note under the Levene table
-jaov(ScreenTime ~ Condition, diagnostics = TRUE))---", fence = TRUE)
+jaov(ScreenTime ~ Condition, diagnostics = "levene"))---", fence = TRUE)
 ```
 
 This time Levene's test is significant: evidence that the four conditions differ
@@ -508,7 +509,7 @@ that group out. Whichever you choose, say so in your write-up.
 Once you know the pieces, two arguments ask for all of them together.
 `full = TRUE` brings the confidence intervals, the effect size, and the post-hoc
 comparisons. Levene's test is a diagnostic, and no level of detail includes the
-diagnostics, so it keeps its own argument, `diagnostics = TRUE`. Add
+diagnostics, so it keeps its own argument, `diagnostics = "levene"`. Add
 `welch = TRUE` to the same call for the Welch route.
 
 ```{r}
@@ -517,8 +518,8 @@ diagnostics, so it keeps its own argument, `diagnostics = TRUE`. Add
 .obx$show_block(r"---(## ---- 11. Everything in one call ---------------------------------------
 
 ## full = TRUE asks for the confidence intervals, the effect size, and the
-## post-hoc comparisons; diagnostics = TRUE adds Levene's test
-jaov(Flourishing ~ Condition, full = TRUE, diagnostics = TRUE))---",
+## post-hoc comparisons; diagnostics = "levene" adds Levene's test
+jaov(Flourishing ~ Condition, full = TRUE, diagnostics = "levene"))---",
   chrome = TRUE)
 ```
 
@@ -578,9 +579,9 @@ the method that matches the test you ran.
   attr(res, "printed") <- out
   res
 }
-.std <- .q(jaov(Flourishing ~ Condition, data = clinic, posthoc = TRUE, diagnostics = TRUE))
+.std <- .q(jaov(Flourishing ~ Condition, data = clinic, posthoc = TRUE, diagnostics = "levene"))
 .wel <- .q(jaov(Flourishing ~ Condition, data = clinic, welch = TRUE, posthoc = TRUE))
-.scr <- .q(jaov(ScreenTime ~ Condition, data = clinic, diagnostics = TRUE))
+.scr <- .q(jaov(ScreenTime ~ Condition, data = clinic, diagnostics = "levene"))
 .ful <- .q(jaov(Flourishing ~ Condition, data = clinic, full = TRUE))
 
 # block 8: the box plot's axis labels, read from the plot jplot() builds
@@ -633,7 +634,7 @@ stopifnot(
   which.max(.scr$descriptives$SD) == 2, round(max(.scr$descriptives$SD), 3) == 2.463,
   which.min(.scr$descriptives$SD) == 1, round(min(.scr$descriptives$SD), 3) == 1.151,
   grepl("group is 1.5 times the smallest", .lev_scr$note, fixed = TRUE),
-  grepl("SD is 2.1 times the smallest", .lev_scr$note, fixed = TRUE),
+  grepl("standard deviation is 2.1 times the smallest", .lev_scr$note, fixed = TRUE),
   grepl("Guidelines differ on whether the standard ANOVA", .lev_scr$note, fixed = TRUE),
   grepl("welch = TRUE", .lev_scr$note, fixed = TRUE),
   .scr$p > .05,

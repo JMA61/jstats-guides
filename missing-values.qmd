@@ -53,9 +53,11 @@ later, may carry such codes, and most survey data do, whatever the format: a CSV
 file (comma-separated values, the plainest spreadsheet format) brings the codes
 with nothing to say what they mean, and a file from SPSS, Stata, or SAS usually
 arrives with them declared, but not always. If your data have no missing values
-at all, leave this page for later. Missing entries that are simply blank need no
-declaring — they usually load as R's ordinary `NA` (short for "not available")
-— but every analysis still
+at all, leave this page for later. Missing entries that are simply blank are a
+different matter. In a variable of numbers they load as R's ordinary `NA` (short
+for "not available") and need no declaring; in a text variable they load as a
+category of their own, `<blank>`, which `jdeclare_missing()` makes missing with
+`codes = ""`. Either way, every analysis still
 has to decide what to do with them, a topic of its own that the books cover in
 full. No copy of SPSS, Stata, or SAS is needed to follow along; those names
 appear only because the three ways of recording a missing value are named after
@@ -101,9 +103,10 @@ Two things happened. As `clinic` loaded, jstats looked over its missing values
 and reported on two groups of columns. Four of them — `Stress`, `SleepHours`,
 `Medication`, and `Anxiety4` — arrived with their codes already *declared*, and
 those codes are listed with labels such as "Refused". Two others, `MoodRating`
-and `Anxiety2`, carry codes that jstats *suspects* stand for missing values but
-that nobody has declared; for those it offers a ready-to-run example, naming
-`MoodRating`. Then the descriptives showed why that second group matters: the
+and `Anxiety2`, carry codes that match the numbers jstats watches for as
+missing-value codes, but that nobody has declared. For those, jstats says that
+no missing-value convention is chosen yet, lists the three to choose from, and
+then offers a ready-to-run example, naming `MoodRating`. Then the descriptives showed why that second group matters: the
 minimum of `MoodRating` is a large negative number and the mean has been dragged
 well below the 1–10 range.
 Those stand-in codes are being averaged in as if they were genuine ratings —
@@ -181,9 +184,10 @@ them, and on whether you also use base R alongside jstats.
 ### 3. Declare, and meet the gate
 
 `jdeclare_missing()` is the function that tells jstats which codes in a column
-mean "missing," and it takes the labels at the same time. Run it now, exactly
-as you will run it successfully in the next block — with no convention chosen,
-it stops and asks.
+mean "missing," and it takes the labels at the same time. The load note in
+block 1 already said a convention has to be chosen first; run the declaration
+now anyway, exactly as you will run it successfully in the next block — with no
+convention chosen, it stops and asks.
 
 ```{r}
 #| echo: false

@@ -75,7 +75,9 @@ jupdate()
 That's the whole thing — one command, run in the Console, in its own separate
 process. The full details (what it checks, why you restart R afterward, the
 `ask = TRUE` option) live on the [Install jstats](install-jstats.qmd#keep-jstats-up-to-date)
-page, since that's where you first meet it.
+page, since that's where you first meet it. To see what changed in each release,
+read [What's new in each release](https://jma61.github.io/jstats/news/index.html) on
+the jstats reference site.
 
 ## Updating RStudio
 

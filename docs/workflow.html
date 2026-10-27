@@ -401,7 +401,10 @@ jstats treats these as missing; base R functions do not.
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"clinic"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Loaded the jstats example dataset 'clinic'.</code></pre>
+<pre><code>Loaded the jstats example dataset 'clinic'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>4 variables have SPSS-style missing values:
@@ -415,27 +418,40 @@ To make them missing in base R as well, convert:
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-Suspected missing-value codes detected:
+Missing-value codes detected:
   MoodRating:  -99 (4), -98 (3)
   Anxiety2:    -99 (3), -98 (3)
 
-These codes are not formally defined, so they are not treated as missing.
+These codes match the missing.convention.codes setting (-99, -98, -97) but are
+not formally declared, so they are not treated as missing.
 Declare them as missing if they are; leave as-is if real.
 
-To declare one variable's codes as missing:
+No missing-value convention is selected, so these codes cannot be declared yet.
+Choose one for this session:
+  joptions(missing.convention = "stata")
+      Lowercase markers behave as true NAs in base R.
+      Recommended if you also run base R or AI-generated code.
+  joptions(missing.convention = "spss")
+      Codes stay visible numbers; jstats treats them as missing.
+      Base R does not.
+  joptions(missing.convention = "sas")
+      Like Stata, with uppercase markers (.A-.Z).
+To make the choice permanent, put the same line in your .Rprofile.
+Then, to declare one variable's codes as missing:
   jdeclare_missing(clinic, MoodRating, codes = c(-99, -98), modify = TRUE)
 To declare and label them in one call, replacing the placeholder names:
-  jdeclare_missing(clinic, MoodRating, codes = c("label1" = -99, "label2" = -98), modify = TRUE)</code></pre>
+  jdeclare_missing(clinic, MoodRating,
+      codes = c("label1" = -99, "label2" = -98), modify = TRUE)</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">juse</span>(clinic)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">juse</span>(clinic)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Default data frame set to: clinic</code></pre>
 </div>
 </div>
-<p>Loading it first isn’t something you’d normally write — <code>clinic</code> is there by name as soon as jstats is loaded — but it guarantees a clean copy whatever you did with it elsewhere. Notice what jstats says on the way in: it reports the columns whose missing-value codes were declared before the data reached you, and separately flags codes it <em>suspects</em> in columns where nobody declared anything. <code>MoodRating</code> is in that second group.</p>
+<p>Loading it first isn’t something you’d normally write — <code>clinic</code> is there by name as soon as jstats is loaded — but it guarantees a clean copy whatever you did with it elsewhere. Notice what jstats says on the way in: it reports the columns whose missing-value codes were declared before the data reached you, and separately flags undeclared codes that match the numbers it watches for as missing-value codes — listing, since no convention is chosen yet, the three to choose from. <code>MoodRating</code> is in that second group.</p>
 <p>That column is meant to run from 1 to 10, but it arrived with two stand-in codes buried in it as ordinary numbers: <code>-99</code> for “Refused” and <code>-98</code> for “Don’t know” — the usual state of affairs after an import from Excel or from a CSV file (comma-separated values, a plain-text spreadsheet), where the file carries no record of what those numbers mean. Until we tell jstats they stand for missing, they are treated as real values and quietly poison every statistic:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MoodRating)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MoodRating)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Descriptive Statistics
 </span><span style="color: #BBBB00;">Using default data frame: clinic
 </span>
@@ -448,8 +464,8 @@ MoodRating    70        70      -99   9   -4.943  31.477
 </div>
 <p>The mean is dragged far below the 1–10 range, because those large negative codes are being averaged in as if they were genuine ratings. <code>jdeclare_missing()</code> fixes this the careful way — it <em>declares</em> the two codes as missing, with labels, so jstats sets them aside and still knows which was “Refused” and which “Don’t know.” No case is deleted.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>clinic <span class="ot">&lt;-</span> <span class="fu">jdeclare_missing</span>(clinic, MoodRating,</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">codes =</span> <span class="fu">c</span>(<span class="st">"Refused"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">99</span>, <span class="st">"Don't know"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">98</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>clinic <span class="ot">&lt;-</span> <span class="fu">jdeclare_missing</span>(clinic, MoodRating,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">codes =</span> <span class="fu">c</span>(<span class="st">"Refused"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">99</span>, <span class="st">"Don't know"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">98</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: jdeclare_missing(): no missing-value convention is selected, so these
 codes cannot be declared.
@@ -467,7 +483,7 @@ To make the choice permanent, put the same line in your .Rprofile.</code></pre>
 </div>
 <p>jstats stops rather than guessing. Missing values can be stored in three different forms — one for each of the major statistics programs — and because they behave differently once the data leave jstats, it asks you to choose rather than picking for you. Stata-style is the choice jstats itself recommends for anyone who also runs base R, so that is the one we take here. <em><a href="./missing-values.html">Telling jstats about missing values</a></em> covers what the three forms are and how to choose between them. (If you <em>didn’t</em> see that error, you have already chosen a convention — on another page, or in your Project’s <code>.Rprofile</code> — and that is the setting doing its job.)</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">missing.convention =</span> <span class="st">"stata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">missing.convention =</span> <span class="st">"stata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Options Settings
 </span>Missing-value convention: Stata-style
 Run joptions() to see all settings.
@@ -476,8 +492,8 @@ Note: the clinic data frame uses SPSS-style missing values.
 To convert it to match this setting, run:
   jconvert(clinic, to = "stata", modify = TRUE)
 </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>clinic <span class="ot">&lt;-</span> <span class="fu">jdeclare_missing</span>(clinic, MoodRating,</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">codes =</span> <span class="fu">c</span>(<span class="st">"Refused"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">99</span>, <span class="st">"Don't know"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">98</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>clinic <span class="ot">&lt;-</span> <span class="fu">jdeclare_missing</span>(clinic, MoodRating,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">codes =</span> <span class="fu">c</span>(<span class="st">"Refused"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">99</span>, <span class="st">"Don't know"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">98</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Declared and converted to Stata-style missing values on MoodRating:
   .a ["Refused"] (from -99)
@@ -492,9 +508,9 @@ To change clinic directly, rerun with modify = TRUE:
 Note: MoodRating uses Stata-style missing values, but other columns in clinic
 are SPSS-style.
 To align MoodRating with the rest, run:
-  jconvert(clinic, to = "spss", vars = "MoodRating", modify = TRUE)</code></pre>
+  jconvert(clinic, vars = "MoodRating", to = "spss", modify = TRUE)</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MoodRating)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(MoodRating)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Descriptive Statistics
 </span><span style="color: #BBBB00;">Using default data frame: clinic
 </span>
@@ -559,7 +575,7 @@ MoodRating    70        63       1    9   5.460  1.702
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">juse</span>(community)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">juse</span>(community)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Default data frame set to: community</code></pre>
 </div>
@@ -571,7 +587,7 @@ MoodRating    70        63       1    9   5.460  1.702
 <p>A common early task is combining several survey items into one scale score — but only after checking the items hang together. <code>community</code> has a five-item Environment battery (<code>Environment1</code> through <code>Environment5</code>).</p>
 <p>By default jstats prints variable <em>names</em>, which keeps output uncluttered. But a variable’s <strong>label</strong>, when it has one, usually carries the actual question wording — and that can be a useful clue when something looks off. So before we start, let’s switch the display to bring the labels along. <code>joutput()</code> sets output preferences for the rest of the session; <code>variable.id = "legend"</code> keeps the short names in the tables and adds a label legend beneath them:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="at">variable.id =</span> <span class="st">"legend"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="at">variable.id =</span> <span class="st">"legend"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Output Settings
 </span>  variable.id: LEGEND (override)
 Run joutput() to see all settings.
@@ -597,7 +613,7 @@ Run joutput() to see all settings.
 </div>
 <p>Now <code>jalpha()</code> reports Cronbach’s alpha and the per-item diagnostics, with each item’s label shown in the legend below:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jalpha</span>(Environment1, Environment2, Environment3, Environment4, Environment5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jalpha</span>(Environment1, Environment2, Environment3, Environment4, Environment5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Reliability Analysis
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
@@ -653,11 +669,10 @@ Variable Labels:
 </div>
 <p><code>jalpha()</code> flags <code>Environment2</code> as <strong>reverse-keyed</strong>: it correlates negatively with the rest, which drags the reliability down. The label legend tells you why — <code>Environment2</code>’s label ends in “R”, the marker this dataset’s author used for a reverse-coded item. Your own data won’t always be flagged so conveniently, but the label <em>wording</em> is often the tell on its own: a positively phrased item sitting among negatively phrased ones is exactly the kind of thing that surfaces here. We fix it by recoding the item into a new column that runs the same direction as the others. <code>jrecode()</code> returns the recoded variable, which we store as a new column:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>community<span class="sc">$</span>Environment2R <span class="ot">&lt;-</span> <span class="fu">jrecode</span>(community, Environment2,</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">map =</span> <span class="st">"1=5; 2=4; 3=3; 4=2; 5=1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>community<span class="sc">$</span>Environment2R <span class="ot">&lt;-</span> <span class="fu">jrecode</span>(community, Environment2,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">map =</span> <span class="st">"1=5; 2=4; 3=3; 4=2; 5=1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>
-Note: This call changes community only if you assign the result:
+<pre><code>Note: This call changes community only if you assign the result:
   community$&lt;name&gt; &lt;- jrecode(...)
 To check the recode landed correctly, compare jfreq() on the original and the
 new column.</code></pre>
@@ -681,7 +696,7 @@ new column.</code></pre>
 </div>
 <p>Run <code>jalpha()</code> again with the reversed item in place of the original:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jalpha</span>(Environment1, Environment2R, Environment3, Environment4, Environment5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jalpha</span>(Environment1, Environment2R, Environment3, Environment4, Environment5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Reliability Analysis
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
@@ -730,8 +745,8 @@ Variable Labels:
 </div>
 <p>With the item reversed, reliability improves — but the diagnostics now point at <code>Environment5</code>: it has the weakest corrected item-total correlation and the highest “Alpha if Item Deleted,” meaning the scale would be a touch <em>more</em> reliable without it. So we drop it and build the scale from the four items that hang together, as a per-case mean with <code>javg()</code>, requiring at least three of the four present so a respondent who skipped one still gets a score:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>community<span class="sc">$</span>EnvScale <span class="ot">&lt;-</span> <span class="fu">javg</span>(Environment1, Environment2R, Environment3, Environment4,</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">min.valid =</span> <span class="dv">3</span>, <span class="at">var.label =</span> <span class="st">"Environment scale (mean)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>community<span class="sc">$</span>EnvScale <span class="ot">&lt;-</span> <span class="fu">javg</span>(Environment1, Environment2R, Environment3, Environment4,</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">min.valid =</span> <span class="dv">3</span>, <span class="at">var.label =</span> <span class="st">"Environment scale (mean)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Mean of 4 variables computed for 103 cases (min.valid = 3: 14 cases used
 partial data, 5 set to NA due to missing values).
@@ -743,7 +758,7 @@ Note: javg() returns the scores; assign them to a column to keep them:
   community$&lt;name&gt; &lt;- javg(...)
 For the full distribution (min, max, SD), run jdesc() on the new column.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(EnvScale)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(EnvScale)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Descriptive Statistics
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
@@ -778,7 +793,7 @@ Variable Labels:
 <h2 class="anchored" data-anchor-id="run-the-analysis">Run the analysis</h2>
 <p>With a clean, prepared dataset, the analysis itself is short. jstats uses the same <code>DV ~ IV</code> formula you’d write in base R, so a linear regression of wellbeing on income and age reads naturally:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jlm</span>(WellbeingScore <span class="sc">~</span> Income <span class="sc">+</span> Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jlm</span>(WellbeingScore <span class="sc">~</span> Income <span class="sc">+</span> Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Linear Regression
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
@@ -817,7 +832,7 @@ Sum of Squares:
 </div>
 <p>To add a categorical predictor like <code>Region</code>, you tell jstats to treat it as a set of dummy variables. <code>jdummy()</code> registers that once — choosing <code>West</code> as the reference category here — and every analysis that follows honors it, so you don’t re-specify it each time:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdummy</span>(Region, <span class="at">ref =</span> <span class="st">"West"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdummy</span>(Region, <span class="at">ref =</span> <span class="st">"West"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Dummy Variable Registration
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
@@ -834,7 +849,7 @@ To keep it across sessions, save the data frame in R format (.rds):
 Next session, load that file to restore the registration:
   jload("community.rds")</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jlm</span>(WellbeingScore <span class="sc">~</span> Income <span class="sc">+</span> Age <span class="sc">+</span> Region)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jlm</span>(WellbeingScore <span class="sc">~</span> Income <span class="sc">+</span> Age <span class="sc">+</span> Region)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Linear Regression
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
@@ -894,17 +909,17 @@ Sum of Squares:
 </div>
 <p>Logistic regression works the same way, with a 0/1 outcome. <code>Volunteer</code> is already coded 0/1, so it drops straight in:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jlogistic</span>(Volunteer <span class="sc">~</span> Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jlogistic</span>(Volunteer <span class="sc">~</span> Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Logistic Regression
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
 Analysis N: 103
 
 Coefficients
-                b      SE    Wald  df    p   Exp(B)
------------  ------  -----  -----  --  ----  ------
-(Intercept)  -2.347  0.811  8.382   1  .004   0.096
-Age           0.055  0.019  8.216   1  .004   1.057
+                b      SE    Wald  df    p   Gelman β  Exp(b)
+-----------  ------  -----  -----  --  ----  --------  ------
+(Intercept)  -2.347  0.811  8.382   1  .004             0.096
+Age           0.055  0.019  8.216   1  .004    1.284    1.057
 
 Outcome:
   Volunteer = Volunteered in past year
@@ -948,7 +963,7 @@ Dependent Variable Encoding
 <h2 class="anchored" data-anchor-id="keep-one-set-of-cases-across-analyses">Keep one set of cases across analyses</h2>
 <p>When several variables have missing values, different analyses can quietly run on different subsets of respondents — a regression on these three variables uses a different N than a correlation on those four. When you want a run of analyses to share the <em>same</em> respondents, <code>jcomplete()</code> sets a listwise filter: only cases complete on the variables you name are used, until you turn it off.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jcomplete</span>(Income, Education, Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jcomplete</span>(Income, Education, Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Listwise Case Filter
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
@@ -962,7 +977,7 @@ Age        103     0        0.0%
   Listwise filter activated -- 12 cases will be excluded from
   subsequent analyses.
 </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdesc</span>(Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Descriptive Statistics
 </span><span style="color: #BBBB00;">Using default data frame: community
 </span>
@@ -986,15 +1001,15 @@ Variable Labels:
 <h2 class="anchored" data-anchor-id="a-clean-slate-when-you-want-one">A clean slate when you want one</h2>
 <p>The session default, the dummy registration, and the listwise filter all persist by design — that’s what makes them convenient. When you do want to clear them (starting a genuinely separate analysis, or undoing something), each has an off switch:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jcomplete</span>(<span class="cn">NULL</span>)            <span class="co"># drop the listwise filter</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jcomplete</span>(<span class="cn">NULL</span>)            <span class="co"># drop the listwise filter</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>jcomplete cleared for community (had: Income, Education, Age).</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdummy</span>(<span class="cn">NULL</span>)               <span class="co"># drop the dummy registrations</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jdummy</span>(<span class="cn">NULL</span>)               <span class="co"># drop the dummy registrations</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Dummy registrations cleared for community (the default data frame): Region.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">juse</span>(<span class="cn">NULL</span>)                 <span class="co"># clear the session default</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">juse</span>(<span class="cn">NULL</span>)                 <span class="co"># clear the session default</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Default data frame cleared.</code></pre>
 </div>
@@ -1005,9 +1020,9 @@ Variable Labels:
 <h2 class="anchored" data-anchor-id="dialing-the-detail-up-or-down">Dialing the detail up or down</h2>
 <p>Everything you’ve seen this session came out at jstats’s <strong>standard</strong> detail level — the default (a bare <code>joutput()</code> names the level on its first line). <code>joutput()</code> also takes an overall level, so you can trim the output or expand it in a single move:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"minimal"</span>)    <span class="co"># core results only — leanest output</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"standard"</span>)   <span class="co"># the default you've been seeing</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"full"</span>)       <span class="co"># fullest detail — extra tests and notes, complete processing summaries</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"minimal"</span>)    <span class="co"># core results only — leanest output</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"standard"</span>)   <span class="co"># the default you've been seeing</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">joutput</span>(<span class="st">"full"</span>)       <span class="co"># fullest detail — extra tests and notes, complete processing summaries</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><code>minimal</code> strips the output down to the essential result tables — handy for a clean report or a production script; <code>full</code> turns on the additional tests and notes that <code>standard</code> leaves off. Diagnostics such as Levene’s test are the one exception: no level turns them on, and <code>joutput(diagnostics = TRUE)</code> is their own setting. Important warnings and errors always appear, whatever level you choose.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
@@ -1031,8 +1046,8 @@ Variable Labels:
 <h2 class="anchored" data-anchor-id="save-your-work-and-open-a-file-someone-sends-you">Save your work, and open a file someone sends you</h2>
 <p>A finished session usually ends by saving the prepared data. <code>jsave()</code> writes the in-memory data frame back out to a file, and <code>jload()</code> reads it back; together they’re the round trip. Across formats — R’s own <code>.rds</code>, plus SPSS, Stata, and Excel — jstats carries value labels, variable labels, and missing-value declarations along as faithfully as each format allows.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(community, <span class="st">"community.rds"</span>)     <span class="co"># save the prepared data</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)  <span class="co"># read it back</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jsave</span>(community, <span class="st">"community.rds"</span>)     <span class="co"># save the prepared data</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)  <span class="co"># read it back</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
@@ -1050,12 +1065,17 @@ Variable Labels:
 </div>
 </div>
 </div>
-<p>Everything above used files you’d save yourself. The package also ships an example SPSS file inside itself — a stand-in for a data file a colleague emails you. <code>system.file()</code> is base R’s way of finding a file bundled inside an installed package; <code>jload()</code> then opens it like any other received file, missing-value codes and all:</p>
+<p>Everything above used files you’d save yourself. The package also ships an example SPSS file inside itself — a stand-in for a data file a colleague emails you. Name it as you would a file of your own: when no file of that name is in your folders, <code>jload()</code> looks among the jstats example files, says so as it loads, and opens it like any other received file, missing-value codes and all:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>received <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"community_spss.sav"</span>, <span class="at">package =</span> <span class="st">"jstats"</span>)</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(received, <span class="at">name =</span> <span class="st">"community_received"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community_spss.sav"</span>, <span class="at">name =</span> <span class="st">"community_received"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Reading from the jstats example files</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loaded community_received (SPSS format; 103 cases, 15 variables)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>5 variables have SPSS-style missing values:
@@ -1071,7 +1091,7 @@ To use SPSS-style missing values, run:
 To use Stata-style missing values, run:
   jconvert(community_received, to = "stata", modify = TRUE)</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jscreen</span>(community_received, <span class="at">stats =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jscreen</span>(community_received, <span class="at">stats =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="fansi fansi-output"><code><span style="color: #BB0000;">Data Screening
 </span>  Cases: 103
   Variables: 15

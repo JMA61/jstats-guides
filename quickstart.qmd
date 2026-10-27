@@ -228,7 +228,10 @@ Inside the parentheses, `jfreq` takes two things in order: the dataset (`communi
 the variable to count (`Region`). It prints a frequency table — the number of respondents
 in each region, alongside the percentages. (Note the capital **R** in `Region`:
 capitalization has to match, and to R a lowercase `region` would be a different name
-entirely.)
+entirely.) Notice, too, that neither name is in quotation marks: in jstats a dataset and
+its variables go in without them, and quotation marks are for inputs that are not
+names, such as a file name. If you mix the two up, jstats tells you which way round it
+should be; the [Troubleshooting](troubleshooting.qmd#quoting) page has the rule in full.
 
 You'll also see one more mark throughout these examples, from the orientation: the `#`. A
 `#` tells R to ignore the rest of the line — everything after it is a **comment**, a
@@ -458,6 +461,12 @@ the default, none of them needed the dataset retyped, or the dollar-sign constru
 (`community$Age`) you saw in the base R lines at the start. At the same time, that form
 stays close enough to base R that what you've practiced transfers — to base R itself, and
 to other packages' functions, whenever your work calls for them.
+
+One last check, and a habit worth keeping. Choose **Session > Restart R**: the Console
+clears, the Environment pane empties, and `Results` is gone. Now select the whole script
+(**Ctrl+A**, **Cmd+A** on a Mac) and run it with **Ctrl+Enter** (**Cmd+Enter**), and every
+result comes back. The script is the real record of your work, not whatever happens to be
+loaded in R at the moment.
 
 Your script can be saved, too, so today's commands are there to reopen and build on in a
 future session. Saving script files — and where they live inside your Project — is covered

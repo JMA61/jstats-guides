@@ -134,7 +134,8 @@ downloads and installs the new version. It doesn't pause to ask "are you sure?"
 One thing to know: *installing* the new version and *loading* it are two separate
 steps. `jupdate()` puts the new version on your computer, but the session you're in
 keeps running the old one until you restart R. You don't have to remember how
-— when the update finishes, `jupdate()` prints the exact steps:
+— when the update finishes, `jupdate()` prints the exact steps, after a list of
+what is new in each version since the one you had (left out of the copy below):
 
 ```
 jstats has been updated to version x.y.z.

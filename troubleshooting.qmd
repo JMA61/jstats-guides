@@ -182,6 +182,13 @@ or to run the install line for you; either way it's a quick job for them.
 :::
 
 ::: {.callout-warning collapse="true" title="Where did jstats install? / I updated, but I still see the old version"}
+**Restart R first.** A session that had jstats loaded keeps running the copy it
+loaded, even after an install or `jupdate()` puts a newer one on your computer —
+and `packageVersion("jstats")` reports the new number all the same, because it
+reads the installed copy, not the one the session is running. Choose
+**Session > Restart R**, then run `library(jstats)`; the startup line names the
+version now in use. If it still names the old one, read on.
+
 R keeps installed packages in a **library** — a folder on your computer — and
 there can be more than one. That's normally invisible and harmless: jstats
 installs into one of them and runs fine from there.
@@ -405,6 +412,78 @@ jload("C:/Users/you/Documents/survey.csv")
 ```
 
 Forward slashes work in R on every kind of computer, Windows included.
+
+Some backslash pairs are ones R accepts — `\t` is a tab, `\n` a new line — so a
+path such as `"C:\temp\new.csv"` gets past R and reaches jstats. `jload()`,
+`jsave()` and `joptions(data.dir = )` then stop with a message of their own,
+saying how R read the backslashes and showing the path with forward slashes to
+type instead.
+:::
+
+::: {#quoting .callout-warning collapse="true" title="When do names go in quotation marks? ('is not in quotes' or 'is in quotes')"}
+The rule in jstats is short: **a variable goes without quotes, after its data
+frame; anything that is not a variable — a format, a convention, a map, a file
+name — goes in quotes.** So `jfreq(community, Region)` has no quotation marks,
+and `jload("community.rds")` or `jconvert(community, to = "stata")` does.
+
+Mix the two up and jstats says which way round it should be, with the line to
+run:
+
+```
+Error: jconvert(): stata is not in quotes.
+to = takes a format name in quotes:
+  jconvert(community, to = "stata")
+```
+
+```
+Error: jdesc(): "community" is in quotes.
+A data frame's name goes without them:
+  jdesc(community, Age)
+```
+
+One more rule goes with it: jstats analyzes the variables of a data frame. A
+single vector can be described with `jdesc()`, `jfreq()` or `jscreen()`;
+anything else is added to the data frame first.
+:::
+
+## Chinese, Japanese and Korean text
+
+::: {.callout-warning collapse="true" title="Error: unexpected input, typing with a Chinese, Japanese or Korean input method"}
+R reads only the plain brackets, commas, quotation marks and other punctuation
+of an English keyboard. An input method left in Chinese (or Japanese, or Korean)
+mode types the full-width forms instead — `（`, `，`, `“` — and R stops before
+any function runs:
+
+```
+Error: unexpected input in "jfreq(community，"
+```
+
+Type R code with the input method switched to English, and switch to Chinese
+only for the words inside quotation marks — a label, a category, a file name.
+If a full-width `；` or `＝` gets inside a `map =` or `labels =` string, jstats
+stops with a message of its own that names the character and shows the line with
+the plain one.
+:::
+
+::: {.callout-warning collapse="true" title="Chinese characters show as boxes in a plot"}
+R's graphics may not have a font for the characters. In RStudio, set the
+graphics backend to **AGG** (Tools > Global Options > General > Graphics >
+Backend), then draw the plot again. If a character is still a box, name a font
+your computer has that includes it — on a Mac, Songti SC has worked:
+
+```r
+jplot(result) + ggplot2::theme(text = ggplot2::element_text(family = "Songti SC"))
+```
+:::
+
+::: {.callout-warning collapse="true" title="A table with Chinese labels has columns that drift"}
+Nothing is wrong with the numbers. jstats lines its columns up on the
+assumption that a Chinese character is exactly two letters wide, and many
+Console fonts draw it a little narrower, so each label pulls its row slightly
+out of line; R's own `print()` drifts the same way. A Console font that draws
+the characters at exactly two letters' width (Sarasa Mono SC or Noto Sans Mono
+CJK SC, for example) lines them up: Tools > Global Options > Appearance >
+Editor font.
 :::
 
 ## Using jstats outside RStudio

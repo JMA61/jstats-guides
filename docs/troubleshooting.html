@@ -207,6 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#installing-jstats" id="toc-installing-jstats" class="nav-link" data-scroll-target="#installing-jstats">Installing jstats</a></li>
   <li><a href="#starting-rstudio-and-loading-jstats" id="toc-starting-rstudio-and-loading-jstats" class="nav-link" data-scroll-target="#starting-rstudio-and-loading-jstats">Starting RStudio and loading jstats</a></li>
   <li><a href="#typing-commands-in-the-console" id="toc-typing-commands-in-the-console" class="nav-link" data-scroll-target="#typing-commands-in-the-console">Typing commands in the Console</a></li>
+  <li><a href="#chinese-japanese-and-korean-text" id="toc-chinese-japanese-and-korean-text" class="nav-link" data-scroll-target="#chinese-japanese-and-korean-text">Chinese, Japanese and Korean text</a></li>
   <li><a href="#using-jstats-outside-rstudio" id="toc-using-jstats-outside-rstudio" class="nav-link" data-scroll-target="#using-jstats-outside-rstudio">Using jstats outside RStudio</a></li>
   </ul>
 </nav>
@@ -413,6 +414,7 @@ available; add a figure line like the one above once the image is in images/). -
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p><strong>Restart R first.</strong> A session that had jstats loaded keeps running the copy it loaded, even after an install or <code>jupdate()</code> puts a newer one on your computer — and <code>packageVersion("jstats")</code> reports the new number all the same, because it reads the installed copy, not the one the session is running. Choose <strong>Session &gt; Restart R</strong>, then run <code>library(jstats)</code>; the startup line names the version now in use. If it still names the old one, read on.</p>
 <p>R keeps installed packages in a <strong>library</strong> — a folder on your computer — and there can be more than one. That’s normally invisible and harmless: jstats installs into one of them and runs fine from there.</p>
 <p>It only matters if you end up with <strong>two copies in two libraries</strong> — then R can keep loading an older copy from one while a newer copy sits unused in the other, and you appear stuck on the old version. <code>jupdate()</code> does not cause this: it updates the copy of jstats that R is using, wherever that copy lives. A second copy usually comes from running the install line again by hand. To see which copy R is using, and every library R searches:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find.package</span>(<span class="st">"jstats"</span>)   <span class="co"># the folder of the copy R loads</span></span>
@@ -632,6 +634,85 @@ Error: \500 exceeds maximum allowed octal value \377</code></pre>
 <p>The fix is to type the path with forward slashes:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"C:/Users/you/Documents/survey.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Forward slashes work in R on every kind of computer, Windows included.</p>
+<p>Some backslash pairs are ones R accepts — <code>\t</code> is a tab, <code>\n</code> a new line — so a path such as <code>"C:\temp\new.csv"</code> gets past R and reaches jstats. <code>jload()</code>, <code>jsave()</code> and <code>joptions(data.dir = )</code> then stop with a message of their own, saying how R read the backslashes and showing the path with forward slashes to type instead.</p>
+</div>
+</div>
+</div>
+<div id="quoting" class="callout callout-style-default callout-warning callout-titled" title="When do names go in quotation marks? ('is not in quotes' or 'is in quotes')">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>When do names go in quotation marks? (‘is not in quotes’ or ‘is in quotes’)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The rule in jstats is short: <strong>a variable goes without quotes, after its data frame; anything that is not a variable — a format, a convention, a map, a file name — goes in quotes.</strong> So <code>jfreq(community, Region)</code> has no quotation marks, and <code>jload("community.rds")</code> or <code>jconvert(community, to = "stata")</code> does.</p>
+<p>Mix the two up and jstats says which way round it should be, with the line to run:</p>
+<pre><code>Error: jconvert(): stata is not in quotes.
+to = takes a format name in quotes:
+  jconvert(community, to = "stata")</code></pre>
+<pre><code>Error: jdesc(): "community" is in quotes.
+A data frame's name goes without them:
+  jdesc(community, Age)</code></pre>
+<p>One more rule goes with it: jstats analyzes the variables of a data frame. A single vector can be described with <code>jdesc()</code>, <code>jfreq()</code> or <code>jscreen()</code>; anything else is added to the data frame first.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="chinese-japanese-and-korean-text" class="level2">
+<h2 class="anchored" data-anchor-id="chinese-japanese-and-korean-text">Chinese, Japanese and Korean text</h2>
+<div class="callout callout-style-default callout-warning callout-titled" title="Error: unexpected input, typing with a Chinese, Japanese or Korean input method">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Error: unexpected input, typing with a Chinese, Japanese or Korean input method
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>R reads only the plain brackets, commas, quotation marks and other punctuation of an English keyboard. An input method left in Chinese (or Japanese, or Korean) mode types the full-width forms instead — <code>（</code>, <code>，</code>, <code>“</code> — and R stops before any function runs:</p>
+<pre><code>Error: unexpected input in "jfreq(community，"</code></pre>
+<p>Type R code with the input method switched to English, and switch to Chinese only for the words inside quotation marks — a label, a category, a file name. If a full-width <code>；</code> or <code>＝</code> gets inside a <code>map =</code> or <code>labels =</code> string, jstats stops with a message of its own that names the character and shows the line with the plain one.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Chinese characters show as boxes in a plot">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Chinese characters show as boxes in a plot
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>R’s graphics may not have a font for the characters. In RStudio, set the graphics backend to <strong>AGG</strong> (Tools &gt; Global Options &gt; General &gt; Graphics &gt; Backend), then draw the plot again. If a character is still a box, name a font your computer has that includes it — on a Mac, Songti SC has worked:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>(result) <span class="sc">+</span> ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">text =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Songti SC"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="A table with Chinese labels has columns that drift">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>A table with Chinese labels has columns that drift
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Nothing is wrong with the numbers. jstats lines its columns up on the assumption that a Chinese character is exactly two letters wide, and many Console fonts draw it a little narrower, so each label pulls its row slightly out of line; R’s own <code>print()</code> drifts the same way. A Console font that draws the characters at exactly two letters’ width (Sarasa Mono SC or Noto Sans Mono CJK SC, for example) lines them up: Tools &gt; Global Options &gt; Appearance &gt; Editor font.</p>
 </div>
 </div>
 </div>
@@ -639,7 +720,7 @@ Error: \500 exceeds maximum allowed octal value \377</code></pre>
 <section id="using-jstats-outside-rstudio" class="level2">
 <h2 class="anchored" data-anchor-id="using-jstats-outside-rstudio">Using jstats outside RStudio</h2>
 <div class="callout callout-style-default callout-warning callout-titled" title="The red titles and yellow notes are missing">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -648,11 +729,11 @@ Error: \500 exceeds maximum allowed octal value \377</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>jstats colors its table titles and notes only in the RStudio Console. Anywhere else — Positron, VS Code, a terminal window, or a document rendered with Quarto or R Markdown — the same output prints in plain text, because not every one of those displays color properly. Nothing is missing from the results.</p>
 <p>If your program does show color and you would like it, run this once per session, or put it in your <code>.Rprofile</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">jstats.color =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">jstats.color =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>(<code>options(jstats.color = FALSE)</code> does the opposite, and turns the color off in RStudio too.)</p>
 </div>
 </div>

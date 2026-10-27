@@ -223,6 +223,15 @@ that the Environment holds more than datasets, so `rm()` removes any object you
 name, whatever its shape.
 :::
 
+A habit worth starting now: keep your variables inside their data frame.
+`MyObject` in block 2 was a copy of one column, `community$Region`, made only to
+show what the Environment holds — which is why block 3 removed it. When you
+work, name the data frame in the call rather than copying a column out on its
+own, and if you ever build a data frame from separate pieces, check it, then
+`rm()` the pieces. jstats works the same way: it analyzes the variables of a
+data frame. A single vector can be described with `jdesc()`, `jfreq()` or
+`jscreen()`; anything else is added to the data frame first.
+
 ### 4. How much output you see
 
 jstats can show more or less detail. The output level controls how much appears —
@@ -304,6 +313,12 @@ The `~` is shorthand for your *home* folder (on Windows, usually your Documents
 folder). `getwd()` prints that same address written out in full — beginning, on
 Windows, with a drive letter such as `C:` or `E:` that names the disk. Short
 spelling in the Console header, long spelling from `getwd()`. Same place.
+
+An address written out from the drive like that is an *absolute* path: it means
+the same place whatever folder you are working in. A *relative* path starts from
+your working directory instead — `"Data/MyData_r.rds"` means the file
+`MyData_r.rds` in the `Data` folder inside your project, wherever the project
+itself sits.
 
 You have met that squiggle before, on the Quick Start page, doing a completely
 different job — writing a model, as in `jt(Optimism ~ Gender)`. In a file path
@@ -406,7 +421,7 @@ file.remove("WhereDidIGo.rds")  # base R
 joptions(data.dir = "Data")
 
 ## Save the dataset to the Data folder and call it MyData_r.rds
-## Specify R native format with the .rds extension
+## Specify R format with the .rds extension
 jsave(MyData, "MyData_r.rds"))---",
   chrome = TRUE,
   files = c("Data/"),
@@ -495,7 +510,8 @@ In SPSS, user-missing values are declared in Variable View and travel with the
 file. When you Save As a different format, those definitions don't always carry
 across cleanly. jstats keeps the equivalent information with your data, and when a
 format needs it in a different form, `jconvert()` does the translation — which is
-why saving straight to Stata format above stops and asks you to convert first.
+why saving straight to Stata format above stops and offers two ways forward:
+convert first, or save every declared missing value as a plain `NA`.
 :::
 
 ::: {.callout-note collapse="true" title="What's the Base R equivalent?"}

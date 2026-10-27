@@ -71,7 +71,7 @@ jload("clinic", overwrite = TRUE)
 juse(clinic)
 ```
 
-Loading it first isn't something you'd normally write — `clinic` is there by name as soon as jstats is loaded — but it guarantees a clean copy whatever you did with it elsewhere. Notice what jstats says on the way in: it reports the columns whose missing-value codes were declared before the data reached you, and separately flags codes it *suspects* in columns where nobody declared anything. `MoodRating` is in that second group.
+Loading it first isn't something you'd normally write — `clinic` is there by name as soon as jstats is loaded — but it guarantees a clean copy whatever you did with it elsewhere. Notice what jstats says on the way in: it reports the columns whose missing-value codes were declared before the data reached you, and separately flags undeclared codes that match the numbers it watches for as missing-value codes — listing, since no convention is chosen yet, the three to choose from. `MoodRating` is in that second group.
 
 That column is meant to run from 1 to 10, but it arrived with two stand-in codes buried in it as ordinary numbers: `-99` for "Refused" and `-98` for "Don't know" — the usual state of affairs after an import from Excel or from a CSV file (comma-separated values, a plain-text spreadsheet), where the file carries no record of what those numbers mean. Until we tell jstats they stand for missing, they are treated as real values and quietly poison every statistic:
 
@@ -288,11 +288,10 @@ jload("community", overwrite = TRUE)  # read it back
 Saving across formats is where the missing-value distinctions earn their keep — an SPSS-style code can't write straight to a Stata file, and Excel stores no missing-value metadata at all, so jstats handles (and warns about) each case. *[Loading, Saving, Converting Data](data.qmd)* walks the full cross-format round trip live; Book 2 covers the fidelity rules in more detail, with worked examples. `?jsave` and `?jconvert` document the options.
 :::
 
-Everything above used files you'd save yourself. The package also ships an example SPSS file inside itself — a stand-in for a data file a colleague emails you. `system.file()` is base R's way of finding a file bundled inside an installed package; `jload()` then opens it like any other received file, missing-value codes and all:
+Everything above used files you'd save yourself. The package also ships an example SPSS file inside itself — a stand-in for a data file a colleague emails you. Name it as you would a file of your own: when no file of that name is in your folders, `jload()` looks among the jstats example files, says so as it loads, and opens it like any other received file, missing-value codes and all:
 
 ```{r}
-received <- system.file("extdata", "community_spss.sav", package = "jstats")
-jload(received, name = "community_received", overwrite = TRUE)
+jload("community_spss.sav", name = "community_received", overwrite = TRUE)
 jscreen(community_received, stats = TRUE)
 ```
 
