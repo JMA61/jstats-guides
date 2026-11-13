@@ -7,12 +7,21 @@ title-prefix: ""
 
 These how-tos assume you've worked through [Get Started](start-here.qmd) — you'll be
 comfortable loading jstats, using `juse()` and `jload()`, and running the basic
-functions. Each one stands on its own, so read whichever you need.
+functions.
 
 The How-Tos go beyond the Get Started on-ramp and point toward the fuller treatment
-in the books. The menu on the left lists them by topic. The first article is
-ready: [One-way ANOVA](anova.qmd), under Comparing groups. More are on the way,
-and [Coming soon](coming-soon.qmd) describes them.
+in the books. The menu on the left lists them by topic. Each topic stands on its own,
+so start with whichever you need, except where a topic says it builds on
+another. Within a topic the pages are numbered, and each builds on the ones
+before it: read them in order, or at least skim the earlier pages first. A page
+that says it stands on its own repeats what it needs.
+
+Three topics are under way: Comparing groups, with
+[One-way ANOVA](anova.qmd); Publication tables, whose numbered pages start with
+[Saving results](tables-saving-results.qmd); and Your own table styles, which
+builds on Publication tables, starting with
+[Making your own style](tables-own-style.qmd). More are on the way, and
+[Coming soon](coming-soon.qmd) describes them.
 
 ## Using the How-To pages {#using-the-how-to-pages}
 
@@ -42,6 +51,8 @@ can see what one looks like).
   outline for easy jumping around.
 - Block 1 of every page loads jstats and chooses the practice dataset that page
   uses, so each page's script runs on its own, in a fresh session.
+- A block whose step happens outside R, in RStudio's editor or in an AI
+  assistant, is only comments: a note in your script of what you did there.
 - Run lines the way the [RStudio Orientation](rstudio-orientation.qmd) showed:
   cursor on the line, then Ctrl+Enter (Cmd+Enter on a Mac) or the Run button;
   highlight several lines to run them together. Experiment freely as you go.

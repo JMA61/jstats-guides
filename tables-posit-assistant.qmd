@@ -1,0 +1,25 @@
+---
+pagetitle: "jstats:Changing a style with Posit Assistant"
+title-prefix: ""
+---
+
+<!-- YOUR OWN TABLE STYLES, PAGE 5 (S422 review; was Publication tables page 9): a STUB until the (S406) Posit Assistant
+probe at Jeff's desk. It stands alone, like page 8. Hedged on a trial (Jeff,
+S421: "mentioning only that R Studio sometimes has a free trial available"). -->
+
+## Changing a style with Posit Assistant
+
+**Your own table styles &middot; Page 5**\
+*Like page 4, it will stand on its own.*
+
+This page is on the way. It will show the kind of change page 4,
+[Changing a style with an AI assistant](tables-ai-assistant.qmd), makes, this
+time with Posit Assistant, the AI assistant that works inside RStudio, in its
+sidebar. Posit Assistant can see your R session, so its route will
+likely be shorter than page 4's, with no copy to upload and no file to
+download.
+
+Posit Assistant needs a paid subscription from Posit, the company that makes
+RStudio, and RStudio sometimes has a free trial available. Until this page is
+ready, page 4's route works with an AI assistant outside RStudio, such as
+Microsoft Copilot.

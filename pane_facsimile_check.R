@@ -1,7 +1,7 @@
 # pane_facsimile_check.R -- machine assertion battery for pane_facsimile.R's
 # run_block(): stream ordering (S273), expect_error_match (S273, wrap-proof
-# matching S274), a blank line printed after a message (S334), and the color
-# switch (S344).
+# matching S274), a blank line printed after a message (S334), the color
+# switch (S344), and a working directory wrapped at one of its spaces (S422).
 #
 # WHY THIS FILE EXISTS. run_block() is a shared asset: every "What you should
 # see" box (show_block) and every Console facsimile (show_console) on the guide
@@ -335,6 +335,41 @@ if (requireNamespace("fansi", quietly = TRUE)){
 } else {
   cat("K2     skipped: the fansi package is not installed here\n")
 }
+
+# ---- 9. A PATH WRAPPED AT ONE OF ITS SPACES (S422) ------------------------
+# jstats width-wraps its messages, so a working directory with a space in it
+# can be printed across two lines, broken at that space. Jeff's ("E:/00 R
+# Projects/OnLineMaterial") was, in jtable()'s "written to <path>" line, and
+# the render halted at the leak gate -- the scrub matched the path only whole.
+# The fixtures run in a temporary folder named like Jeff's. D1, D2 and D3 fail
+# on the unrepaired file; D4 and D5 hold what must not change.
+
+cat("\n9. A PATH WRAPPED AT ONE OF ITS SPACES\n")
+
+local({
+  d <- file.path(tempdir(), "00 R Projects", "OnLineMaterial")
+  dir.create(d, recursive = TRUE, showWarnings = FALSE)
+  old <- setwd(d)
+  on.exit({ setwd(old); unlink(dirname(d), recursive = TRUE) }, add = TRUE)
+  wd   <- normalizePath(getwd(), winslash = "/")
+  whole <- paste0("2 tables and 1 figure written to ", wd, "/Report_report.docx")
+  want  <- "2 tables and 1 figure written to ~/your-working-directory/Report_report.docx"
+
+  ck("D1", "a path broken at a space, across two lines, is scrubbed",
+     .obx$scrub_wd(sub(" Projects/", "\nProjects/", whole, fixed = TRUE)), want)
+  ck("D2", "  ... and so is one whose second line is indented",
+     .obx$scrub_wd(sub(" Projects/", "\n    Projects/", whole, fixed = TRUE)), want)
+  assign(".w9_line", sub(" R ", " R\n", whole, fixed = TRUE), envir = globalenv())
+  D3 <- tryCatch(texts(run('cat(.w9_line, "\\n", sep = "")', echo = FALSE)),
+                 error = function(e) paste("halted:", conditionMessage(e)))
+  rm(".w9_line", envir = globalenv())
+  ck("D3", "a box printing a wrapped path shows the placeholder",
+     D3, want)
+  ck("D4", "a path printed whole is scrubbed as before",
+     .obx$scrub_wd(whole), want)
+  ck("D5", "the folder's words alone, not a path, are left as they are",
+     .obx$scrub_wd("see the 00 R Projects notes"), "see the 00 R Projects notes")
+})
 
 # ---- foot -----------------------------------------------------------------
 cat("\n", strrep("-", 78), "\n", sep = "")

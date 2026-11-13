@@ -792,6 +792,21 @@ local({
                       gsub("/", "\\\\", wd), wd))
     cands <- cands[order(-nchar(cands))]      # longest first: no partial hits
     for (v in cands) txt <- gsub(v, WD_PLACEHOLDER, txt, fixed = TRUE)
+    # A PATH WRAPPED AT ONE OF ITS SPACES (S422). jstats width-wraps its
+    # messages, so a working directory with a space in it ("E:/00 R
+    # Projects/OnLineMaterial") can be printed across two lines, broken at
+    # that space, and the literal pass above cannot see it: jtable()'s
+    # "written to <path>" line, 83 characters on Jeff's machine, halted his
+    # render of tables-choosing-a-style.qmd at the leak gate. So each
+    # candidate holding a space is matched again with every space allowed to
+    # be any run of whitespace, a line break included; the line comes back
+    # joined, with the placeholder, as it reads where the path is short
+    # enough not to wrap (the sandbox's render).
+    for (v in cands[grepl(" ", cands, fixed = TRUE)]){
+      rx <- gsub("([.\\\\|()\\[\\]{}^$*+?])", "\\\\\\1", v, perl = TRUE)
+      rx <- gsub(" ", "\\s+", rx, fixed = TRUE)
+      txt <- gsub(rx, WD_PLACEHOLDER, txt, perl = TRUE)
+    }
     gsub("your-working-directory\\\\", "your-working-directory/", txt)
   }
   leak_check <- function(txt){

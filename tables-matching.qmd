@@ -1,0 +1,318 @@
+---
+pagetitle: "jstats:Matching the look of a published table"
+title-prefix: ""
+resources:
+  - tables-matching-follow-along.R
+---
+
+```{r}
+#| label: obx-setup
+#| include: false
+
+# ---------------------------------------------------------------------------
+# CONSOLE FACSIMILES -- render scaffolding, hidden (include: false). Same
+# mechanism as anova.qmd: pane_facsimile.R defines the capture-once /
+# display-twice helpers in their own dot-named environment (.obx). Each block
+# below is one call whose code STRING is both printed into the page and
+# executed once, so the shown code and the run code cannot drift. An
+# unexpected error in any block HALTS the render (the publish gate).
+#
+# Devices, by the OUTPUT-REGISTER rule: the prose READS the output of blocks 1
+# and 2, so those panes render OPEN (.obx$show_console(fence = TRUE)). Block 3
+# is comments only (the step happens in the reader's AI assistant). What blocks
+# 4 and 5 print depends on the reader's example, which a render does not have,
+# so they are plain fences; the hidden chunk "blocks-4-5" runs their code on
+# the unchanged copy, so a line that stops still halts the render.
+#
+# YOUR OWN TABLE STYLES, PAGE 6 (S422 review; was Publication tables page
+# 10). It uses page 4's route (Jeff, S421: "the
+# example prompt, naming the sections, the list of what could not be matched
+# read as a start, the look and not the typesetting, published examples only;
+# so far tried with a scanned article"). What it says about the test is the
+# S418 T10 record (Online Materials, SESSION 418 point 4).
+#
+# jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
+# startup message on first attach only. joutput()/joptions() are left alone. The
+# page WRITES a styles folder, a style file, its upload copy and a Word file
+# into the working directory; the clean-slate lines below clear them before
+# the blocks run, and the teardown clears them after. The styles folder goes
+# only when left empty; the shared list below names every page's files.
+#
+# HOW-TO LAYOUT (S344). No top boxes: the shared material lives once on
+# howtos.qmd, and this page points there.
+# ---------------------------------------------------------------------------
+
+options(width = 80)   # match a default 80-column console for table alignment
+options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real startup message
+
+# THE SHARED LIST (S422): every Publication tables page's files, so a render
+# halted on one page cannot leave a style file in the styles folder another
+# page creates and lists. A styles folder still holding anything else HALTS
+# the render: it is not this page's to remove.
+.tables_files <- c("styles/myreport.jstyle", "styles/mystyle.jstyle",
+                   "styles/myblue.jstyle", "styles/mytest.txt",
+                   "styles/mytest.jstyle", "styles/mymatch.jstyle",
+                   "myblue.txt", "mymatch.txt", "Descriptives.docx",
+                   "Regression.docx", "Report.docx", "Report_report.docx",
+                   "Table1_mystyle.docx", "Table1_report.docx",
+                   "Table1_myblue.docx", "Tables_mymatch.docx",
+                   "Models.docx")
+.mt_clean <- function() {
+  f <- .tables_files[file.exists(.tables_files)]
+  if (length(f)) file.remove(f)
+  if (dir.exists("styles") &&
+      !length(list.files("styles", all.files = TRUE, no.. = TRUE)))
+    unlink("styles", recursive = TRUE)
+  invisible(NULL)
+}
+.mt_clean()
+if (dir.exists("styles"))
+  stop("The project's styles folder holds files no Publication tables page ",
+       "wrote. Move them out and render again.", call. = FALSE)
+
+source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color on
+```
+
+## Matching the look of a published table
+
+**Your own table styles &middot; Page 6**\
+*It uses the route of
+[4. Changing a style with an AI assistant](tables-ai-assistant.qmd), so read
+that page first.*
+
+Instead of describing a look to an AI assistant, you can show it one: attach a
+published table you'd like your tables to look like, beside a copy of a jstats
+style, and ask the assistant to change the style to match. This page is a
+hands-on run-through of that request, and of what to check in the reply.
+
+The steps are page 4's, with an example attached: a copy of a style and a copy
+to upload, the request, the check with `jstyle()`, and a table in the new
+style. This page says less about each step than page 4 does, and more about
+what is different when the request is an example.
+
+This page follows the pattern of every How-To: numbered blocks that build one
+script, with the finished script to download at the bottom.
+[Using the How-To pages](howtos.qmd#using-the-how-to-pages) explains the
+pattern, and how to reset your session if something goes wrong.
+
+### 1. Load jstats and the data
+
+We'll work on `community`, one of the two practice datasets that ship with the
+package: 103 simulated respondents to a community survey. `jload()` puts a copy
+of it in your workspace, and `juse()` makes it the default data frame, so the
+commands that follow can leave its name out.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 1. Load jstats and the data --------------------------------------
+
+## Load jstats and the community practice dataset, and make community the
+## default data frame. quiet = TRUE skips jload()'s report on what it
+## loaded; overwrite = TRUE replaces a copy already loaded in this session
+## without asking first
+library(jstats)
+jload("community", overwrite = TRUE, quiet = TRUE)
+juse(community))---", fence = TRUE,
+  lead = "The command lines are shown; the standalone <code>##</code> comment lines aren't -- running a comment just echoes it back and does nothing.")
+```
+
+### 2. A copy of report, and a copy to upload
+
+Start from the built-in style nearer the example: `report` for an agency's or an
+institute's report, `apa` for a journal that follows APA style. This page uses
+`report`, saved as `mymatch`, and a copy of it named `mymatch.txt` for the
+upload.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 2. A copy of report, and a copy to upload ------------------------
+
+## Keep this page's styles in a styles folder inside the project
+joptions(style.dir = "styles")
+
+## A complete copy of report, every setting written out with a note
+jstyle("report", save.as = "mymatch")
+
+## file.copy() is base R: it copies a file. The copy, ending in .txt, is
+## the one to upload
+file.copy("styles/mymatch.jstyle", "mymatch.txt", overwrite = TRUE)  # base R)---",
+  fence = TRUE)
+```
+
+jstats wrote the copy, `mymatch.jstyle`, into the `styles` folder, and
+`file.copy()` printed `TRUE`: `mymatch.txt` is ready to upload.
+
+### 3. Ask your assistant (outside R)
+
+This step happens in your AI assistant, not in R. The block below is only
+comments, a note in your script of what you did.
+
+```r
+## ---- 3. Ask your assistant (outside R) --------------------------------
+
+## Upload mymatch.txt and the example with the request on the guide page,
+## and save the file that comes back as mymatch.jstyle in the styles
+## folder, replacing the copy there
+```
+
+Open a new chat in your assistant, attach `mymatch.txt` and the example, here a
+report saved as `Report.pdf`, and send this message, naming the kinds of table
+you make:
+
+```text
+Attached are mymatch.txt, a jstats table style whose notes say what each
+setting does and what it takes, and Report.pdf. Change the style file so that
+jstats tables look like the tables in the report, following the instructions
+at the top of the file. I make tables of descriptive statistics, regressions
+and crosstabs: set each of their sections to match as well. Give me the
+changed file as a download named mymatch.jstyle. Then list each value you
+changed, old and new, and anything the settings cannot reproduce.
+```
+
+Save the file that comes back as `mymatch.jstyle` in the `styles` folder,
+replacing the copy there, as page 4 describes, and keep the assistant's reply.
+
+Four things matter more here than with a request in words.
+
+- **Name the kinds of table you make**, and ask for each one's section to be
+  set. Each kind of table has a section of the style file to itself, and the
+  sections decide much of a table's shape, such as which columns a regression
+  table shows and which fit statistics go under it. In a test, an assistant
+  asked only to match an article's tables changed fourteen general settings
+  and no section.
+- **Treat the assistant's list of what it couldn't match as a start.** In the
+  same test the list missed differences that a section's settings would have
+  closed. Compare your Word tables with the example yourself, in block 5.
+- **Copy the look, not the typesetting.** A published table was set by a
+  typesetter, and its font sizes and tight spacing suit the printed page. A
+  manuscript follows the journal's guidelines for authors, which usually ask
+  for something plainer.
+- **Use only published examples.** An upload leaves your computer: never a
+  draft, unpublished results, or anything confidential.
+
+So far this has been tried with a scanned journal article, with Microsoft
+Copilot. A screenshot, or a PDF saved straight from a word processor, hasn't
+been tried yet.
+
+### 4. Check what came back
+
+```{r}
+#| echo: false
+#| results: asis
+.b4 <- r"---(## ---- 4. Check what came back ------------------------------------------
+
+## jstyle() reads the file and prints every setting. It stops at a line it
+## cannot use, and names the line
+jstyle("mymatch"))---"
+cat(strrep("`", 3), "r\n", .b4, "\n", strrep("`", 3), "\n", sep = "")
+```
+
+What `jstyle()` prints depends on your example, so this page can't show it;
+page 4 shows a printout and how to read it. Read the values that changed
+against the assistant's list of changes. If `jstyle()` stops, give its message
+to the assistant, ask it to fix that line, and check the file again.
+
+### 5. One table of each kind, in one file
+
+Then make a table of each kind you named, from results of your own or from the
+practice data, and write them to one Word file to compare with the example.
+
+```{r}
+#| echo: false
+#| results: asis
+.b5 <- r"---(## ---- 5. One table of each kind, in one file ---------------------------
+
+## Keep a result of each kind named in the request
+d1 <- jdesc(Age, Income, WellbeingScore, print = FALSE)
+m1 <- jlm(WellbeingScore ~ Age + Income, print = FALSE)
+x1 <- jcrosstab(Volunteer ~ Region, print = FALSE)
+
+## Make each one's table in mymatch, then write the three to one Word file
+t1 <- jtable(d1, style = "mymatch")
+t2 <- jtable(m1, style = "mymatch")
+t3 <- jtable(x1, style = "mymatch")
+jtable(list(t1, t2, t3), file = "Tables_mymatch.docx", open = TRUE))---"
+cat(strrep("`", 3), "r\n", .b5, "\n", strrep("`", 3), "\n", sep = "")
+```
+
+```{r}
+#| label: blocks-4-5
+#| include: false
+# Blocks 4 and 5 are plain fences (see the setup chunk); their code strings,
+# printed as the fences above, run here on the unchanged copy, so the script
+# runs and a line that stops halts the render.
+.out4 <- gsub("\033\\[[0-9;]*m", "", utils::capture.output(eval(parse(text = .b4))))
+.out5 <- utils::capture.output(eval(parse(text = .b5)))
+```
+
+Open the Word file beside the example and compare them table by table. For a
+difference you'd like closed, ask the assistant about it in the same chat,
+naming the table and what differs, and check the new file the same way.
+
+## What a style can't match
+
+A style changes only what its settings can change. Page 4's list,
+[What a style can and can't do](tables-ai-assistant.qmd#what-a-style-can-and-cant-do),
+gives the main limits. An example can show one more: a table laid out in a way
+no jstats table is, such as regression models of different outcomes side by
+side, which jstats makes only as separate tables. No change to the style makes
+that.
+
+```{r}
+#| label: prose-gates
+#| include: false
+
+# ---------------------------------------------------------------------------
+# PROSE GATES -- hidden. Each stopifnot() below is one statement the prose
+# makes about what the package does; a false one HALTS the render.
+# ---------------------------------------------------------------------------
+.cp <- readLines("styles/mymatch.jstyle", encoding = "UTF-8")
+.sections <- sub("^\\[(.*)\\]$", "\\1", grep("^\\[[a-z]+\\]$", .cp, value = TRUE))
+.td <- tempfile("mt-"); dir.create(.td)
+.err <- function(expr) tryCatch({ expr; NA_character_ },
+                                error = function(e) conditionMessage(e))
+# models of different outcomes stop: separate tables only
+.m_other <- jlm(Age ~ Income, print = FALSE)
+.e_two <- .err(jtable(list(m1, .m_other)))
+stopifnot(
+  # block 2: the copy, and the upload copy
+  file.exists("styles/mymatch.jstyle"), file.exists("mymatch.txt"),
+  identical(readLines("mymatch.txt"), .cp),
+  # the request names three kinds of table, each a section of the file
+  all(c("descriptives", "regression", "crosstab") %in% .sections),
+  # blocks 4 and 5 ran: the style read, three tables in one file
+  any(grepl("^Style: mymatch", .out4)),
+  file.exists("Tables_mymatch.docx"),
+  any(grepl("3 tables written to", .out5, fixed = TRUE)),
+  # models of different outcomes: no one table
+  !is.na(.e_two)
+)
+unlink(.td, recursive = TRUE)
+```
+
+## Take the whole script with you
+
+That's the full run-through. If you'd like the entire script in one file to
+keep and reuse, download it here. Put your own results in place of `d1`, `m1`
+and `x1`, and your own style's name in place of `mymatch`.
+
+The file is the finished version of the script you built: the same code, in the
+same order. Block 3 is still only comments: the assistant's part happens
+outside R. Its first lines say what to answer when you run it again and jstats
+asks before replacing a file.
+[Using the How-To pages](howtos.qmd#using-the-how-to-pages) says more about
+finished scripts and how to run one.
+
+<div style="margin: 1rem 0 2rem;">
+<a href="tables-matching-follow-along.R" download class="btn btn-primary">Download the full script (.R)</a>
+</div>
+
+```{r}
+#| label: obx-teardown
+#| include: false
+# Page-end teardown: remove the files the render wrote (the setup chunk also
+# clears them at render start, against a halted render).
+.mt_clean()
+```

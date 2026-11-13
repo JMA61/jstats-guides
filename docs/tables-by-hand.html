@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>jstats:Changing a style by hand</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./tables-ai-assistant.html" rel="next">
+<link href="./tables-keeping-styles.html" rel="prev">
+<link href="./images/avatar.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-b60af2d24e4b1d763b4580bec0caf010.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<meta property="og:title" content="jstats:Changing a style by hand">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://jma61.github.io/jstats-guides/images/tables-mystyle.png">
+<meta property="og:site_name" content="jstats">
+<meta property="og:image:alt" content="A descriptive statistics table in Word in the changed style: the caption 'Table 1: Descriptive Statistics (N = 103)' in bold, a light gray header row, the statistics to one decimal place.">
+<meta property="og:image:height" content="205">
+<meta property="og:image:width" content="989">
+<meta name="twitter:title" content="jstats:Changing a style by hand">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/tables-mystyle.png">
+<meta name="twitter:image:alt" content="A descriptive statistics table in Word in the changed style: the caption 'Table 1: Descriptive Statistics (N = 103)' in bold, a light gray header row, the statistics to one decimal place.">
+<meta name="twitter:image-height" content="205">
+<meta name="twitter:image-width" content="989">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/avatar.png" alt="jstats" class="navbar-logo light-content">
+    <img src="./images/avatar.png" alt="jstats" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">jstats</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./start-here.html"> 
+<span class="menu-text">Get Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./howtos.html" aria-current="page"> 
+<span class="menu-text">How-Tos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./reference.html"> 
+<span class="menu-text">Reference</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./books.html"> 
+<span class="menu-text">Books</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./videos.html"> 
+<span class="menu-text">Videos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./updating.html"> 
+<span class="menu-text">Updating</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./troubleshooting.html"> 
+<span class="menu-text">Troubleshooting</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/jma61/jstats-guides"> <i class="bi bi-github" role="img" aria-label="jstats guides on GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tables-own-style.html">Your own table styles</a></li><li class="breadcrumb-item"><a href="./tables-by-hand.html">3. Changing a style by hand</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./howtos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">All How-Tos</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Comparing groups</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">One-way ANOVA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Publication tables</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tables-saving-results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Saving results</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tables-in-word.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Making a table in Word</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tables-several.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Several tables and a chart in one file</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tables-several-results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Several results in one table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tables-choosing-a-style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. Choosing a style: apa or report</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Your own table styles</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tables-own-style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Making your own style</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tables-keeping-styles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Keeping your styles</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tables-by-hand.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">3. Changing a style by hand</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tables-ai-assistant.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Changing a style with an AI assistant</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tables-posit-assistant.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. Changing a style with Posit Assistant</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tables-matching.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6. Matching the look of a published table</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./coming-soon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Coming soon</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#changing-a-style-by-hand" id="toc-changing-a-style-by-hand" class="nav-link active" data-scroll-target="#changing-a-style-by-hand">Changing a style by hand</a>
+  <ul class="collapse">
+  <li><a href="#load-jstats-and-the-data" id="toc-load-jstats-and-the-data" class="nav-link" data-scroll-target="#load-jstats-and-the-data">1. Load jstats and the data</a></li>
+  <li><a href="#a-table-in-the-report-style" id="toc-a-table-in-the-report-style" class="nav-link" data-scroll-target="#a-table-in-the-report-style">2. A table in the report style</a></li>
+  <li><a href="#a-copy-of-report-to-change" id="toc-a-copy-of-report-to-change" class="nav-link" data-scroll-target="#a-copy-of-report-to-change">3. A copy of report to change</a></li>
+  <li><a href="#change-two-values-and-save" id="toc-change-two-values-and-save" class="nav-link" data-scroll-target="#change-two-values-and-save">4. Change two values, and save</a></li>
+  <li><a href="#check-the-file" id="toc-check-the-file" class="nav-link" data-scroll-target="#check-the-file">5. Check the file</a></li>
+  <li><a href="#the-table-in-your-style" id="toc-the-table-in-your-style" class="nav-link" data-scroll-target="#the-table-in-your-style">6. The table in your style</a></li>
+  </ul></li>
+  <li><a href="#when-jstyle-stops" id="toc-when-jstyle-stops" class="nav-link" data-scroll-target="#when-jstyle-stops">When jstyle() stops</a></li>
+  <li><a href="#changing-it-again" id="toc-changing-it-again" class="nav-link" data-scroll-target="#changing-it-again">Changing it again</a></li>
+  <li><a href="#take-the-whole-script-with-you" id="toc-take-the-whole-script-with-you" class="nav-link" data-scroll-target="#take-the-whole-script-with-you">Take the whole script with you</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tables-own-style.html">Your own table styles</a></li><li class="breadcrumb-item"><a href="./tables-by-hand.html">3. Changing a style by hand</a></li></ol></nav></header>
+
+
+
+
+<section id="changing-a-style-by-hand" class="level2">
+<h2 class="anchored" data-anchor-id="changing-a-style-by-hand">Changing a style by hand</h2>
+<p><strong>Your own table styles · Page 3</strong><br>
+<em>The page before it is <a href="./tables-keeping-styles.html">2. Keeping your styles</a>.</em></p>
+<p>This page is a hands-on run-through of changing a style yourself: you save a copy of a built-in style as a style file, change a value or two in RStudio, and check the file before you make a table with it.</p>
+<p>A <em>style file</em> is a plain-text file listing every setting a table’s look depends on, one to a line, each after a note saying what it does and what values it takes. Changing a style means changing the value after a setting’s equals sign. Page 4, <a href="./tables-ai-assistant.html">Changing a style with an AI assistant</a>, hands the same file to an AI assistant instead; the copy and the check are the same either way.</p>
+<p>This page follows the pattern of every How-To: numbered blocks that build one script, with the finished script to download at the bottom. <a href="./howtos.html#using-the-how-to-pages">Using the How-To pages</a> explains the pattern, and how to reset your session if something goes wrong.</p>
+<section id="load-jstats-and-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="load-jstats-and-the-data">1. Load jstats and the data</h3>
+<p>We’ll work on <code>community</code>, one of the two practice datasets that ship with the package: 103 simulated respondents to a community survey. <code>jload()</code> puts a copy of it in your workspace, and <code>juse()</code> makes it the default data frame, so the commands that follow can leave its name out.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 1. Load jstats and the data --------------------------------------</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Load jstats and the community practice dataset, and make community the</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## default data frame. quiet = TRUE skips jload()'s report on what it</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## loaded; overwrite = TRUE replaces a copy already loaded in this session</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## without asking first</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jstats)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jload</span>(<span class="st">"community"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">juse</span>(community)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p class="obx-lead">
+<em>The command lines are shown; the standalone <code>##</code> comment lines aren’t – running a comment just echoes it back and does nothing.</em>
+</p>
+<div class="obx-cap">
+Console <span class="obx-loc">(lower-left pane)</span>
+</div>
+<pre class="cp-pane cp-chrome"><span class="ep-tabs"><span class="ep-tab on">Console</span><span class="ep-tab">Terminal<span class="ep-x">×</span></span><span class="ep-tab">Background Jobs<span class="ep-x">×</span></span><span class="ep-ctl"><svg width="42" height="16" viewbox="0 0 42 16"><rect x="0.5" y="7.5" width="18" height="7" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="0.5" y="7.5" width="18" height="3.5" fill="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="14" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="3.5" fill="#8A9196"></rect></svg></span></span><span class="cp-strip" style="background-image:url(data:image/png;base64,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)"></span><span class="cp-body"><span class="cp-in">&gt; library(jstats)</span>
+<span class="cp-msg">jstats v0.9.282 is up to date.
+For jstats conventions (useful to AI assistants too), run jai().</span>
+<span class="cp-in">&gt; jload("community", overwrite = TRUE, quiet = TRUE)</span>
+<span class="cp-in">&gt; juse(community)</span>
+<span class="cp-msg">Default data frame set to: community</span>
+<span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
+</section>
+<section id="a-table-in-the-report-style" class="level3">
+<h3 class="anchored" data-anchor-id="a-table-in-the-report-style">2. A table in the report style</h3>
+<p>First, a table to compare against: descriptive statistics for three variables, kept as <code>d1</code>, in the built-in <code>report</code> style. <code>style =</code> names the style a table is built in.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 2. A table in the report style -----------------------------------</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Keep a result, then make its table in the built-in report style</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">jdesc</span>(Age, Income, WellbeingScore, <span class="at">print =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> <span class="fu">jtable</span>(d1, <span class="at">style =</span> <span class="st">"report"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="do">## print() is base R: it shows an object in the Console, here the table</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(t1)  <span class="co"># base R</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="obx-cap">
+Console <span class="obx-loc">(lower-left pane)</span>
+</div>
+<pre class="cp-pane cp-chrome"><span class="ep-tabs"><span class="ep-tab on">Console</span><span class="ep-tab">Terminal<span class="ep-x">×</span></span><span class="ep-tab">Background Jobs<span class="ep-x">×</span></span><span class="ep-ctl"><svg width="42" height="16" viewbox="0 0 42 16"><rect x="0.5" y="7.5" width="18" height="7" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="0.5" y="7.5" width="18" height="3.5" fill="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="14" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="3.5" fill="#8A9196"></rect></svg></span></span><span class="cp-strip" style="background-image:url(data:image/png;base64,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)"></span><span class="cp-body"><span class="cp-in">&gt; d1 &lt;- jdesc(Age, Income, WellbeingScore, print = FALSE)</span>
+<span class="cp-in">&gt; t1 &lt;- jtable(d1, style = "report")</span>
+<span class="cp-out">Table 1. Descriptive Statistics (N = 103)
+  3 variables, on a portrait page.
+The table was made in R; no Word file was asked for.
+</span>
+<span class="cp-in">&gt; print(t1)  # base R</span>
+<span class="cp-out">Table 1: Descriptive Statistics (N = 103)
+------------------------------------------------------------------
+Variable                  n       M          SD       Min     Max
+------------------------------------------------------------------
+Age (years)              103      40.65      11.62      18      71
+Annual income (USD)       97  49,855.67  17,427.22  14,000  93,000
+Wellbeing score (0-100)  103      50.89      11.48      25      81
+------------------------------------------------------------------
+</span>
+<span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
+<p>The table shows its statistics to two decimal places: a mean age of 40.65, for example. With no <code>file</code>, <code>jtable()</code> writes nothing to Word, and says so.</p>
+</section>
+<section id="a-copy-of-report-to-change" class="level3">
+<h3 class="anchored" data-anchor-id="a-copy-of-report-to-change">3. A copy of report to change</h3>
+<p>The built-in styles have no file of their own to change. <code>jstyle()</code> with <code>save.as</code> writes a copy as a style file, into the style folder that page 1 set up: a folder named <code>styles</code> inside your project.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 3. A copy of report to change ------------------------------------</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Keep this page's styles in a styles folder inside the project. jstats</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">## makes the folder; the setting lasts until R restarts</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">style.dir =</span> <span class="st">"styles"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">## A complete copy of report, every setting written out with a note.</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">## open = TRUE opens it in a tab beside your script</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">jstyle</span>(<span class="st">"report"</span>, <span class="at">save.as =</span> <span class="st">"mystyle"</span>, <span class="at">open =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="obx-cap">
+Console <span class="obx-loc">(lower-left pane)</span>
+</div>
+<pre class="cp-pane cp-chrome"><span class="ep-tabs"><span class="ep-tab on">Console</span><span class="ep-tab">Terminal<span class="ep-x">×</span></span><span class="ep-tab">Background Jobs<span class="ep-x">×</span></span><span class="ep-ctl"><svg width="42" height="16" viewbox="0 0 42 16"><rect x="0.5" y="7.5" width="18" height="7" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="0.5" y="7.5" width="18" height="3.5" fill="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="14" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="3.5" fill="#8A9196"></rect></svg></span></span><span class="cp-strip" style="background-image:url(data:image/png;base64,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)"></span><span class="cp-body"><span class="cp-in">&gt; joptions(style.dir = "styles")</span>
+<span class="cp-out"><span style="color: #BB0000;">Options Settings
+</span>Style folder: styles
+Run joptions() to see all settings.
+</span>
+<span class="cp-msg">Created 'styles' folder in working directory.</span>
+<span class="cp-out"></span>
+<span class="cp-in">&gt; jstyle("report", save.as = "mystyle", open = TRUE)</span>
+<span class="cp-out">Style written to ~/your-working-directory/styles/mystyle.jstyle
+</span>
+<span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
+<p>jstats wrote the copy, <code>mystyle.jstyle</code>, into the <code>styles</code> folder, and with <code>open = TRUE</code> the file opens in a tab beside your script. It is about 800 lines long: every setting jstats has, each after its note. The general settings come first, the ones that set the look of every table, such as the font, the size, and the decimal places. Then each kind of table has a section of its own, under its name in square brackets, such as <code>[descriptives]</code> and <code>[regression]</code>, and <code>[plot]</code> comes last, for charts.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Reading this output">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading this output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The first three lines are <code>joptions()</code> confirming the setting it changed. The next two report the folder jstats created and the file it wrote. The path is your working directory’s, followed by <code>styles/mystyle.jstyle</code>. (The Console pane on this page shows every working directory as <code>~/your-working-directory</code>.)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="change-two-values-and-save" class="level3">
+<h3 class="anchored" data-anchor-id="change-two-values-and-save">4. Change two values, and save</h3>
+<p>This step happens in the <code>mystyle.jstyle</code> tab, not in the Console. The block below is only comments, a note in your script of what you did.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 4. Change two values, and save -----------------------------------</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">## In the mystyle.jstyle tab: font = Times New Roman, decimals = 1, saved</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In the <code>mystyle.jstyle</code> tab:</p>
+<ol type="1">
+<li><strong>Find the font.</strong> Press Ctrl+F (Cmd+F on a Mac), type <code>font = Arial</code>, and press Enter. The first match is the general setting, near the top under “The general settings”. (A second <code>font</code> line, under <code>[plot]</code>, sets the charts’ font; leave it as it is.)</li>
+<li><strong>Change the value.</strong> Replace <code>Arial</code> with <code>Times New Roman</code>, so the line reads <code>font = Times New Roman</code>. Change only what follows the equals sign: the setting’s name stays as it is.</li>
+<li><strong>Find the decimals.</strong> Search for <code>decimals = 2</code>, and change it to <code>decimals = 1</code>. The note above it says what the setting takes: “a whole number from 0 to 6”.</li>
+<li><strong>Save the file</strong>, with Ctrl+S (Cmd+S on a Mac). jstats reads the file as it is saved on disk, so a change that isn’t saved doesn’t count.</li>
+</ol>
+</section>
+<section id="check-the-file" class="level3">
+<h3 class="anchored" data-anchor-id="check-the-file">5. Check the file</h3>
+<p><code>jstyle()</code> with a style’s name reads the style file and prints every setting. If a line holds something jstats can’t use, <code>jstyle()</code> stops at that line and names it, so run it after every change.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 5. Check the file ------------------------------------------------</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">## jstyle() reads the saved file and prints every setting. It stops at a</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## line it cannot use, and names the line</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">jstyle</span>(<span class="st">"mystyle"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="What you should see">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you should see
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="obx-cap">
+Console <span class="obx-loc">(lower-left pane)</span>
+</div>
+<pre class="cp-pane cp-chrome"><span class="ep-tabs"><span class="ep-tab on">Console</span><span class="ep-tab">Terminal<span class="ep-x">×</span></span><span class="ep-tab">Background Jobs<span class="ep-x">×</span></span><span class="ep-ctl"><svg width="42" height="16" viewbox="0 0 42 16"><rect x="0.5" y="7.5" width="18" height="7" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="0.5" y="7.5" width="18" height="3.5" fill="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="14" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="3.5" fill="#8A9196"></rect></svg></span></span><span class="cp-strip" style="background-image:url(data:image/png;base64,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)"></span><span class="cp-body"><span class="cp-in">&gt; jstyle("mystyle")</span>
+<span class="cp-out"><span style="color: #BB0000;">Style: mystyle
+</span>  ~/your-working-directory/styles/mystyle.jstyle
+  based on report, then apa
+  Set in this file: every setting.
+
+font              = Times New Roman
+size              = 10
+paper             = a4
+caption.form      = report
+caption.position  = row
+caption.size      = size
+caption.fill      = none
+caption.text      = 000000
+header.fill       = D9D9D9
+header.text       = 000000
+header.bold       = yes
+band.fill         = none
+heading.fill      = none
+rules             = apa
+rule.color        = 000000
+note.label        = Note:
+note.label.italic = no
+note.position     = row
+note.size         = size - 1
+note.sentences    = lines
+note.order        = report
+source.position   = line
+source.label      = Source:
+n.position        = title
+decimals          = 1
+leading.zero      = yes
+p.format          = exact
+p.decimals        = 3
+stars             = .05, .01, .001
+marks             = letters
+minus             = true
+thousands         = comma
+landscape         = auto
+line.spacing      = single
+percent.decimals  = 1
+filter.note       = yes
+
+[descriptives]
+title          = Descriptive Statistics
+columns        = n, mean, sd, min, max
+stub.label     = Variable
+n.label        = n
+mean.label     = M
+sd.label       = SD
+min.label      = Min
+max.label      = Max
+group.headings = italic
+
+[frequencies]
+title               = Frequency Distributions
+columns             = n, percent
+stub.label          = Variable
+n.label             = n
+percent.label       = %
+valid.percent.label = Valid %
+cumulative.label    = Cumulative %
+missing.rows        = combined
+missing.label       = Missing
+variable.headings   = bold
+group.headings      = italic
+
+[regression]
+title             = Regression Coefficients Predicting {outcome}
+columns           = b, se, beta, p
+columns.last      = none
+stub.label        = Predictor
+b.label           = b
+se.label          = SE
+beta.label        = β
+p.label           = p
+t.label           = t
+ci.label          = 95% CI
+beta.gelman.label = β*
+ci.style          = one
+intercept         = yes
+intercept.label   = Constant
+fit.rows          = r2
+reference         = row
+reference.label   = reference
+variable.headings = bold
+group.headings    = italic
+
+[logistic]
+title             = Logistic Regression Coefficients Predicting {outcome}
+columns           = b, se, or, p
+columns.last      = none
+stub.label        = Predictor
+b.label           = b
+se.label          = SE
+or.label          = OR
+p.label           = p
+wald.label        = Wald
+ci.label          = 95% CI for OR
+beta.gelman.label = β*
+ci.style          = one
+intercept         = yes
+intercept.label   = Constant
+fit.rows          = chisq, nagelkerke
+reference         = row
+reference.label   = reference
+variable.headings = bold
+group.headings    = italic
+
+[correlation]
+title          = Descriptive Statistics and Correlations for Study Variables
+columns        = n, mean, sd
+stub.label     = Variable
+n.label        = n
+mean.label     = M
+sd.label       = SD
+lower.triangle = yes
+r.stars        = yes
+method.note    = yes
+
+[ttest]
+title         = Means, Standard Deviations, and *t* Tests by {group}
+columns       = mean, sd, t, p, d
+stub.label    = Variable
+n.label       = n
+mean.label    = M
+sd.label      = SD
+t.label       = t
+df.label      = df
+df.position   = column
+p.label       = p
+d.label       = d
+diff.label    = Mean difference
+ci.label      = 95% CI
+ci.style      = one
+group.spanner = yes
+test.note     = yes
+
+[anova]
+title         = Means, Standard Deviations, and One-Way Analyses of Variance by {group}
+columns       = mean, sd, f, p, eta2
+stub.label    = Variable
+n.label       = n
+mean.label    = M
+sd.label      = SD
+f.label       = F
+df.label      = df
+df.position   = column
+p.label       = p
+eta2.label    = η²
+group.spanner = yes
+test.note     = yes
+
+[crosstab]
+title             = Frequencies and Percentages by {group}
+columns           = n, percent
+total             = yes
+percent.base      = column
+test.columns      = chisq, df, p, v
+stub.label        = Variable
+n.label           = n
+percent.label     = %
+total.label       = Total
+chisq.label       = χ²
+df.label          = df
+p.label           = p
+v.label           = V
+group.spanner     = yes
+variable.headings = bold
+
+[reliability]
+title                  = Item Statistics and Reliability
+columns                = mean, sd, item.total, alpha.if.deleted
+stub.label             = Item
+mean.label             = M
+sd.label               = SD
+item.total.label       = Item-total *r*
+alpha.if.deleted.label = α if item deleted
+alpha                  = yes
+item.total.note        = yes
+group.headings         = italic
+
+[multiresponse]
+title         = {set}
+columns       = n, percent
+stub.label    = Option
+n.label       = n
+percent.label = %
+none.label    = None of these
+choice.note   = yes
+
+[plot]
+font            = Arial
+size            = 10
+palette         = greys
+gridlines       = horizontal
+grid.color      = D9D9D9
+axis.lines      = x
+legend.position = top
+values          = yes
+values.grouped  = no
+values.stacked  = no
+values.decimals = 0
+pie.max         = 6
+width           = 6
+height          = 4
+resolution      = 300
+data.file       = no
+vector.file     = none
+</span>
+<span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
+</div>
+</div>
+</div>
+<p><code>jstyle()</code> read the file with no stop, and the two changes are in its printout: <code>font = Times New Roman</code> at the top, and <code>decimals = 1</code> further down the general settings.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Reading this output">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reading this output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>The top lines</strong> name the style, the file it was read from, and the styles it is based on: “based on report, then apa”. A setting the file left out would come from report, and one report leaves out from apa. A complete copy leaves out nothing, so the next line says “Set in this file: every setting.”</li>
+<li><strong>The settings</strong> follow in the file’s order: the general settings first, then each kind of table’s section under its name in square brackets, then <code>[plot]</code>, for charts.</li>
+<li><strong>If the printout still shows Arial</strong>, the change wasn’t saved, or jstats read a different file. Save the tab, and check that the <code>styles</code> folder holds <code>mystyle.jstyle</code>.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="the-table-in-your-style" class="level3">
+<h3 class="anchored" data-anchor-id="the-table-in-your-style">6. The table in your style</h3>
+<p>Now make the same table in <code>mystyle</code>, and write it to a Word file. A table <code>jtable()</code> has built keeps the style it was built in, so the new table starts from the result, <code>d1</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 6. The table in your style ---------------------------------------</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">## The same result in your style, written to a Word file</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">&lt;-</span> <span class="fu">jtable</span>(d1, <span class="at">style =</span> <span class="st">"mystyle"</span>, <span class="at">file =</span> <span class="st">"Table1_mystyle.docx"</span>, <span class="at">open =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(t2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="obx-cap">
+Console <span class="obx-loc">(lower-left pane)</span>
+</div>
+<pre class="cp-pane cp-chrome"><span class="ep-tabs"><span class="ep-tab on">Console</span><span class="ep-tab">Terminal<span class="ep-x">×</span></span><span class="ep-tab">Background Jobs<span class="ep-x">×</span></span><span class="ep-ctl"><svg width="42" height="16" viewbox="0 0 42 16"><rect x="0.5" y="7.5" width="18" height="7" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="0.5" y="7.5" width="18" height="3.5" fill="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="14" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="3.5" fill="#8A9196"></rect></svg></span></span><span class="cp-strip" style="background-image:url(data:image/png;base64,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)"></span><span class="cp-body"><span class="cp-in">&gt; t2 &lt;- jtable(d1, style = "mystyle", file = "Table1_mystyle.docx", open = TRUE)</span>
+<span class="cp-out">Table 1. Descriptive Statistics (N = 103)
+  3 variables, on a portrait page.
+Table written to ~/your-working-directory/Table1_mystyle.docx
+</span>
+<span class="cp-in">&gt; print(t2)</span>
+<span class="cp-out">Table 1: Descriptive Statistics (N = 103)
+----------------------------------------------------------------
+Variable                  n       M        SD       Min     Max
+----------------------------------------------------------------
+Age (years)              103      40.7      11.6      18      71
+Annual income (USD)       97  49,855.7  17,427.2  14,000  93,000
+Wellbeing score (0-100)  103      50.9      11.5      25      81
+----------------------------------------------------------------
+</span>
+<span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
+<p>The statistics now have one decimal place, a mean age of 40.7, and the Word file has the table in Times New Roman. The font is a change only Word shows: in the Console, every table is in the Console’s own font.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/tables-mystyle.png" class="img-fluid figure-img" alt="A descriptive statistics table in Word in the changed style: the caption 'Table 1: Descriptive Statistics (N = 103)' in bold, a light gray header row, the statistics to one decimal place." width="560"></p>
+<figcaption>The table in Word, in the changed style: Times New Roman 10, one decimal place, report’s light gray header row.</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Why jstats does it this way">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why jstats does it this way
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A jstats style is a plain-text file, one setting to a line, each with a note on what it does and what it takes. So a style can be read and changed in any text editor, with no special program, and a change is one value on one line. A journal’s style or an agency’s is one small file, which travels to a colleague or a new computer by email.</p>
+<p>The style is kept apart from the analysis, so one change to the file changes every table made with it: run the script again, and every table is rebuilt in the new look.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Coming from SPSS, Stata, or SAS?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Coming from SPSS, Stata, or SAS?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A jstats style does the job of <strong>SPSS</strong>’s TableLooks: in the Viewer, a pivot table’s look can be saved as a TableLook file (.stt) and applied to other tables, and a default TableLook set for new output. The difference is where the look lives. A TableLook styles tables already in the Viewer, and a table exported to Word takes the look it had there; a jstats style is applied as <code>jtable()</code> builds the Word table.</p>
+<p>In <strong>Stata</strong>, <code>collect style</code> commands set the look of a table built with <code>collect</code>, and <code>collect style save</code> keeps them in a file for <code>collect style use</code>; <code>collect export</code> writes the table to Word.</p>
+<p>In <strong>SAS</strong>, the look of ODS output comes from an ODS style, made or changed with <code>PROC TEMPLATE</code> and named in the ODS RTF or ODS WORD statement that writes the file.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Going deeper (optional)">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Going deeper (optional)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A general setting can take a value of its own for one kind of table: copy the setting’s line under that table’s heading in the file, and change the value there. <code>decimals = 3</code> copied under <code>[regression]</code>, for instance, gives regression tables three decimal places and leaves every other table as it was. This works for every general setting except <code>paper</code>, which sets the page of the whole Word file, and under every heading except <code>[plot]</code>, which takes only a chart’s own settings. The help page <code>?jstyle_settings</code> lists every setting and what it takes. The books cover every setting in depth, and designing a house style, with worked examples.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="when-jstyle-stops" class="level2">
+<h2 class="anchored" data-anchor-id="when-jstyle-stops">When jstyle() stops</h2>
+<p>A slip in the file, such as a misspelled setting or a value the setting doesn’t take, makes <code>jstyle()</code> stop at that line and say what is wrong. Two examples, each made from this page’s file with one line changed:</p>
+<ul>
+<li><code>decimal = 1</code>, with the <em>s</em> left off. The message reads <code>line 129 of mystyle.jstyle sets decimal, which is not a setting of a style. Did you mean decimals?</code></li>
+<li><code>decimals = one</code>, a word where a number belongs. The message reads <code>line 129 of mystyle.jstyle sets decimals = one. `decimals` must be a whole number from 0 to 6.</code></li>
+</ul>
+<p>Fix the line the message names, save the file, and run <code>jstyle()</code> again. Your own message gives the line number in your file.</p>
+</section>
+<section id="changing-it-again" class="level2">
+<h2 class="anchored" data-anchor-id="changing-it-again">Changing it again</h2>
+<p>Change the file, save it, and run blocks 5 and 6 again. <code>jtable()</code> asks before replacing the Word file it wrote earlier: close the file in Word, then answer <code>y</code>. Running block 3 again is a different matter: <code>jstyle()</code> asks before replacing <code>mystyle.jstyle</code> with a fresh copy of report, and <code>n</code> (no) keeps your changes.</p>
+</section>
+<section id="take-the-whole-script-with-you" class="level2">
+<h2 class="anchored" data-anchor-id="take-the-whole-script-with-you">Take the whole script with you</h2>
+<p>That’s the full run-through. If you’d like the entire script in one file to keep and reuse, download it here. Put your own result in place of <code>d1</code>, and your own style’s name in place of <code>mystyle</code>.</p>
+<p>The file is the finished version of the script you built: the same code, in the same order. Block 4 is still only comments: the change happens in the editor, not in R. Its first lines say what to answer when you run it again and jstats asks before replacing a file. <a href="./howtos.html#using-the-how-to-pages">Using the How-To pages</a> says more about finished scripts and how to run one.</p>
+<div style="margin: 1rem 0 2rem;">
+<p><a href="tables-by-hand-follow-along.R" download="" class="btn btn-primary">Download the full script (.R)</a></p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("^(?:http:|https:)\/\/jma61\.github\.io\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./tables-keeping-styles.html" class="pagination-link" aria-label="2. Keeping your styles">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">2. Keeping your styles</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./tables-ai-assistant.html" class="pagination-link" aria-label="4. Changing a style with an AI assistant">
+        <span class="nav-page-text">4. Changing a style with an AI assistant</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Jeff Ackerman</p>
+</div>   
+    <div class="nav-footer-center">
+<p>jstats is an independent project that I develop and maintain in my own time; it began as a teaching tool in a university setting. Views expressed and any errors are my own.</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  function syncFooter(){
+    var c = document.querySelector('main.content')
+         || document.querySelector('#quarto-document-content');
+    var f = document.querySelector('.nav-footer-center');
+    if (c && f) {
+      var w = Math.round(c.getBoundingClientRect().width);
+      f.style.flexGrow = '0';
+      f.style.flexShrink = '0';
+      f.style.flexBasis = w + 'px';
+    }
+  }
+  window.addEventListener('DOMContentLoaded', syncFooter);
+  window.addEventListener('load', syncFooter);
+  window.addEventListener('resize', syncFooter);
+})();
+</script>
+
+
+
+
+</body></html>

@@ -1,0 +1,241 @@
+---
+pagetitle: "jstats:Several tables and a chart in one file"
+title-prefix: ""
+resources:
+  - tables-several-follow-along.R
+---
+
+```{r}
+#| label: obx-setup
+#| include: false
+
+# ---------------------------------------------------------------------------
+# CONSOLE FACSIMILES -- render scaffolding, hidden (include: false). Same
+# mechanism as anova.qmd: pane_facsimile.R defines the capture-once /
+# display-twice helpers in their own dot-named environment (.obx). Each block
+# below is one call whose code STRING is both printed into the page and
+# executed once, so the shown code and the run code cannot drift. An
+# unexpected error in any block HALTS the render (the publish gate).
+#
+# Devices, by the OUTPUT-REGISTER rule: the prose READS the output of blocks 1
+# and 3, so those panes render OPEN (.obx$show_console(fence = TRUE)). Block
+# 2's result is a chart, not Console output: its code is a plain fence and the
+# chart is drawn by a chunk that runs the same code string (anova.qmd's
+# block 8).
+#
+# PUBLICATION TABLES, PAGE 3 (S422). It uses page 1's saved results and page
+# 2's tables, t1 and t2; block 1 makes them again, without files (print =
+# FALSE), so the page and its script also work in a fresh session.
+#
+# jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
+# startup message on first attach only. joutput()/joptions() are left alone.
+# The page WRITES one Word file into the working directory; the clean-slate
+# line below removes it before the blocks run, and the teardown after.
+#
+# HOW-TO LAYOUT (S344). No top boxes: the shared material lives once on
+# howtos.qmd, and this page points there.
+# ---------------------------------------------------------------------------
+
+options(width = 80)   # match a default 80-column console for table alignment
+options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real startup message
+
+.sv_files <- c("Report.docx")
+.sv_clean <- function() {
+  f <- .sv_files[file.exists(.sv_files)]
+  if (length(f)) file.remove(f)
+  invisible(NULL)
+}
+.sv_clean()
+
+source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color on
+```
+
+## Several tables and a chart in one file
+
+**Publication tables &middot; Page 3**\
+*It uses the results saved on
+[1. Saving results](tables-saving-results.qmd) and the tables made on
+[2. Making a table in Word](tables-in-word.qmd).*
+
+A report or an article usually has several tables, and a chart or two. This page
+is a hands-on run-through of putting them in one Word file, numbered in order,
+with one call to `jtable()`.
+
+Block 1 repeats the steps from pages 1 and 2 that saved the two results and made
+their tables, `t1` and `t2`, so this page works in a fresh session too. If
+they're still listed in your **Environment** pane, running block 1 again does
+no harm.
+
+This page follows the pattern of every How-To: numbered blocks that build one
+script, with the finished script to download at the bottom.
+[Using the How-To pages](howtos.qmd#using-the-how-to-pages) explains the
+pattern, and how to reset your session if something goes wrong.
+
+### 1. Load jstats, the saved results, and their tables
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 1. Load jstats, the saved results, and their tables --------------
+
+## Load jstats and community, make community the default data frame, save
+## page 1's two results again, and make their tables, t1 and t2.
+## quiet = TRUE skips jload()'s report, which page 1 shows; overwrite = TRUE
+## replaces a copy loaded earlier without asking first. print = FALSE keeps
+## jtable() quiet; with no file, nothing is written to Word yet
+library(jstats)
+jload("community", overwrite = TRUE, quiet = TRUE)
+juse(community)
+d1 <- jdesc(Age, Income, WellbeingScore, print = FALSE)
+m1 <- jlm(WellbeingScore ~ Age + Income, print = FALSE)
+t1 <- jtable(d1, print = FALSE)
+t2 <- jtable(m1, print = FALSE))---", fence = TRUE,
+  lead = "The command lines are shown; the standalone <code>##</code> comment lines aren't -- running a comment just echoes it back and does nothing.")
+```
+
+jstats and `community` are loaded, and the two results and their tables are
+saved, with nothing printed. On page 2 each table went to a Word file of its own; here they stay in
+R until block 3 writes them together.
+
+### 2. A chart
+
+A chart from `jplot()` can be saved with `<-`, just as a result can. Here it is
+a bar chart of the region each respondent lives in, saved as `p1`.
+
+```{r}
+#| echo: false
+#| results: asis
+.b2 <- r"---(## ---- 2. A chart -------------------------------------------------------
+
+## A bar chart of Region, saved as p1. It appears in the Plots tab
+## (lower-right pane)
+p1 <- jplot(Region))---"
+.fence <- strrep("`", 3)
+cat(.fence, "r\n", .b2, "\n", .fence, "\n", sep = "")
+```
+
+The chart appears in the **Plots** tab of the lower-right pane. (`jplot()` also
+prints the chart's title and its number of cases, 103, in the Console.)
+
+```{r}
+#| label: tables-several-chart
+#| echo: false
+#| results: hide
+#| message: false
+#| fig-width: 6
+#| fig-height: 4
+#| fig-alt: "A bar chart of the number of respondents in each region of residence, one gray bar per region, the count printed above each: North 27, South 20, East 31, West 25."
+eval(parse(text = .b2))
+```
+
+### 3. Tables and a chart in one file
+
+Given a list of tables and charts, `jtable()` writes them all to one Word file,
+in the order given.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 3. Tables and a chart in one file --------------------------------
+
+## list() is base R: it puts the two tables and the chart together, in
+## this order, and jtable() writes them all to one Word file
+jtable(list(t1, p1, t2), file = "Report.docx", open = TRUE))---", fence = TRUE)
+```
+
+The report lists what went into the file, in order, and says where the file is.
+The tables are numbered in the order given, so the regression, Table 1 in its
+own file on page 2, is Table 2 here, and the chart is Figure 1: figures are
+numbered apart from tables. The chart's caption is set as the style sets a
+table's, with the number, then the title and N.
+
+::: {.callout-note collapse="true" title="Reading this output"}
+- **Each table and figure** gets two lines: its number and title, then what it
+  holds and the page it is on. They come in the order of the list, which is
+  the order they have in the Word file.
+- **The last line** counts what went into the file, and gives the file's place.
+- **A wide table**, such as a crosstab across several groups, goes on a
+  landscape page of its own, and the report says so; the pages around it stay portrait.
+:::
+
+To add another table later, save its result, make its table, and add it to the
+list where it belongs in the file. Run the line again, and `jtable()` asks
+before replacing `Report.docx`: close the file in Word first, then answer `y`.
+
+Each table here holds one result. Page 4,
+[Several results in one table](tables-several-results.qmd), puts two
+regression models side by side in a single table.
+
+```{r}
+#| label: prose-gates
+#| include: false
+
+# ---------------------------------------------------------------------------
+# PROSE GATES -- hidden. Each stopifnot() below is one statement the prose
+# makes about what the package does; a false one HALTS the render, the same
+# publish gate the blocks have.
+# ---------------------------------------------------------------------------
+.msgs <- function(expr) {         # what a call prints, both streams, as one string
+  m <- character(0)
+  o <- withCallingHandlers(utils::capture.output(expr),
+                           message = function(c) { m <<- c(m, conditionMessage(c))
+                                                   invokeRestart("muffleMessage") })
+  paste(c(o, m), collapse = "\n")
+}
+.td <- tempfile("sv-"); dir.create(.td)
+# block 1: nothing printed
+.m1q <- .msgs({ jdesc(Age, Income, WellbeingScore, print = FALSE)
+                jlm(WellbeingScore ~ Age + Income, print = FALSE)
+                jtable(d1, print = FALSE); jtable(m1, print = FALSE) })
+# block 2: jplot() prints its title and N; the alt text's counts
+grDevices::pdf(NULL)
+.m2 <- .msgs(jplot(Region))
+invisible(grDevices::dev.off())
+.reg <- table(haven::as_factor(community$Region))
+# block 3: the order and the numbering
+.m3 <- .msgs(jtable(list(t1, p1, t2), file = file.path(.td, "R.docx")))
+.pos <- function(s) regexpr(s, .m3, fixed = TRUE)
+# the reading box: a wide table goes landscape, the report says so
+.x1 <- jcrosstab(Volunteer ~ Region, print = FALSE)
+.m_wide <- .msgs(jtable(.x1))
+.m_mix <- .msgs(jtable(list(t1, jtable(.x1, print = FALSE)), file = file.path(.td, "M.docx")))
+
+stopifnot(
+  !nzchar(.m1q),
+  grepl("Bar Chart: Region", .m2, fixed = TRUE), grepl("Analysis N: 103", .m2, fixed = TRUE),
+  identical(names(.reg), c("North", "South", "East", "West")),
+  identical(as.integer(.reg), c(27L, 20L, 31L, 25L)),
+  file.exists("Report.docx"),
+  .pos("Table 1. Descriptive") > 0, .pos("Figure 1. Region") > .pos("Table 1. Descriptive"),
+  .pos("Table 2. Regression") > .pos("Figure 1. Region"),
+  grepl("2 tables and 1 figure written to", .m3, fixed = TRUE),
+  grepl("on a landscape page", .m_wide, fixed = TRUE),
+  grepl("3 variables, on a portrait page.", .m_mix, fixed = TRUE),
+  grepl("on a landscape page", .m_mix, fixed = TRUE)
+)
+unlink(.td, recursive = TRUE)
+```
+
+## Take the whole script with you
+
+That's the full run-through. If you'd like the entire script in one file to
+keep and reuse, download it here. Put your own results and tables in the list,
+in the order you want them in the file.
+
+The file is the finished version of the script you built: the same code, in the
+same order. Its first lines say what to answer when you run it a second time
+and `jtable()` asks before replacing `Report.docx`.
+[Using the How-To pages](howtos.qmd#using-the-how-to-pages) says more about
+finished scripts and how to run one.
+
+<div style="margin: 1rem 0 2rem;">
+<a href="tables-several-follow-along.R" download class="btn btn-primary">Download the full script (.R)</a>
+</div>
+
+```{r}
+#| label: obx-teardown
+#| include: false
+# Page-end teardown: remove the file the render wrote (the setup chunk also
+# clears it at render start, against a halted render).
+.sv_clean()
+```

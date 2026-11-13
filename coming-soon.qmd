@@ -5,8 +5,8 @@ title-prefix: ""
 
 ## Coming soon
 
-These How-Tos are on the way. Each will stand on its own, like the ones already
-listed on the [How-Tos](howtos.qmd) page.
+These How-Tos are on the way. Each topic will stand on its own, as the topics
+already in the menu do: the [How-Tos](howtos.qmd) page says more.
 
 ## Using your own data
 

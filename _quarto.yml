@@ -80,6 +80,7 @@ website:
               href: loading-jstats-automatically.qmd
     - title: "How-Tos"
       style: "floating"
+      collapse-level: 1
       contents:
         - text: "All How-Tos"
           href: howtos.qmd
@@ -88,6 +89,32 @@ website:
           contents:
             - text: "One-way ANOVA"
               href: anova.qmd
+        - section: "Publication tables"
+          contents:
+            - text: "1. Saving results"
+              href: tables-saving-results.qmd
+            - text: "2. Making a table in Word"
+              href: tables-in-word.qmd
+            - text: "3. Several tables and a chart in one file"
+              href: tables-several.qmd
+            - text: "4. Several results in one table"
+              href: tables-several-results.qmd
+            - text: "5. Choosing a style: apa or report"
+              href: tables-choosing-a-style.qmd
+        - section: "Your own table styles"
+          contents:
+            - text: "1. Making your own style"
+              href: tables-own-style.qmd
+            - text: "2. Keeping your styles"
+              href: tables-keeping-styles.qmd
+            - text: "3. Changing a style by hand"
+              href: tables-by-hand.qmd
+            - text: "4. Changing a style with an AI assistant"
+              href: tables-ai-assistant.qmd
+            - text: "5. Changing a style with Posit Assistant"
+              href: tables-posit-assistant.qmd
+            - text: "6. Matching the look of a published table"
+              href: tables-matching.qmd
         - text: "Coming soon"
           href: coming-soon.qmd
   page-footer:
