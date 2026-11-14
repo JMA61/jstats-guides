@@ -6,7 +6,7 @@
 ## it wrote: close the files in Word first, then answer y.
 
 
-## ---- 1. Load jstats and the saved results -----------------------------
+## ---- 1. Load jstats and save the two results again --------------------
 
 ## Load jstats and community, make community the default data frame, and
 ## save page 1's two results again: d1, descriptive statistics, and m1, a
@@ -21,7 +21,7 @@ m1 <- jlm(WellbeingScore ~ Age + Income, print = FALSE)
 
 ## ---- 2. A table in Word -----------------------------------------------
 
-## Make d1's table, saved as t1, and write it to a Word file.
+## Make a table from d1, save it as t1, and write it to a Word file.
 ## open = TRUE opens the file once it is written
 t1 <- jtable(d1, file = "Descriptives.docx", open = TRUE)
 
@@ -32,7 +32,7 @@ print(t1)  # base R
 
 ## ---- 3. A second table, in a file of its own --------------------------
 
-## Make m1's table, saved as t2, and write it to a second Word file
+## Make a table from m1, save it as t2, and write it to a second Word file
 t2 <- jtable(m1, file = "Regression.docx", open = TRUE)
 
 ## Optional, as in block 2: the table in the Console as well

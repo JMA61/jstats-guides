@@ -6,7 +6,7 @@
 ## close the file in Word first, then answer y.
 
 
-## ---- 1. Load jstats and the saved regression --------------------------
+## ---- 1. Load jstats and save the regression again ---------------------
 
 ## Load jstats and community, make community the default data frame, and
 ## save page 1's regression again as m1. quiet = TRUE skips jload()'s
@@ -20,15 +20,16 @@ m1 <- jlm(WellbeingScore ~ Age + Income, print = FALSE)
 
 ## ---- 2. A second model ------------------------------------------------
 
-## The first model's predictors, and daily commute time
+## A second regression, saved as m2: the first model's predictors, with
+## daily commute time added
 m2 <- jlm(WellbeingScore ~ Age + Income + CommuteTime, print = FALSE)
 
 
 ## ---- 3. Two models in one table ---------------------------------------
 
-## list() is base R: it puts the two models together, each under the name
-## that will head its columns. jtable() sets them side by side in one
-## table, and writes it to a Word file
+## list() is base R: it groups the two models, each under the name that
+## will head its columns. jtable() puts them side by side in one table,
+## saved as t3, and writes the table to a Word file
 t3 <- jtable(list("Age and income" = m1, "Adding commute time" = m2),
              file = "Models.docx", open = TRUE)
 

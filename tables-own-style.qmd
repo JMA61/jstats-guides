@@ -30,8 +30,13 @@ resources:
 # YOUR OWN TABLE STYLES, PAGE 1 (S422 review; Publication tables page 5
 # before it). Written as "Where your styles live",
 # then split by Jeff (S422): this page makes the style folder and the copy;
-# page 6, "Keeping your styles", has the .Rprofile line, the copies and the
+# page 2, "Keeping your styles", has the .Rprofile line, the copies and the
 # hidden jstats folder (the S421 draft's "Where to keep your styles").
+#
+# S428 (the S427 wording pass, Fable 5.2, okayed by Jeff): the topic's
+# roadmap under the intro -- pages 3 to 5 are three ways to change a style,
+# "pick one" (Jeff, S423: "keep the order and say pick one") -- and the
+# page's numbered changes.
 #
 # jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
 # startup message on first attach only. joutput()/joptions() are left alone. The
@@ -80,15 +85,21 @@ source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color 
 **Your own table styles &middot; Page 1**\
 *This topic builds on the Publication tables pages, which end with
 [5. Choosing a style: apa or report](tables-choosing-a-style.qmd). Its pages are
-numbered too, and each builds on the ones before it.*
+numbered too.*
 
-The two built-in styles, `apa` and `report`, are fixed. Your own style starts as
-a copy of one of them, saved as a *style file*: a plain-text file listing every
-setting, which you can change. This page is a hands-on run-through of making
-that copy, in a folder of your own, and of how jstats finds it by its name.
+The two built-in styles, `apa` and `report`, can't themselves be changed. Your
+own style starts as a copy of one of them, saved as a *style file*: a plain-text
+file that lists every setting, each with a value you can change. This page is a
+hands-on run-through of making that copy, in a folder of your own, and of how
+jstats finds the copy by its name.
 
-This page follows the pattern of every How-To: numbered blocks that build one
-script, with the finished script to download at the bottom.
+The rest of the topic goes on from that copy. Page 2 shows where to keep a
+style you mean to keep. Pages 3 to 5 are three ways to change a style: by hand
+(page 3), with an AI assistant (page 4), or with Posit Assistant (page 5). Pick
+one. Page 6 matches the look of a published table, by page 4's route.
+
+This page follows the pattern of every How-To: numbered blocks of code that
+build one script, with the finished script to download at the bottom.
 [Using the How-To pages](howtos.qmd#using-the-how-to-pages) explains the
 pattern, and how to reset your session if something goes wrong.
 
@@ -96,8 +107,8 @@ pattern, and how to reset your session if something goes wrong.
 
 We'll work on `community`, one of the two practice datasets that ship with the
 package: 103 simulated respondents to a community survey. `jload()` puts a copy
-of it in your workspace, and `juse()` makes it the default data frame, so the
-commands that follow can leave its name out.
+of it in your workspace, and `juse()` makes `community` the default data frame,
+so the commands that follow can leave its name out.
 
 ```{r}
 #| echo: false
@@ -117,9 +128,9 @@ juse(community))---", fence = TRUE,
 ### 2. A style folder, and a copy in it
 
 A *style folder* is the folder you choose for your style files.
-`joptions(style.dir = )` sets it. For this page it is a folder named `styles`
-inside your project, and `jstyle()` with `save.as` writes a copy of `report`
-into it, named `myreport`.
+`joptions(style.dir = )` sets it. On this page the style folder is a folder
+named `styles` inside your project, and `jstyle()` with `save.as =` writes a
+copy of `report` into that folder, under the name `myreport`.
 
 ```{r}
 #| echo: false
@@ -130,12 +141,13 @@ into it, named `myreport`.
 ## makes the folder; the setting lasts until R restarts
 joptions(style.dir = "styles")
 
-## A complete copy of report, saved as myreport.jstyle in the style folder
+## Save a complete copy of report as myreport.jstyle in the style folder
 jstyle("report", save.as = "myreport"))---", fence = TRUE)
 ```
 
 `joptions()` confirms the style folder and, since there was no `styles` folder
-yet, creates it. `jstyle()` then reports the copy it wrote, `myreport.jstyle`.
+yet, creates it. `jstyle()` then reports the copy it wrote, `myreport.jstyle`:
+a style file's name ends in `.jstyle`.
 
 ### 3. Where jstats looks
 
@@ -181,38 +193,40 @@ if (any(grepl("(?<![A-Za-z])[A-Za-z]:[\\\\/]|/home/|/Users/|/root/|/tmp/", .sf_t
 cat("```text\n", paste(.sf_txt, collapse = "\n"), "\n```\n", sep = "")
 ```
 
-That is what it printed when this page was made. Your Console shows your own
-working directory and the full path of your jstats folder.
+That is what the Console showed when this page was made. Where this page has
+`~/your-working-directory` and `<your jstats folder>`, your Console shows the
+full path of your own working directory and of your jstats folder.
 
-jstats looks for a style named in a call in three places, in this order: the
-style folder, if one is set; your working directory; and your *jstats folder*,
-a folder jstats keeps for you. It uses the first file of that name it finds,
+When a call names a style, jstats looks for its file in three places, in this
+order: the style folder, if one is set; your working directory (your project's
+folder); and your *jstats folder*, a folder jstats keeps for you. It uses the first file of that name it finds,
 so a style in the style folder wins over one of the same name anywhere else.
 The two built-in styles are always there, and need no file.
 
 ### 4. A style found by its name
 
-So `jtable()` can use `myreport` by its name alone, whichever folder it is in.
+So `jtable()` can use `myreport` by its name alone, with no folder named.
 
 ```{r}
 #| echo: false
 #| results: asis
 .obx$show_console(r"---(## ---- 4. A style found by its name -------------------------------------
 
-## Keep a result, then make its table in myreport, found in the style folder
+## Save a result, then make a table from it in myreport, which jstats
+## finds in the style folder
 d1 <- jdesc(Age, Income, WellbeingScore, print = FALSE)
 t1 <- jtable(d1, style = "myreport"))---", fence = TRUE)
 ```
 
-`jtable()` found `myreport` in the style folder and made the table in it. With
-no `file`, it writes nothing to Word, and says so.
+`jtable()` found `myreport` in the style folder and made the table in that
+style. With no `file =`, `jtable()` writes no Word file, and says so.
 
-`myreport` is still a copy of `report`, setting for setting: changing it comes
-next. Before that, page 2, [Keeping your styles](tables-keeping-styles.qmd),
-shows where to keep a style you mean to keep, since the `styles` folder here
-is inside the project and goes when the project goes. Page 3,
-[Changing a style by hand](tables-by-hand.qmd), then changes a copy like this
-one.
+`myreport` is still a copy of `report`, setting for setting. Page 2,
+[Keeping your styles](tables-keeping-styles.qmd), shows where to keep a style
+you mean to keep: the `styles` folder here is inside the project, and is
+deleted when the project is. Pages 3 to 5 then show three ways to change a copy
+like this one: pick one. Page 3, [Changing a style by hand](tables-by-hand.qmd),
+is the first.
 
 ```{r}
 #| label: prose-gates
@@ -286,12 +300,12 @@ unlink(.td, recursive = TRUE)
 
 That's the full run-through. If you'd like the entire script in one file to
 keep and reuse, download it here. Put your own style's name in place of
-`myreport`, and, once page 2 has set up a folder for every project, leave out
-the `joptions()` line.
+`myreport`, and, once you've set up a folder for every project, as page 2
+shows, leave out the `joptions()` line.
 
 The file is the finished version of the script you built: the same code, in the
-same order. Its first lines say what to answer when you run it again and
-`jstyle()` asks before replacing `myreport.jstyle`.
+same order. If you run the file again, `jstyle()` asks before replacing
+`myreport.jstyle`; the file's first lines say what to answer.
 [Using the How-To pages](howtos.qmd#using-the-how-to-pages) says more about
 finished scripts and how to run one.
 

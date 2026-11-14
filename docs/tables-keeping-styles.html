@@ -354,17 +354,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="keeping-your-styles">Keeping your styles</h2>
 <p><strong>Your own table styles · Page 2</strong><br>
 <em>The page before it is <a href="./tables-own-style.html">1. Making your own style</a>.</em></p>
-<p>Page 1 kept its style in a folder named <code>styles</code> inside the project. That suits a style that belongs to one project, such as one journal’s style for one paper, but the folder goes when the project goes: copy such a style somewhere else before you delete the project. This page shows where to keep the styles you mean to keep, so that every project can use them. There’s no script to build here: just a line for a startup file, and a few habits.</p>
+<p>Page 1 kept its style in a folder named <code>styles</code> inside the project. That suits a style that belongs to one project, such as one journal’s style for one paper, but the folder is deleted when the project is: copy such a style somewhere else before you delete the project. This page shows where to keep the styles you mean to keep, so that every project can use them. There’s no script to build here: just a line for your project’s <code>.Rprofile</code>, and a few habits.</p>
 </section>
 <section id="one-folder-for-every-project" class="level2">
 <h2 class="anchored" data-anchor-id="one-folder-for-every-project">One folder for every project</h2>
 <ul>
-<li><p><strong>Choose a folder you can see, and that is backed up</strong>, such as a folder named <code>jstats styles</code> in your Documents folder (or in OneDrive).</p></li>
-<li><p><strong>Set it for every session.</strong> The <code>style.dir</code> setting lasts until R restarts, so add it to your project’s <code>.Rprofile</code>, the file <a href="./loading-jstats-automatically.html">Loading jstats automatically</a> sets up, below its <code>library(jstats)</code> line:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Explained on the Keeping your styles page</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">style.dir =</span> <span class="st">"~/jstats styles"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<li><p><strong>Choose a folder you can see, and that is backed up.</strong> jstats suggests one: a folder named <code>jstats styles</code> in your Documents folder.</p></li>
+<li><p><strong>Get the line that sets it.</strong> The line is <code>joptions(style.dir = "...")</code>, with the folder’s full path between the quotes. You don’t have to type the path. With no style folder set, <code>jstyle()</code> ends its list of styles with the line, made for your computer. To see it now, run these two lines in the Console:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">style.dir =</span> <span class="cn">NULL</span>)   <span class="co"># no style folder, as in a new session</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jstyle</span>()                     <span class="co"># lists your styles, and ends on the line</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>jstyle()</code> lists the styles it can find and the folders it looks in. When this page was made, its list ended on these lines:</p>
+<pre class="text"><code>No style folder is set, so jstyle() saves copies in your jstats folder, which
+is hidden.
+To keep them in your Documents folder instead, run:
+  joptions(style.dir = "&lt;your Documents folder&gt;/jstats styles")</code></pre>
+<p>In your Console, the last line holds the full path of your own Documents folder, so it works exactly as it appears there. Copy that line from your Console, not from this page.</p></li>
+<li><p><strong>Set it for every session.</strong> The <code>style.dir</code> setting lasts until R restarts, so paste the line you copied into your project’s <code>.Rprofile</code>, the file <a href="./loading-jstats-automatically.html">Loading jstats automatically</a> sets up, below its <code>library(jstats)</code> line:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Explained on the Keeping your styles page</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">joptions</span>(<span class="at">style.dir =</span> <span class="st">"&lt;your Documents folder&gt;/jstats styles"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>An <code>.Rprofile</code> belongs to one project, so add the line in each project where you make tables. Every project then finds the same styles. jstats creates the folder the first time the line runs, if it isn’t there.</p></li>
-<li><p><strong>Find the folder.</strong> In R, <code>~</code> is usually your Documents folder on Windows and your home folder on a Mac. To see exactly where the folder is, run <code>path.expand("~/jstats styles")</code>.</p></li>
 <li><p><strong>Move a style in.</strong> A style made in a project’s own <code>styles</code> folder, as on page 1, can be copied into this folder like any file. With the line above in place, jstats looks in this folder first, so the copy here is the one it uses.</p></li>
 </ul>
 </section>
@@ -374,9 +382,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="if-no-style-folder-is-set" class="level2">
 <h2 class="anchored" data-anchor-id="if-no-style-folder-is-set">If no style folder is set</h2>
-<p>With no style folder set, <code>jstyle()</code> with <code>save.as</code> saves a copy in your <em>jstats folder</em>, a folder jstats keeps for you, and prints the copy’s full path. That folder is easy to lose track of: it is hidden in File Explorer on Windows (it sits under AppData) and in Finder on a Mac (under Library).</p>
-<p>To open it anyway, copy the full path jstats printed (<code>jstyle()</code> with nothing in the parentheses prints it too, at the end of its list of folders) and paste it into the address bar of File Explorer on Windows, or into Finder’s Go &gt; Go to Folder on a Mac. To make hidden folders show all the time, search the web for “show hidden files” and your version of Windows, or for “show Library folder” on a Mac.</p>
-<p>Setting a style folder of your own, as above, keeps your styles where you can see them. Page 3, <a href="./tables-by-hand.html">Changing a style by hand</a>, changes a copy of a style.</p>
+<p>With no style folder set, <code>jstyle()</code> with <code>save.as =</code> saves a copy in your <em>jstats folder</em>, a folder jstats keeps for you, and shows the copy’s full path, followed by a note with the folder’s own path and the line that sets a style folder in your Documents folder. The jstats folder is easy to lose track of: it is hidden in File Explorer on Windows (it sits under AppData) and in Finder on a Mac (under Library).</p>
+<p>To open it anyway, copy the folder’s path from the note (<code>jstyle()</code> with nothing in the parentheses shows it too, at the end of its list of folders) and paste it into the address bar of File Explorer on Windows, or into Finder’s Go &gt; Go to Folder on a Mac. To make hidden folders show all the time, search the web for “show hidden files” and your version of Windows, or for “show Library folder” on a Mac.</p>
+<p>Setting a style folder of your own, as above, keeps your styles where you can see them. Pages 3 to 5 show three ways to change a copy of a style: pick one. Page 3, <a href="./tables-by-hand.html">Changing a style by hand</a>, is the first.</p>
 
 
 </section>

@@ -24,7 +24,8 @@ juse(community)
 ## Keep this page's styles in a styles folder inside the project
 joptions(style.dir = "styles")
 
-## A complete copy of report, every setting written out with a note
+## Save a complete copy of report as mymatch, every setting written out
+## with a note
 jstyle("report", save.as = "mymatch")
 
 ## file.copy() is base R: it copies a file. The copy, ending in .txt, is
@@ -41,19 +42,20 @@ file.copy("styles/mymatch.jstyle", "mymatch.txt", overwrite = TRUE)  # base R
 
 ## ---- 4. Check what came back ------------------------------------------
 
-## jstyle() reads the file and prints every setting. It stops at a line it
+## jstyle() reads the file and shows every setting. It stops at a line it
 ## cannot use, and names the line
 jstyle("mymatch")
 
 
 ## ---- 5. One table of each kind, in one file ---------------------------
 
-## Keep a result of each kind named in the request
+## Save a result of each kind named in the request
 d1 <- jdesc(Age, Income, WellbeingScore, print = FALSE)
 m1 <- jlm(WellbeingScore ~ Age + Income, print = FALSE)
 x1 <- jcrosstab(Volunteer ~ Region, print = FALSE)
 
-## Make each one's table in mymatch, then write the three to one Word file
+## Make a table from each result in mymatch. list() is base R: it puts
+## the three tables together, and jtable() writes them to one Word file
 t1 <- jtable(d1, style = "mymatch")
 t2 <- jtable(m1, style = "mymatch")
 t3 <- jtable(x1, style = "mymatch")

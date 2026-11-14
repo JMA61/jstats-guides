@@ -22,8 +22,9 @@ juse(community)
 
 ## ---- 2. Make a table in the report style ------------------------------
 
-## Keep a result, then make its table in the built-in report style and write
-## it to a Word file. open = TRUE opens the file once it is written
+## Save a result, then make a table from it in the built-in report style
+## and write the table to a Word file. open = TRUE opens the file once it
+## is written
 d1 <- jdesc(Age, Income, WellbeingScore, print = FALSE)
 t1 <- jtable(d1, style = "report", file = "Table1_report.docx", open = TRUE)
 
@@ -37,9 +38,9 @@ print(t1)  # base R
 ## makes the folder; the setting lasts until R restarts
 joptions(style.dir = "styles")
 
-## A complete copy of report, every setting written out with a note.
-## Run this line once: run again, it asks before replacing myblue.jstyle,
-## and n (no) keeps the changes your assistant made
+## Save a complete copy of report as myblue, every setting written out
+## with a note. Run this line once: run again, it asks before replacing
+## myblue.jstyle, and n (no) keeps the changes your assistant made
 jstyle("report", save.as = "myblue", open = TRUE)
 
 
@@ -59,21 +60,22 @@ file.copy("styles/myblue.jstyle", "myblue.txt", overwrite = TRUE)  # base R
 
 ## ---- 6. Check what came back ------------------------------------------
 
-## jstyle() reads the file and prints every setting. It stops at a line it
+## jstyle() reads the file and shows every setting. It stops at a line it
 ## cannot use, and names the line
 jstyle("myblue")
 
 
 ## ---- 7. The table in your style ---------------------------------------
 
-## The same result in the new style, to a second Word file
+## Make a table from the same result in the new style, and write it to a
+## second Word file
 t2 <- jtable(d1, style = "myblue", file = "Table1_myblue.docx", open = TRUE)
 
 
 ## ---- 8. If the file comes back as .txt --------------------------------
 
 ## Make a style file that ends in .txt, from the upload copy
-file.copy("myblue.txt", "styles/mytest.txt", overwrite = TRUE)
+file.copy("myblue.txt", "styles/mytest.txt", overwrite = TRUE)  # base R
 
 ## jstats reads a style only from a file ending in .jstyle, so this stops
 ## (on purpose) and gives the line that renames the file
@@ -84,7 +86,7 @@ file.copy("myblue.txt", "styles/mytest.txt", overwrite = TRUE)
 
 ## ---- 9. Rename it -----------------------------------------------------
 
-## file.rename() is base R. The line jstyle() printed does the same, with
+## file.rename() is base R. The line jstyle() gave does the same, with
 ## the full paths
 file.rename("styles/mytest.txt", "styles/mytest.jstyle")  # base R
 

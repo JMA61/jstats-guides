@@ -1,7 +1,8 @@
 # pane_facsimile_check.R -- machine assertion battery for pane_facsimile.R's
 # run_block(): stream ordering (S273), expect_error_match (S273, wrap-proof
 # matching S274), a blank line printed after a message (S334), the color
-# switch (S344), and a working directory wrapped at one of its spaces (S422).
+# switch (S344), a working directory wrapped at one of its spaces (S422), and
+# a list in the Environment pane (S428).
 #
 # WHY THIS FILE EXISTS. run_block() is a shared asset: every "What you should
 # see" box (show_block) and every Console facsimile (show_console) on the guide
@@ -369,6 +370,56 @@ local({
      .obx$scrub_wd(whole), want)
   ck("D5", "the folder's words alone, not a path, are left as they are",
      .obx$scrub_wd("see the 00 R Projects notes"), "see the 00 R Projects notes")
+})
+
+# ---- 10. A LIST IN THE ENVIRONMENT PANE (S428) ----------------------------
+# RStudio's Environment pane lists a list -- and a jstats analysis result is a
+# list, whatever its class -- under Data, as "List of N", beside the data
+# frames (S423, Jeff's screenshot: d1 "List of 4" and m1 "List of 20",
+# directly under community). Until S428 the facsimile put it under Values, as
+# its class name. L1, L2 and L6 fail on the unrepaired file; L3 to L5 hold
+# what must not change.
+
+cat("\n10. A LIST IN THE ENVIRONMENT PANE\n")
+
+local({
+  # Each row of the pane as "<section>|<name>|<description>", in pane order.
+  rows <- function(html){
+    parts <- strsplit(html, '<div class="ep-row', fixed = TRUE)[[1]][-1]
+    sec <- ""; out <- character(0)
+    for (p in gsub("\n", "", parts, fixed = TRUE)){
+      if (startsWith(p, " ep-hdr")){
+        sec <- sub('^[^>]*>([^<]*)</div>.*$', "\\1", p)
+      } else {
+        nm <- sub('^.*<span class="ep-nm">(<svg.*?</svg>)?([^<]*)</span>.*$', "\\2", p, perl = TRUE)
+        ds <- sub('^.*<span class="ep-ds">([^<]*)</span>.*$', "\\1", p)
+        out <- c(out, paste(sec, nm, ds, sep = "|"))
+      }
+    }
+    out
+  }
+  res <- structure(list(a = 1, b = 2, c = 3, d = 4), class = "jst_desc")
+  objs <- list(community = data.frame(x = 1:3, y = 4:6), d1 = res,
+               m1 = structure(as.list(1:20), class = "jst_lm"),
+               k = 5, f = function(x) x)
+  html <- .obx$env_pane(objs)
+  r <- rows(html)
+
+  ck("L1", "a classed list is listed under Data, as List of N",
+     r[2:3], c("Data|d1|List of 4", "Data|m1|List of 20"))
+  ck("L2", "  ... directly under the data frame, before Values",
+     sub("\\|.*$", "", r), c("Data", "Data", "Data", "Values", "Functions"))
+  ck("L3", "a data frame still reads N obs. of M variables",
+     r[1], "Data|community|3 obs. of 2 variables")
+  ck("L4", "a length-1 number is still a Value, shown bare",
+     r[4], "Values|k|5")
+  ck("L5", "a function is still under Functions",
+     sub("\\|[^|]*$", "", r[5]), "Functions|f")
+  rowhtml <- strsplit(html, '<div class="ep-row', fixed = TRUE)[[1]]
+  d1row <- rowhtml[grepl(">d1</span>", rowhtml, fixed = TRUE)]
+  ck("L6", "a list row has the expand triangle and the view icon",
+     c(grepl("<polygon", d1row, fixed = TRUE), grepl('class="ep-gi"', d1row, fixed = TRUE)),
+     c(TRUE, TRUE))
 })
 
 # ---- foot -----------------------------------------------------------------

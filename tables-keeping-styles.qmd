@@ -8,21 +8,47 @@ title-prefix: ""
 #| include: false
 
 # ---------------------------------------------------------------------------
-# YOUR OWN TABLE STYLES, PAGE 2 (S422 review; was Publication tables page 6; split from "Where your styles live" by
-# Jeff, S422). A prose page: a line for the .Rprofile and some habits, so no
-# numbered blocks, no Console panes and no follow-along script. The code is in
-# plain fences, never run: the ~ folder would be made in the render machine's
-# home (S421 lean 1).
+# YOUR OWN TABLE STYLES, PAGE 2 (S422 review; was Publication tables page 6;
+# split from "Where your styles live" by Jeff, S422). A prose page: a line for
+# the .Rprofile and some habits, so no numbered blocks, no Console panes and no
+# follow-along script. The code is in plain fences, never run: the line jstats
+# shows sets a folder in the render machine's own Documents folder.
+#
+# THE LINE (S427; built in v0.9.287, the (S427) item, Jeff's "Option 2"). The
+# reader runs joptions(style.dir = NULL), then jstyle(), whose list ends, with
+# no style folder set, on the line that sets one in Documents by its full path
+# (the (S423) path item, v0.9.284; Jeff: "Some of my students, even at the
+# masters level, have a difficult time with the ~ and the concept of a working
+# directory"). No spare copy is saved (Jeff, S427: "3. okay"). The end of the
+# list is QUOTED from a run at render (chunk "unset-lines"), the Documents
+# folder shown as <your Documents folder>; a real path left in it halts the
+# render.
 #
 # The finding-the-folder step names no web page (Jeff, S422: "point them to
 # on-line information about this (easily found with a search - I don't want to
 # worry about webpage links becoming outdated)").
 #
-# jstats is loaded quietly for the prose gates at the foot; every gate that
-# writes does so in a temporary folder, the jstats folder included
+# S428: the S427 wording pass (Fable 5.2, okayed by Jeff), adapted to the
+# jstyle() route above.
+#
+# jstats is loaded quietly for the quotation and the prose gates; every call
+# that reads or writes the jstats folder does so in a temporary one
 # (R_USER_DATA_DIR, which tools::R_user_dir() reads at each call).
 # ---------------------------------------------------------------------------
+options(width = 80)   # match a default 80-column console, as the quotation wraps
 suppressPackageStartupMessages(library(jstats))
+.ks_msgs <- function(expr) {      # what a call prints, both streams, in order
+  out <- character(0)
+  o <- withCallingHandlers(utils::capture.output(expr),
+                           message = function(c) { out <<- c(out, conditionMessage(c))
+                                                   invokeRestart("muffleMessage") })
+  c(o, unlist(strsplit(out, "\n", fixed = TRUE)))
+}
+# The Documents folder, worked out as jstats works it out: R's home folder is
+# the Documents folder on Windows; on a Mac or Linux the home holds Documents.
+.ks_home <- sub("/+$", "", gsub("\\", "/", path.expand("~"), fixed = TRUE))
+.ks_docs <- if (identical(tolower(basename(.ks_home)), "documents")) .ks_home else
+  file.path(.ks_home, "Documents")
 ```
 
 ## Keeping your styles
@@ -33,32 +59,74 @@ suppressPackageStartupMessages(library(jstats))
 
 Page 1 kept its style in a folder named `styles` inside the project. That suits
 a style that belongs to one project, such as one journal's style for one paper,
-but the folder goes when the project goes: copy such a style somewhere else
+but the folder is deleted when the project is: copy such a style somewhere else
 before you delete the project. This page shows where to keep the styles you mean
 to keep, so that every project can use them. There's no script to build here:
-just a line for a startup file, and a few habits.
+just a line for your project's `.Rprofile`, and a few habits.
 
 ## One folder for every project
 
-- **Choose a folder you can see, and that is backed up**, such as a folder
-  named `jstats styles` in your Documents folder (or in OneDrive).
+- **Choose a folder you can see, and that is backed up.** jstats suggests one:
+  a folder named `jstats styles` in your Documents folder.
+- **Get the line that sets it.** The line is `joptions(style.dir = "...")`, with
+  the folder's full path between the quotes. You don't have to type the path.
+  With no style folder set, `jstyle()` ends its list of styles with the line,
+  made for your computer. To see it now, run these two lines in the Console:
+
+  ```r
+  joptions(style.dir = NULL)   # no style folder, as in a new session
+  jstyle()                     # lists your styles, and ends on the line
+  ```
+
+  `jstyle()` lists the styles it can find and the folders it looks in. When
+  this page was made, its list ended on these lines:
+
+  ```{r}
+  #| label: unset-lines
+  #| echo: false
+  #| results: asis
+  # The end of jstyle()'s list with no style folder set, run here and QUOTED, the
+  # Documents folder shown as <your Documents folder>. Under a temporary jstats
+  # folder, so the render machine's own styles are never read; nothing is
+  # written.
+  .ks_old_ud <- Sys.getenv("R_USER_DATA_DIR", unset = NA)
+  Sys.setenv(R_USER_DATA_DIR = tempfile("ks-ud-"))
+  invisible(utils::capture.output(joptions(style.dir = NULL)))
+  .ks_raw <- gsub("\033\\[[0-9;]*m", "", .ks_msgs(jstyle()))   # a quotation: no color codes
+  if (is.na(.ks_old_ud)) Sys.unsetenv("R_USER_DATA_DIR") else
+    Sys.setenv(R_USER_DATA_DIR = .ks_old_ud)
+  while (length(.ks_raw) && !nzchar(trimws(.ks_raw[length(.ks_raw)])))
+    .ks_raw <- .ks_raw[-length(.ks_raw)]
+  .ks_i <- grep("^No style folder is set", .ks_raw)
+  if (length(.ks_i) != 1L)
+    stop("unset-lines: jstyle()'s list did not end on the style-folder lines:\n",
+         paste(.ks_raw, collapse = "\n"))
+  .ks_end <- .ks_raw[.ks_i:length(.ks_raw)]
+  .ks_line_real <- .ks_end[length(.ks_end)]
+  .ks_txt <- gsub(.ks_docs, "<your Documents folder>", .ks_end, fixed = TRUE)
+  if (any(grepl("(?<![A-Za-z])[A-Za-z]:[\\\\/]|/home/|/Users/|/root/|/tmp/", .ks_txt, perl = TRUE)))
+    stop("unset-lines: a real path survived the placeholder:\n", paste(.ks_txt, collapse = "\n"))
+  cat("```text\n", paste(.ks_txt, collapse = "\n"), "\n```\n", sep = "")
+  ```
+
+  In your Console, the last line holds the full path of your own Documents
+  folder, so it works exactly as it appears there. Copy that line from your
+  Console, not from this page.
 - **Set it for every session.** The `style.dir` setting lasts until R
-  restarts, so add it to your project's `.Rprofile`, the file
-  [Loading jstats automatically](loading-jstats-automatically.qmd) sets up,
-  below its `library(jstats)` line:
+  restarts, so paste the line you copied into your project's `.Rprofile`, the
+  file [Loading jstats automatically](loading-jstats-automatically.qmd) sets
+  up, below its `library(jstats)` line:
 
   ```r
   # Explained on the Keeping your styles page
-  joptions(style.dir = "~/jstats styles")
+  joptions(style.dir = "<your Documents folder>/jstats styles")
   ```
 
   An `.Rprofile` belongs to one project, so add the line in each project where
   you make tables. Every project then finds the same styles. jstats creates the
   folder the first time the line runs, if it isn't there.
-- **Find the folder.** In R, `~` is usually your Documents folder on Windows
-  and your home folder on a Mac. To see exactly where the folder is, run
-  `path.expand("~/jstats styles")`.
-- **Move a style in.** A style made in a project's own `styles` folder, as on page 1, can be copied into this folder like any file. With the line above in
+- **Move a style in.** A style made in a project's own `styles` folder, as on
+  page 1, can be copied into this folder like any file. With the line above in
   place, jstats looks in this folder first, so the copy here is the one it uses.
 
 ## Keep copies
@@ -68,20 +136,23 @@ lose, and of the version before a big change.
 
 ## If no style folder is set
 
-With no style folder set, `jstyle()` with `save.as` saves a copy in your
-*jstats folder*, a folder jstats keeps for you, and prints the copy's full
-path. That folder is easy to lose track of: it is hidden in File Explorer on
-Windows (it sits under AppData) and in Finder on a Mac (under Library).
+With no style folder set, `jstyle()` with `save.as =` saves a copy in your
+*jstats folder*, a folder jstats keeps for you, and shows the copy's full path,
+followed by a note with the folder's own path and the line that sets a style
+folder in your Documents folder. The jstats folder is easy to lose track of: it
+is hidden in File Explorer on Windows (it sits under AppData) and in Finder on
+a Mac (under Library).
 
-To open it anyway, copy the full path jstats printed (`jstyle()` with nothing in
-the parentheses prints it too, at the end of its list of folders) and paste it
-into the address bar of File Explorer on Windows, or into Finder's Go > Go to
-Folder on a Mac. To make hidden folders show all the time, search the web for
-"show hidden files" and your version of Windows, or for "show Library folder"
-on a Mac.
+To open it anyway, copy the folder's path from the note (`jstyle()` with
+nothing in the parentheses shows it too, at the end of its list of folders) and
+paste it into the address bar of File Explorer on Windows, or into Finder's
+Go > Go to Folder on a Mac. To make hidden folders show all the time, search
+the web for "show hidden files" and your version of Windows, or for "show
+Library folder" on a Mac.
 
-Setting a style folder of your own, as above, keeps your styles where you can see them. Page 3, [Changing a style by hand](tables-by-hand.qmd), changes a
-copy of a style.
+Setting a style folder of your own, as above, keeps your styles where you can
+see them. Pages 3 to 5 show three ways to change a copy of a style: pick one.
+Page 3, [Changing a style by hand](tables-by-hand.qmd), is the first.
 
 ```{r}
 #| label: prose-gates
@@ -92,13 +163,7 @@ copy of a style.
 # makes about what the package does; a false one HALTS the render. Every file
 # written goes into a temporary folder.
 # ---------------------------------------------------------------------------
-.msgs <- function(expr) {         # what a call prints, both streams, as one string
-  m <- character(0)
-  o <- withCallingHandlers(utils::capture.output(expr),
-                           message = function(c) { m <<- c(m, conditionMessage(c))
-                                                   invokeRestart("muffleMessage") })
-  paste(c(o, m), collapse = "\n")
-}
+.msgs <- function(expr) paste(.ks_msgs(expr), collapse = "\n")
 .td <- tempfile("ks-"); dir.create(.td)
 .old_ud <- Sys.getenv("R_USER_DATA_DIR", unset = NA)
 Sys.setenv(R_USER_DATA_DIR = file.path(.td, "userdata"))
@@ -113,9 +178,12 @@ stopifnot(startsWith(.np(.jf), .np(.td)))   # the temporary one, never the real 
   any(vapply(unique(c(gsub("\\\\", "/", path), .np(path))),
              function(f) grepl(f, text, fixed = TRUE), logical(1)))
 }
+# the quoted lines: the line jstyle() ends on sets Documents/jstats styles, by
+# its full path, and runs as printed (two spaces in, the path whole)
+.line_want <- paste0('  joptions(style.dir = "', .ks_docs, '/jstats styles")')
 
 # joptions() creates a style folder that is not there (a full path here,
-# standing in for the .Rprofile line's ~ folder)
+# standing in for the line's Documents folder, which is the render machine's)
 .newdir <- file.path(.td, "jstats styles")
 .m_new <- .msgs(joptions(style.dir = .newdir))
 .made <- dir.exists(.newdir)
@@ -126,19 +194,33 @@ invisible(utils::capture.output(jstyle("report", save.as = file.path(.newdir, "s
 .alt[which(.alt == "font = Arial")[1]] <- "font = Courier New"
 writeLines(.alt, file.path(.jf, "same.jstyle"), useBytes = TRUE)
 .font_first <- grep("^font ", utils::capture.output(jstyle("same")), value = TRUE)[1]
-# with no style folder set: save.as writes into the jstats folder and prints
-# its full path; jstyle() lists the jstats folder last
+# with no style folder set: save.as writes into the jstats folder and shows the
+# copy's path, then a note with the folder's own path and the line; jstyle()
+# lists the jstats folder last among its folders
 invisible(utils::capture.output(joptions(style.dir = NULL)))
-.m_save <- .msgs(jstyle("report", save.as = "kept"))
+.m_save <- .ks_msgs(jstyle("report", save.as = "kept"))
 .saved <- file.exists(file.path(.jf, "kept.jstyle"))
-.lst <- utils::capture.output(jstyle())
-.last_folder <- tail(.lst[nzchar(trimws(.lst))], 1)
+.m_save_t <- paste(.m_save, collapse = "\n")
+.lst <- .ks_msgs(jstyle())
+.folder_lines <- grep("\\((the style folder|the working directory|your jstats folder)", .lst, value = TRUE)
+.last_folder <- .folder_lines[length(.folder_lines)]
 
 if (is.na(.old_ud)) Sys.unsetenv("R_USER_DATA_DIR") else Sys.setenv(R_USER_DATA_DIR = .old_ud)
 stopifnot(
+  # the quotation: three lines and the line, which sets Documents/jstats styles
+  length(.ks_end) == 4L, identical(.ks_line_real, .line_want),
+  grepl("To keep them in your Documents folder instead, run:", .ks_end[3], fixed = TRUE),
+  # the line's folder is created the first time it runs
   grepl("Created the style folder", .m_new, fixed = TRUE), .made,
   grepl("Arial$", .font_first),
-  .saved, .has_path(.m_save, .jf),
+  # no style folder: the copy's full path, then the note's folder path and line
+  .saved, grepl("Style written to", .m_save_t, fixed = TRUE),
+  .has_path(.m_save_t, file.path(.jf, "kept.jstyle")),
+  any(vapply(.m_save, function(l) .has_path(trimws(l), .jf) && !grepl("kept", l), logical(1))),
+  grepl("is hidden in File Explorer on Windows and in Finder on a Mac",
+        gsub("\\s+", " ", .m_save_t), fixed = TRUE),   # the note is width-wrapped
+  identical(.m_save[length(.m_save)], .line_want),
+  # jstyle() shows the jstats folder at the end of its list of folders
   grepl("(your jstats folder", .last_folder, fixed = TRUE),
   .has_path(.last_folder, .jf)
 )

@@ -20,12 +20,12 @@ juse(community)
 ## ---- 2. Save a result -------------------------------------------------
 
 ## Save jdesc()'s result for three variables in an object named d1.
-## It prints as well, as it would without d1 <-
+## The output still appears in the Console, as it would without d1 <-
 d1 <- jdesc(Age, Income, WellbeingScore)
 
 
-## ---- 3. Save a second result, without printing ------------------------
+## ---- 3. Save a second result without Console output -------------------
 
-## Save a regression in an object named m1. print = FALSE: nothing is
-## printed, since a table is what we're after
+## Save a regression in an object named m1. print = FALSE keeps the
+## output out of the Console, since the Word table is what we're after
 m1 <- jlm(WellbeingScore ~ Age + Income, print = FALSE)

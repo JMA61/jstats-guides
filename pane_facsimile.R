@@ -1069,6 +1069,10 @@ local({
   # ---- Environment pane (chrome + generated grid) -------------------------
   summarize <- function(x){
     if (is.data.frame(x)) sprintf("%d obs. of %d variables", nrow(x), ncol(x))
+    # A list -- a jstats analysis result is one, whatever its class -- is shown
+    # by RStudio as "List of N", under Data (S423, Jeff's screenshot: d1 "List
+    # of 4" and m1 "List of 20", directly under community; built S428).
+    else if (is.list(x)) sprintf("List of %d", length(x))
     # A length-1 atomic is shown by RStudio as its bare value (x  5), NOT as
     # "num [1:1] 5" -- match that. Labelled scalars keep the vector form, since
     # RStudio shows their type tag too. (S184: needed by data.qmd's x <- 5.)
@@ -1126,7 +1130,9 @@ local({
   )
 
   env_pane <- function(objs, mark = NULL){
-    is_df  <- vapply(objs, is.data.frame, logical(1))
+    # Data holds the data frames AND the lists, as RStudio's pane does (S428);
+    # a list row gets the same expand triangle and view icon as a data frame.
+    is_df  <- vapply(objs, function(x) is.data.frame(x) || is.list(x), logical(1))
     is_fun <- vapply(objs, is.function,  logical(1)) & !is_df
     data_rows  <- objs[is_df]
     fun_rows   <- objs[is_fun]

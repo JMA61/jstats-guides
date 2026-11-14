@@ -31,8 +31,15 @@ resources:
 # taught, and what a name may hold, BEFORE the first one appears; block 2
 # prints and saves, block 3 shows print = FALSE (the plain form first).
 #
-# A saved result is never typed or printed here: at v0.9.282 an analysis
-# result has no print method, and print(d1) shows the raw list (S422 finding).
+# Since v0.9.283 (ruling R85) a saved result shows its output again when it is
+# typed or printed. No block types one; the prose under block 3 tells the
+# reader to type m1 to see its output, and prose-gates checks that it does.
+#
+# S428 (the S423 wording pass, Fable 5.2, okayed by Jeff): "prints" is Console
+# wording on this topic's pages, print glossed once (block 3); an object lives
+# in R's memory for the session; "the Word table"; "dash". The Going deeper
+# box's sentence on a result made by an earlier version is out (R87, v0.9.284:
+# jtable() no longer checks); it gains the jsave() sentence instead.
 #
 # jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
 # startup message on first attach only. joutput()/joptions() are left alone.
@@ -51,24 +58,26 @@ source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color 
 
 **Publication tables &middot; Page 1**\
 *The pages in this topic are numbered, and each builds on the ones before it,
-starting with the results this page saves.*
+starting with the results you save on this page.*
 
 A publication-ready table in Word takes two steps. First, save the result of an
-analysis in an *object*, which this page shows. Second, give that object to
-`jtable()`, which writes the table to a Word file: page 2,
-[Making a table in Word](tables-in-word.qmd). For many readers those two pages
-are all they need. The rest of this topic goes a step further each time: several
-tables and a chart in one Word file (page 3), several results side by side in
-one table (page 4), and jstats' second built-in style (page 5). A second topic,
-*Your own table styles*, starts from there, for tables in a look of your own.
+analysis under a name. R calls a saved result an *object*, and this page shows
+how to make one. Second, give that object to `jtable()`, which writes the table
+to a Word file. Page 2, [Making a table in Word](tables-in-word.qmd), shows that
+step. For many readers those two pages are all they need. Each later page adds
+one thing: several tables and a chart in one Word file (page 3), several results
+side by side in one table (page 4), and a choice between the two table looks,
+called *styles*, built into jstats (page 5). A second topic,
+*Your own table styles*, picks up after page 5, for tables in a look you design
+or a journal requires.
 
 The Publication tables pages assume you can already run the analyses you'll put
 in tables: they don't explain, for instance, how to choose the predictors for a
 regression. What they explain is the step after the analysis, starting here,
 with saving its result.
 
-This page follows the pattern of every How-To: numbered blocks that build one
-script, with the finished script to download at the bottom.
+This page follows the pattern of every How-To: numbered blocks of code that
+build one script, with the finished script to download at the bottom.
 [Using the How-To pages](howtos.qmd#using-the-how-to-pages) explains the
 pattern, and how to reset your session if something goes wrong.
 
@@ -76,8 +85,9 @@ pattern, and how to reset your session if something goes wrong.
 
 We'll work on `community`, one of the two practice datasets that ship with the
 package: 103 simulated respondents to a community survey. `jload()` puts a copy
-of it in your workspace, the way you'll load your own data, and `juse()` makes
-it the default data frame, so the commands that follow can leave its name out.
+of it in your workspace, with the same command that loads a data file of your
+own. `juse()` then makes `community` the default data frame, so the commands
+that follow can leave its name out.
 
 ```{r}
 #| echo: false
@@ -102,27 +112,33 @@ juse(community))---", fence = TRUE,
   length(attr(x, "na_values")) > 0L || !is.null(attr(x, "na_range")), logical(1)))
 ```
 
-`jload()` reports what it loaded, including `r .sr_nmv` variables with codes,
-such as -99 and -98, that stand for answers like "Refused" and "Don't know".
-jstats sets those codes aside in every analysis, and so in every table: there is
-nothing to do about them here. The note's last lines are for analyses with base
-R's own functions, which the tables here don't need, and
+`jload()` reports what it loaded. The report lists `r .sr_nmv` variables with
+codes, such as -99 and -98, that stand for answers like "Refused" and "Don't
+know"; it calls them SPSS-style missing values. jstats sets those codes aside in
+every analysis, and so in every table: there is nothing to do about them here.
+The report's closing lines, about base R and `jconvert()`, matter only if you
+also analyze these data with base R's own functions. The tables on these pages
+don't need that, so you can pass over those lines.
 [Declaring missing values](missing-values.qmd) explains the codes.
 
 ### 2. Save a result
 
-The first step is saving an analysis result in an *object*: a result R keeps
-under a name, listed in the **Environment** pane. You make one with `<-`, the
-assignment operator from
+The first step is saving an analysis result in an *object*: R's word for
+anything it keeps under a name, here the result of an analysis. R keeps an
+object in its memory for the rest of the session; an object is not a file on
+your computer. The **Environment** pane lists the objects you have. You make an
+object with `<-`, the assignment operator from
 [Step 3, RStudio Orientation](rstudio-orientation.qmd): the name on the left,
-the analysis on the right.
+the analysis on the right. (Step 5, [jstats Quick Start](quickstart.qmd), saved
+a regression this way, under the name `Results`.)
 
 The name can be almost anything you like. These pages use short ones, `d1` for
 descriptive statistics and `m1` for a model, but names like `descriptives1` or
 `model_wellbeing` work just as well and may be easier to remember. A name can
-hold letters, numbers, dots and underscores. It must start with a letter, and it
-can't contain a space or a hyphen, which R reads as a minus sign. Capitals
-count, as everywhere in R: `M1` and `m1` are two different names.
+contain letters, numbers, dots, and underscores. It must start with a letter,
+and it can't contain a space or a dash, which R reads as a minus sign.
+Capitalization has to match, as everywhere in R: `M1` and `m1` are two different
+names.
 
 ```{r}
 #| echo: false
@@ -130,48 +146,51 @@ count, as everywhere in R: `M1` and `m1` are two different names.
 .obx$show_console(r"---(## ---- 2. Save a result -------------------------------------------------
 
 ## Save jdesc()'s result for three variables in an object named d1.
-## It prints as well, as it would without d1 <-
+## The output still appears in the Console, as it would without d1 <-
 d1 <- jdesc(Age, Income, WellbeingScore))---", fence = TRUE, env = TRUE)
 ```
 
-The descriptive statistics print as they would without `d1 <-`, and the result
-is saved as well: `d1` is now in the **Environment** pane, beside `community`.
-The pane lists what is in your workspace, the data you loaded and the objects
-you made.
+The descriptive statistics appear in the Console as they would without
+`d1 <-`, and the result is saved as well: `d1` is now in the **Environment**
+pane, beside `community`. The pane lists what is in your workspace: the data you
+loaded and the results you saved.
 
-### 3. Save a second result, without printing
+### 3. Save a second result without Console output
 
-Any jstats analysis can be saved the same way, as many as you like, each in an
-object of its own. When you only want the table, `print = FALSE` saves the
-result without printing it. Here the second result is a regression of the
-wellbeing score on age and income, saved as `m1`.
+The result of any jstats analysis can be saved the same way. Save as many as you
+like, each in an object of its own. When the Word table is all you want, add
+`print = FALSE` inside the command's parentheses: the result is saved and
+nothing appears in the Console. (In R, to *print* a result is to show it in the
+Console. Nothing goes to a printer or to Word.) Here the second result is a
+regression of the wellbeing score on age and income, saved as `m1`.
 
 ```{r}
 #| echo: false
 #| results: asis
-.obx$show_console(r"---(## ---- 3. Save a second result, without printing ------------------------
+.obx$show_console(r"---(## ---- 3. Save a second result without Console output -------------------
 
-## Save a regression in an object named m1. print = FALSE: nothing is
-## printed, since a table is what we're after
+## Save a regression in an object named m1. print = FALSE keeps the
+## output out of the Console, since the Word table is what we're after
 m1 <- jlm(WellbeingScore ~ Age + Income, print = FALSE))---", fence = TRUE, env = TRUE)
 ```
 
-Nothing prints, and `m1` joins `d1` in the **Environment** pane. Page 2,
+The Console shows the command and nothing else, and `m1` joins `d1` in the
+**Environment** pane. The regression's output is saved with the result, though:
+to see it after all, type `m1` in the Console. Page 2,
 [Making a table in Word](tables-in-word.qmd), makes a table from each.
 
 ::: {.callout-note collapse="true" title="Going deeper (optional)"}
-A saved result lasts until R restarts. To keep one for a later session, save it
-to a file with base R's `saveRDS()`, and read it back in that session with
-`readRDS()`:
+An object is gone when the R session ends. To keep a result for a later session,
+save it to a file with base R's `saveRDS()`, and read it back in that session
+with `readRDS()`:
 
 ```r
-saveRDS(m1, "m1.rds")     # base R: the result, in a file of its own
-m1 <- readRDS("m1.rds")   # base R, in a later session: the result again
+saveRDS(m1, "m1.rds")     # base R: save the result in a file, m1.rds
+m1 <- readRDS("m1.rds")   # base R, in a later session: read it back
 ```
 
-A table made from it in that later session is the same table. A result saved
-by an earlier version of jstats than `jtable()` needs stops when you make its
-table, and says which version made it: run the analysis again.
+A table made from the result in that later session is the same table. `jsave()`
+keeps data, not results: given a result, it stops and shows these two lines.
 :::
 
 ```{r}
@@ -198,16 +217,30 @@ table, and says which version made it: run the analysis again.
 .l2b <- utils::capture.output(jdesc(Age, Income, WellbeingScore))
 # block 3: nothing prints with print = FALSE
 .q3 <- utils::capture.output(.z <- jlm(WellbeingScore ~ Age + Income, print = FALSE))
+# block 3: typing m1 shows the regression's output after all (R85, v0.9.283)
+.t3 <- .pr(m1)
+.u3 <- utils::capture.output(jlm(WellbeingScore ~ Age + Income))
 # going deeper: a result read back from a file makes the same table
 .f <- tempfile(fileext = ".rds"); saveRDS(m1, .f); .m1b <- readRDS(.f); unlink(.f)
+# going deeper: jsave() given a result stops and shows the box's two lines
+# (they carry the file's name, so it is called as a reader would, with none,
+# from a temporary folder in case a later build writes a file instead)
+.js <- local({
+  .o <- setwd(tempdir()); on.exit(setwd(.o))
+  tryCatch({ jsave(m1); "no stop" }, error = function(e) conditionMessage(e))
+})
 stopifnot(
   grepl(paste(.sr_nmv, "variables have SPSS-style missing values"), .l1, fixed = TRUE),
   grepl('-99 ["Refused"]', .l1, fixed = TRUE), grepl('-98 ["Don\'t know"]', .l1, fixed = TRUE),
   grepl("Base R functions do not", .l1, fixed = TRUE),
+  grepl("jconvert(community", .l1, fixed = TRUE),
   length(.l2a) > 0L, identical(.l2a, .l2b), length(.q3) == 0L,
   inherits(d1, "jst_desc"), inherits(m1, "jst_lm"),
   all(c("community", "d1", "m1") %in% ls(globalenv())),
-  identical(.pr(jtable(m1, print = FALSE)), .pr(jtable(.m1b, print = FALSE)))
+  length(.t3) > 5L, identical(.t3, .u3), grepl("Linear Regression", .t3[1], fixed = TRUE),
+  identical(.pr(jtable(m1, print = FALSE)), .pr(jtable(.m1b, print = FALSE))),
+  grepl('saveRDS(m1, "m1.rds")', .js, fixed = TRUE),
+  grepl('m1 <- readRDS("m1.rds")', .js, fixed = TRUE)
 )
 ```
 
@@ -218,8 +251,8 @@ keep and reuse, download it here. Put your own analyses in place of the two on
 this page, each saved under a name of its own.
 
 The file is the finished version of the script you built: the same code, in the
-same order. Its first lines say what to answer when you run it a second time in
-the same session and `jload()` asks before replacing `community`.
+same order. If you run the file a second time in the same session, `jload()`
+asks before replacing `community`; the file's first lines say what to answer.
 [Using the How-To pages](howtos.qmd#using-the-how-to-pages) says more about
 finished scripts and how to run one.
 

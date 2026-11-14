@@ -21,7 +21,7 @@ juse(community)
 
 ## ---- 2. A table in the report style -----------------------------------
 
-## Keep a result, then make its table in the built-in report style
+## Save a result, then make a table from it in the built-in report style
 d1 <- jdesc(Age, Income, WellbeingScore, print = FALSE)
 t1 <- jtable(d1, style = "report")
 
@@ -35,8 +35,8 @@ print(t1)  # base R
 ## makes the folder; the setting lasts until R restarts
 joptions(style.dir = "styles")
 
-## A complete copy of report, every setting written out with a note.
-## open = TRUE opens it in a tab beside your script
+## Save a complete copy of report as mystyle, every setting written out
+## with a note. open = TRUE opens the copy in a tab beside your script
 jstyle("report", save.as = "mystyle", open = TRUE)
 
 
@@ -47,13 +47,14 @@ jstyle("report", save.as = "mystyle", open = TRUE)
 
 ## ---- 5. Check the file ------------------------------------------------
 
-## jstyle() reads the saved file and prints every setting. It stops at a
+## jstyle() reads the saved file and shows every setting. It stops at a
 ## line it cannot use, and names the line
 jstyle("mystyle")
 
 
 ## ---- 6. The table in your style ---------------------------------------
 
-## The same result in your style, written to a Word file
+## Make a table from the same result in your style, and write it to a
+## Word file
 t2 <- jtable(d1, style = "mystyle", file = "Table1_mystyle.docx", open = TRUE)
-print(t2)
+print(t2)  # base R

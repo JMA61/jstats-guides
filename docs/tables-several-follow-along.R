@@ -6,13 +6,14 @@
 ## close the file in Word first, then answer y.
 
 
-## ---- 1. Load jstats, the saved results, and their tables --------------
+## ---- 1. Load jstats, and make the results and their tables again ------
 
 ## Load jstats and community, make community the default data frame, save
 ## page 1's two results again, and make their tables, t1 and t2.
 ## quiet = TRUE skips jload()'s report, which page 1 shows; overwrite = TRUE
 ## replaces a copy loaded earlier without asking first. print = FALSE keeps
-## jtable() quiet; with no file, nothing is written to Word yet
+## each command's output out of the Console; with no file =, jtable()
+## writes nothing to Word yet
 library(jstats)
 jload("community", overwrite = TRUE, quiet = TRUE)
 juse(community)

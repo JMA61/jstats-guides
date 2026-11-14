@@ -23,7 +23,7 @@ juse(community)
 ## makes the folder; the setting lasts until R restarts
 joptions(style.dir = "styles")
 
-## A complete copy of report, saved as myreport.jstyle in the style folder
+## Save a complete copy of report as myreport.jstyle in the style folder
 jstyle("report", save.as = "myreport")
 
 
@@ -35,6 +35,7 @@ jstyle()
 
 ## ---- 4. A style found by its name -------------------------------------
 
-## Keep a result, then make its table in myreport, found in the style folder
+## Save a result, then make a table from it in myreport, which jstats
+## finds in the style folder
 d1 <- jdesc(Age, Income, WellbeingScore, print = FALSE)
 t1 <- jtable(d1, style = "myreport")

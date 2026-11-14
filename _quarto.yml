@@ -56,6 +56,7 @@ website:
   sidebar:
     - title: "Get Started"
       style: "floating"
+      collapse-level: 1
       contents:
         - text: "Step 1 — Overview"
           href: start-here.qmd

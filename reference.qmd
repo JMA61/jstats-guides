@@ -37,6 +37,7 @@ name linking to its full help page.
 
 - [`jdesc`](https://jma61.github.io/jstats/reference/jdesc.html) — descriptive statistics for one or more variables.
 - [`jfreq`](https://jma61.github.io/jstats/reference/jfreq.html) — frequency tables for categorical variables.
+- [`jmulti`](https://jma61.github.io/jstats/reference/jmulti.html) — a multiple-response set: how many cases are in each category of a set of yes/no items.
 - [`jscreen`](https://jma61.github.io/jstats/reference/jscreen.html) — a one-call overview of a whole dataset: ranges, missing values, possible outliers, and what kind each variable looks to be.
 
 ### Tests and models
@@ -53,6 +54,12 @@ name linking to its full help page.
 - [`jalpha`](https://jma61.github.io/jstats/reference/jalpha.html) — Cronbach's alpha reliability analysis for a set of scale items.
 - [`jsum`](https://jma61.github.io/jstats/reference/jsum.html) — a row-wise sum across several variables (for example, a scale total).
 - [`javg`](https://jma61.github.io/jstats/reference/javg.html) — a row-wise mean across several variables (for example, a scale score).
+
+### Publication tables
+
+- [`jtable`](https://jma61.github.io/jstats/reference/jtable.html) — a formatted table in a Word file, made from a saved result; a chart goes in as a figure.
+- [`jstyle`](https://jma61.github.io/jstats/reference/jstyle.html) — list, check, and copy the styles that set a table's look.
+- [`jstyle_settings`](https://jma61.github.io/jstats/reference/jstyle_settings.html) — every setting a style holds, and what each one takes.
 
 ### Prepare and manage your data
 
@@ -98,11 +105,11 @@ a particular way.
 
 jstats ships with two practice datasets, both available the moment the package loads:
 
-- [`community`](https://jma61.github.io/jstats/reference/community.html) — a clean 100-respondent community survey (income, education, age, a wellbeing score, several yes/no items, a region, and a five-item attitude scale). The package's default example data; it's what every function's help examples use.
+- [`community`](https://jma61.github.io/jstats/reference/community.html) — a clean 103-respondent community survey (income, education, age, a wellbeing score, several yes/no items, a daily commute time, a region, and a five-item attitude scale). The package's default example data; it's what every function's help examples use.
 - [`clinic`](https://jma61.github.io/jstats/reference/clinic.html) — a deliberately messy 70-client mental-health and wellbeing sample, the companion for practicing data cleaning: it carries undeclared missing-value codes, stripped labels, and imperfect scale items to work through.
 
 ### On the way
 
 A few capabilities are planned for future versions — among them regression for
-count outcomes (Poisson and negative-binomial models) and exporting formatted,
-APA-style results to Word. The function set above is what ships today.
+count outcomes (Poisson and negative-binomial models). The function set above is
+what ships today.

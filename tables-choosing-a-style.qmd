@@ -38,6 +38,11 @@ resources:
 #
 # HOW-TO LAYOUT (S344). No top boxes: the shared material lives once on
 # howtos.qmd, and this page points there.
+#
+# S428 (the S427 wording pass, Fable 5.2, okayed by Jeff): the recurring
+# changes A-M and the page's 22 numbered changes; gates for the summary's
+# "no Word file" line, a chart keeping the style it was made in, and a copy
+# under a built-in style's name refused (in a temporary style folder).
 # ---------------------------------------------------------------------------
 
 options(width = 80)   # match a default 80-column console for table alignment
@@ -61,34 +66,37 @@ source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color 
 [1. Saving results](tables-saving-results.qmd), and remakes the file from
 [3. Several tables and a chart in one file](tables-several.qmd).*
 
-A *style* is the set of choices behind every table and chart `jtable()` writes
-to Word: the font and its size, the caption, the shading, which lines are
-drawn, the decimal places, and many more. jstats has two built-in styles:
+A *style* is the set of choices that decide how every table and chart looks
+when `jtable()` writes it to Word: the font and its size, the caption, the
+shading, which lines are drawn, the decimal places, and many more. jstats has
+two built-in styles:
 
-- **`apa`** follows APA 7, for journal manuscripts, and is the default: every
-  table on pages 2 to 4 is in `apa`.
-- **`report`** is the plainer look that agency and institute report manuals
-  share: Arial 10, "Table 1:" and the title on one line, a light gray header
-  row.
+- **`apa`** follows APA 7 (the American Psychological Association's style), for
+  journal manuscripts, and is the default: every table on pages 2 to 4 is in
+  `apa`.
+- **`report`** is the plain look shared by the style manuals that agencies and
+  institutes write for their reports: Arial 10, "Table 1:" and the title on one
+  line, a light gray header row.
 
 This page is a hands-on run-through of choosing between them, for one table or
 for a whole session, and of what changes when you do.
 
-Block 1 repeats the steps from page 1 that saved the two results, so this page
-works in a fresh session too. If `d1` and `m1` are still listed in your
-**Environment** pane, running block 1 again does no harm.
-
-This page follows the pattern of every How-To: numbered blocks that build one
-script, with the finished script to download at the bottom.
+This page follows the pattern of every How-To: numbered blocks of code that
+build one script, with the finished script to download at the bottom.
 [Using the How-To pages](howtos.qmd#using-the-how-to-pages) explains the
 pattern, and how to reset your session if something goes wrong.
 
-### 1. Load jstats and the saved results
+Block 1 repeats the steps from page 1 that saved the two results, so this page
+works in a fresh session too. If `d1` and `m1` are still listed in your
+**Environment** pane, running block 1 does no harm: it saves the same two
+results again.
+
+### 1. Load jstats and save the two results again
 
 ```{r}
 #| echo: false
 #| results: asis
-.obx$show_console(r"---(## ---- 1. Load jstats and the saved results -----------------------------
+.obx$show_console(r"---(## ---- 1. Load jstats and save the two results again --------------------
 
 ## Load jstats and community, make community the default data frame, and
 ## save page 1's two results again: d1, descriptive statistics, and m1, a
@@ -102,41 +110,43 @@ m1 <- jlm(WellbeingScore ~ Age + Income, print = FALSE))---", fence = TRUE,
   lead = "The command lines are shown; the standalone <code>##</code> comment lines aren't -- running a comment just echoes it back and does nothing.")
 ```
 
-### 2. One table in report
+### 2. One table in the report style
 
-`style =` in a `jtable()` call names the style that table is built in.
+`style =` in a `jtable()` call names the style for that one table.
 
 ```{r}
 #| echo: false
 #| results: asis
-.obx$show_console(r"---(## ---- 2. One table in report -------------------------------------------
+.obx$show_console(r"---(## ---- 2. One table in the report style ---------------------------------
 
-## Make d1's table in the built-in report style, and show it
+## Make a table from d1 in the built-in report style, saved as t1
 t1 <- jtable(d1, style = "report")
 
 ## print() is base R: it shows an object in the Console, here the table
 print(t1)  # base R)---", fence = TRUE)
 ```
 
-The caption is now on one line, "Table 1:" and the title, where `apa` puts
-"Table 1" on a line of its own with the title under it. The numbers are the
-same: both styles give a statistic two decimal places. The rest of the change
-is the look, which only Word shows:
+With no `file =`, `jtable()` writes no Word file, and its last line says so.
+The caption, the table's number and title, is now on one line, "Table 1:" and
+the title, where `apa` puts "Table 1" on a line of its own with the title under
+it. The numbers are the same: both styles show statistics to two decimal
+places. The rest of the change is the look, which only Word shows. Block 3
+writes the Word file; this is the table in it:
 
-![The table in Word, in the built-in report style: Arial 10, a light gray header row, rules above and below the header and under the last row.](images/tables-report.png){width=560px fig-alt="A descriptive statistics table in Word in the report style: the caption 'Table 1: Descriptive Statistics (N = 103)' in bold, a light gray header row, three variable rows."}
+![The table in Word, in the built-in report style: Arial 10, a light gray header row, lines above and below the header row and under the last row.](images/tables-report.png){width=560px fig-alt="A descriptive statistics table in Word in the report style: the caption 'Table 1: Descriptive Statistics (N = 103)' in bold, a light gray header row, three variable rows."}
 
-### 3. Report for the whole session
+### 3. The report style for the whole session
 
 To use `report` for every table, set it as the session's style with
 `joptions()`, rather than adding `style =` to each call. The setting lasts
-until R restarts. A table keeps the style it was built in, so remake the tables,
-and the chart, after setting it.
+until R restarts. A table or a chart keeps the style it was made in, so make
+the tables and the chart again after you change the setting.
 
 ```{r}
 #| echo: false
 #| results: asis
 grDevices::pdf(NULL)   # the chart block 3 draws: on a null device, not the page (S350)
-.obx$show_console(r"---(## ---- 3. Report for the whole session ----------------------------------
+.obx$show_console(r"---(## ---- 3. The report style for the whole session ------------------------
 
 ## Make report the style for the rest of the session
 joptions(style = "report")
@@ -152,7 +162,8 @@ invisible(grDevices::dev.off())
 
 `joptions()` confirms the style, and `Report_report.docx` holds page 3's two
 tables and its chart, all in `report`. The chart changes with the tables: its
-caption reads "Figure 1:" as the tables' do, and `report` draws the chart
+caption takes the same form as theirs, "Figure 1:" and the title on one line,
+and `report` draws the chart
 itself with horizontal gridlines and only the bottom axis line, where `apa`
 draws both axis lines and no gridlines:
 
@@ -169,8 +180,8 @@ print(p1)
 
 ::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
 `joptions(style = )` does what **SPSS**'s default TableLook does: under Edit >
-Options, on the Pivot Tables tab, the TableLook chosen there is the one new
-tables take. `style =` in a single call is the jstats version of applying a
+Options, on the Pivot Tables tab, the TableLook chosen there is applied to
+every new table. `style =` in a single call is the jstats version of applying a
 TableLook to one table.
 
 In **SAS**, the STYLE= option on an ODS statement chooses the style for that
@@ -191,15 +202,15 @@ black-and-white tables.
 joptions(style = "apa"))---", fence = TRUE)
 ```
 
-Tables already built keep their style: `t1` and `t2` are still in `report`. To
+Tables already made keep their style: `t1` and `t2` are still in `report`. To
 start every session in `report`, put the `joptions(style = "report")` line in
 your project's `.Rprofile`, the file
 [Loading jstats automatically](loading-jstats-automatically.qmd) sets up, below
 its `library(jstats)` line.
 
-Both built-in styles are fixed: to change one, save a copy of it as a style
-file of your own, which the next topic, *Your own table styles*, shows,
-starting with [1. Making your own style](tables-own-style.qmd).
+Neither built-in style can itself be changed. To change one, save a copy of it
+as a style file of your own: the next topic, *Your own table styles*, shows
+how, starting with [1. Making your own style](tables-own-style.qmd).
 
 ```{r}
 #| label: prose-gates
@@ -234,8 +245,27 @@ grDevices::pdf(NULL)
 .doc <- jtable(list(t1, p1, t2), file = file.path(.td, "R.docx"), print = FALSE)
 .cap <- .pr(.doc)
 invisible(grDevices::dev.off())
-# going back with NULL does not work at v0.9.282; "apa" does (block 4)
+# block 4: "apa" puts the default back (style = NULL leaves the style as it
+# is, with a note since v0.9.283, R86; the page teaches "apa")
 .cur <- .msgs(joptions())
+# block 2: with no file =, the summary's last line says no Word file was written
+.m2 <- strsplit(.msgs(jtable(d1, style = "report")), "\n", fixed = TRUE)[[1]]
+.m2 <- .m2[nzchar(trimws(.m2))]
+# block 3: a chart keeps the style it was made in -- one made under apa keeps
+# apa's caption form after the session's style changes
+invisible(utils::capture.output(joptions(style = "apa")))
+.p_apa <- jplot(Region)
+invisible(utils::capture.output(joptions(style = "report")))
+.cap_kept <- .pr(jtable(list(.p_apa), print = FALSE))
+invisible(utils::capture.output(joptions(style = "apa")))
+# the last paragraph: a built-in style can't itself be changed -- a copy under
+# its name is refused (run under a temporary style folder, so nothing can reach
+# the render machine's own folders)
+.sd <- file.path(.td, "styles")
+invisible(utils::capture.output(joptions(style.dir = .sd)))
+.e_builtin <- tryCatch({ jstyle("report", save.as = "report"); NA_character_ },
+                       error = function(e) conditionMessage(e))
+invisible(utils::capture.output(joptions(style.dir = NULL)))
 # style = cannot restyle a built table
 .e_built <- tryCatch({ jtable(t1, style = "apa"); NA_character_ },
                      error = function(e) conditionMessage(e))
@@ -258,6 +288,10 @@ stopifnot(
   .plot_line(.ap, "gridlines") == "gridlines       = none",
   .plot_line(.rp, "axis.lines") == "axis.lines      = x",
   .plot_line(.ap, "axis.lines") == "axis.lines      = both",
+  grepl("no Word file was asked for", .m2[length(.m2)], fixed = TRUE),
+  .cap_kept[1] == "Figure 1", grepl("^Region of residence", .cap_kept[2]),
+  grepl("is the name of a style built into jstats", .e_builtin, fixed = TRUE),
+  length(list.files(.sd)) == 0L,
   # block 4: apa again
   grepl("Publication style: apa", .cur, fixed = TRUE),
   .pr(jtable(d1, print = FALSE))[1] == "Table 1",
@@ -274,8 +308,8 @@ keep and reuse, download it here. Put your own results in place of `d1` and
 `m1`.
 
 The file is the finished version of the script you built: the same code, in the
-same order. Its first lines say what to answer when you run it a second time
-and `jtable()` asks before replacing `Report_report.docx`.
+same order. If you run the file a second time, `jtable()` asks before replacing
+`Report_report.docx`; the file's first lines say what to answer.
 [Using the How-To pages](howtos.qmd#using-the-how-to-pages) says more about
 finished scripts and how to run one.
 

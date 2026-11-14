@@ -46,6 +46,10 @@ resources:
 #
 # HOW-TO LAYOUT (S344). No top boxes: the shared material lives once on
 # howtos.qmd, and this page points there.
+#
+# S428 (the S427 wording pass, Fable 5.2, okayed by Jeff): the recurring
+# changes A-M and L and the page's 42 numbered changes; the request text in
+# block 5 is the S417-S418 test's prompt, left as it was.
 # ---------------------------------------------------------------------------
 
 options(width = 80)   # match a default 80-column console for table alignment
@@ -82,30 +86,32 @@ source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color 
 ## Changing a style with an AI assistant
 
 **Your own table styles &middot; Page 4**\
-*It stands on its own: it repeats what it needs from the pages before it, so
-you can start here.*
+*Pages 3 to 5 show three ways to change a style: pick one. This page stands on
+its own: it repeats what it needs from the pages before it, so you can start
+here.*
 
 This page is a hands-on run-through of changing how your tables look in Word by
 asking an AI assistant, such as Microsoft Copilot, ChatGPT, Gemini, or Claude, in
 plain words: "use Calibri 11 and a dark blue header row". You make a copy of a
 jstats *style*, hand it to the assistant with your request, and check what comes
-back before you use it. Page 3,
-[Changing a style by hand](tables-by-hand.qmd), makes the same kind of change
-yourself, in RStudio.
+back before you use it. On page 3,
+[Changing a style by hand](tables-by-hand.qmd), you make the same kind of
+change yourself, in RStudio.
 
-A style is the set of choices behind every table `jtable()` writes to Word: the
-font and its size, the shading of the header row, which lines are drawn, how the
-title and the notes are set, how many decimal places a statistic gets, and many
-more. jstats has two built-in styles. `apa` follows APA 7, for journal
-manuscripts, and is the default. `report` is the plainer look that agency and
-institute report manuals share. A copy of either can be saved as a *style file*,
-a plain-text file listing every setting with a note on what each does. The copy
-is what the assistant changes. If you've worked through the Publication tables pages and pages 1 to 3 of this
-topic, the
+A style is the set of choices that decide how every table looks when `jtable()`
+writes it to Word: the font and its size, the shading of the header row, which
+lines are drawn, how the title and the notes are laid out, how many decimal
+places a statistic gets, and many more. jstats has two built-in styles. `apa`
+follows APA 7 (the American Psychological Association's style), for journal
+manuscripts, and is the default. `report` is the plain look shared by the style
+manuals that agencies and institutes write for their reports. A copy of either
+can be saved as a *style file*, a plain-text file listing every setting with a
+note on what each does. The copy is what the assistant changes. If you've
+worked through the Publication tables pages and pages 1 to 3 of this topic, the
 first three blocks will look familiar.
 
-This page follows the pattern of every How-To: numbered blocks that build one
-script, with the finished script to download at the bottom.
+This page follows the pattern of every How-To: numbered blocks of code that
+build one script, with the finished script to download at the bottom.
 [Using the How-To pages](howtos.qmd#using-the-how-to-pages) explains the
 pattern, and how to reset your session if something goes wrong.
 
@@ -113,8 +119,8 @@ pattern, and how to reset your session if something goes wrong.
 
 We'll work on `community`, one of the two practice datasets that ship with the
 package: 103 simulated respondents to a community survey. `jload()` puts a copy
-of it in your workspace, and `juse()` makes it the default data frame, so the
-commands that follow can leave its name out.
+of it in your workspace, and `juse()` makes `community` the default data frame,
+so the commands that follow can leave its name out.
 
 ```{r}
 #| echo: false
@@ -133,19 +139,22 @@ juse(community))---", fence = TRUE,
 
 ### 2. Make a table in the report style
 
-A table starts from a result kept with `<-`, the assignment operator. Here the
-result is `jdesc()`'s descriptive statistics for three variables; `print = FALSE`
-keeps `jdesc()` from printing its own output, since the table is what we're
-after.
-`jtable()` then builds the table in a style and writes it to a Word file.
+A table starts from a result saved with `<-`, the assignment operator. Here the
+result is `jdesc()`'s descriptive statistics for three variables.
+`print = FALSE` keeps `jdesc()`'s own output out of the Console, since the Word
+table is what we're after. (In R, to *print* a result is to show it in the
+Console. Nothing goes to a printer or to Word.) `jtable()` then makes the table
+in a style, here `report`, and writes it to a Word file in your working
+directory (your project's folder).
 
 ```{r}
 #| echo: false
 #| results: asis
 .obx$show_console(r"---(## ---- 2. Make a table in the report style ------------------------------
 
-## Keep a result, then make its table in the built-in report style and write
-## it to a Word file. open = TRUE opens the file once it is written
+## Save a result, then make a table from it in the built-in report style
+## and write the table to a Word file. open = TRUE opens the file once it
+## is written
 d1 <- jdesc(Age, Income, WellbeingScore, print = FALSE)
 t1 <- jtable(d1, style = "report", file = "Table1_report.docx", open = TRUE)
 
@@ -153,36 +162,39 @@ t1 <- jtable(d1, style = "report", file = "Table1_report.docx", open = TRUE)
 print(t1)  # base R)---", fence = TRUE)
 ```
 
-`jtable()` reports what it made, Table 1 with three variables on a portrait
-page, and where it wrote the Word file. `print(t1)` shows the same table in the
-Console.
+`jtable()` reports what it made (Table 1, with three variables, on a portrait
+page) and where it wrote the Word file. On your screen that line gives your own
+working directory, which this page shows as `~/your-working-directory`.
+`print(t1)` shows the same table in the Console.
 
 ::: {.callout-note collapse="true" title="Reading this output"}
-- **The first three lines** are `jtable()`'s report: the table's number and
-  title, what the table holds, and the file written. `jtable()` prints this
-  short report rather than the table itself, so a call that writes several
-  tables at once stays short.
+- **The first three lines** are `jtable()`'s summary of what it did: the
+  table's number and title; what the table holds, and the kind of page it goes
+  on in the Word file (portrait here); and where the file was written.
+  `jtable()` shows this short summary rather than the table itself, so that one
+  call writing several tables doesn't fill the Console.
 - **`print(t1)`** shows the table laid out as the Word table is: the caption
-  (report puts "Table 1:" and the title on one line), the column heads, the
-  rows, and dashed lines where the Word table has rules. The row labels, such
-  as "Age (years)", are the variables' labels from the dataset.
+  (`report` puts "Table 1:" and the title on one line), the column headings,
+  the rows, and rows of dashes where the Word table has lines. The row labels,
+  such as "Age (years)", are the variables' labels from the dataset.
 - **What the Console can't show** is the look: a font, a size, a shading color.
   `print()` shows the layout, and the Word file is where you judge the look.
   That matters for this page, because most requests you'll give an assistant
   change the look.
 :::
 
-![The table in Word, in the built-in report style: Arial 10, a light gray header row, rules above and below the header and under the last row.](images/tables-report.png){width=560px fig-alt="A descriptive statistics table in Word in the report style: the caption 'Table 1: Descriptive Statistics (N = 103)' in bold, a light gray header row, three variable rows."}
+![The table in Word, in the built-in report style: Arial 10, a light gray header row, lines above and below the header row and under the last row.](images/tables-report.png){width=560px fig-alt="A descriptive statistics table in Word in the report style: the caption 'Table 1: Descriptive Statistics (N = 103)' in bold, a light gray header row, three variable rows."}
 
 ### 3. A folder for your styles, and a copy of report
 
 jstats looks for a style file in a *style folder*, if you've set one, then in
-your working directory, then in a folder of its own, your *jstats folder*. For
+your working directory, then in your *jstats folder*, a folder jstats keeps for
+you. For
 this page, the style folder is a folder named `styles` inside your project. A
 style you mean to keep belongs somewhere safer: page 2,
 [Keeping your styles](tables-keeping-styles.qmd), says where.
 
-`jstyle()` with `save.as` writes a copy of a style into the style folder.
+`jstyle()` with `save.as =` writes a copy of a style into the style folder.
 
 ```{r}
 #| echo: false
@@ -193,9 +205,9 @@ style you mean to keep belongs somewhere safer: page 2,
 ## makes the folder; the setting lasts until R restarts
 joptions(style.dir = "styles")
 
-## A complete copy of report, every setting written out with a note.
-## Run this line once: run again, it asks before replacing myblue.jstyle,
-## and n (no) keeps the changes your assistant made
+## Save a complete copy of report as myblue, every setting written out
+## with a note. Run this line once: run again, it asks before replacing
+## myblue.jstyle, and n (no) keeps the changes your assistant made
 jstyle("report", save.as = "myblue", open = TRUE))---", fence = TRUE)
 ```
 
@@ -224,26 +236,26 @@ instructions written for an AI assistant:
 cat("```text\n", paste(.head[.ai_from:.ai_to], collapse = "\n"), "\n```\n", sep = "")
 ```
 
-Those lines name the file to send back, `myblue.jstyle`, because the copy is
-named `myblue`, for the change this page asks for. Give an assistant a *complete* copy like this one, written by
-`save.as` with no settings after it. `jstyle()` can also write a short file that
-holds a few settings and takes the rest from the style it is based on; an
-assistant given a short file can't see the settings it leaves out.
+Those lines name the file to send back, `myblue.jstyle`: jstats writes the
+copy's own name into them. (The name `myblue` is for the dark blue header row
+this page asks for.) Give an assistant a *complete* copy like this one, made by
+a `jstyle()` line with `save.as =` and no settings after it. `jstyle()` can also
+write a short file that holds a few settings and takes the rest from the style
+it is based on, but an assistant given a short file can't see the settings the
+file leaves out.
 
 ::: {.callout-note collapse="true" title="Reading this output"}
 The first three lines are `joptions()` confirming the setting it changed. The
-next two report the folder jstats created and the file it wrote. The path is
-your working directory's, followed by `styles/myblue.jstyle`. (The Console
-pane on this page shows every working directory as
-`~/your-working-directory`.)
+next two say that jstats created the folder, and where it wrote the file. On
+your screen the file's path starts with your own working directory.
 :::
 
 ::: {.callout-note collapse="true" title="Going deeper (optional)"}
 Open `myblue.jstyle` and scroll down. The general settings come first: the
-font, the size, the caption, the header row, the rules, the notes, the
-decimals. Then each kind of table has a section of its own, under its name in
-square brackets: `[descriptives]`, `[frequencies]`, `[regression]` and the
-rest, with the settings for that kind of table only, such as which columns a
+font, the size, the caption, the header row, the rules (a table's horizontal
+lines), the notes, the decimals. Then each kind of table has a section of its
+own, under its name in square brackets: `[descriptives]`, `[frequencies]`,
+`[regression]`, and the rest, with the settings for that kind of table only, such as which columns a
 regression table shows. `[plot]` comes last, for charts. The help page
 `?jstyle_settings` lists every setting and what it takes. The books cover every
 setting in depth, and designing a house style, with worked examples.
@@ -251,10 +263,10 @@ setting in depth, and designing a house style, with worked examples.
 
 ### 4. A copy to upload
 
-An assistant's upload box takes a file whose name ends in `.txt`, and some
-refuse one ending in `.jstyle`: Microsoft Copilot does. So make a copy with the
-ending `.txt` for the upload. The copy goes in your working directory, outside
-the style folder.
+An assistant's upload box takes a file whose name ends in `.txt`, and some,
+Microsoft Copilot among them, refuse one ending in `.jstyle`. So make a copy
+with the ending `.txt` for the upload. The copy goes in your working directory,
+outside the style folder, which should hold only `.jstyle` files.
 
 ```{r}
 #| echo: false
@@ -268,8 +280,9 @@ file.copy("styles/myblue.jstyle", "myblue.txt", overwrite = TRUE)  # base R)---"
 ```
 
 `TRUE` means the copy was made. `myblue.txt` is only for uploading: jstats
-doesn't use it as a style. Each time you send the style back for more changes,
-run the line again first, so the upload holds the latest version.
+doesn't use it as a style. Each time you send the style to the assistant again
+for more changes, run the line again first, so the upload holds the latest
+version.
 
 ### 5. Ask your assistant (outside R)
 
@@ -311,7 +324,8 @@ Then:
    the file against in block 6.
 
 Some assistants can't make a file to download. The instructions at the top of
-the style tell an assistant in that case to give the whole text for you to save.
+the style file tell an assistant in that case to give the whole text for you to
+save.
 Copy that text, open `myblue.jstyle` in RStudio (click it in the Files tab),
 select everything in it, paste the assistant's text over it, and save. The name
 stays as it was. An assistant that takes no upload at all can be given the text
@@ -321,7 +335,7 @@ the whole file.
 
 This route was tested with Microsoft Copilot and with Claude, given the same
 set of requests: every file that came back read cleanly in jstats, with no
-setting added, lost or invented. Other assistants that take a file upload
+setting added, lost, or invented. Other assistants that take a file upload
 should work the same way, but haven't been tried yet.
 
 ```{r}
@@ -346,23 +360,23 @@ stopifnot(which(.rp == "font = Calibri") < grep("^\\[descriptives\\]", .rp),
 writeLines(.rp, "styles/myblue.jstyle", useBytes = TRUE)
 ```
 
-On this page, the file that came back holds the four changes the example asks
-for, as the assistants in the test made them: `font = Calibri`, `size = 11`,
-`header.fill = 1F3864` (a dark blue) and `header.text = FFFFFF` (white). Your
+The rest of this page uses a file with the four changes the example asks for,
+made as the assistants in the test made them: `font = Calibri`, `size = 11`,
+`header.fill = 1F3864` (a dark blue), and `header.text = FFFFFF` (white). Your
 assistant may choose a different blue.
 
 ### 6. Check what came back
 
-`jstyle()` with a style's name reads the style file and prints every setting.
-If a line holds something jstats can't use, `jstyle()` stops at that line and
-names it.
+`jstyle()` with a style's name reads the style file and shows every setting in
+the Console. If a line holds something jstats can't use, `jstyle()` stops at
+that line and names it.
 
 ```{r}
 #| echo: false
 #| results: asis
 .obx$show_block(r"---(## ---- 6. Check what came back ------------------------------------------
 
-## jstyle() reads the file and prints every setting. It stops at a line it
+## jstyle() reads the file and shows every setting. It stops at a line it
 ## cannot use, and names the line
 jstyle("myblue"))---", chrome = TRUE)
 ```
@@ -393,10 +407,10 @@ stopifnot(grepl("which is not a setting jstats has.", .msg_inv, fixed = TRUE),
           !grepl("`r ", .msg_inv, fixed = TRUE), !grepl("``", .msg_val, fixed = TRUE))
 ```
 
-`jstyle()` read the file with no stop, and the four changes are at the top of
-its printout: `font = Calibri`, `size = 11`, `header.fill = 1F3864` and
-`header.text = FFFFFF`. Read them against the assistant's list of changes, and
-both against what you asked for.
+`jstyle()` read the file without stopping, and the four changes are at the top
+of the settings it lists: `font = Calibri`, `size = 11`, `header.fill = 1F3864`,
+and `header.text = FFFFFF`. Check them against the assistant's list of changes,
+and check both against what you asked for.
 
 When a line is wrong, `jstyle()` stops and names the line. Two examples:
 
@@ -411,30 +425,32 @@ again.
 ::: {.callout-note collapse="true" title="Reading this output"}
 - **The top lines** name the style, the file it was read from, and the styles
   it is based on: "based on report, then apa". A setting the file left out
-  would come from report, and one report leaves out from apa. A complete copy
-  leaves out nothing, so the next line says "Set in this file: every setting."
+  would come from `report`, and a setting that `report` leaves out would come
+  from `apa`. A complete copy leaves out nothing, so the next line says "Set in
+  this file: every setting."
 - **The settings** follow in the file's order: the general settings first,
   then each kind of table's section under its name in square brackets, then
   `[plot]`, for charts.
 - **Two values follow the size.** `caption.size` reads `size`, and `note.size`
   reads `size - 1`, so the caption is now 11 points and the note 10, though
   neither line changed.
-- **If the printout still shows Arial and 10**, jstats read a different file
+- **If the list still shows Arial and 10**, jstats read a different file
   from the one you saved. Look in the `styles` folder for a `myblue.txt` or
   `myblue.jstyle.txt` beside `myblue.jstyle`, and see block 8.
 :::
 
 ### 7. The table in your style
 
-Now make the same table in the new style. A table `jtable()` has built keeps
-the style it was built in, so the new table starts from the result, `d1`.
+Now make the same table in the new style. A table keeps the style it was made
+in, so the new table is made from the result, `d1`, not from `t1`.
 
 ```{r}
 #| echo: false
 #| results: asis
 .obx$show_console(r"---(## ---- 7. The table in your style ---------------------------------------
 
-## The same result in the new style, to a second Word file
+## Make a table from the same result in the new style, and write it to a
+## second Word file
 t2 <- jtable(d1, style = "myblue", file = "Table1_myblue.docx", open = TRUE))---",
   fence = TRUE)
 ```
@@ -451,7 +467,7 @@ in the new style as well. `jtable()` writes a chart from `jplot()` to Word as a
 figure, in a style, as it writes a table:
 
 ```r
-p1 <- jplot(community, Region)
+p1 <- jplot(Region)
 jtable(p1, style = "myblue", file = "Figure1_myblue.docx", open = TRUE)
 ```
 
@@ -460,10 +476,10 @@ editing the table in Word: the next run writes over any edits made in Word.
 
 ::: {.callout-note collapse="true" title="Why jstats does it this way"}
 jstats keeps the look of a table apart from the analysis. The analysis gives
-the numbers, and the style decides how they are set, so one change to the style
-file changes every table made with it, and running the script again rebuilds
-every table in the new look. A journal's style or an agency's is one small
-file, which travels to a colleague or a new computer by email.
+the numbers, and the style decides how they are laid out, so one change to the
+style file changes every table made with it, and running the script again
+rebuilds every table in the new look. A journal's style or an agency's is one
+small file, which you can email to a colleague or copy to a new computer.
 
 The style file is plain text, one setting to a line, each with a note on what
 it does and what it takes. That is what lets an AI assistant change one
@@ -479,9 +495,8 @@ each with its own syntax, defaults, and output.
 An assistant told to return `myblue.jstyle` sometimes returns a `.txt` file
 anyway. And on Windows, renaming a file while File Explorer hides its ending
 can leave it named `myblue.jstyle.txt`. jstats reads a style only from a file
-whose name ends in `.jstyle`. To
-see what it does with one that doesn't, make one on purpose, here named
-`mytest.txt`.
+whose name ends in `.jstyle`. To see what jstats does with a file that ends in
+`.txt`, make one on purpose, here named `mytest.txt`.
 
 ```{r}
 #| echo: false
@@ -489,7 +504,7 @@ see what it does with one that doesn't, make one on purpose, here named
 .obx$show_console(r"---(## ---- 8. If the file comes back as .txt --------------------------------
 
 ## Make a style file that ends in .txt, from the upload copy
-file.copy("myblue.txt", "styles/mytest.txt", overwrite = TRUE)
+file.copy("myblue.txt", "styles/mytest.txt", overwrite = TRUE)  # base R
 
 ## jstats reads a style only from a file ending in .jstyle, so this stops
 ## (on purpose) and gives the line that renames the file
@@ -498,9 +513,9 @@ jstyle("mytest"))---", fence = TRUE,
 ```
 
 `jstyle()` found no style named `mytest`, but it saw `mytest.txt` in the style
-folder, said why it can't be read, and printed the line that renames it. The
-line uses the file's full path, so it works as printed: copy it from your
-Console, not from this page.
+folder, said why the file can't be read, and gave the line that renames it. The
+line uses the file's full path, so it works as it appears in your Console: copy
+it from there, not from this page.
 
 ### 9. Rename it
 
@@ -509,7 +524,7 @@ Console, not from this page.
 #| results: asis
 .obx$show_console(r"---(## ---- 9. Rename it -----------------------------------------------------
 
-## file.rename() is base R. The line jstyle() printed does the same, with
+## file.rename() is base R. The line jstyle() gave does the same, with
 ## the full paths
 file.rename("styles/mytest.txt", "styles/mytest.jstyle")  # base R
 
@@ -517,18 +532,19 @@ file.rename("styles/mytest.txt", "styles/mytest.jstyle")  # base R
 t3 <- jtable(d1, style = "mytest"))---", fence = TRUE)
 ```
 
-`TRUE` means the file was renamed, and `jtable()` built the table in `mytest`
-with no stop. With no `file`, `jtable()` writes nothing to Word, and says so.
+`TRUE` means the file was renamed, and `jtable()` made the table in `mytest`
+without stopping. With no `file =`, `jtable()` writes no Word file, and says so.
 
 ## What a style can and can't do
 
 - **One kind of table only.** A general setting, such as the decimals or the
   font, can take a value of its own for one kind of table: the assistant copies
-  the setting's line under that table's heading. Ask in those words, "three
-  decimal places in regression tables only". This works for every general
-  setting except `paper`, which sets the page of the whole Word file, and under
-  every heading except `[plot]`.
-- **Significance stars.** Ask for stars and the style sets `p.format = stars`.
+  the setting's line under that table's heading. Ask in words like these:
+  "three decimal places in regression tables only". This works for every
+  general setting except `paper`, which sets the paper size of the whole Word
+  file, and under every heading except `[plot]`.
+- **Significance stars.** Ask for stars and the assistant sets
+  `p.format = stars`.
   The table then has no *p* column, and the stars go on the statistic itself:
   on *b* in a regression table, and on *t*, *F*, or chi-square.
 - **Tables and charts.** The `[plot]` section has a font and a size of its own.
@@ -542,11 +558,12 @@ with no stop. With no `file`, `jtable()` writes nothing to Word, and says so.
 
 ## Where to go next
 
-- **Matching a published table.** Instead of describing a look, you can show your assistant one: page 6,
+- **Matching a published table.** Instead of describing a look, you can show
+  your assistant an example: page 6,
   [Matching the look of a published table](tables-matching.qmd), uses this
   page's route with an example attached.
 - **Keeping your styles.** The `styles` folder this page used is inside the
-  project, so it goes when the project goes. Page 2,
+  project, so it is deleted when the project is. Page 2,
   [Keeping your styles](tables-keeping-styles.qmd), says where to keep a
   style you mean to keep, and how every project can find it.
 
@@ -576,7 +593,7 @@ with no stop. With no `file`, `jtable()` writes nothing to Word, and says so.
 # block 7: a chart as a figure, in the style (the static fence), drawn on a
 # null device so the render writes no stray figure file
 grDevices::pdf(NULL)
-.p1 <- suppressMessages(jplot(community, Region))
+.p1 <- suppressMessages(jplot(Region))
 .fig <- .q(jtable(.p1, style = "myblue", file = file.path(.td, "Figure1_myblue.docx")))
 invisible(grDevices::dev.off())
 

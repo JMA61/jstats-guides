@@ -116,13 +116,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta property="og:description" content="">
 <meta property="og:image" content="https://jma61.github.io/jstats-guides/images/tables-apa.png">
 <meta property="og:site_name" content="jstats">
-<meta property="og:image:alt" content="A descriptive statistics table in Word in the apa style: 'Table 1' in bold, the title 'Descriptive Statistics (N = 103)' in italics below it, columns n, M, SD, Min and Max, and three variable rows.">
+<meta property="og:image:alt" content="A descriptive statistics table in Word in the apa style: 'Table 1' in bold, the title 'Descriptive Statistics (N = 103)' in italics below it, columns n, M, SD, Min, and Max, and three variable rows.">
 <meta property="og:image:height" content="272">
 <meta property="og:image:width" content="1164">
 <meta name="twitter:title" content="jstats:Making a table in Word">
 <meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://jma61.github.io/jstats-guides/images/tables-apa.png">
-<meta name="twitter:image:alt" content="A descriptive statistics table in Word in the apa style: 'Table 1' in bold, the title 'Descriptive Statistics (N = 103)' in italics below it, columns n, M, SD, Min and Max, and three variable rows.">
+<meta name="twitter:image:alt" content="A descriptive statistics table in Word in the apa style: 'Table 1' in bold, the title 'Descriptive Statistics (N = 103)' in italics below it, columns n, M, SD, Min, and Max, and three variable rows.">
 <meta name="twitter:image-height" content="272">
 <meta name="twitter:image-width" content="1164">
 <meta name="twitter:card" content="summary_large_image">
@@ -341,7 +341,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#making-a-table-in-word" id="toc-making-a-table-in-word" class="nav-link active" data-scroll-target="#making-a-table-in-word">Making a table in Word</a>
   <ul class="collapse">
-  <li><a href="#load-jstats-and-the-saved-results" id="toc-load-jstats-and-the-saved-results" class="nav-link" data-scroll-target="#load-jstats-and-the-saved-results">1. Load jstats and the saved results</a></li>
+  <li><a href="#load-jstats-and-save-the-two-results-again" id="toc-load-jstats-and-save-the-two-results-again" class="nav-link" data-scroll-target="#load-jstats-and-save-the-two-results-again">1. Load jstats and save the two results again</a></li>
   <li><a href="#a-table-in-word" id="toc-a-table-in-word" class="nav-link" data-scroll-target="#a-table-in-word">2. A table in Word</a></li>
   <li><a href="#a-second-table-in-a-file-of-its-own" id="toc-a-second-table-in-a-file-of-its-own" class="nav-link" data-scroll-target="#a-second-table-in-a-file-of-its-own">3. A second table, in a file of its own</a></li>
   </ul></li>
@@ -360,13 +360,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="making-a-table-in-word" class="level2">
 <h2 class="anchored" data-anchor-id="making-a-table-in-word">Making a table in Word</h2>
 <p><strong>Publication tables · Page 2</strong><br>
-<em>It uses the two results saved on <a href="./tables-saving-results.html">1. Saving results</a>, <code>d1</code> and <code>m1</code>.</em></p>
-<p>This page is a hands-on run-through of <code>jtable()</code>, which turns a saved result into a formatted table in a Word file. It makes a table from each of page 1’s two results, each in a Word file of its own.</p>
-<p>Block 1 repeats the steps from page 1 that saved the two results, so this page works in a fresh session too. If <code>d1</code> and <code>m1</code> are still listed in your <strong>Environment</strong> pane from page 1, running block 1 again does no harm.</p>
-<p>This page follows the pattern of every How-To: numbered blocks that build one script, with the finished script to download at the bottom. <a href="./howtos.html#using-the-how-to-pages">Using the How-To pages</a> explains the pattern, and how to reset your session if something goes wrong.</p>
-<section id="load-jstats-and-the-saved-results" class="level3">
-<h3 class="anchored" data-anchor-id="load-jstats-and-the-saved-results">1. Load jstats and the saved results</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 1. Load jstats and the saved results -----------------------------</span></span>
+<em>It uses <code>d1</code> and <code>m1</code>, the two results saved on <a href="./tables-saving-results.html">1. Saving results</a>.</em></p>
+<p>This page is a hands-on run-through of <code>jtable()</code>, which turns a saved result into a formatted table in a Word file. You’ll make a table from each of page 1’s two results, each in a Word file of its own.</p>
+<p>This page follows the pattern of every How-To: numbered blocks of code that build one script, with the finished script to download at the bottom. <a href="./howtos.html#using-the-how-to-pages">Using the How-To pages</a> explains the pattern, and how to reset your session if something goes wrong.</p>
+<p>Block 1 repeats the steps from page 1 that saved the two results, so this page works in a fresh session too. If <code>d1</code> and <code>m1</code> are still listed in your <strong>Environment</strong> pane from page 1, running block 1 does no harm: it saves the same two results again.</p>
+<section id="load-jstats-and-save-the-two-results-again" class="level3">
+<h3 class="anchored" data-anchor-id="load-jstats-and-save-the-two-results-again">1. Load jstats and save the two results again</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 1. Load jstats and save the two results again --------------------</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Load jstats and community, make community the default data frame, and</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## save page 1's two results again: d1, descriptive statistics, and m1, a</span></span>
@@ -384,7 +384,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Console <span class="obx-loc">(lower-left pane)</span>
 </div>
 <pre class="cp-pane cp-chrome"><span class="ep-tabs"><span class="ep-tab on">Console</span><span class="ep-tab">Terminal<span class="ep-x">×</span></span><span class="ep-tab">Background Jobs<span class="ep-x">×</span></span><span class="ep-ctl"><svg width="42" height="16" viewbox="0 0 42 16"><rect x="0.5" y="7.5" width="18" height="7" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="0.5" y="7.5" width="18" height="3.5" fill="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="14" fill="#E8E9EB" stroke="#8A9196"></rect><rect x="23.5" y="0.5" width="17" height="3.5" fill="#8A9196"></rect></svg></span></span><span class="cp-strip" style="background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAvgAAAAcCAIAAACbClwJAAAfqElEQVR4nO3deZhcRbkw8LfWs/UyM5mFTBKysQRCNgyyBT9AtrBEWVRQ8UOvfIKCERS96oMiKvqBCCheUfnEq14QFSWILEEQCGtCEgIkmBBC9kwymZme7j5L7fePxtwQQkhjYvDj/P7I0zlPd1Wdqp7ut9+qcwplmbTWIoSscxbB2rVrR44cKbWimMC/MmMM51wphRDCGCOEjDEDAwOtra17umlvC8YY5xzainPOWkvIv/a4v9NorRFCAND411rbeLfv6Xblcrnc2wXd0w3YXTDGzrnGg0aUgxAqFAp7ul1vF4wxAGh0UeN70TlHCLHW7uGW5ZrRGMdGnOqco5RuPaa5XC6X+/820Nmika4wxlBKfd+34PZ0i94WMCHOOdcIaxBqJHgIJojgPd20XBO2ZOPAgTUWY2S0AQAEeaCTy+VyAG8h0NFaG2N836eUAkC9XuecU0rrquqs7/u+T4ysDlDkAwtToyyXzuCCX9ACrAZGAGFtrHCINVVvZjVyceS1IkusQQoGPT/IjAMtEHiUeVYBQsaIpMiLRtoKlhgnlGMnCWOU+qEQGQVa5wlCuJAyi0AgqRArOW48AYbUXIKUF2ABuGRJgpUPyDjIQJoEhxHjUtQsiQoudriokWy2695WjNVbHjtwGBAgBDaPAv/FOHBbxowg7IwlaLeEqtukiJwzWmvOudbWOcQ518pgjB3oNyohl8vl9oimAx1CyJaPvCRJgiCw1mqtOfIcZWBQasArdCihEWCP+Ugrax0IxYAYYh0ARgSB56C5KRIkMScRMjaW2vPBJUQbhDHGEFALmlvpUqQl+DTFwiFcxr5Q0kNs0Gc2qQCJLE1F4ltNfESAC5EQKPKCZeCsqGAvMJEqYewcNUIBTWTq8QJzIENJ08AYHyvLAsIxc8UBKbz8F3PuncS5bYJgTCm3FjDGAGCMQhia/aPO5XK5f4KmA53GIt8sy4QQjXW+cRxXq1Wc2sHByqbNGzH3MWGUEJ+SEXsNb+tqodRzCJRRGjJrLbMeJb6F5jIipbJvRYwNCX2ubVLwAm1JzfSFYcglrqRp6EcRjirGSmsJxjYxJipmWRbZuuGeU9KwMmUKIeRh41LDAy4FyYTwPEaLSgjCSSyIzwWx2GCvwDHVGgBlBHnC2YqwoeepOLMBK1itSHMZqdw7ntVaY0wppcYYAEwIsTbPf+Ryudzu1XSgwxiz1vq+TwiJ43j+/PlJkhBCMkXB1Klna9kA474RiiG6Zv1qHuw1dETr+IP2UaCd8q12jhqlBxCNmqq3onUAcUgC5SQCou0g5m2EhIkGV1e8rQTWqVhabALsI4uED0rHbQylwIhlPsZ9qi4IwRinVhQpT5GiWBgeGQV1Pyl65ZQwB1ByJKYuy4Q1OsBEMuo7ip0sB1yqfotCpVOFCrjJQC33DvHqipmt/H1RPEHIEUIai74BQClFSJ4XzOVyud2r6en8xqe2c+65556bO3duvV7XWgshtEPa8UxCW7EcMtxRbqWYAaHVZMWKl5fc++fZcSUJfMR9RTxkEW+2Xg9RhMPYxY7x1ArNqNDaycDDAWIBkuCylLGE2gHfAwoAJAZCM+3XjPNtqjEA6BYLXHsaCoIKa4jkkGaSMoOhzck6E7ygdQYptqpECQkBcBxkmuNMGJwmsm4DQX0slGF5lJN7Q1vmdhtXQsGrV7Qx5xBjDCGktSaE4HzZdy6Xy+1+qNn76DQ+xJ9//vl6vW6MSdOUMeb7fvsQr1Aa3trRBZAExFlFLWY1EYv6wOoV69ev3lAuhu859vCgENRShXkBa9VUQ4nGjpG6rhFUcshyiq2seq6AvF5lPc+FWlvCwFjFuF9PZLFgElUQFnsylj4vIu2SgFBppRM+iR2UCa1jKGPjjFKaY5eFSDrq1w0lJkakQKiVjjmkilRslp41tci0sRAgFRgrgZuO1XLvBFuu1YetAh0A6O3tq9frnZ2dQ4a0GmOMMVpLSvN3US6Xy+1eTQc6zrkVK1b09PRYaymljDFCyOTJkxHz7n1849PL+nHgmBFIcmGs5FmL8g86oO2oqcPuueO2kh9NP3mGY8qwjAivqYYym2RQxEB81wOqK/MkpsgzVlF/gKg2oTFlFQ0tQAezOi8QKWmbVSkXxGIEvrQe1VDzoQOyqnYMBxZcIdsccy+VrMgk0OIAxyWtkaHYyirhZaUcYZgNDCRBC9eZK2CWeRrXNCkxIlye1Mltx5ZAZ5tY59mFz4dREIZhd3d3FAVxXMMYk3ylVy6Xy+1mTWfPrbVJkjRuqmutLRQKBx98MELIKj1v4ap7ntpw94KBPz3T/8fHN81eWL1n3vrfzK9dcfP8C796x9SjP9SfDUrYLGWCVbHZeg0NNTiujO69fVIXay34ER9CgyjgH3q+h0nMJalJL0bWRkFEHSEOGR56rDCgXvzB1LauI65/IRwkeiCl2OIgtBWN5ODD5xei1o7WkX6xJfLIkdev6x8QzEsrwAlkImCeXHrN4W1d5Y52v9ha/tjdUN1AbUSrhsXNtj/3DrT1Yh2E0L777Ecp7enpSdOUEBIEwR5sWy6Xy71DNB3o1Cq1/t5+MGCkMdKMHTXWSEMR1SZeaTPAdRpvqifCeTKzm6lsd2QTKuBn++I/P728LRoaMuSgRI0EAOccxtgY09h5gBBCKbUEKaMBIwBQSnFCA8Y5JhXIfOtMZOM0c+K838Zqs+h3xiz49tITh551DxCtSntBWfg4w3WqueD1GGmhWctffnr5C0maZc4VPN5qMqtlXHeiZAnRZf+Dsyu11UlmXsp6l144rCMQvVlQoKKI/dDCoh/OWPCF6rLahjX1dNUVS8+Z9PNKyrVkqYy0S42zznHrMEIIQSbFIDFcoVQYyzDDTuz64cq9XWGHrdIUUSFSpUSSJBs3bly3bsNLL7384pJlzy1aXCiUBgdrQ9raKwODGzZsZCwwJr9rUS6Xy+12TQc6jR0VrLXW2jAMGwt0lFIBCTzDmNeZodIBQ9ufuenEhdefcse3xqeJrQtLw9Liv20MShGYku8JZ3hjvkxK2QhxhBBKKWstgVdDHIwxpTTLMqW1UqpNCxcpHZvIRQCDRPUnSaoUHPSZr5yDlry0uJLEWZopFmcsCRNkA0eY1Bz99sOn3/PBj+4H1oKK/VhR4oUu8VlXhl3P8gUZGgx9HNvqCNzucC3hfoi0NRjVbWaTcV9a8Luzgi5EGKoXPnvRWYtv+8Na7BjzLPgKM818agnCjsSASTHqwCwuQblEWVVXE9bc3FzuX5rTBLAHzGFMN27s3bRpc6FQKhZKo0aO3n//AyZMmNTd3c05xxhPnDhRa7127dp8t41cLpf7J2g60OGcA4AQwjnXCFOEEFrrhBIbIgHSUetQnGYDzgplRBAEvh9h3dLZAb29G8EypDzfB8YYxhhj3Pi49zyvsWsPxjgMw8DzG8cbuzcQSk3QEcvQcfCUUcipQnvk2SSu1v0hCaesVGTIUcRw4FxIWqykpKghvf9jH19+9fyLxqVAS0Uo1UtQwZnv+0qBtqziEoB6XXLswjTNWBb42HEHBcKyoiQaSRv1YUwCF5J2yoYaiDkBpXjdr9ugAIHNtCDUOllwimEMxrC6TjOUUnCBfivba5x387OPLet/Cy/851jVlxYuuLev/pr1Sav701GXPfjXF/t2SRWHXDnn10+u27Vl/uPedFwYUx4QDXKgv4qAdnZ0gSNBEBnjtLZKGUIIY8w5l6ZpZ2fnsmXLhMhzfrlcLrfbNR3olEqlQqGgtVZKJUmyZMmSKPIopWVLPGdNreJbtKxfHf7ZJ9516SPnfHOZUsomg2G6/oyjx23uWWcQIIaESYUQlFJKaeNqWwDIsswYY5RWQsLfkzqYUSA4lUKbOALrKadQzBhRqWVeCyrQR84+adZHvnnxqLrPUOxkjTCNVVWbxJnSn7942tPX/PKyDp8y8LJ65qQmkaLaFYFBUUu/UMa//be2CA0pe6VLHxkoUqsM5WKzhsSkdQ8IQFFjlYjNRHmzbroL3r332FiHyK+bFClHwFimhABDESUDsTWMR7ymQHm04Df/c/3lTfHyTfG0/dqafuUeFTCyb1dUCnblvmn/eJnX3rfihgde2SWN2ZlxSRBPRF+9kqWp6OjoMgZZC0oZY5zWOo7jNE0bfzVSytWrV3d1dTU2UcnlcrncbtX0R61zbty4cUmSZFkWx/GLL74IAJMmTUgTLSxzGIlkwAQR5iyt97UQrWjQ3SIvPWfyK08+efrJx2kca+t8XABIjDFSSsYYpXTdunWN7I5zzvM8KeXQoUMJIVmWNea2mPUzCpHNNhDQ8rfnhH8mQACqH77DbThlALlQccmAYlm1iJOi5tnv/s+H5n1z4dVjM7uSEhCIhVC0GBut0QBiQT/Rw8+/J/0Eo345Hbjz3PYzhmSzBn92XKXmPK9OFDfMIWWUkiEJ01XXHPLBu2f8sXq01CUuaSFSWaIU90MfgFo0KGIdeZ6OSY13FhGkEMccB3r7V669kR89tOqCY0Y1OyJ7XEeRP/CFw95uZS5ZX5s4orRLGrMz42I4xDQUq3va2/fS2mKMnXNCiDRNq9UK5xwhNGzYMOdMb2+vc278+PHGNHeHhVwul8u9BU1ndChFQRBMmjSpMfeEEFq5cuWdd97Vu2klqYvIOkaIV+czDm45oLNlEBErRakYLV745P86fPywYcOYhzEwBYoQIqVszE9pra+99tqjjjrqxBNPPOn4E4487PDvX/O9xiJl55xxFhHsScj0pli1eq5A+Lm/HazX9OZffBT/6qvfWEdapWIkCYpUgikwGWq54geTz8nuePZz+xULnJu6DzhNIc3QoLIqJEVfuiIqUOhSAiND6ZCzbpp1Btz+H39yxkOG+gVOI6YCgweNF2R/+WTLvlcedFf261N4i0RKkSSzTnHAoEmSWACkCpaI9bdMKx900yowFnwVp01+jVVT/cDi3g8cMvR9P5j35d//rXFw+ca4a+bsSqIAYMn62qnXzx126V+mfP3Rmx9dDQArepPCBfcOJq9WdNRVT9z86Op1A9len3vg9rnrR1/24FV3v7R1FWfc+Mx3/ry88fjCXz5/9o8XNB7/9OFVZ974zHar2EFp//bzRWf96JnG48IF9y5YNRgLM+Si+2e/0Dvl6492X/LA525d3Ljq6PrZr+z7pYdaPn1f4YJ7CxfcO2thzzbn/szKwUOunNN9yQPn3fxsIszWZb6+DUvW14675qmumbOP/PbjT6+oNJ789MsDh1w5p2vm7OOueWrxutonb1n0h/kbvjFrWdfM2Y35rzc9tTfq9i3jsuPhQyptFYGmpPGWNkYtX76sUukPQz50aNeQIa3r16/Psqy3t1cpNW7cuNffQDmXy+Vyu0PTGZ04zhr7P0ydOnXdunWvvPJKlmVSylmPPNw7uBeEWDvVYtITRhdGef6Kv/Qi8Be/vGF899i2fYYT59VqVQIcRQpj1tgf1DlnjPn617/+yCOP9Pf3EwfllpYrrriicRxTwhgzxmQh7JV2pBgYqjuJLdUO2PRbFnxr/8lnf/vMZy8/APkkriWea1OFGrvrJ197GYZ8oFRENdAeYFG2zx9TvP0rc+d+dnIgUsM9kwrQMGhaC9pVsfCiffafrBdnjGS8PwQkoBgimmThmpsmveuLo26pZGf6A0aYYrF9MAGMlfN9R1JhBCM+qNAphzBooHUzmOFyyeJAM3izhI6xzgFQjADglsfWnHNot0fxJ44aMfPWxd88Y3+K0W/mrj91UldLyGJhZtww79ITx/zx4kOW9tRn3DCvs+gdNHz7V+nXMz1nWf+y7x7LXrvDwMkTO299ct2XT9nHOvfw3/oSaVJlAkbufb73lEmd263iXaPKW5e2qi9tFHX73PV//Vvf05dP26Zqoe0fF/TM+fIRfbE64tuPnzShc1R7cPW9y+d+7ajOIv/ITxYe0F04bXLX1i+pZfr0H8770sn7fOrokYvWVGfcMHcHZ5QpM+lrj848fvR9nz/06ZcHPvqTBQu/8R5p3Pt/+MxVZ40794jh81ZUfIZv/viktQPZ9AmdM48fDQA7c2qzFva8vtu3HpcdDyWXPArSEbQrRspa3dOzfuTIEaVysXEHZCklAGzatCnLkilTpsRJHWPseZ5SeVInl8vldq+3shi5ccGU7/vjx48/7LDDpkyZ0t3dPbp9LJJBIlnVchLCxhXrRoS9R+49jCMuSXTnnGeffKGSIcA6DFiKIMAYa60xxoQQ3/fDMJwzZ8748eMnTpz42Jw5URSFYYAQaixGtgiEkDXPqUAiQQB6Sr5FtYzJfb561fkrvnPVH+LYakuLLOUZlcXacd+t9Wer6tW0P8nibPlV+4lJ35vTP//8SQHEmQXdb6iz9SGqpSSlSYp+avylf1sCKnIGshY+SICJTEr08Pnv+n+fWJj88TS7iaASL7TXFBCo6CCxRBLDfRt6FluDY5+w7osfyxZdObZQYFmVMJ/7r++9WqZPuW7u2C8+dMWdyzYMivN/8dyPHlwJAMa6n89Z88n37A0AJ0/swgg9sLgXAG6fu/7j00YAwOwXehnBnz52FCPooGHFTxw14j8fX7ODYfr8SWMaUc51s1d0zZzdNXP2ydfNnT6hc8GqwWqq566oHDSseNiYlkeX9gttH3+pf/qEzh1UsaW0hjX92ed/s+THH5vQUdzOjX0vOWFMwacjhwRTR5VfWFdlBCGEhDLKOG1dS8gwQlu36p7nNgWMfObYUYygqaPKw1q3029b2nDf870hxzOPH00xOnLftokjSg8v7bt70cbuFv/j00ZQjA7fp3Vs57bbqO3MqW2327celx1zNOuTKvVejXK6hw3t6GxnjABYraWUWalUwhg3pn0bPxXyxci5XC73T9B0Rke7V/dbJpwoq8pt5XJbee/Re0syePPzK3m1PzCB56v3feR04HLcwer4K36nUSkLur/764f+61vndBQkJi3VKkKBwRgDgDEGABo/cGfNmtUo3AEIIQEAAwIHxEEV4o7Mw5SLYuBBqUcL4/MSifpP+9Tlw6Ze8OlzTrvlREgjJBNb1BEtZVKEfk0bCgAk8zMrix6nKk6X/9/J777l4vlrPjN+xRXn3PT+31x8kLIUPXnmGbeN/Nbcow3h3v1nF08it5qfHbf+h1/+9alX/6QFu9Av+0JusHHBbyvS4kZJuJMAxgFSTgLBjIC1kgFOwYDCFAWwvamrW59a193i33bBwTc8sOKoqx4f0xFe+6EDAeCuhRsPHdPSWfIAgBF07hHDbntqfVvECUaNNbBrB9Lulv+5Xn1EW3Dngm0ngLYW8lezSZecMOaSE8ZsOT5+WPHRZX3zXqlMn9gJAPe/0MsI2qcrGtbq76CKLaU1HP3dJ8YNLRw/vn3HbxVGkNR2bGf08WnDj736KQA47sD2C44ZuU2rrr1vxYg2H73Z7paNNmysijX9WdfM2Y2D1sJpk7vWV8QbhUcNO3Nq2+32rcdlxxAw7ojznHVq+IihjDGtZSNSZ8zz/XDipFfDL4RQI/ppbPD5piXncrlc7h+xy6774Ki97K8mkFqLw5aywBiMbu9EHzpi6h2zn1HekFfq9pZZiz82/cBWP21pQZlobqFuB29VWnJsqhAL8LoES4nwiQ3JxEu+9+FvfOCMC8+UN05HJaxlUivgFkZkPYs8nyKtqx6GzBd6c8H5lrFQ7l0LBkxizHOXTWGXeRhp6Wb83i09DSrGcLO5aMBIyGy9aOHu90ezHDVMg2OhUckHZ1V/fXzRgkPNtb9hfHfx8LGtpYBePmO/y2fst+X4jQ+t/P7ZB27573nTRhx65WOcovOOHNE4Mrw12FD5nwTA2v507yEBpxgAVDP3nTt5YudfX+x7/KX+P1w8FQCuu39FwPD0CR1vVMV2C5l/xVGnXj/v+tmvXHrimO0+YWvKuJ89svqpy6eNbg+3+4QhBdZb29n9NEYOCSYMLz72lSO3PvjLJ9aumZfu4FU7eWqv7/ZtxuVNIYQopYSQxvK1RhzTWGq284XkcrlcbhfaZRsoRwadd8yYGy6afNPF46+5cEo7TlpxVEbRRaft86srTv7FF4/46ZeOPvOI7g4fmSrWlaZvfp+oQY60jV3LqMuey246wvOLKKoiLuqIn/5f8eDm2061jNVj7JRrrXKd6XIRZcj2cZOOvuip2pKZB+L2OvP0/hfNEY9/tjM0MPor8229N+5Nquu0+ulpRiJHsLb0pP+suZtPh73ouHMXDFal25yogarYXOtfvdnJX8wgWgv1FrcomrZf2+svBZq/cpARNGmr46Pbw0PHtvxhfs9HDh/WOHL8+Hah7Y8fWqWMe2Fd7edz1vzvI4cPLXutEbvr2Y3KuN8/s2FpT/1NGzB9YuddC3sYwd0tfneLXwzo75/ZMH1i1xtVsd1CWkL2s/MmXnX3Sy+sq71pjYygA7uL7/nOE10zZ+/373/999+9aF/7rX/sge2r+9K7F210Dm6fu35l745Clvce2L65Jn/1xFptXSzMrU+t66vLkyd0bhgUv3xirbFu9gu9D724GQAiTlZsitcOZKkyO3lq23T768dlxxq7XDWuItyy45W1trGF5+ufn0c/uVwu90+wywIdQewhE1rfPaZ8zAHD9+8MRZYJg8BHhbKeMLZw5P6FaWOLoztDbTLtQeI1vSNmhCKDieJgNc1c3ELAMRIg8MrEJv2aEKWJkr4XeQRDqIhjAmyBAtEeTywwpbNM+8SAALC6yD3toSxQgReYhFKnBLVcIUKQgLaqsUAFkDj0GQFZYAAmHUIKLBo0Rqe06IW78g4oNz74yqePHbXNwWn7Djl5YueWRTAFn/7pc4fcvWjjqMse/OhPF3751H3eN2UvgtF/nDvh6nuWj7rswUWrqydP7HzTuqbsXQaAGVNeXQ582uQuZdy7RpbfqIo3Kmfafm0XvXf0+bcskvpN7hf0m6fXD23x1lx73MYbTrj/C4fe8tiaZT2v2Sls77bgxnMnXHLr4jFffHBDRZxwUMcOSgs5ufOzh9w+d/3ILzw48fJH5r1S8RlpL/LbLzz4xr+s7L7kgetmr2hMY33iPXvfMb9n+rVPL9+Y7Pypbd3t2x2XHUMINXI58No4pvG4MZPVVIG5XC6X+wc1vXv5GzEWCOE21eBTi42DTFlWpMYYT0nBPU85hDlyANgJq+rENbevJ3EcMUjNIAepZQdBJrN1bARGTJVKRSmV8hixiErJsBukwJDmcYRKIhks8nKKQJB6oEmWqBKP4igzNROFpl8XWwlmSlW5h4QjasD5BYSqwpSURwJpwWNM9jrcKiylVBqNIikSHxO7a2Id5+AXj68578gRW38DOgeTv/7o988+8L0Hvsk6mLe/62aveHDJ5ls/dXDRpw++uPmTtyxa/K2jI++tTPztblt3+3bHZWc0Zqy2RDa7paG5XC6X22m7LjOBdIiwo9I6YaxOtPR42aSYQBqGrJ5WsRcg5SED1BDmClmTkz91I4sO+4RqU8ShA5F6jpFiaA0LNWgU4MhK4YoaVa3PwjUiK1PtCxWHuJwQTRR4lidURBEfZASLCBhUnS4AlcINerhoEx2G1SRoR6hGy1iJogIPF6pZReH2ApVcUIdqZeJtCkJscQBNJ6W2320IGhf4bO2+FzYBwDEHDNklVexZFxwz8qWeeOLXHlHGHTSseMdnpr49oxx4bbdvd1x2bOuwZkug01hxvyX0ef0T/uFW53K5XG5HdllGR3DT6sjAwEC53OoEMR5RBLAEQsACaK09RrUA34dEKsAKueZiLGwwCqlOBin1TerhQs1g32SaYsYAg1d3LnDCWUvBYYgskchx51vcJ+UQRTYHNkKJ02WKjTVEcklT4jNd0RB6oCWjnrWGIFwPoFjJsnJo+mqRRx0JlKkZLwjiuAqex32GjATpO7JrAp1cLpfL5XK7zy5boxOqQNYwbylXbKI5ERJU3B9CYoRB4IAaaRJtB5OkrnXmmt/lxxILBiJHBp3hAQSpsKmWgc8c5djWqqQisowQaVNBaiTOmMjSDNdd1mJJtSCMpp5VwoDRVR+BlNYyg7HnLHLO+C5zxmKJdIJriYoor6a0ECWMZjwjxYD2UWjhznMuyrBWJCG7bBkpQoSRFCMOBsBjLI0dELAZMlx7BhssDXWZlV5aV0CBW50xzjOUcgBKeIqQsswShxGjjhPFCapSwx2qA3aOMKw5xeBLjF1mwaWWYKhijAnlCmhMKwTzQHJjU0G5QpnTEDIcYa5AK7CR4MoSbBVoFgLBnCPGnYbMs5Ryo3mkGeeUgNSO2tQFHrFIEJc4BByolcwjXMCAZykmOgYZOS6RBFYLGKdaAoDjxqRpxLi2nGKbWlfjJqJcm8RaayjT1kSCO6WpI9zj1pOJVJISApIYR4ACzTDhVtUx0UZTbLLQcYmNn3EKqUYccXCMI2N9plPEfSqcM1UKCjhFyhk+SFUMEhOeKXCGe9QEnCsHRPckmHvGUgxAuLYGI+65KlJc8FhQzjKeGmYgo9gaCxR4pmoIcWRoP+KANNhMIZcA+IhTRwJQ1WyAMiBKIU1im3iUY5pS4M5inHKHwENce1hZjpjQVjkzoD0bMeRnXGMwVCkbO24cSRHiWnHAjhCurYmZooCUYBoprVCIDIpRP7ECVYOMC8IQVShNMiYx5UgIgXREuZQSWbf10qKt01GNHdcbq6rh7yko59w2643c3+2qv4tcLpfbVdBApUoIaexJboxZunRpe3t7vV4nUZKkkacTVWjl0oTGVSjhtqZciRJBKc0ySTHyeEGmFkBj/IYZDmtt4zaDAKCU4pxrrfOkfS6Xy+Vyud3tvwHu9ktuTaLcKwAAAABJRU5ErkJggg==)"></span><span class="cp-body"><span class="cp-in">&gt; library(jstats)</span>
-<span class="cp-msg">jstats v0.9.282 is up to date.
+<span class="cp-msg">jstats v0.9.287 is up to date.
 For jstats conventions (useful to AI assistants too), run jai().</span>
 <span class="cp-in">&gt; jload("community", overwrite = TRUE, quiet = TRUE)</span>
 <span class="cp-in">&gt; juse(community)</span>
@@ -392,14 +392,14 @@ For jstats conventions (useful to AI assistants too), run jai().</span>
 <span class="cp-in">&gt; d1 &lt;- jdesc(Age, Income, WellbeingScore, print = FALSE)</span>
 <span class="cp-in">&gt; m1 &lt;- jlm(WellbeingScore ~ Age + Income, print = FALSE)</span>
 <span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
-<p>jstats and <code>community</code> are loaded, <code>community</code> is the default data frame, and the two results are saved again, with nothing printed.</p>
+<p>jstats and <code>community</code> are loaded, <code>community</code> is the default data frame, and the two results are saved again. This time <code>print = FALSE</code> keeps the output of both out of the Console. To see either one’s output, type its name, <code>d1</code> or <code>m1</code>, in the Console.</p>
 </section>
 <section id="a-table-in-word" class="level3">
 <h3 class="anchored" data-anchor-id="a-table-in-word">2. A table in Word</h3>
-<p><code>jtable()</code> makes a table from a saved result. With <code>file</code>, it writes the table to a Word file in your working directory, and <code>open = TRUE</code> opens the file once it is written.</p>
+<p><code>jtable()</code> makes a table from a saved result. Give it a file name with <code>file =</code>, and it writes the table to a Word file of that name in your working directory (your project’s folder). <code>open = TRUE</code> opens the file once it is written. The table itself can be saved in an object too, here <code>t1</code>, so that later lines can use it.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 2. A table in Word -----------------------------------------------</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Make d1's table, saved as t1, and write it to a Word file.</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Make a table from d1, save it as t1, and write it to a Word file.</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## open = TRUE opens the file once it is written</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> <span class="fu">jtable</span>(d1, <span class="at">file =</span> <span class="st">"Descriptives.docx"</span>, <span class="at">open =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -426,7 +426,7 @@ Wellbeing score (0-100)  103      50.89      11.48      25      81
 ------------------------------------------------------------------
 </span>
 <span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
-<p><code>jtable()</code> reports what it made, Table 1 with three variables on a portrait page, and where it wrote the Word file. <code>print(t1)</code> shows the same table in the Console. That line is optional: the Word file is the table itself, and <code>print()</code> is only there to let you see it without leaving RStudio.</p>
+<p><code>jtable()</code> reports what it made (Table 1, with three variables, on a portrait page) and where it wrote the Word file. On your screen that line gives your own working directory, which this page shows as <code>~/your-working-directory</code>. <code>print(t1)</code> shows the same table in the Console. That line is optional: the finished table is the one in the Word file, and <code>print()</code> only lets you check it without leaving RStudio.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Reading this output">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -440,9 +440,12 @@ Wellbeing score (0-100)  103      50.89      11.48      25      81
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
-<li><strong>The first three lines</strong> are <code>jtable()</code>’s report: the table’s number and title, what the table holds and the page it is on, and the file written. <code>jtable()</code> prints this short report rather than the table itself, so a call that writes several tables at once stays short.</li>
-<li><strong><code>print(t1)</code></strong> shows the table laid out as the Word table is: “Table 1” on one line and the title on the next, the column heads, one row per variable, and dashed lines where the Word table has rules. The row labels, such as “Age (years)”, are the variables’ labels from the dataset.</li>
-<li><strong>N and n.</strong> “N = 103” after the title is the number of respondents. The <em>n</em> column gives each variable’s own count: 6 respondents have no income recorded, so income’s <em>n</em> is 97.</li>
+<li><strong>The first three lines</strong> are <code>jtable()</code>’s summary of what it did: the table’s number and title; what the table holds, and the kind of page it goes on in the Word file (portrait here); and where the file was written. <code>jtable()</code> shows this short summary rather than the table itself, so that one call writing several tables doesn’t fill the Console.</li>
+<li><strong><code>print(t1)</code></strong> shows the table laid out as the Word table is: “Table 1” on one line and the title on the next, the column headings, one row per variable, and rows of dashes where the Word table has lines. The row labels, such as “Age (years)”, are the variables’ labels from the dataset.</li>
+<li><strong>N and n.</strong> “N = 103” after the title is the number of respondents. The <em>n</em> column counts the respondents who have a value for each variable: 6 respondents have no income recorded, so income’s <em>n</em> is
+<ol start="97" type="1">
+<li></li>
+</ol></li>
 <li><strong>What the Console can’t show</strong> is the look: a font, a size, a shading color. <code>print()</code> shows the layout, and the Word file is where you judge the look.</li>
 </ul>
 </div>
@@ -450,11 +453,11 @@ Wellbeing score (0-100)  103      50.89      11.48      25      81
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/tables-apa.png" class="img-fluid figure-img" alt="A descriptive statistics table in Word in the apa style: 'Table 1' in bold, the title 'Descriptive Statistics (N = 103)' in italics below it, columns n, M, SD, Min and Max, and three variable rows." width="560"></p>
-<figcaption>The table in Word, in the built-in apa style: Times New Roman 12, rules above and below the column heads and under the last row.</figcaption>
+<p><img src="images/tables-apa.png" class="img-fluid figure-img" alt="A descriptive statistics table in Word in the apa style: 'Table 1' in bold, the title 'Descriptive Statistics (N = 103)' in italics below it, columns n, M, SD, Min, and Max, and three variable rows." width="560"></p>
+<figcaption>The table in Word, in the built-in apa style: Times New Roman 12, lines above and below the column headings and under the last row.</figcaption>
 </figure>
 </div>
-<p>The table is in jstats’ default style, <code>apa</code>, which follows APA 7 for journal manuscripts. jstats has a second built-in style, <code>report</code>, and page 5, <a href="./tables-choosing-a-style.html">Choosing a style: apa or report</a>, covers choosing between them.</p>
+<p>The Word table’s look comes from a <em>style</em>. This table is in <code>apa</code>, the default, which follows APA 7 (the American Psychological Association’s style) for journal manuscripts. jstats has a second built-in style, <code>report</code>, and page 5, <a href="./tables-choosing-a-style.html">Choosing a style: apa or report</a>, covers choosing between them.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Why jstats does it this way">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -467,14 +470,14 @@ Wellbeing score (0-100)  103      50.89      11.48      25      81
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>jstats keeps the analysis and the table apart: the analysis gives the numbers, and <code>jtable()</code> sets them as a table in a style.</p>
-<p>Base R has no function that writes a table to a Word file. Add-on packages make publication-ready tables too, but each has coding rules of its own to learn, and none was built around jstats. <code>jtable()</code> was. It works from the result jstats saved, so:</p>
+<p>jstats keeps the analysis and the table apart: the analysis gives the numbers, and <code>jtable()</code> lays them out as a table in a style.</p>
+<p>Base R has no function that writes a table to a Word file. Add-on packages make publication-ready tables too, but each has coding rules of its own to learn, and none was built around jstats. <code>jtable()</code> was. It works from the result you saved, so:</p>
 <ul>
-<li>the numbers come from the result itself, the ones the Console showed, and the analysis isn’t run again to make its table;</li>
+<li>the numbers come from the result itself, so the table agrees with the analysis’s own output, and the analysis isn’t run again to make its table;</li>
 <li>the cases are the analysis’s own: declared missing values are set aside the same way, and the N and each <em>n</em> come from the result;</li>
-<li>the row labels are your variables’ labels, such as those an SPSS, Stata or SAS file brings;</li>
-<li>the look comes from one style, so every table in a project matches; page 5 and the topic after this one change it;</li>
-<li>a script run again rebuilds every table from fresh results.</li>
+<li>the row labels are your variables’ labels, such as those an SPSS, Stata, or SAS file brings;</li>
+<li>the look comes from one style, so every table in a project matches (page 5 and the next topic, <em>Your own table styles</em>, show how to change the style);</li>
+<li>running your script again rebuilds every table from fresh results.</li>
 </ul>
 </div>
 </div>
@@ -482,10 +485,10 @@ Wellbeing score (0-100)  103      50.89      11.48      25      81
 </section>
 <section id="a-second-table-in-a-file-of-its-own" class="level3">
 <h3 class="anchored" data-anchor-id="a-second-table-in-a-file-of-its-own">3. A second table, in a file of its own</h3>
-<p>The regression saved as <code>m1</code> makes a table the same way, here in a second Word file.</p>
+<p><code>jtable()</code> makes a table from the regression saved as <code>m1</code> the same way, here written to a second Word file.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- 3. A second table, in a file of its own --------------------------</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Make m1's table, saved as t2, and write it to a second Word file</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Make a table from m1, save it as t2, and write it to a second Word file</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">&lt;-</span> <span class="fu">jtable</span>(m1, <span class="at">file =</span> <span class="st">"Regression.docx"</span>, <span class="at">open =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Optional, as in block 2: the table in the Console as well</span></span>
@@ -511,11 +514,11 @@ R²                     .41
 -------------------------------------------------
 </span>
 <span class="cp-in">&gt;</span> <span class="cp-cursor">|</span></span></pre>
-<p>The regression table lists each predictor with its coefficient, <em>b</em>, and the fit, <em>R</em><sup>2</sup>, under the predictors. It is Table 1 as well: each Word file numbers its own tables from 1. Page 3, <a href="./tables-several.html">Several tables and a chart in one file</a>, puts both tables in one file, where they are numbered 1 and 2.</p>
-<p>As in block 2, <code>print(t2)</code> only shows the table in the Console; the Word file is the one to look at:</p>
+<p>The regression table has a row for each predictor, with its <em>b</em>, <em>SE</em>, <em>β</em>, and <em>p</em>, and the model’s <em>R</em><sup>2</sup> in a row under the predictors. This table is Table 1 too, because each Word file numbers its own tables from 1. Page 3, <a href="./tables-several.html">Several tables and a chart in one file</a>, puts both tables in one file, where they are numbered 1 and 2.</p>
+<p>As in block 2, <code>print(t2)</code> only shows the table in the Console. This is the table in Word:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/tables-regression-apa.png" class="img-fluid figure-img" alt="A regression table in Word in the apa style: 'Table 1' in bold, the title 'Regression Coefficients Predicting Wellbeing score (0-100) (N = 97)' in italics below it, columns b, SE, beta and p, rows for the constant, age and annual income, and R squared under them." width="560"></p>
+<p><img src="images/tables-regression-apa.png" class="img-fluid figure-img" alt="A regression table in Word in the apa style: 'Table 1' in bold, the title 'Regression Coefficients Predicting Wellbeing score (0-100) (N = 97)' in italics below it, columns b, SE, beta, and p, rows for the constant, age, and annual income, and R squared under them." width="560"></p>
 <figcaption>The regression table in Word, in the built-in apa style.</figcaption>
 </figure>
 </div>
@@ -534,7 +537,7 @@ R²                     .41
 <p>In <strong>SPSS</strong>, tables reach Word from the Viewer: File &gt; Export writes the output, pivot tables included, to a Word file. jstats makes the Word table straight from a saved result, with no Viewer step, so running the script again rebuilds the file.</p>
 <p>In <strong>Stata</strong>, <code>putdocx table</code> writes a table to a Word file, and so does <code>collect export</code> for a table built with <code>collect</code>.</p>
 <p>In <strong>SAS</strong>, the ODS RTF and ODS WORD destinations write procedure output to a file Word opens.</p>
-<p>Where jstats differs from all three: the table is in a journal’s layout from the start, <code>apa</code> by default, so it needs no reworking in Word; its row labels are the variable labels your data brought, and its N comes from the analysis; and one style sets the look of every table, so a change of font or rules is made once, not table by table.</p>
+<p>Where jstats differs from all three: the table is in a journal’s layout from the start, <code>apa</code> by default, so it needs no reworking in Word; its row labels are the variable labels that came with your data, and its N comes from the analysis; and one style sets the look of every table, so a change of font or lines is made once, not table by table.</p>
 </div>
 </div>
 </div>
@@ -542,17 +545,17 @@ R²                     .41
 </section>
 <section id="opening-the-file-without-word" class="level2">
 <h2 class="anchored" data-anchor-id="opening-the-file-without-word">Opening the file without Word</h2>
-<p><code>jtable()</code> writes the Word file itself, so you don’t need Word to make one. LibreOffice, Word on the web, Google Docs, and Apple’s Pages all open it, with small differences in how each draws it: a program that lacks the style’s font puts another in its place, for one. <code>open = TRUE</code> opens the file in whichever program your computer uses for <code>.docx</code> files.</p>
+<p><code>jtable()</code> writes the Word file itself, so you don’t need Word on your computer to make the file. LibreOffice, Word on the web, Google Docs, and Apple’s Pages all open it, though each may draw the table a little differently: a program that doesn’t have the style’s font, for example, uses another in its place. <code>open = TRUE</code> opens the file in whichever program your computer uses for <code>.docx</code> files.</p>
 </section>
 <section id="running-the-script-again" class="level2">
 <h2 class="anchored" data-anchor-id="running-the-script-again">Running the script again</h2>
-<p>Run block 2 or block 3 again, and <code>jtable()</code> asks before replacing the Word file it wrote earlier: answer <code>y</code> to replace it. Close the file in Word first: Word locks a file it has open, and if the file can’t be replaced, <code>jtable()</code> says so.</p>
-<p>To change how the tables look, change the style and run <code>jtable()</code> again, rather than editing the tables in Word: the next run writes over any edits made in Word. The later pages in this topic show how to change a style.</p>
+<p>Before you run block 2 or block 3 again, close the Word file. Word locks a file it has open, and <code>jtable()</code> stops with a message if it can’t replace the file. When you run the block, <code>jtable()</code> asks before replacing the file it wrote earlier: answer <code>y</code>.</p>
+<p>To change how the tables look, change the style and run <code>jtable()</code> again, rather than editing the tables in Word: the next run writes over any edits made in Word. Page 5 shows how to switch to the other built-in style, and the next topic, <em>Your own table styles</em>, how to change a style.</p>
 </section>
 <section id="take-the-whole-script-with-you" class="level2">
 <h2 class="anchored" data-anchor-id="take-the-whole-script-with-you">Take the whole script with you</h2>
 <p>That’s the full run-through. If you’d like the entire script in one file to keep and reuse, download it here. Put your own results in place of <code>d1</code> and <code>m1</code>, and your own file names in place of <code>Descriptives.docx</code> and <code>Regression.docx</code>.</p>
-<p>The file is the finished version of the script you built: the same code, in the same order. Its first lines say what to answer when you run it a second time and <code>jtable()</code> asks before replacing a Word file. <a href="./howtos.html#using-the-how-to-pages">Using the How-To pages</a> says more about finished scripts and how to run one.</p>
+<p>The file is the finished version of the script you built: the same code, in the same order. If you run the file a second time, <code>jtable()</code> asks before replacing each Word file; the file’s first lines say what to answer. <a href="./howtos.html#using-the-how-to-pages">Using the How-To pages</a> says more about finished scripts and how to run one.</p>
 <div style="margin: 1rem 0 2rem;">
 <p><a href="tables-in-word-follow-along.R" download="" class="btn btn-primary">Download the full script (.R)</a></p>
 </div>

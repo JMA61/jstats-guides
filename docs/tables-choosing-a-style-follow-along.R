@@ -6,7 +6,7 @@
 ## Report_report.docx: close the file in Word first, then answer y.
 
 
-## ---- 1. Load jstats and the saved results -----------------------------
+## ---- 1. Load jstats and save the two results again --------------------
 
 ## Load jstats and community, make community the default data frame, and
 ## save page 1's two results again: d1, descriptive statistics, and m1, a
@@ -19,16 +19,16 @@ d1 <- jdesc(Age, Income, WellbeingScore, print = FALSE)
 m1 <- jlm(WellbeingScore ~ Age + Income, print = FALSE)
 
 
-## ---- 2. One table in report -------------------------------------------
+## ---- 2. One table in the report style ---------------------------------
 
-## Make d1's table in the built-in report style, and show it
+## Make a table from d1 in the built-in report style, saved as t1
 t1 <- jtable(d1, style = "report")
 
 ## print() is base R: it shows an object in the Console, here the table
 print(t1)  # base R
 
 
-## ---- 3. Report for the whole session ----------------------------------
+## ---- 3. The report style for the whole session ------------------------
 
 ## Make report the style for the rest of the session
 joptions(style = "report")

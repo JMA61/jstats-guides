@@ -172,6 +172,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#describe-and-explore" id="toc-describe-and-explore" class="nav-link" data-scroll-target="#describe-and-explore">Describe and explore</a></li>
   <li><a href="#tests-and-models" id="toc-tests-and-models" class="nav-link" data-scroll-target="#tests-and-models">Tests and models</a></li>
   <li><a href="#scales-and-reliability" id="toc-scales-and-reliability" class="nav-link" data-scroll-target="#scales-and-reliability">Scales and reliability</a></li>
+  <li><a href="#publication-tables" id="toc-publication-tables" class="nav-link" data-scroll-target="#publication-tables">Publication tables</a></li>
   <li><a href="#prepare-and-manage-your-data" id="toc-prepare-and-manage-your-data" class="nav-link" data-scroll-target="#prepare-and-manage-your-data">Prepare and manage your data</a></li>
   <li><a href="#open-save-and-convert-files" id="toc-open-save-and-convert-files" class="nav-link" data-scroll-target="#open-save-and-convert-files">Open, save, and convert files</a></li>
   <li><a href="#set-up-your-session" id="toc-set-up-your-session" class="nav-link" data-scroll-target="#set-up-your-session">Set up your session</a></li>
@@ -218,6 +219,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><a href="https://jma61.github.io/jstats/reference/jdesc.html"><code>jdesc</code></a> — descriptive statistics for one or more variables.</li>
 <li><a href="https://jma61.github.io/jstats/reference/jfreq.html"><code>jfreq</code></a> — frequency tables for categorical variables.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jmulti.html"><code>jmulti</code></a> — a multiple-response set: how many cases are in each category of a set of yes/no items.</li>
 <li><a href="https://jma61.github.io/jstats/reference/jscreen.html"><code>jscreen</code></a> — a one-call overview of a whole dataset: ranges, missing values, possible outliers, and what kind each variable looks to be.</li>
 </ul>
 </section>
@@ -238,6 +240,14 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="https://jma61.github.io/jstats/reference/jalpha.html"><code>jalpha</code></a> — Cronbach’s alpha reliability analysis for a set of scale items.</li>
 <li><a href="https://jma61.github.io/jstats/reference/jsum.html"><code>jsum</code></a> — a row-wise sum across several variables (for example, a scale total).</li>
 <li><a href="https://jma61.github.io/jstats/reference/javg.html"><code>javg</code></a> — a row-wise mean across several variables (for example, a scale score).</li>
+</ul>
+</section>
+<section id="publication-tables" class="level3">
+<h3 class="anchored" data-anchor-id="publication-tables">Publication tables</h3>
+<ul>
+<li><a href="https://jma61.github.io/jstats/reference/jtable.html"><code>jtable</code></a> — a formatted table in a Word file, made from a saved result; a chart goes in as a figure.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jstyle.html"><code>jstyle</code></a> — list, check, and copy the styles that set a table’s look.</li>
+<li><a href="https://jma61.github.io/jstats/reference/jstyle_settings.html"><code>jstyle_settings</code></a> — every setting a style holds, and what each one takes.</li>
 </ul>
 </section>
 <section id="prepare-and-manage-your-data" class="level3">
@@ -291,13 +301,13 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="datasets">Datasets</h3>
 <p>jstats ships with two practice datasets, both available the moment the package loads:</p>
 <ul>
-<li><a href="https://jma61.github.io/jstats/reference/community.html"><code>community</code></a> — a clean 100-respondent community survey (income, education, age, a wellbeing score, several yes/no items, a region, and a five-item attitude scale). The package’s default example data; it’s what every function’s help examples use.</li>
+<li><a href="https://jma61.github.io/jstats/reference/community.html"><code>community</code></a> — a clean 103-respondent community survey (income, education, age, a wellbeing score, several yes/no items, a daily commute time, a region, and a five-item attitude scale). The package’s default example data; it’s what every function’s help examples use.</li>
 <li><a href="https://jma61.github.io/jstats/reference/clinic.html"><code>clinic</code></a> — a deliberately messy 70-client mental-health and wellbeing sample, the companion for practicing data cleaning: it carries undeclared missing-value codes, stripped labels, and imperfect scale items to work through.</li>
 </ul>
 </section>
 <section id="on-the-way" class="level3">
 <h3 class="anchored" data-anchor-id="on-the-way">On the way</h3>
-<p>A few capabilities are planned for future versions — among them regression for count outcomes (Poisson and negative-binomial models) and exporting formatted, APA-style results to Word. The function set above is what ships today.</p>
+<p>A few capabilities are planned for future versions — among them regression for count outcomes (Poisson and negative-binomial models). The function set above is what ships today.</p>
 
 
 </section>

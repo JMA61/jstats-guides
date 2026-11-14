@@ -42,6 +42,10 @@ resources:
 #
 # HOW-TO LAYOUT (S344). No top boxes: the shared material lives once on
 # howtos.qmd, and this page points there.
+#
+# S428 (the S427 wording pass, Fable 5.2, okayed by Jeff): the recurring
+# changes A-M and L (pages 3 to 5 are three ways to change a style, "pick
+# one") and the page's 21 numbered changes.
 # ---------------------------------------------------------------------------
 
 options(width = 80)   # match a default 80-column console for table alignment
@@ -78,8 +82,8 @@ source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color 
 ## Changing a style by hand
 
 **Your own table styles &middot; Page 3**\
-*The page before it is
-[2. Keeping your styles](tables-keeping-styles.qmd).*
+*Pages 3 to 5 show three ways to change a style: pick one. This page is the
+first, and it follows [2. Keeping your styles](tables-keeping-styles.qmd).*
 
 This page is a hands-on run-through of changing a style yourself: you save a
 copy of a built-in style as a style file, change a value or two in RStudio, and
@@ -88,13 +92,13 @@ check the file before you make a table with it.
 A *style file* is a plain-text file listing every setting a table's look
 depends on, one to a line, each after a note saying what it does and what
 values it takes. Changing a style means changing the value after a setting's
-equals sign. Page 4,
-[Changing a style with an AI assistant](tables-ai-assistant.qmd), hands the
-same file to an AI assistant instead; the copy and the check are the same
-either way.
+equals sign. On page 4,
+[Changing a style with an AI assistant](tables-ai-assistant.qmd), an AI
+assistant makes the changes instead; the copy and the check are the same either
+way.
 
-This page follows the pattern of every How-To: numbered blocks that build one
-script, with the finished script to download at the bottom.
+This page follows the pattern of every How-To: numbered blocks of code that
+build one script, with the finished script to download at the bottom.
 [Using the How-To pages](howtos.qmd#using-the-how-to-pages) explains the
 pattern, and how to reset your session if something goes wrong.
 
@@ -102,8 +106,8 @@ pattern, and how to reset your session if something goes wrong.
 
 We'll work on `community`, one of the two practice datasets that ship with the
 package: 103 simulated respondents to a community survey. `jload()` puts a copy
-of it in your workspace, and `juse()` makes it the default data frame, so the
-commands that follow can leave its name out.
+of it in your workspace, and `juse()` makes `community` the default data frame,
+so the commands that follow can leave its name out.
 
 ```{r}
 #| echo: false
@@ -122,16 +126,16 @@ juse(community))---", fence = TRUE,
 
 ### 2. A table in the report style
 
-First, a table to compare against: descriptive statistics for three variables,
-kept as `d1`, in the built-in `report` style. `style =` names the style a table
-is built in.
+First, make a table to compare the changed one with: descriptive statistics for
+three variables, saved as `d1`, in the built-in `report` style. `style =` names
+the style a table is built in.
 
 ```{r}
 #| echo: false
 #| results: asis
 .obx$show_console(r"---(## ---- 2. A table in the report style -----------------------------------
 
-## Keep a result, then make its table in the built-in report style
+## Save a result, then make a table from it in the built-in report style
 d1 <- jdesc(Age, Income, WellbeingScore, print = FALSE)
 t1 <- jtable(d1, style = "report")
 
@@ -154,13 +158,15 @@ print(t1)  # base R)---", fence = TRUE)
 ```
 
 The table shows its statistics to `r .bh_dec_before` decimal places: a mean
-age of `r .bh_age_before`, for example. With no `file`, `jtable()` writes
-nothing to Word, and says so.
+age of `r .bh_age_before`, for example. With no `file =`, `jtable()` writes no
+Word file, and says so.
 
 ### 3. A copy of report to change
 
 The built-in styles have no file of their own to change. `jstyle()` with
-`save.as` writes a copy as a style file, into the style folder that page 1 set up: a folder named `styles` inside your project.
+`save.as =` writes a copy of one as a style file. The copy goes into the style
+folder, which this block sets, as page 1 did, to a folder named `styles` inside
+your project.
 
 ```{r}
 #| echo: false
@@ -171,8 +177,8 @@ The built-in styles have no file of their own to change. `jstyle()` with
 ## makes the folder; the setting lasts until R restarts
 joptions(style.dir = "styles")
 
-## A complete copy of report, every setting written out with a note.
-## open = TRUE opens it in a tab beside your script
+## Save a complete copy of report as mystyle, every setting written out
+## with a note. open = TRUE opens the copy in a tab beside your script
 jstyle("report", save.as = "mystyle", open = TRUE))---", fence = TRUE)
 ```
 
@@ -184,7 +190,9 @@ jstyle("report", save.as = "mystyle", open = TRUE))---", fence = TRUE)
 ```
 
 jstats wrote the copy, `mystyle.jstyle`, into the `styles` folder, and with
-`open = TRUE` the file opens in a tab beside your script. It is about
+`open = TRUE` the file opens in a tab beside your script. On your screen the
+copy's path starts with your own working directory (your project's folder),
+which this page shows as `~/your-working-directory`. The file is about
 `r format(round(.bh_n_lines, -2))` lines long: every setting jstats has, each
 after its note. The general settings come first, the ones that set the look of
 every table, such as the font, the size, and the decimal places. Then each kind
@@ -193,10 +201,7 @@ of table has a section of its own, under its name in square brackets, such as
 
 ::: {.callout-note collapse="true" title="Reading this output"}
 The first three lines are `joptions()` confirming the setting it changed. The
-next two report the folder jstats created and the file it wrote. The path is
-your working directory's, followed by `styles/mystyle.jstyle`. (The Console
-pane on this page shows every working directory as
-`~/your-working-directory`.)
+next two say that jstats created the folder, and where it wrote the file.
 :::
 
 ### 4. Change two values, and save
@@ -248,33 +253,34 @@ writeLines(.ed, "styles/mystyle.jstyle", useBytes = TRUE)
 
 ### 5. Check the file
 
-`jstyle()` with a style's name reads the style file and prints every setting.
-If a line holds something jstats can't use, `jstyle()` stops at that line and
-names it, so run it after every change.
+`jstyle()` with a style's name reads the style file and shows every setting in
+the Console. If a line holds something jstats can't use, `jstyle()` stops at
+that line and names it, so run it after every change.
 
 ```{r}
 #| echo: false
 #| results: asis
 .obx$show_block(r"---(## ---- 5. Check the file ------------------------------------------------
 
-## jstyle() reads the saved file and prints every setting. It stops at a
+## jstyle() reads the saved file and shows every setting. It stops at a
 ## line it cannot use, and names the line
 jstyle("mystyle"))---", chrome = TRUE)
 ```
 
-`jstyle()` read the file with no stop, and the two changes are in its printout:
-`font = Times New Roman` at the top, and `decimals = 1` further down the
-general settings.
+`jstyle()` read the file without stopping, and the two changes are in the
+settings it lists: `font = Times New Roman` at the top, and `decimals = 1`
+further down the general settings.
 
 ::: {.callout-note collapse="true" title="Reading this output"}
 - **The top lines** name the style, the file it was read from, and the styles
   it is based on: "based on report, then apa". A setting the file left out
-  would come from report, and one report leaves out from apa. A complete copy
-  leaves out nothing, so the next line says "Set in this file: every setting."
+  would come from `report`, and a setting that `report` leaves out would come
+  from `apa`. A complete copy leaves out nothing, so the next line says "Set in
+  this file: every setting."
 - **The settings** follow in the file's order: the general settings first,
   then each kind of table's section under its name in square brackets, then
   `[plot]`, for charts.
-- **If the printout still shows Arial**, the change wasn't saved, or jstats
+- **If the list still shows Arial**, the change wasn't saved, or jstats
   read a different file. Save the tab, and check that the `styles` folder holds
   `mystyle.jstyle`.
 :::
@@ -282,17 +288,18 @@ general settings.
 ### 6. The table in your style
 
 Now make the same table in `mystyle`, and write it to a Word file. A table
-`jtable()` has built keeps the style it was built in, so the new table starts
-from the result, `d1`.
+keeps the style it was made in, so the new table is made from the result, `d1`,
+not from `t1`.
 
 ```{r}
 #| echo: false
 #| results: asis
 .obx$show_console(r"---(## ---- 6. The table in your style ---------------------------------------
 
-## The same result in your style, written to a Word file
+## Make a table from the same result in your style, and write it to a
+## Word file
 t2 <- jtable(d1, style = "mystyle", file = "Table1_mystyle.docx", open = TRUE)
-print(t2))---", fence = TRUE)
+print(t2)  # base R)---", fence = TRUE)
 ```
 
 ```{r}
@@ -311,8 +318,8 @@ shows: in the Console, every table is in the Console's own font.
 A jstats style is a plain-text file, one setting to a line, each with a note on
 what it does and what it takes. So a style can be read and changed in any text
 editor, with no special program, and a change is one value on one line. A
-journal's style or an agency's is one small file, which travels to a colleague
-or a new computer by email.
+journal's style or an agency's is one small file, which you can email to a
+colleague or copy to a new computer.
 
 The style is kept apart from the analysis, so one change to the file changes
 every table made with it: run the script again, and every table is rebuilt in
@@ -323,7 +330,7 @@ the new look.
 A jstats style does the job of **SPSS**'s TableLooks: in the Viewer, a pivot
 table's look can be saved as a TableLook file (.stt) and applied to other
 tables, and a default TableLook set for new output. The difference is where
-the look lives. A TableLook styles tables already in the Viewer, and a table
+the look is applied. A TableLook styles tables already in the Viewer, and a table
 exported to Word takes the look it had there; a jstats style is applied as
 `jtable()` builds the Word table.
 
@@ -341,8 +348,8 @@ A general setting can take a value of its own for one kind of table: copy the
 setting's line under that table's heading in the file, and change the value
 there. `decimals = 3` copied under `[regression]`, for instance, gives
 regression tables three decimal places and leaves every other table as it was.
-This works for every general setting except `paper`, which sets the page of the
-whole Word file, and under every heading except `[plot]`, which takes only a
+This works for every general setting except `paper`, which sets the paper size
+of the whole Word file, and under every heading except `[plot]`, which takes only a
 chart's own settings. The help page `?jstyle_settings` lists every setting and
 what it takes. The books cover every setting in depth, and designing a house
 style, with worked examples.
@@ -382,10 +389,10 @@ own message gives the line number in your file.
 
 ## Changing it again
 
-Change the file, save it, and run blocks 5 and 6 again. `jtable()` asks before
-replacing the Word file it wrote earlier: close the file in Word, then answer
-`y`. Running block 3 again is a different matter: `jstyle()` asks before
-replacing `mystyle.jstyle` with a fresh copy of report, and `n` (no) keeps your
+Close the Word file, change the style file, save it, and run blocks 5 and 6
+again. `jtable()` asks before replacing the Word file it wrote earlier: answer
+`y`. Block 3 is different: run it again, and `jstyle()` asks before replacing
+`mystyle.jstyle` with a fresh copy of `report`. Answer `n` (no) to keep your
 changes.
 
 ```{r}
@@ -451,8 +458,8 @@ your own style's name in place of `mystyle`.
 
 The file is the finished version of the script you built: the same code, in the
 same order. Block 4 is still only comments: the change happens in the editor,
-not in R. Its first lines say what to answer when you run it again and jstats
-asks before replacing a file.
+not in R. If you run the file again, jstats asks before replacing each file it
+wrote earlier; the file's first lines say what to answer.
 [Using the How-To pages](howtos.qmd#using-the-how-to-pages) says more about
 finished scripts and how to run one.
 
