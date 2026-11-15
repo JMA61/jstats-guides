@@ -73,8 +73,8 @@ name linking to its full help page.
 
 ### Open, save, and convert files
 
-- [`jload`](https://jma61.github.io/jstats/reference/jload.html) — open a data file (from commercial statistical software, Excel, or CSV) in one command, bringing its value labels, variable labels, and missing-value codes along automatically.
-- [`jsave`](https://jma61.github.io/jstats/reference/jsave.html) — save a data frame back out to a file.
+- [`jload`](https://jma61.github.io/jstats/reference/jload.html) — open a data file (from commercial statistical software, Excel, or CSV) in one command, bringing its value labels, variable labels, and missing-value codes along automatically; it also loads a result or a table saved with `jsave()`.
+- [`jsave`](https://jma61.github.io/jstats/reference/jsave.html) — save a data frame back out to a file, or save a result or a table for a later session.
 - [`jconvert`](https://jma61.github.io/jstats/reference/jconvert.html) — convert missing-value declarations between the conventions different programs use.
 - [`jdata_dir`](https://jma61.github.io/jstats/reference/jdata_dir.html) — show the folder jstats reads your data files from.
 

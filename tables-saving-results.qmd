@@ -35,6 +35,17 @@ resources:
 # typed or printed. No block types one; the prose under block 3 tells the
 # reader to type m1 to see its output, and prose-gates checks that it does.
 #
+# S429 (v0.9.288; Jeff's ruling, reversing S406: jsave() and jload() keep a
+# result, "Let's reverse the decision and incorporate the rest of your
+# ideas"; the wording drafted on Fable 5.2 and okayed): blocks 4 and 5 save
+# m1 in a file with jsave(m1), remove it with rm(), and load it back with
+# jload("m1"), the Environment pane shown after each (the broom marked in
+# block 4); the Going deeper box on saveRDS() gives way to a "Why jstats
+# does it this way" box on base R's saveRDS() and readRDS(), each statement
+# run in prose-gates, and a "Coming from SPSS, Stata, or SAS?" box (OUTPUT
+# SAVE; estimates save and estimates use, checked against IBM's and Stata's
+# manuals).
+#
 # S428 (the S423 wording pass, Fable 5.2, okayed by Jeff): "prints" is Console
 # wording on this topic's pages, print glossed once (block 3); an object lives
 # in R's memory for the session; "the Word table"; "dash". The Going deeper
@@ -43,7 +54,9 @@ resources:
 #
 # jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
 # startup message on first attach only. joutput()/joptions() are left alone.
-# The page writes nothing to disk, so there is no teardown.
+# The page WRITES m1.rds into the working directory (block 4); the clean-slate
+# line below removes it before the blocks run (a halted render never reaches
+# the teardown chunk at the foot), and the teardown removes it after.
 #
 # HOW-TO LAYOUT (S344). No top boxes: the shared material lives once on
 # howtos.qmd, and this page points there.
@@ -51,6 +64,15 @@ resources:
 
 options(width = 80)   # match a default 80-column console for table alignment
 options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real startup message
+
+.sr_files <- "m1.rds"
+.sr_clean <- function() {
+  f <- .sr_files[file.exists(.sr_files)]
+  if (length(f)) file.remove(f)
+  invisible(NULL)
+}
+.sr_clean()
+
 source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color on
 ```
 
@@ -74,7 +96,8 @@ or a journal requires.
 The Publication tables pages assume you can already run the analyses you'll put
 in tables: they don't explain, for instance, how to choose the predictors for a
 regression. What they explain is the step after the analysis, starting here,
-with saving its result.
+with saving its result. The page's last two blocks then save a result in a
+file, so that a later session can use the result.
 
 This page follows the pattern of every How-To: numbered blocks of code that
 build one script, with the finished script to download at the bottom.
@@ -176,21 +199,116 @@ m1 <- jlm(WellbeingScore ~ Age + Income, print = FALSE))---", fence = TRUE, env 
 
 The Console shows the command and nothing else, and `m1` joins `d1` in the
 **Environment** pane. The regression's output is saved with the result, though:
-to see it after all, type `m1` in the Console. Page 2,
-[Making a table in Word](tables-in-word.qmd), makes a table from each.
+to see it after all, type `m1` in the Console.
 
-::: {.callout-note collapse="true" title="Going deeper (optional)"}
-An object is gone when the R session ends. To keep a result for a later session,
-save it to a file with base R's `saveRDS()`, and read it back in that session
-with `readRDS()`:
+### 4. Save a result in a file
 
-```r
-saveRDS(m1, "m1.rds")     # base R: save the result in a file, m1.rds
-m1 <- readRDS("m1.rds")   # base R, in a later session: read it back
+An object is gone when the R session ends. To use a result in a later session,
+save the result in a file. Give the result to `jsave()`, the command that saves
+a dataset in [Loading, Saving, Converting Data](data.qmd). For a result,
+`jsave()` needs no file name: it names the file for the object, `m1.rds`. (The
+`.rds` ending marks R's own file format.)
+
+The block's second command then removes `m1` from the Environment with base R's
+`rm()`. Ending the session would do the same to every object; removing `m1` now
+lets block 5 show the result coming back from the file.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 4. Save a result in a file ---------------------------------------
+
+## Save the result m1 in a file. jsave() names the file m1.rds
+jsave(m1)
+
+## Remove m1 from the Environment, as ending the session would.
+## rm() is base R, and shows nothing in the Console when it works
+rm(m1)  # base R)---", fence = TRUE, env = TRUE, env_mark = "broom",
+  note = "The red arrow points to the broom.")
 ```
 
-A table made from the result in that later session is the same table. `jsave()`
-keeps data, not results: given a result, it stops and shows these two lines.
+```{r}
+#| label: env-after-4
+#| include: false
+# What the Environment holds after block 4, and the file it wrote (gated in
+# prose-gates, which runs at the foot).
+.e4 <- ls(globalenv())
+.f4 <- file.exists("m1.rds")
+```
+
+`jsave()` reports where it saved the file, with the file's full path, and gives
+the command that loads the result back in a later session. On your screen the
+path starts with your working directory (your project's folder), which this
+page shows as `~/your-working-directory`. If you have set a data
+folder, as [Loading, Saving, Converting Data](data.qmd) shows, the file is in
+the data folder instead.
+
+`rm()` shows nothing in the Console, and `m1` is gone from the **Environment**
+pane, which now lists `community` and `d1`. The result is still in the file.
+
+`rm()` removes the one object you name. To remove every object at once, click
+the broom at the top of the **Environment** pane, where the red arrow points;
+RStudio asks you to confirm first.
+
+### 5. Load the result from the file
+
+In a later session, load jstats, then load the result with `jload()`, the
+command that loads a dataset. Give `jload()` the result's name in quotes: it
+reads the file `m1.rds` and puts the result in the Environment as `m1`. The
+quotes are the one difference from block 4. There, `m1` was an object in the
+Environment; here, `"m1"` is the name of a file, and in R a file's name goes in
+quotes.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 5. Load the result from the file ---------------------------------
+
+## Load the result saved in m1.rds. It comes back as an object named m1
+jload("m1"))---", fence = TRUE, env = TRUE)
+```
+
+```{r}
+#| label: env-after-5
+#| include: false
+# What the Environment holds after block 5 (gated in prose-gates).
+.e5 <- ls(globalenv())
+```
+
+`jload()` reports where it found the file and what it loaded, and `m1` is back in
+the **Environment** pane, beside `community` and `d1`. The loaded `m1` is the
+result you saved: type `m1` in the Console to see the regression's output, or
+give `m1` to `jtable()`. The file holds everything a table needs, so in a later
+session the data do not have to be loaded first. Page 2, [Making a table in
+Word](tables-in-word.qmd), makes a table from each result.
+
+The file `m1.rds` stays in your folder until you delete it. The later pages
+don't use the file, since each makes `d1` and `m1` again in its first block. To
+delete the file, select its checkbox in the **Files** pane and click
+**Delete**.
+
+::: {.callout-note collapse="true" title="Why jstats does it this way"}
+Base R has two commands for this job: `saveRDS(m1, "m1.rds")` saves the result
+in a file, and `m1 <- readRDS("m1.rds")` reads the file in a later session, the
+name typed twice in each. The file is the same either way: `readRDS()` reads a
+file that `jsave()` wrote, and `jload()` reads a file that `saveRDS()` wrote.
+
+The base R commands do less around the file. `saveRDS()` shows nothing in the
+Console, so it doesn't say where the file went. `saveRDS()` doesn't use your
+data folder either: the folder has to be typed into the file name each time, as
+in `"Data/m1.rds"`. And neither command asks first: `saveRDS()` replaces a file
+of the same name, and `m1 <- readRDS("m1.rds")` replaces an `m1` you already
+have. `jsave()` and `jload()` name the file for the object, report the full
+path, use your data folder when you have set one, and ask before replacing a
+file or an object.
+:::
+
+::: {.callout-tip collapse="true" title="Coming from SPSS, Stata, or SAS?"}
+SPSS saves results by saving the Viewer's output in a file of its own, apart
+from the data (`OUTPUT SAVE`). Stata saves a model's results with
+`estimates save` and brings them back in a later session with `estimates use`.
+`jsave()` and `jload()` do that job here, for the result of any jstats
+analysis, and a loaded result still makes its table.
 :::
 
 ```{r}
@@ -220,15 +338,78 @@ keeps data, not results: given a result, it stops and shows these two lines.
 # block 3: typing m1 shows the regression's output after all (R85, v0.9.283)
 .t3 <- .pr(m1)
 .u3 <- utils::capture.output(jlm(WellbeingScore ~ Age + Income))
-# going deeper: a result read back from a file makes the same table
-.f <- tempfile(fileext = ".rds"); saveRDS(m1, .f); .m1b <- readRDS(.f); unlink(.f)
-# going deeper: jsave() given a result stops and shows the box's two lines
-# (they carry the file's name, so it is called as a reader would, with none,
-# from a temporary folder in case a later build writes a file instead)
-.js <- local({
-  .o <- setwd(tempdir()); on.exit(setwd(.o))
-  tryCatch({ jsave(m1); "no stop" }, error = function(e) conditionMessage(e))
+# block 4 (S429): jsave(m1) names the file for the object, in the working
+# directory with no data folder set, and says so -- the path in full, what it
+# is, the line that loads it back; rm(m1) left community and d1. Run again in
+# a folder of its own, so the page's own file is not touched.
+.notes <- function(expr) {   # a call's notes, in order
+  m <- character(0)
+  withCallingHandlers(expr, message = function(c) {
+    m <<- c(m, conditionMessage(c)); invokeRestart("muffleMessage") })
+  paste(m, collapse = "")
+}
+.g4 <- local({
+  td <- tempfile("g4"); dir.create(td); .o <- setwd(td); on.exit(setwd(.o))
+  e <- new.env(); e$m1 <- m1
+  msg <- .notes(evalq(jsave(m1), e))
+  list(msg = gsub("\\s+", " ", msg), td = normalizePath(td, winslash = "/"),
+       file = file.exists("m1.rds"),
+       out = utils::capture.output(saveRDS(m1, "base.rds")),
+       base_msg = .notes(saveRDS(m1, "base2.rds")))
 })
+# block 4: with a data folder set the file goes there, and saveRDS() does
+# not use the folder; read in a fresh R session, as a reader's later one.
+.m1f <- tempfile(fileext = ".rds"); saveRDS(m1, .m1f)
+.g4d <- callr::r(function(f) {
+  suppressPackageStartupMessages(library(jstats))
+  td <- tempfile("g4d"); dir.create(td); setwd(td)
+  m1 <- readRDS(f)
+  joptions(data.dir = "Data", quiet = TRUE)
+  invisible(utils::capture.output(suppressMessages(jsave(m1))))
+  saveRDS(m1, "base.rds")
+  list(jsave_in_data = file.exists(file.path("Data", "m1.rds")),
+       jsave_in_wd = file.exists("m1.rds"),
+       base_in_wd = file.exists("base.rds"),
+       base_in_data = file.exists(file.path("Data", "base.rds")),
+       again = tryCatch({ suppressMessages(jsave(m1)); "saved" },
+                        error = function(e) conditionMessage(e)))
+}, args = list(f = .m1f))
+# block 5: jload("m1") reads the file back under its name, said in one line;
+# in a fresh session, with no data loaded, the loaded result makes the same
+# table as the result in memory.
+.g5 <- local({
+  td <- tempfile("g5"); dir.create(td); .o <- setwd(td); on.exit(setwd(.o))
+  file.copy(file.path(.o, "m1.rds"), "m1.rds")
+  e <- new.env()
+  msg <- .notes(evalq(jload("m1"), e))
+  e$m1 <- 1
+  replaced <- .notes(evalq(jload("m1"), e))
+  list(msg = gsub("\\s+", " ", msg), back = exists("m1", envir = e, inherits = FALSE),
+       replaced = gsub("\\s+", " ", replaced), now = class(e$m1))
+})
+.g5t <- callr::r(function(f) {
+  suppressPackageStartupMessages(library(jstats))
+  td <- tempfile("g5t"); dir.create(td); setwd(td); file.copy(f, "m1.rds")
+  suppressMessages(jload("m1"))
+  # no data frame in the session: jload() assigns here, in the function's
+  # frame, and nothing is in the global environment (community is the
+  # package's own, reached through the search path, never loaded)
+  held <- c(mget(ls(), envir = environment()), mget(ls(globalenv()), envir = globalenv()))
+  list(no_data = !any(vapply(held, is.data.frame, logical(1))), loaded = exists("m1", inherits = FALSE),
+       table = utils::capture.output(print(jtable(m1, print = FALSE))))
+}, args = list(f = .m1f))
+# the box: readRDS() reads the file jsave() wrote, jload() a file saveRDS()
+# wrote; saveRDS() replaces a file of the same name without a word.
+.gb <- local({
+  td <- tempfile("gb"); dir.create(td); .o <- setwd(td); on.exit(setwd(.o))
+  saveRDS(m1, "s.rds"); e <- new.env()
+  invisible(.notes(evalq(jload("s"), e)))
+  a <- readRDS(file.path(.o, "m1.rds"))
+  saveRDS(d1, "x.rds"); out2 <- utils::capture.output(saveRDS(m1, "x.rds"))
+  list(read = .pr(jtable(a, print = FALSE)), loaded = .pr(jtable(e$s, print = FALSE)),
+       replaced = inherits(readRDS("x.rds"), "jst_lm"), silent = length(out2) == 0L)
+})
+unlink(.m1f)
 stopifnot(
   grepl(paste(.sr_nmv, "variables have SPSS-style missing values"), .l1, fixed = TRUE),
   grepl('-99 ["Refused"]', .l1, fixed = TRUE), grepl('-98 ["Don\'t know"]', .l1, fixed = TRUE),
@@ -238,9 +419,26 @@ stopifnot(
   inherits(d1, "jst_desc"), inherits(m1, "jst_lm"),
   all(c("community", "d1", "m1") %in% ls(globalenv())),
   length(.t3) > 5L, identical(.t3, .u3), grepl("Linear Regression", .t3[1], fixed = TRUE),
-  identical(.pr(jtable(m1, print = FALSE)), .pr(jtable(.m1b, print = FALSE))),
-  grepl('saveRDS(m1, "m1.rds")', .js, fixed = TRUE),
-  grepl('m1 <- readRDS("m1.rds")', .js, fixed = TRUE)
+  # block 4
+  .f4, setequal(.e4, c("community", "d1")),
+  .g4$file, startsWith(.g4$msg, paste0("Saved m1 to ", .g4$td, "/m1.rds ")),
+  grepl("(R format; a jlm() result)", .g4$msg, fixed = TRUE),
+  grepl('To load it in a later session: jload("m1")', .g4$msg, fixed = TRUE),
+  length(.g4$out) == 0L, identical(.g4$base_msg, ""),
+  .g4d$jsave_in_data, !.g4d$jsave_in_wd, .g4d$base_in_wd, !.g4d$base_in_data,
+  grepl("this file already exists", .g4d$again, fixed = TRUE),
+  # block 5
+  setequal(.e5, c("community", "d1", "m1")), inherits(m1, "jst_lm"),
+  .g5$back, grepl("Loaded m1 (R format; a jlm() result made by jstats ", .g5$msg, fixed = TRUE),
+  startsWith(.g5$msg, "Found m1.rds in "),
+  grepl("already existed and has been replaced", .g5$replaced, fixed = TRUE),
+  identical(.g5$now, class(m1)),
+  .g5t$no_data, .g5t$loaded,
+  identical(.g5t$table, .pr(jtable(m1, print = FALSE))),
+  # the box
+  identical(.gb$read, .pr(jtable(m1, print = FALSE))),
+  identical(.gb$loaded, .pr(jtable(m1, print = FALSE))),
+  .gb$replaced, .gb$silent
 )
 ```
 
@@ -252,10 +450,20 @@ this page, each saved under a name of its own.
 
 The file is the finished version of the script you built: the same code, in the
 same order. If you run the file a second time in the same session, `jload()`
-asks before replacing `community`; the file's first lines say what to answer.
+asks before replacing `community`. `jsave()` asks before replacing the file
+`m1.rds` whenever that file is already in your folder. The file's first lines
+say what to answer.
 [Using the How-To pages](howtos.qmd#using-the-how-to-pages) says more about
 finished scripts and how to run one.
 
 <div style="margin: 1rem 0 2rem;">
 <a href="tables-saving-results-follow-along.R" download class="btn btn-primary">Download the full script (.R)</a>
 </div>
+
+```{r}
+#| label: obx-teardown
+#| include: false
+# Page-end teardown: remove the file block 4 wrote (the setup chunk also
+# clears it at render start, against a halted render).
+.sr_clean()
+```

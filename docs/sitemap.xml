@@ -9,84 +9,12 @@
     <lastmod>2026-10-27T10:12:09.275Z</lastmod>
   </url>
   <url>
-    <loc>https://jma61.github.io/jstats-guides/start-here.html</loc>
-    <lastmod>2026-07-15T21:55:49.396Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/reference.html</loc>
-    <lastmod>2026-11-14T07:19:54.494Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/missing-values.html</loc>
-    <lastmod>2026-10-27T10:12:09.257Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/install-r-and-rstudio.html</loc>
-    <lastmod>2026-07-15T21:55:49.348Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/index.html</loc>
-    <lastmod>2026-06-29T10:05:55.529Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/griffith.html</loc>
-    <lastmod>2026-10-11T08:56:52.596Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/coming-soon.html</loc>
-    <lastmod>2026-11-13T01:53:51.963Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/anova.html</loc>
-    <lastmod>2026-10-27T10:12:09.230Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/books.html</loc>
-    <lastmod>2026-07-09T22:34:43.222Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/data.html</loc>
-    <lastmod>2026-10-27T10:12:09.240Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/howtos.html</loc>
-    <lastmod>2026-11-13T09:47:43.563Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/install-jstats.html</loc>
-    <lastmod>2026-10-27T10:12:09.250Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/loading-jstats-automatically.html</loc>
-    <lastmod>2026-10-04T01:24:20.048Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/quickstart.html</loc>
-    <lastmod>2026-10-27T10:12:09.263Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/rstudio-orientation.html</loc>
-    <lastmod>2026-09-03T22:59:49.593Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/troubleshooting.html</loc>
-    <lastmod>2026-10-27T10:12:09.269Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/videos.html</loc>
-    <lastmod>2026-06-29T10:05:55.648Z</lastmod>
+    <loc>https://jma61.github.io/jstats-guides/tables-several.html</loc>
+    <lastmod>2026-11-14T07:19:54.531Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/tables-saving-results.html</loc>
-    <lastmod>2026-11-14T07:19:54.526Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/tables-in-word.html</loc>
-    <lastmod>2026-11-14T07:19:54.519Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jma61.github.io/jstats-guides/tables-several.html</loc>
-    <lastmod>2026-11-14T07:19:54.531Z</lastmod>
+    <lastmod>2026-11-14T18:44:50.509Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/tables-own-style.html</loc>
@@ -97,27 +25,99 @@
     <lastmod>2026-11-14T07:19:54.520Z</lastmod>
   </url>
   <url>
-    <loc>https://jma61.github.io/jstats-guides/tables-by-hand.html</loc>
-    <lastmod>2026-11-14T07:19:54.514Z</lastmod>
+    <loc>https://jma61.github.io/jstats-guides/tables-choosing-a-style.html</loc>
+    <lastmod>2026-11-14T07:19:54.516Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/tables-ai-assistant.html</loc>
     <lastmod>2026-11-14T07:19:54.512Z</lastmod>
   </url>
   <url>
-    <loc>https://jma61.github.io/jstats-guides/tables-posit-assistant.html</loc>
-    <lastmod>2026-11-14T07:19:54.524Z</lastmod>
+    <loc>https://jma61.github.io/jstats-guides/rstudio-orientation.html</loc>
+    <lastmod>2026-09-03T22:59:49.593Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/quickstart.html</loc>
+    <lastmod>2026-10-27T10:12:09.263Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/loading-jstats-automatically.html</loc>
+    <lastmod>2026-10-04T01:24:20.048Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/install-jstats.html</loc>
+    <lastmod>2026-10-27T10:12:09.250Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/howtos.html</loc>
+    <lastmod>2026-11-13T09:47:43.563Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/data.html</loc>
+    <lastmod>2026-10-27T10:12:09.240Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/books.html</loc>
+    <lastmod>2026-07-09T22:34:43.222Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/anova.html</loc>
+    <lastmod>2026-10-27T10:12:09.230Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/coming-soon.html</loc>
+    <lastmod>2026-11-13T01:53:51.963Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/griffith.html</loc>
+    <lastmod>2026-10-11T08:56:52.596Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/index.html</loc>
+    <lastmod>2026-06-29T10:05:55.529Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/install-r-and-rstudio.html</loc>
+    <lastmod>2026-07-15T21:55:49.348Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/missing-values.html</loc>
+    <lastmod>2026-10-27T10:12:09.257Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/reference.html</loc>
+    <lastmod>2026-11-14T18:44:50.511Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/start-here.html</loc>
+    <lastmod>2026-07-15T21:55:49.396Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/tables-by-hand.html</loc>
+    <lastmod>2026-11-14T07:19:54.514Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/tables-in-word.html</loc>
+    <lastmod>2026-11-14T07:19:54.519Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/tables-matching.html</loc>
     <lastmod>2026-11-14T07:19:54.522Z</lastmod>
   </url>
   <url>
-    <loc>https://jma61.github.io/jstats-guides/tables-choosing-a-style.html</loc>
-    <lastmod>2026-11-14T07:19:54.516Z</lastmod>
+    <loc>https://jma61.github.io/jstats-guides/tables-posit-assistant.html</loc>
+    <lastmod>2026-11-14T07:19:54.524Z</lastmod>
   </url>
   <url>
     <loc>https://jma61.github.io/jstats-guides/tables-several-results.html</loc>
     <lastmod>2026-11-14T07:19:54.530Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/troubleshooting.html</loc>
+    <lastmod>2026-10-27T10:12:09.269Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jma61.github.io/jstats-guides/videos.html</loc>
+    <lastmod>2026-06-29T10:05:55.648Z</lastmod>
   </url>
 </urlset>
