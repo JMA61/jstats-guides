@@ -27,8 +27,15 @@ resources:
 #
 # jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
 # startup message on first attach only. joutput()/joptions() are left alone.
-# The page WRITES one Word file into the working directory; the clean-slate
-# line below removes it before the blocks run, and the teardown after.
+# The page WRITES one Word file into the output folder, Tables; the clean-slate
+# line below removes it, and the folder when it is left empty, before the
+# blocks run, and the teardown after.
+#
+# S431 (Jeff's S429 read of the Publication tables pages, okayed): the page
+# assumes the output folder page 2 sets, and says so at block 3; a hidden
+# chunk after block 1 sets it out of sight, so the Word file and the summary's
+# path are as that reader sees them. The opening line names what the page
+# uses and that block 1 makes it again.
 #
 # HOW-TO LAYOUT (S344). No top boxes: the shared material lives once on
 # howtos.qmd, and this page points there.
@@ -42,10 +49,13 @@ resources:
 options(width = 80)   # match a default 80-column console for table alignment
 options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real startup message
 
-.sr_files <- c("Models.docx")
+.sr_files <- file.path("Tables", c("Models.docx"))
 .sr_clean <- function() {
   f <- .sr_files[file.exists(.sr_files)]
   if (length(f)) file.remove(f)
+  if (dir.exists("Tables") &&
+      !length(list.files("Tables", all.files = TRUE, no.. = TRUE)))
+    unlink("Tables", recursive = TRUE)
   invisible(NULL)
 }
 .sr_clean()
@@ -56,8 +66,9 @@ source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color 
 ## Several results in one table
 
 **Publication tables &middot; Page 4**\
-*It uses `m1`, the regression saved on
-[1. Saving results](tables-saving-results.qmd).*
+*This page uses `m1`, the regression you saved on
+[1. Saving results](tables-saving-results.qmd). Its first block makes it
+again, so you can start here in a new session.*
 
 Each table on page 3 held one result. Some tables hold several results. The
 most common is a table of regression models side by side, each model adding
@@ -91,6 +102,15 @@ m1 <- jlm(WellbeingScore ~ Age + Income, print = FALSE))---", fence = TRUE,
   lead = "The command lines are shown; the standalone <code>##</code> comment lines aren't -- running a comment just echoes it back and does nothing.")
 ```
 
+```{r}
+#| label: output-folder
+#| include: false
+# The output folder page 2 sets, which this page assumes (block 3 says so):
+# set here out of sight, so the Word file and the summary's path are as that
+# reader sees them. The teardown removes the folder when it is left empty.
+invisible(joptions(output.dir = "Tables", quiet = TRUE))
+```
+
 jstats and `community` are loaded, `community` is the default data frame, and
 `m1` is saved again. `print = FALSE` keeps its output out of the Console.
 
@@ -113,7 +133,11 @@ m2 <- jlm(WellbeingScore ~ Age + Income + CommuteTime, print = FALSE))---", fenc
 
 Given several models in a list, which base R's `list()` makes, `jtable()` puts
 them side by side in one table. The name each model is given in the list
-becomes the heading over its columns.
+becomes the heading over its columns. As on page 2, this assumes you've already
+set your output folder with `joptions(output.dir = "Tables")`, so the Word file
+goes in `Tables`. To set the folder once for every session, put that line in
+your project's `.Rprofile`, as
+[Loading jstats automatically](loading-jstats-automatically.qmd) shows.
 
 ```{r}
 #| echo: false
@@ -197,6 +221,11 @@ side by side.
 # block 3: the report, the headings, the empty row
 .m3 <- .msgs(jtable(list("Age and income" = m1, "Adding commute time" = m2),
                     file = file.path(.td, "M.docx")))
+# block 3: with the output folder set, a bare file name goes in Tables, and the
+# summary says so
+.m3_od <- .msgs(jtable(list(m1, m2), file = "GateCheck_sr.docx"))
+if (file.exists(file.path("Tables", "GateCheck_sr.docx")))
+  file.remove(file.path("Tables", "GateCheck_sr.docx"))
 .pv <- .pr(t3)
 .ct <- .pv[grepl("^Daily commute time", .pv)]
 .num <- function(x) length(regmatches(x, gregexpr("-?[.0-9]*[0-9]", x))[[1]])
@@ -224,7 +253,8 @@ side by side.
 
 stopifnot(
   !nzchar(.q12),
-  file.exists("Models.docx"),
+  file.exists(file.path("Tables", "Models.docx")), !file.exists("Models.docx"),
+  grepl("Tables[/\\\\]GateCheck_sr\\.docx", .m3_od),
   grepl("2 models side by side, on a landscape page.", .m3, fixed = TRUE),
   grepl("Table written to", .m3, fixed = TRUE),
   any(grepl("Age and income", .pv, fixed = TRUE)),

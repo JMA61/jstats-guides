@@ -35,10 +35,18 @@ resources:
 #
 # jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
 # startup message on first attach only. joutput()/joptions() are left alone. The
-# page WRITES files into the working directory (a styles folder and a Word
-# file); the clean-slate lines below clear them before the blocks run, and the
-# teardown clears them after. Only the Publication tables pages' files are removed (the
-# shared list below); the styles folder goes only when it is left empty.
+# page WRITES a styles folder into the working directory and a Word file into
+# the output folder, Tables; the clean-slate lines below clear them before the
+# blocks run, and the teardown clears them after. Only the Publication tables
+# pages' files are removed (the shared list below); the styles folder and the
+# Tables folder go only when they are left empty.
+#
+# S431 (Jeff's S429 read of the Publication tables pages, okayed): the Word
+# files go in the output folder, Tables, that Publication tables page 2 sets;
+# the page says it assumes the folder where its Word file is written, and a
+# hidden chunk after block 1 sets it out of sight, so the file and the
+# summary's path are as that reader sees them. The shared list's Word files
+# are in Tables, under the S431 names (Tables.docx, Tables_v2.docx).
 #
 # HOW-TO LAYOUT (S344). No top boxes: the shared material lives once on
 # howtos.qmd, and this page points there.
@@ -58,17 +66,21 @@ options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real start
 .tables_files <- c("styles/myreport.jstyle", "styles/mystyle.jstyle",
                    "styles/myblue.jstyle", "styles/mytest.txt",
                    "styles/mytest.jstyle", "styles/mymatch.jstyle",
-                   "myblue.txt", "mymatch.txt", "Descriptives.docx",
-                   "Regression.docx", "Report.docx", "Report_report.docx",
-                   "Table1_mystyle.docx", "Table1_report.docx",
-                   "Table1_myblue.docx", "Tables_mymatch.docx",
-                   "Models.docx")
+                   "myblue.txt", "mymatch.txt",
+                   file.path("Tables", c("Descriptives.docx",
+                     "Regression.docx", "Tables.docx", "Tables_v2.docx",
+                     "Table1_mystyle.docx", "Table1_report.docx",
+                     "Table1_myblue.docx", "Tables_mymatch.docx",
+                     "Models.docx")))
 .bh_clean <- function() {
   f <- .tables_files[file.exists(.tables_files)]
   if (length(f)) file.remove(f)
   if (dir.exists("styles") &&
       !length(list.files("styles", all.files = TRUE, no.. = TRUE)))
     unlink("styles", recursive = TRUE)
+  if (dir.exists("Tables") &&
+      !length(list.files("Tables", all.files = TRUE, no.. = TRUE)))
+    unlink("Tables", recursive = TRUE)
   invisible(NULL)
 }
 .bh_clean()
@@ -122,6 +134,16 @@ library(jstats)
 jload("community", overwrite = TRUE, quiet = TRUE)
 juse(community))---", fence = TRUE,
   lead = "The command lines are shown; the standalone <code>##</code> comment lines aren't -- running a comment just echoes it back and does nothing.")
+```
+
+```{r}
+#| label: output-folder
+#| include: false
+# The output folder Publication tables page 2 sets, which this page assumes
+# (its text says so where the Word file is written): set here out of sight, so
+# the Word file and the summary's path are as that reader sees them. The
+# teardown removes the folder when it is left empty.
+invisible(joptions(output.dir = "Tables", quiet = TRUE))
 ```
 
 ### 2. A table in the report style
@@ -289,7 +311,12 @@ further down the general settings.
 
 Now make the same table in `mystyle`, and write it to a Word file. A table
 keeps the style it was made in, so the new table is made from the result, `d1`,
-not from `t1`.
+not from `t1`. As on
+[Making a table in Word](tables-in-word.qmd), Publication tables page 2, this
+assumes you've already set your output folder with
+`joptions(output.dir = "Tables")`, so the Word file goes in `Tables`. To set the folder once for every session, put that line in
+your project's `.Rprofile`, as
+[Loading jstats automatically](loading-jstats-automatically.qmd) shows.
 
 ```{r}
 #| echo: false
@@ -436,7 +463,7 @@ stopifnot(
   grep("^font += Times New Roman$", .chk) < grep("^decimals += 1$", .chk),
   # block 6: one decimal place, the mean age as quoted, the file written
   grepl(paste0(" ", .bh_age_after, " "), .age2), !identical(.pr(t1)[-1], .pr(t2)[-1]),
-  file.exists("Table1_mystyle.docx"),
+  file.exists(file.path("Tables", "Table1_mystyle.docx")), !file.exists("Table1_mystyle.docx"),
   # the stops: a misspelled setting and a value the setting doesn't take
   grepl("decimal", .bh_msg_name, fixed = TRUE), grepl("Did you mean decimals?", .bh_msg_name, fixed = TRUE),
   grepl("decimals = one", .bh_msg_value, fixed = TRUE), grepl("must be", .bh_msg_value, fixed = TRUE),

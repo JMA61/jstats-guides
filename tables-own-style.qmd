@@ -59,17 +59,21 @@ options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real start
 .tables_files <- c("styles/myreport.jstyle", "styles/mystyle.jstyle",
                    "styles/myblue.jstyle", "styles/mytest.txt",
                    "styles/mytest.jstyle", "styles/mymatch.jstyle",
-                   "myblue.txt", "mymatch.txt", "Descriptives.docx",
-                   "Regression.docx", "Report.docx", "Report_report.docx",
-                   "Table1_mystyle.docx", "Table1_report.docx",
-                   "Table1_myblue.docx", "Tables_mymatch.docx",
-                   "Models.docx")
+                   "myblue.txt", "mymatch.txt",
+                   file.path("Tables", c("Descriptives.docx",
+                     "Regression.docx", "Tables.docx", "Tables_v2.docx",
+                     "Table1_mystyle.docx", "Table1_report.docx",
+                     "Table1_myblue.docx", "Tables_mymatch.docx",
+                     "Models.docx")))
 .sf_clean <- function() {
   f <- .tables_files[file.exists(.tables_files)]
   if (length(f)) file.remove(f)
   if (dir.exists("styles") &&
       !length(list.files("styles", all.files = TRUE, no.. = TRUE)))
     unlink("styles", recursive = TRUE)
+  if (dir.exists("Tables") &&
+      !length(list.files("Tables", all.files = TRUE, no.. = TRUE)))
+    unlink("Tables", recursive = TRUE)
   invisible(NULL)
 }
 .sf_clean()

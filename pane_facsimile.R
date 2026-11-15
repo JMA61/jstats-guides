@@ -14,7 +14,8 @@
 #       the "What you should see" box -- a collapsed callout. The Going-further
 #       device (data.qmd is the model page).
 #   .obx$show_source(code, name, dirty, lead, note)
-#   .obx$show_console(code, expect_error, lead, note, expect_error_match)
+#   .obx$show_console(code, expect_error, lead, note, expect_error_match,
+#                     files, files_path)
 #       bare captioned pane FIGURES, no callout wrapper. Together they carry the
 #       source-vs-console beat on the spine pages (Step 3): the same line shown
 #       sitting unrun in a script, then having been run in the Console.
@@ -1290,6 +1291,9 @@ local({
   #     When the reader is being asked to TYPE the line, pass fence = TRUE.
   # env = TRUE appends an Environment facsimile, read live from the global
   # environment after the code runs (same mechanism as show_block's env arg).
+  # files = appends a Files facsimile, as show_block's files = does, under the
+  # Environment pane when both are given (S431: Publication tables page 2
+  # shows the Tables folder its block 2 creates, in an open pane).
   # The code still RUNS (same run_block, same publish gate), so the shown result
   # can never drift from what the line actually produces.
   #
@@ -1300,7 +1304,8 @@ local({
   show_console <- function(code, expect_error = FALSE, fence = FALSE,
                            env = FALSE, env_mark = NULL,
                            lead = NULL, note = NULL, echo = TRUE,
-                           expect_error_match = NULL){
+                           expect_error_match = NULL, files = NULL,
+                           files_path = "your-working-directory"){
     code <- sub("[\n]+$", "", code)
     if (fence) cat("```r\n", code, "\n```\n\n", sep = "")
     segs <- run_block(code, expect_error = expect_error, echo = echo,
@@ -1310,6 +1315,10 @@ local({
     if (env){
       cat("\n", cap("Environment", "upper-right pane"), "\n\n",
           env_pane(env_objects(), mark = env_mark), "\n", sep = "")
+    }
+    if (!is.null(files)){
+      cat("\n", cap("Files", "lower-right pane"), "\n\n",
+          files_pane(files, path_parts = files_path), "\n", sep = "")
     }
     if (!is.null(note)) cat('<p class="obx-note"><em>', note, "</em></p>\n", sep = "")
     invisible(NULL)

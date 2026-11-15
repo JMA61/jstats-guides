@@ -4,6 +4,9 @@
 ## with the Source icon, to the right of Run in the script toolbar.
 ## Run it a second time and jtable() asks before replacing Models.docx:
 ## close the file in Word first, then answer y.
+## It assumes your output folder is set, as on page 2, with
+## joptions(output.dir = "Tables"). If it isn't set, the Word file goes in
+## your working directory instead.
 
 
 ## ---- 1. Load jstats and save the regression again ---------------------

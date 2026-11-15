@@ -6,6 +6,9 @@
 ## Run it again and jstats asks before replacing a file it wrote earlier:
 ## answer n for mymatch.jstyle, to keep the changes your assistant made,
 ## and y for the Word file (close it in Word first).
+## It assumes your output folder is set, as on Publication tables page 2,
+## with joptions(output.dir = "Tables"). If it isn't set, the Word file
+## goes in your working directory instead.
 
 
 ## ---- 1. Load jstats and the data --------------------------------------

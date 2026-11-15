@@ -54,7 +54,7 @@ suppressPackageStartupMessages(library(jstats))
 ## Keeping your styles
 
 **Your own table styles &middot; Page 2**\
-*The page before it is
+*The page before this one is
 [1. Making your own style](tables-own-style.qmd).*
 
 Page 1 kept its style in a folder named `styles` inside the project. That suits

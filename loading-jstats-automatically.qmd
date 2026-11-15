@@ -29,6 +29,12 @@ title-prefix: ""
 #      start the message appears WITHOUT the reader typing anything.
 #
 # Everything else on this page is a static screenshot or a plain code fence.
+#
+# S431: the file gains the output-folder line, joptions(output.dir =
+# "Tables"), beside the data-folder line, so the Publication tables pages'
+# reminders ("this assumes you've already set your output folder", Jeff,
+# S429) point to a page that shows it; Claude's default at S431, okayed
+# ("All yours on all").
 # ---------------------------------------------------------------------------
 
 options(width = 80)          # match a default 80-column console
@@ -92,6 +98,9 @@ joptions(missing.convention = "stata")
 
 # Explained on the Loading, Saving, Converting Data page
 joptions(data.dir = "Data")
+
+# Explained on the Making a table in Word page
+joptions(output.dir = "Tables")
 ```
 
 Pasted in, the file looks like this:
@@ -107,22 +116,27 @@ library(jstats)
 joptions(missing.convention = "stata")
 
 # Explained on the Loading, Saving, Converting Data page
-joptions(data.dir = "Data"))---", name = ".Rprofile", dirty = FALSE)
+joptions(data.dir = "Data")
+
+# Explained on the Making a table in Word page
+joptions(output.dir = "Tables"))---", name = ".Rprofile", dirty = FALSE)
 ```
 
 `library(jstats)` does the loading. The comment above it holds the address of the
 install page, so the reinstall instructions are one glance away on a new computer
 or after an R update.
 
-The two `joptions()` lines below it are settings, and they work the same way as
-the load: anything you put in this file applies to every session you open in this
-Project, so you choose once instead of at the start of each session. Both are
-optional, and neither is explained here — each belongs to its own page.
+The three `joptions()` lines below it are settings, and they work the same way
+as the load: anything you put in this file applies to every session you open in
+this Project, so you choose once instead of at the start of each session. All
+three are optional, and none is explained here — each belongs to its own page.
 *[Telling jstats about missing values](missing-values.qmd)* covers what a
 missing-value convention is and why Stata-style is the one jstats recommends;
-*[Loading, Saving, Converting Data](data.qmd)* covers the data folder. If you
-haven't read those yet, leave the two lines out for now and add them later; the
-file works perfectly well with just the load.
+*[Loading, Saving, Converting Data](data.qmd)* covers the data folder; and
+*[Making a table in Word](tables-in-word.qmd)* covers the output folder, where
+jstats writes its Word tables. If you haven't read those yet, leave the lines
+out for now and add them later; the file works perfectly well with just the
+load.
 
 Save — the disk icon at the top of the Source pane, or **Ctrl+S** (**Cmd+S** on a
 Mac) — and check that the tab reads `.Rprofile`, nothing more. (Picked up a `.R`
@@ -147,10 +161,10 @@ RStudio's sign that the package is loaded for this session:
 
 ![](images/packages-jstats-loaded.png){width=440px fig-alt="RStudio's Packages tab, showing the jstats entry with its checkbox ticked."}
 
-If you kept the two `joptions()` lines, each one also prints a short
-confirmation of its setting in the Console at every start, just below the
-startup message. And the first time the Project opens, jstats creates the Data
-folder and says so. If you would rather not see the confirmations, add
+If you kept the `joptions()` lines, each one also prints a short confirmation
+of its setting in the Console at every start, just below the startup message.
+And the first time the Project opens, jstats creates the Data and Tables
+folders and says so. If you would rather not see the confirmations, add
 `quiet = TRUE` inside the parentheses —
 `joptions(data.dir = "Data", quiet = TRUE)`, for example.
 

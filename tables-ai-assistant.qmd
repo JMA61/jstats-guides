@@ -32,11 +32,19 @@ resources:
 #
 # jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
 # startup message on first attach only. joutput()/joptions() are left alone. The
-# page WRITES files into the working directory (a styles folder, two Word files,
-# myblue.txt); the clean-slate lines below clear them before the blocks run (a
-# halted render never reaches the teardown chunk at the foot), and the teardown
-# clears them after. Only the Publication tables pages' files are removed (the
-# shared list below); the styles folder goes only when it is left empty.
+# page WRITES files into the working directory (a styles folder, myblue.txt)
+# and two Word files into the output folder, Tables; the clean-slate lines
+# below clear them before the blocks run (a halted render never reaches the
+# teardown chunk at the foot), and the teardown clears them after. Only the
+# Publication tables pages' files are removed (the shared list below); the
+# styles folder and the Tables folder go only when they are left empty.
+#
+# S431 (Jeff's S429 read of the Publication tables pages, okayed): the Word
+# files go in the output folder, Tables, that Publication tables page 2 sets;
+# the page says it assumes the folder where its Word file is written, and a
+# hidden chunk after block 1 sets it out of sight, so the file and the
+# summary's path are as that reader sees them. The shared list's Word files
+# are in Tables, under the S431 names (Tables.docx, Tables_v2.docx).
 #
 # YOUR OWN TABLE STYLES, PAGE 4 (S422 review; was Publication tables page 8; drafted S421 as ai-styles.qmd). It STANDS
 # ALONE: readers may arrive by the AI route without pages 1-7, so it repeats
@@ -62,17 +70,21 @@ options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real start
 .tables_files <- c("styles/myreport.jstyle", "styles/mystyle.jstyle",
                    "styles/myblue.jstyle", "styles/mytest.txt",
                    "styles/mytest.jstyle", "styles/mymatch.jstyle",
-                   "myblue.txt", "mymatch.txt", "Descriptives.docx",
-                   "Regression.docx", "Report.docx", "Report_report.docx",
-                   "Table1_mystyle.docx", "Table1_report.docx",
-                   "Table1_myblue.docx", "Tables_mymatch.docx",
-                   "Models.docx")
+                   "myblue.txt", "mymatch.txt",
+                   file.path("Tables", c("Descriptives.docx",
+                     "Regression.docx", "Tables.docx", "Tables_v2.docx",
+                     "Table1_mystyle.docx", "Table1_report.docx",
+                     "Table1_myblue.docx", "Tables_mymatch.docx",
+                     "Models.docx")))
 .ai_clean <- function() {
   f <- .tables_files[file.exists(.tables_files)]
   if (length(f)) file.remove(f)
   if (dir.exists("styles") &&
       !length(list.files("styles", all.files = TRUE, no.. = TRUE)))
     unlink("styles", recursive = TRUE)
+  if (dir.exists("Tables") &&
+      !length(list.files("Tables", all.files = TRUE, no.. = TRUE)))
+    unlink("Tables", recursive = TRUE)
   invisible(NULL)
 }
 .ai_clean()
@@ -137,6 +149,16 @@ juse(community))---", fence = TRUE,
   lead = "The command lines are shown; the standalone <code>##</code> comment lines aren't -- running a comment just echoes it back and does nothing.")
 ```
 
+```{r}
+#| label: output-folder
+#| include: false
+# The output folder Publication tables page 2 sets, which this page assumes
+# (its text says so where the Word file is written): set here out of sight, so
+# the Word file and the summary's path are as that reader sees them. The
+# teardown removes the folder when it is left empty.
+invisible(joptions(output.dir = "Tables", quiet = TRUE))
+```
+
 ### 2. Make a table in the report style
 
 A table starts from a result saved with `<-`, the assignment operator. Here the
@@ -144,8 +166,13 @@ result is `jdesc()`'s descriptive statistics for three variables.
 `print = FALSE` keeps `jdesc()`'s own output out of the Console, since the Word
 table is what we're after. (In R, to *print* a result is to show it in the
 Console. Nothing goes to a printer or to Word.) `jtable()` then makes the table
-in a style, here `report`, and writes it to a Word file in your working
-directory (your project's folder).
+in a style, here `report`, and writes it to a Word file in your output folder.
+As on
+[Making a table in Word](tables-in-word.qmd), Publication tables page 2, this
+assumes you've already set your output folder with
+`joptions(output.dir = "Tables")`, so the Word file goes in `Tables`. To set the folder once for every session, put that line in
+your project's `.Rprofile`, as
+[Loading jstats automatically](loading-jstats-automatically.qmd) shows.
 
 ```{r}
 #| echo: false
@@ -163,8 +190,9 @@ print(t1)  # base R)---", fence = TRUE)
 ```
 
 `jtable()` reports what it made (Table 1, with three variables, on a portrait
-page) and where it wrote the Word file. On your screen that line gives your own
-working directory, which this page shows as `~/your-working-directory`.
+page) and where it wrote the Word file, in the `Tables` folder. On your screen
+that line starts with your own working directory (your project's folder),
+which this page shows as `~/your-working-directory`.
 `print(t1)` shows the same table in the Console.
 
 ::: {.callout-note collapse="true" title="Reading this output"}
@@ -620,7 +648,7 @@ invisible(grDevices::dev.off())
 
 stopifnot(
   # block 2: the Word file written
-  file.exists("Table1_report.docx"),
+  file.exists(file.path("Tables", "Table1_report.docx")), !file.exists("Table1_report.docx"),
   # block 3: a complete copy, its head naming the file to return
   .n_lines > 700, .n_lines < 900,
   any(grepl("return the whole file, named myblue.jstyle (not .txt).", .head, fixed = TRUE)),
@@ -632,7 +660,7 @@ stopifnot(
   any(grepl("^header.fill += 1F3864$", .chk)), any(grepl("^header.text += FFFFFF$", .chk)),
   any(grepl("^caption.size += size$", .chk)), any(grepl("^note.size += size - 1$", .chk)),
   # block 7: written, and the same preview line for line
-  file.exists("Table1_myblue.docx"), identical(.pr(t1), .pr(t2)),
+  file.exists(file.path("Tables", "Table1_myblue.docx")), identical(.pr(t1), .pr(t2)),
   # block 7: a chart as a figure in the style
   file.exists(file.path(.td, "Figure1_myblue.docx")),
   # block 9: renamed, and found

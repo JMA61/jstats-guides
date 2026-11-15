@@ -2,8 +2,11 @@
 ## script. This is the completed version of the script built on the guide
 ## page. It runs from top to bottom without errors. Run the whole file
 ## with the Source icon, to the right of Run in the script toolbar.
-## Run it a second time and jtable() asks before replacing Report.docx:
+## Run it a second time and jtable() asks before replacing Tables.docx:
 ## close the file in Word first, then answer y.
+## It assumes your output folder is set, as on page 2, with
+## joptions(output.dir = "Tables"). If it isn't set, the Word file goes in
+## your working directory instead.
 
 
 ## ---- 1. Load jstats, and make the results and their tables again ------
@@ -34,4 +37,4 @@ p1 <- jplot(Region)
 
 ## list() is base R: it puts the two tables and the chart together, in
 ## this order, and jtable() writes them all to one Word file
-jtable(list(t1, p1, t2), file = "Report.docx", open = TRUE)
+jtable(list(t1, p1, t2), file = "Tables.docx", open = TRUE)

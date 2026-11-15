@@ -33,10 +33,18 @@ resources:
 #
 # jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
 # startup message on first attach only. joutput()/joptions() are left alone. The
-# page WRITES a styles folder, a style file, its upload copy and a Word file
-# into the working directory; the clean-slate lines below clear them before
-# the blocks run, and the teardown clears them after. The styles folder goes
-# only when left empty; the shared list below names every page's files.
+# page WRITES a styles folder, a style file and its upload copy into the
+# working directory, and a Word file into the output folder, Tables; the
+# clean-slate lines below clear them before the blocks run, and the teardown
+# clears them after. The styles folder and the Tables folder go only when left
+# empty; the shared list below names every page's files.
+#
+# S431 (Jeff's S429 read of the Publication tables pages, okayed): the Word
+# files go in the output folder, Tables, that Publication tables page 2 sets;
+# the page says it assumes the folder where its Word file is written, and a
+# hidden chunk after block 1 sets it out of sight, so the file and the
+# summary's path are as that reader sees them. The shared list's Word files
+# are in Tables, under the S431 names (Tables.docx, Tables_v2.docx).
 #
 # HOW-TO LAYOUT (S344). No top boxes: the shared material lives once on
 # howtos.qmd, and this page points there.
@@ -56,17 +64,21 @@ options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real start
 .tables_files <- c("styles/myreport.jstyle", "styles/mystyle.jstyle",
                    "styles/myblue.jstyle", "styles/mytest.txt",
                    "styles/mytest.jstyle", "styles/mymatch.jstyle",
-                   "myblue.txt", "mymatch.txt", "Descriptives.docx",
-                   "Regression.docx", "Report.docx", "Report_report.docx",
-                   "Table1_mystyle.docx", "Table1_report.docx",
-                   "Table1_myblue.docx", "Tables_mymatch.docx",
-                   "Models.docx")
+                   "myblue.txt", "mymatch.txt",
+                   file.path("Tables", c("Descriptives.docx",
+                     "Regression.docx", "Tables.docx", "Tables_v2.docx",
+                     "Table1_mystyle.docx", "Table1_report.docx",
+                     "Table1_myblue.docx", "Tables_mymatch.docx",
+                     "Models.docx")))
 .mt_clean <- function() {
   f <- .tables_files[file.exists(.tables_files)]
   if (length(f)) file.remove(f)
   if (dir.exists("styles") &&
       !length(list.files("styles", all.files = TRUE, no.. = TRUE)))
     unlink("styles", recursive = TRUE)
+  if (dir.exists("Tables") &&
+      !length(list.files("Tables", all.files = TRUE, no.. = TRUE)))
+    unlink("Tables", recursive = TRUE)
   invisible(NULL)
 }
 .mt_clean()
@@ -80,7 +92,7 @@ source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color 
 ## Matching the look of a published table
 
 **Your own table styles &middot; Page 6**\
-*It uses the route of
+*This page uses the route of
 [4. Changing a style with an AI assistant](tables-ai-assistant.qmd), so read
 that page first.*
 
@@ -120,6 +132,16 @@ library(jstats)
 jload("community", overwrite = TRUE, quiet = TRUE)
 juse(community))---", fence = TRUE,
   lead = "The command lines are shown; the standalone <code>##</code> comment lines aren't -- running a comment just echoes it back and does nothing.")
+```
+
+```{r}
+#| label: output-folder
+#| include: false
+# The output folder Publication tables page 2 sets, which this page assumes
+# (its text says so where the Word file is written): set here out of sight, so
+# the Word file and the summary's path are as that reader sees them. The
+# teardown removes the folder when it is left empty.
+invisible(joptions(output.dir = "Tables", quiet = TRUE))
 ```
 
 ### 2. A copy of report, and a copy to upload
@@ -224,7 +246,12 @@ to the assistant, ask it to fix that line, and check the file again.
 
 Then make a table of each kind you named, from results of your own or from the
 practice data, and write the tables to one Word file to compare with the
-example.
+example. As on
+[Making a table in Word](tables-in-word.qmd), Publication tables page 2, this
+assumes you've already set your output folder with
+`joptions(output.dir = "Tables")`, so the Word file goes in `Tables`. To set the folder once for every session, put that line in
+your project's `.Rprofile`, as
+[Loading jstats automatically](loading-jstats-automatically.qmd) shows.
 
 ```{r}
 #| echo: false
@@ -292,7 +319,7 @@ stopifnot(
   all(c("descriptives", "regression", "crosstab") %in% .sections),
   # blocks 4 and 5 ran: the style read, three tables in one file
   any(grepl("^Style: mymatch", .out4)),
-  file.exists("Tables_mymatch.docx"),
+  file.exists(file.path("Tables", "Tables_mymatch.docx")), !file.exists("Tables_mymatch.docx"),
   any(grepl("3 tables written to", .out5, fixed = TRUE)),
   # models of different outcomes: no one table
   !is.na(.e_two)

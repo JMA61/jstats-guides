@@ -299,7 +299,7 @@ getwd()  # base R
 ## And this one opens the package overview: every jstats function,
 ## grouped by purpose
 ?jstats)---", box = FALSE, expect_error = TRUE,
-  expect_error_match = "Provide a filename")
+  expect_error_match = "Provide a file name in quotes")
 ```
 
 ::: {.callout-note collapse="true" title="Aside: how R writes file paths"}

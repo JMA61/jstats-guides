@@ -3,7 +3,10 @@
 ## It runs from top to bottom without errors. Run the whole file with the
 ## Source icon, to the right of Run in the script toolbar.
 ## Run it a second time and jtable() asks before replacing
-## Report_report.docx: close the file in Word first, then answer y.
+## Tables_v2.docx: close the file in Word first, then answer y.
+## It assumes your output folder is set, as on page 2, with
+## joptions(output.dir = "Tables"). If it isn't set, the Word file goes in
+## your working directory instead.
 
 
 ## ---- 1. Load jstats and save the two results again --------------------
@@ -38,7 +41,7 @@ joptions(style = "report")
 t1 <- jtable(d1, print = FALSE)
 t2 <- jtable(m1, print = FALSE)
 p1 <- jplot(Region)
-jtable(list(t1, p1, t2), file = "Report_report.docx", open = TRUE)
+jtable(list(t1, p1, t2), file = "Tables_v2.docx", open = TRUE)
 
 
 ## ---- 4. Back to apa ---------------------------------------------------

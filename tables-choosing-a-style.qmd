@@ -33,8 +33,17 @@ resources:
 # jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
 # startup message on first attach only. joutput()/joptions() are left alone
 # except as the blocks set them; block 4 puts the style back. The page WRITES
-# one Word file; the clean-slate line below removes it before the blocks run,
-# and the teardown after.
+# one Word file, into the output folder, Tables; the clean-slate line below
+# removes it, and the folder when it is left empty, before the blocks run, and
+# the teardown after.
+#
+# S431 (Jeff's S429 read of the Publication tables pages, okayed): the page
+# assumes the output folder page 2 sets, and says so at block 3; a hidden
+# chunk after block 1 sets it out of sight, so the Word file is where that
+# reader finds it. Report_report.docx is Tables_v2.docx (Jeff: "Two reports
+# together with the underscore between ... Can we select a new name for the
+# file?"; "Okay with all names."); the opening line names what the page uses
+# and that block 1 makes the results again.
 #
 # HOW-TO LAYOUT (S344). No top boxes: the shared material lives once on
 # howtos.qmd, and this page points there.
@@ -48,10 +57,13 @@ resources:
 options(width = 80)   # match a default 80-column console for table alignment
 options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real startup message
 
-.cs_files <- c("Report_report.docx")
+.cs_files <- file.path("Tables", c("Tables_v2.docx"))
 .cs_clean <- function() {
   f <- .cs_files[file.exists(.cs_files)]
   if (length(f)) file.remove(f)
+  if (dir.exists("Tables") &&
+      !length(list.files("Tables", all.files = TRUE, no.. = TRUE)))
+    unlink("Tables", recursive = TRUE)
   invisible(NULL)
 }
 .cs_clean()
@@ -62,9 +74,10 @@ source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color 
 ## Choosing a style: apa or report
 
 **Publication tables &middot; Page 5**\
-*It uses the two results saved on
+*This page uses the two results you saved on
 [1. Saving results](tables-saving-results.qmd), and remakes the file from
-[3. Several tables and a chart in one file](tables-several.qmd).*
+[3. Several tables and a chart in one file](tables-several.qmd). Its first block
+makes the results again, so you can start here in a new session.*
 
 A *style* is the set of choices that decide how every table and chart looks
 when `jtable()` writes it to Word: the font and its size, the caption, the
@@ -110,6 +123,15 @@ m1 <- jlm(WellbeingScore ~ Age + Income, print = FALSE))---", fence = TRUE,
   lead = "The command lines are shown; the standalone <code>##</code> comment lines aren't -- running a comment just echoes it back and does nothing.")
 ```
 
+```{r}
+#| label: output-folder
+#| include: false
+# The output folder page 2 sets, which this page assumes (block 3 says so):
+# set here out of sight, so the Word file is where that reader finds it. The
+# teardown removes the folder when it is left empty.
+invisible(joptions(output.dir = "Tables", quiet = TRUE))
+```
+
 ### 2. One table in the report style
 
 `style =` in a `jtable()` call names the style for that one table.
@@ -140,7 +162,12 @@ writes the Word file; this is the table in it:
 To use `report` for every table, set it as the session's style with
 `joptions()`, rather than adding `style =` to each call. The setting lasts
 until R restarts. A table or a chart keeps the style it was made in, so make
-the tables and the chart again after you change the setting.
+the tables and the chart again after you change the setting. As on page 2, the
+block assumes you've already set your output folder with
+`joptions(output.dir = "Tables")`, so the Word file goes in `Tables`. To set
+the folder once for every session, put that line in your project's
+`.Rprofile`, as [Loading jstats automatically](loading-jstats-automatically.qmd)
+shows.
 
 ```{r}
 #| echo: false
@@ -156,11 +183,11 @@ joptions(style = "report")
 t1 <- jtable(d1, print = FALSE)
 t2 <- jtable(m1, print = FALSE)
 p1 <- jplot(Region)
-jtable(list(t1, p1, t2), file = "Report_report.docx", open = TRUE))---", fence = TRUE)
+jtable(list(t1, p1, t2), file = "Tables_v2.docx", open = TRUE))---", fence = TRUE)
 invisible(grDevices::dev.off())
 ```
 
-`joptions()` confirms the style, and `Report_report.docx` holds page 3's two
+`joptions()` confirms the style, and `Tables_v2.docx` holds page 3's two
 tables and its chart, all in `report`. The chart changes with the tables: its
 caption takes the same form as theirs, "Figure 1:" and the title on one line,
 and `report` draws the chart
@@ -281,7 +308,7 @@ stopifnot(
   any(grepl("^header.fill += D9D9D9$", .rp)),
   # block 3: the session's style built t1, t2 and p1 in report
   .pr_built[1] == "Table 1: Descriptive Statistics (N = 103)",
-  file.exists("Report_report.docx"),
+  file.exists(file.path("Tables", "Tables_v2.docx")), !file.exists("Tables_v2.docx"),
   any(grepl("^Table 1: Descriptive", .cap)), any(grepl("^Figure 1: Region", .cap)),
   any(grepl("^Table 2: Regression", .cap)),
   .plot_line(.rp, "gridlines") == "gridlines       = horizontal",
@@ -309,7 +336,7 @@ keep and reuse, download it here. Put your own results in place of `d1` and
 
 The file is the finished version of the script you built: the same code, in the
 same order. If you run the file a second time, `jtable()` asks before replacing
-`Report_report.docx`; the file's first lines say what to answer.
+`Tables_v2.docx`; the file's first lines say what to answer.
 [Using the How-To pages](howtos.qmd#using-the-how-to-pages) says more about
 finished scripts and how to run one.
 

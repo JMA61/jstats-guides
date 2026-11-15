@@ -1,8 +1,9 @@
 # pane_facsimile_check.R -- machine assertion battery for pane_facsimile.R's
 # run_block(): stream ordering (S273), expect_error_match (S273, wrap-proof
 # matching S274), a blank line printed after a message (S334), the color
-# switch (S344), a working directory wrapped at one of its spaces (S422), and
-# a list in the Environment pane (S428).
+# switch (S344), a working directory wrapped at one of its spaces (S422), a
+# list in the Environment pane (S428), and a Files pane under an open Console
+# (S431).
 #
 # WHY THIS FILE EXISTS. run_block() is a shared asset: every "What you should
 # see" box (show_block) and every Console facsimile (show_console) on the guide
@@ -353,8 +354,8 @@ local({
   old <- setwd(d)
   on.exit({ setwd(old); unlink(dirname(d), recursive = TRUE) }, add = TRUE)
   wd   <- normalizePath(getwd(), winslash = "/")
-  whole <- paste0("2 tables and 1 figure written to ", wd, "/Report_report.docx")
-  want  <- "2 tables and 1 figure written to ~/your-working-directory/Report_report.docx"
+  whole <- paste0("2 tables and 1 figure written to ", wd, "/Tables/Tables_v2.docx")
+  want  <- "2 tables and 1 figure written to ~/your-working-directory/Tables/Tables_v2.docx"
 
   ck("D1", "a path broken at a space, across two lines, is scrubbed",
      .obx$scrub_wd(sub(" Projects/", "\nProjects/", whole, fixed = TRUE)), want)
@@ -420,6 +421,34 @@ local({
   ck("L6", "a list row has the expand triangle and the view icon",
      c(grepl("<polygon", d1row, fixed = TRUE), grepl('class="ep-gi"', d1row, fixed = TRUE)),
      c(TRUE, TRUE))
+})
+
+# ---- 11. A FILES PANE UNDER AN OPEN CONSOLE (S431) ------------------------
+# show_console() takes files = as show_block() does, so a page can show, in an
+# open pane, the folder its block creates (Publication tables page 2: the
+# Tables folder that joptions(output.dir = ) makes). F1 and F2 fail on the
+# S430 file (no files argument); F3 and F4 hold what must not change: with no
+# files =, no Files pane, and the Console pane still first.
+
+cat("\n11. A FILES PANE UNDER AN OPEN CONSOLE\n")
+
+local({
+  td <- tempfile("fp-"); dir.create(td)
+  old <- setwd(td); on.exit({ setwd(old); unlink(td, recursive = TRUE) })
+  got <- function(...) paste(utils::capture.output(.obx$show_console(...)), collapse = "\n")
+  has_files <- "files" %in% names(formals(.obx$show_console))
+  ck("F1", "show_console() has a files argument", has_files, TRUE)
+  if (!has_files) return(invisible(NULL))
+  html <- got('dir.create("Tables")', files = c("Tables/"))
+  ck("F2", "  ... and with it, a Files pane listing the folder",
+     c(grepl("Files <span", html, fixed = TRUE),
+       grepl('<span class="fp-link">Tables</span>', html, fixed = TRUE)),
+     c(TRUE, TRUE))
+  html0 <- got("x <- 1")
+  ck("F3", "with no files =, no Files pane", grepl("Files <span", html0, fixed = TRUE), FALSE)
+  ck("F4", "the Console pane comes before the Files pane",
+     regexpr("Console <span", html, fixed = TRUE) < regexpr("Files <span", html, fixed = TRUE),
+     TRUE)
 })
 
 # ---- foot -----------------------------------------------------------------

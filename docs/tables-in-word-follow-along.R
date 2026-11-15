@@ -19,7 +19,14 @@ d1 <- jdesc(Age, Income, WellbeingScore, print = FALSE)
 m1 <- jlm(WellbeingScore ~ Age + Income, print = FALSE)
 
 
-## ---- 2. A table in Word -----------------------------------------------
+## ---- 2. Choose a folder for your Word files ---------------------------
+
+## Make Tables the output folder, where jtable() writes its Word files.
+## jstats creates the folder right away (if it isn't already there)
+joptions(output.dir = "Tables")
+
+
+## ---- 3. A table in Word -----------------------------------------------
 
 ## Make a table from d1, save it as t1, and write it to a Word file.
 ## open = TRUE opens the file once it is written
@@ -30,10 +37,10 @@ t1 <- jtable(d1, file = "Descriptives.docx", open = TRUE)
 print(t1)  # base R
 
 
-## ---- 3. A second table, in a file of its own --------------------------
+## ---- 4. A second table, in a file of its own --------------------------
 
 ## Make a table from m1, save it as t2, and write it to a second Word file
 t2 <- jtable(m1, file = "Regression.docx", open = TRUE)
 
-## Optional, as in block 2: the table in the Console as well
+## Optional, as in block 3: the table in the Console as well
 print(t2)  # base R

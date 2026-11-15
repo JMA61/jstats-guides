@@ -29,8 +29,17 @@ resources:
 #
 # jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
 # startup message on first attach only. joutput()/joptions() are left alone.
-# The page WRITES one Word file into the working directory; the clean-slate
-# line below removes it before the blocks run, and the teardown after.
+# The page WRITES one Word file into the output folder, Tables; the clean-slate
+# line below removes it, and the folder when it is left empty, before the
+# blocks run, and the teardown after.
+#
+# S431 (Jeff's S429 read of the Publication tables pages, okayed): the page
+# assumes the output folder page 2 sets, and says so at block 3 ("this assumes
+# you've already set your output folder", the .Rprofile for every session); a
+# hidden chunk after block 1 sets it out of sight, so the Word file and the
+# summary's path are as that reader sees them. Report.docx is Tables.docx
+# ("Okay with all names."); the opening line names what the page uses and
+# that block 1 makes it again.
 #
 # HOW-TO LAYOUT (S344). No top boxes: the shared material lives once on
 # howtos.qmd, and this page points there.
@@ -43,10 +52,13 @@ resources:
 options(width = 80)   # match a default 80-column console for table alignment
 options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real startup message
 
-.sv_files <- c("Report.docx")
+.sv_files <- file.path("Tables", c("Tables.docx"))
 .sv_clean <- function() {
   f <- .sv_files[file.exists(.sv_files)]
   if (length(f)) file.remove(f)
+  if (dir.exists("Tables") &&
+      !length(list.files("Tables", all.files = TRUE, no.. = TRUE)))
+    unlink("Tables", recursive = TRUE)
   invisible(NULL)
 }
 .sv_clean()
@@ -57,9 +69,10 @@ source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color 
 ## Several tables and a chart in one file
 
 **Publication tables &middot; Page 3**\
-*It uses the results saved on
-[1. Saving results](tables-saving-results.qmd) and the tables made on
-[2. Making a table in Word](tables-in-word.qmd).*
+*This page uses the results you saved on
+[1. Saving results](tables-saving-results.qmd) and the tables you made on
+[2. Making a table in Word](tables-in-word.qmd). Its first block makes the
+results and the tables again, so you can start here in a new session.*
 
 A report or an article usually has several tables, and a chart or two. This page
 is a hands-on run-through of putting them in one Word file, numbered in order,
@@ -96,6 +109,15 @@ m1 <- jlm(WellbeingScore ~ Age + Income, print = FALSE)
 t1 <- jtable(d1, print = FALSE)
 t2 <- jtable(m1, print = FALSE))---", fence = TRUE,
   lead = "The command lines are shown; the standalone <code>##</code> comment lines aren't -- running a comment just echoes it back and does nothing.")
+```
+
+```{r}
+#| label: output-folder
+#| include: false
+# The output folder page 2 sets, which this page assumes (block 3 says so):
+# set here out of sight, so the Word file and the summary's path are as that
+# reader sees them. The teardown removes the folder when it is left empty.
+invisible(joptions(output.dir = "Tables", quiet = TRUE))
 ```
 
 jstats and `community` are loaded, and the two results and their tables are
@@ -136,7 +158,11 @@ eval(parse(text = .b2))
 ### 3. Tables and a chart in one file
 
 Put the tables and the chart together with base R's `list()`, and `jtable()`
-writes them all to one Word file, in the order of the list.
+writes them all to one Word file, in the order of the list. As on page 2, this
+assumes you've already set your output folder with
+`joptions(output.dir = "Tables")`, so the file goes in `Tables`. To set the
+folder once for every session, put that line in your project's `.Rprofile`, as
+[Loading jstats automatically](loading-jstats-automatically.qmd) shows.
 
 ```{r}
 #| echo: false
@@ -145,7 +171,7 @@ writes them all to one Word file, in the order of the list.
 
 ## list() is base R: it puts the two tables and the chart together, in
 ## this order, and jtable() writes them all to one Word file
-jtable(list(t1, p1, t2), file = "Report.docx", open = TRUE))---", fence = TRUE)
+jtable(list(t1, p1, t2), file = "Tables.docx", open = TRUE))---", fence = TRUE)
 ```
 
 The Console lists what went into the file, in order, and ends with where the
@@ -167,7 +193,7 @@ caption in the same form as a table's: the number, then the title and N.
 :::
 
 To add another table later, save its result, make its table, and add the table
-to the list, in the place it should have in the file. Close `Report.docx` in
+to the list, in the place it should have in the file. Close `Tables.docx` in
 Word, then run the line again: `jtable()` asks before replacing the file, and
 you answer `y`.
 
@@ -203,6 +229,11 @@ invisible(grDevices::dev.off())
 .reg <- table(haven::as_factor(community$Region))
 # block 3: the order and the numbering
 .m3 <- .msgs(jtable(list(t1, p1, t2), file = file.path(.td, "R.docx")))
+# block 3: with the output folder set, a bare file name goes in Tables, and the
+# summary's last line says so
+.m3_od <- .msgs(jtable(list(t1, t2), file = "GateCheck_sv.docx"))
+if (file.exists(file.path("Tables", "GateCheck_sv.docx")))
+  file.remove(file.path("Tables", "GateCheck_sv.docx"))
 .pos <- function(s) regexpr(s, .m3, fixed = TRUE)
 # the reading box: a wide table goes landscape, and its second line says so
 .x1 <- jcrosstab(Volunteer ~ Region, print = FALSE)
@@ -216,7 +247,8 @@ stopifnot(
   grepl("Bar Chart: Region", .m2, fixed = TRUE), grepl("Analysis N: 103", .m2, fixed = TRUE),
   identical(names(.reg), c("North", "South", "East", "West")),
   identical(as.integer(.reg), c(27L, 20L, 31L, 25L)),
-  file.exists("Report.docx"),
+  file.exists(file.path("Tables", "Tables.docx")), !file.exists("Tables.docx"),
+  grepl("Tables[/\\\\]GateCheck_sv\\.docx", .m3_od),
   .pos("Table 1. Descriptive") > 0, .pos("Figure 1. Region") > .pos("Table 1. Descriptive"),
   .pos("Table 2. Regression") > .pos("Figure 1. Region"),
   grepl("2 tables and 1 figure written to", .m3, fixed = TRUE),
@@ -236,7 +268,7 @@ in the order you want them in the file.
 
 The file is the finished version of the script you built: the same code, in the
 same order. If you run the file a second time, `jtable()` asks before replacing
-`Report.docx`; the file's first lines say what to answer.
+`Tables.docx`; the file's first lines say what to answer.
 [Using the How-To pages](howtos.qmd#using-the-how-to-pages) says more about
 finished scripts and how to run one.
 

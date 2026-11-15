@@ -18,8 +18,8 @@ resources:
 # unexpected error in any block HALTS the render (the publish gate).
 #
 # Devices, by the OUTPUT-REGISTER rule: the prose and the "Reading this output"
-# box READ the output of blocks 1-3, so those panes render OPEN
-# (.obx$show_console(fence = TRUE)).
+# box READ the output of blocks 1-4, so those panes render OPEN
+# (.obx$show_console(fence = TRUE)); block 2's pane shows the Files pane too.
 #
 # PUBLICATION TABLES, PAGE 2 (S422). It uses page 1's saved results, d1 and
 # m1; block 1 makes them again, so the page and its script also work in a
@@ -28,9 +28,19 @@ resources:
 #
 # jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
 # startup message on first attach only. joutput()/joptions() are left alone.
-# The page WRITES two Word files into the working directory; the clean-slate
-# line below removes them before the blocks run (a halted render never reaches
-# the teardown chunk at the foot), and the teardown removes them after.
+# The page WRITES two Word files into the output folder, Tables, which block 2
+# sets and creates; the clean-slate line below removes them, and the folder
+# when it is left empty, before the blocks run (a halted render never reaches
+# the teardown chunk at the foot), and the teardown removes them after. A
+# Tables folder still holding anything else HALTS the render: block 2's pane
+# and its prose need the folder to be new. The list names every tables page's
+# Word files, as the style pages' shared list does.
+#
+# S431 (Jeff's S429 read of the page, okayed): block 2 sets the output folder
+# ("I think we should cover it in ... page 2"; "okay for option 2": the later
+# pages remind the reader, and the .Rprofile makes it permanent); block 3 says
+# a file name may leave off .docx (v0.9.289); the Why box gains the bullet on
+# SPSS-style missing values, naming no package, gated on base R's mean.
 #
 # HOW-TO LAYOUT (S344). No top boxes: the shared material lives once on
 # howtos.qmd, and this page points there.
@@ -46,13 +56,24 @@ resources:
 options(width = 80)   # match a default 80-column console for table alignment
 options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real startup message
 
-.tw_files <- c("Descriptives.docx", "Regression.docx")
+# Every Word file the tables pages write into Tables (S431), so a render halted
+# on a later page cannot leave a file here that halts this one.
+.tw_files <- file.path("Tables", c("Descriptives.docx", "Regression.docx",
+                                   "Tables.docx", "Tables_v2.docx", "Models.docx",
+                                   "Table1_mystyle.docx", "Table1_report.docx",
+                                   "Table1_myblue.docx", "Tables_mymatch.docx"))
 .tw_clean <- function() {
   f <- .tw_files[file.exists(.tw_files)]
   if (length(f)) file.remove(f)
+  if (dir.exists("Tables") &&
+      !length(list.files("Tables", all.files = TRUE, no.. = TRUE)))
+    unlink("Tables", recursive = TRUE)
   invisible(NULL)
 }
 .tw_clean()
+if (dir.exists("Tables"))
+  stop("The project's Tables folder holds files no Publication tables page ",
+       "wrote. Move them out and render again.", call. = FALSE)
 
 source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color on
 ```
@@ -60,12 +81,14 @@ source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color 
 ## Making a table in Word
 
 **Publication tables &middot; Page 2**\
-*It uses `d1` and `m1`, the two results saved on
-[1. Saving results](tables-saving-results.qmd).*
+*This page uses `d1` and `m1`, the two results you saved on
+[1. Saving results](tables-saving-results.qmd). Its first block makes them
+again, so you can start here in a new session.*
 
 This page is a hands-on run-through of `jtable()`, which turns a saved result
-into a formatted table in a Word file. You'll make a table from each of page 1's
-two results, each in a Word file of its own.
+into a formatted table in a Word file. You'll choose a folder for your Word
+files, then make a table from each of page 1's two results, each in a Word file
+of its own.
 
 This page follows the pattern of every How-To: numbered blocks of code that
 build one script, with the finished script to download at the bottom.
@@ -101,18 +124,44 @@ the two results are saved again. This time `print = FALSE` keeps the output of
 both out of the Console. To see either one's output, type its name, `d1` or
 `m1`, in the Console.
 
-### 2. A table in Word
+### 2. Choose a folder for your Word files
 
-`jtable()` makes a table from a saved result. Give it a file name with
-`file =`, and it writes the table to a Word file of that name in your working
-directory (your project's folder). `open = TRUE` opens the file once it is
-written. The table itself can be saved in an object too, here `t1`, so that
-later lines can use it.
+`jtable()` writes each Word file into your *output folder*. Until you choose
+one, the output folder is your working directory (your project's folder), where
+the Word files would sit among your scripts and data. A folder of their own
+keeps them together. `joptions(output.dir = )` chooses it, as
+`joptions(data.dir = )` chose a data folder on
+[Loading, Saving, Converting Data](data.qmd).
 
 ```{r}
 #| echo: false
 #| results: asis
-.obx$show_console(r"---(## ---- 2. A table in Word -----------------------------------------------
+.obx$show_console(r"---(## ---- 2. Choose a folder for your Word files ---------------------------
+
+## Make Tables the output folder, where jtable() writes its Word files.
+## jstats creates the folder right away (if it isn't already there)
+joptions(output.dir = "Tables"))---", fence = TRUE, files = c("Tables/"),
+  note = "The Files pane (lower right) shows the new Tables folder, alongside whatever else your project folder already holds.")
+```
+
+`joptions()` confirms the setting, and jstats says it created the `Tables`
+folder, which now appears in the **Files** pane. The setting lasts until R
+restarts. The later pages in this topic assume it is set, so to set it once for
+every session, put the same line in your project's `.Rprofile`, as
+[Loading jstats automatically](loading-jstats-automatically.qmd) shows.
+
+### 3. A table in Word
+
+`jtable()` makes a table from a saved result. Give it a file name with
+`file =`, and it writes the table to a Word file of that name in your output
+folder, `Tables`. You may leave `.docx` off the file name: `jtable()` adds it.
+`open = TRUE` opens the file once it is written. The table itself can be saved
+in an object too, here `t1`, so that later lines can use it.
+
+```{r}
+#| echo: false
+#| results: asis
+.obx$show_console(r"---(## ---- 3. A table in Word -----------------------------------------------
 
 ## Make a table from d1, save it as t1, and write it to a Word file.
 ## open = TRUE opens the file once it is written
@@ -124,8 +173,9 @@ print(t1)  # base R)---", fence = TRUE)
 ```
 
 `jtable()` reports what it made (Table 1, with three variables, on a portrait
-page) and where it wrote the Word file. On your screen that line gives your own
-working directory, which this page shows as `~/your-working-directory`.
+page) and where it wrote the Word file, in the `Tables` folder. On your screen
+that line starts with your own working directory, which this page shows as
+`~/your-working-directory`.
 `print(t1)` shows the same table in the Console. That line is optional: the
 finished table is the one in the Word file, and `print()` only lets you check it
 without leaving RStudio.
@@ -182,9 +232,15 @@ saved, so:
 - the look comes from one style, so every table in a project matches (page 5
   and the next topic, *Your own table styles*, show how to change the style);
 - running your script again rebuilds every table from fresh results.
+- SPSS-style missing values stay missing. Many R packages, given a variable
+  whose codes such as &minus;99 are declared missing, count those cases as
+  missing yet still average or correlate the codes as real values. A table can
+  then show the wrong mean beside the right *N*, and nothing in it says so.
+  jstats applies the declarations the same way in every analysis and every
+  table.
 :::
 
-### 3. A second table, in a file of its own
+### 4. A second table, in a file of its own
 
 `jtable()` makes a table from the regression saved as `m1` the same way, here
 written to a second Word file.
@@ -192,12 +248,12 @@ written to a second Word file.
 ```{r}
 #| echo: false
 #| results: asis
-.obx$show_console(r"---(## ---- 3. A second table, in a file of its own --------------------------
+.obx$show_console(r"---(## ---- 4. A second table, in a file of its own --------------------------
 
 ## Make a table from m1, save it as t2, and write it to a second Word file
 t2 <- jtable(m1, file = "Regression.docx", open = TRUE)
 
-## Optional, as in block 2: the table in the Console as well
+## Optional, as in block 3: the table in the Console as well
 print(t2)  # base R)---", fence = TRUE)
 ```
 
@@ -207,7 +263,7 @@ table is Table 1 too, because each Word file numbers its own tables from 1. Page
 3, [Several tables and a chart in one file](tables-several.qmd), puts both
 tables in one file, where they are numbered 1 and 2.
 
-As in block 2, `print(t2)` only shows the table in the Console. This is the
+As in block 3, `print(t2)` only shows the table in the Console. This is the
 table in Word:
 
 ![The regression table in Word, in the built-in apa style.](images/tables-regression-apa.png){width=560px fig-alt="A regression table in Word in the apa style: 'Table 1' in bold, the title 'Regression Coefficients Predicting Wellbeing score (0-100) (N = 97)' in italics below it, columns b, SE, beta, and p, rows for the constant, age, and annual income, and R squared under them."}
@@ -242,7 +298,7 @@ that doesn't have the style's font, for example, uses another in its place.
 
 ## Running the script again
 
-Before you run block 2 or block 3 again, close the Word file. Word locks a file
+Before you run block 3 or block 4 again, close the Word file. Word locks a file
 it has open, and `jtable()` stops with a message if it can't replace the file.
 When you run the block, `jtable()` asks before replacing the file it wrote
 earlier: answer `y`.
@@ -281,7 +337,27 @@ topic, *Your own table styles*, how to change a style.
 # printed by jdesc() to three decimals, is the table's to two
 .num <- function(line) as.numeric(regmatches(line, gregexpr("-?[0-9]+\\.[0-9]+", line))[[1]])
 .age_out <- .d1_out[grepl("^Age ", .d1_out)]
-# block 2: the report's lines, and the preview's caption on two lines
+# block 2 (S431): the output folder -- joptions() confirms it and creates the
+# folder, said in the Console; run again here in an empty folder, then the
+# session's own setting put back. The Files pane's listing is the facsimile's
+# own gate (an entry with nothing on disk halts the render).
+.wd <- getwd(); .td_od <- tempfile("tw-od-"); dir.create(.td_od); setwd(.td_od)
+.m_od <- .msgs(joptions(output.dir = "Tables"))
+.od_made <- dir.exists("Tables")
+setwd(.wd); unlink(.td_od, recursive = TRUE)
+.od_now <- strsplit(.msgs(joptions()), "\n", fixed = TRUE)[[1]]
+# block 3: a bare file name goes in the output folder, and the summary says so;
+# a file name may leave off .docx (v0.9.289)
+.m_bare <- .msgs(jtable(d1, file = "GateCheck_tw.docx"))
+.bare_in_tables <- file.exists(file.path("Tables", "GateCheck_tw.docx"))
+if (.bare_in_tables) file.remove(file.path("Tables", "GateCheck_tw.docx"))
+.m_noext <- .msgs(jtable(d1, file = file.path(.td, "NoExt")))
+# the Why box's bullet: base R counts Income's declared codes as missing yet
+# averages them; jdesc() sets them aside (the S429 test)
+.inc_d1 <- .d1_out[grepl("^Income ", .d1_out)]
+.inc_base <- mean(community$Income, na.rm = TRUE)
+.inc_set_aside <- mean(haven::zap_missing(community$Income), na.rm = TRUE)
+# block 3: the report's lines, and the preview's caption on two lines
 .m2 <- .msgs(jtable(d1, file = file.path(.td, "D.docx")))
 .pv <- .pr(t1)
 .pv <- .pv[nzchar(trimws(.pv))]
@@ -314,8 +390,19 @@ stopifnot(
   identical(.pr(d1), .d1_out), identical(.pr(m1), .m1_out),
   grepl("Descriptive Statistics", .d1_out[1], fixed = TRUE),
   grepl("Linear Regression", .m1_out[1], fixed = TRUE),
-  # block 2
-  file.exists("Descriptives.docx"),
+  # block 2: the output folder set, created, and said so
+  grepl("Output folder: Tables", .m_od, fixed = TRUE),
+  grepl("Created 'Tables' folder in working directory.", .m_od, fixed = TRUE),
+  .od_made, any(.od_now == "Output folder: Tables"),
+  # block 3: the Word file in Tables, not the working directory; .docx added
+  file.exists(file.path("Tables", "Descriptives.docx")), !file.exists("Descriptives.docx"),
+  .bare_in_tables, grepl("Tables[/\\\\]GateCheck_tw\\.docx", .m_bare),
+  file.exists(file.path(.td, "NoExt.docx")), grepl("NoExt.docx", .m_noext, fixed = TRUE),
+  # the Why box's bullet: six cases counted missing, the codes still averaged
+  sum(is.na(community$Income)) == 6L, length(.inc_d1) == 1L,
+  abs(.num(.inc_d1)[1] - .inc_set_aside) < 0.001,
+  abs(.inc_base - .inc_set_aside) > 1000,
+  # block 3
   grepl("Table 1. Descriptive Statistics (N = 103)", .m2, fixed = TRUE),
   grepl("3 variables, on a portrait page.", .m2, fixed = TRUE),
   grepl("Table written to", .m2, fixed = TRUE),
@@ -326,8 +413,8 @@ stopifnot(
   identical(.pr(t1), .pr(jtable(d1, style = "apa", print = FALSE))),
   !identical(.pr(t1), .pr(jtable(d1, style = "report", print = FALSE))),
   any(grepl("^font += Times New Roman$", .apa)), any(grepl("^size += 12$", .apa)),
-  # block 3
-  file.exists("Regression.docx"),
+  # block 4
+  file.exists(file.path("Tables", "Regression.docx")), !file.exists("Regression.docx"),
   grepl("Table 1. Regression Coefficients", .m3, fixed = TRUE),
   grepl("1 model, on a portrait page.", .m3, fixed = TRUE),
   .pv2[1] == "Table 1",
@@ -342,8 +429,8 @@ unlink(.td, recursive = TRUE)
 
 That's the full run-through. If you'd like the entire script in one file to
 keep and reuse, download it here. Put your own results in place of `d1` and
-`m1`, and your own file names in place of `Descriptives.docx` and
-`Regression.docx`.
+`m1`, your own folder name in place of `Tables`, and your own file names in
+place of `Descriptives.docx` and `Regression.docx`.
 
 The file is the finished version of the script you built: the same code, in the
 same order. If you run the file a second time, `jtable()` asks before replacing

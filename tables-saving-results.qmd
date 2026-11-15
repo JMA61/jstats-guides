@@ -94,9 +94,9 @@ called *styles*, built into jstats (page 5). A second topic,
 or a journal requires.
 
 The Publication tables pages assume you can already run the analyses you'll put
-in tables: they don't explain, for instance, how to choose the predictors for a
-regression. What they explain is the step after the analysis, starting here,
-with saving its result. The page's last two blocks then save a result in a
+in tables. They don't cover, for instance, how to choose the predictors for a
+regression. What these pages cover is the step after the analysis, starting
+here with saving its result. The page's last two blocks then save a result in a
 file, so that a later session can use the result.
 
 This page follows the pattern of every How-To: numbered blocks of code that
@@ -204,8 +204,8 @@ to see it after all, type `m1` in the Console.
 ### 4. Save a result in a file
 
 An object is gone when the R session ends. To use a result in a later session,
-save the result in a file. Give the result to `jsave()`, the command that saves
-a dataset in [Loading, Saving, Converting Data](data.qmd). For a result,
+save the result in a file. Give the result to `jsave()`, the same command that
+saves a dataset in [Loading, Saving, Converting Data](data.qmd). For a result,
 `jsave()` needs no file name: it names the file for the object, `m1.rds`. (The
 `.rds` ending marks R's own file format.)
 
@@ -252,7 +252,7 @@ RStudio asks you to confirm first.
 
 ### 5. Load the result from the file
 
-In a later session, load jstats, then load the result with `jload()`, the
+In a later session, load jstats, then load the result with `jload()`, the same
 command that loads a dataset. Give `jload()` the result's name in quotes: it
 reads the file `m1.rds` and puts the result in the Environment as `m1`. The
 quotes are the one difference from block 4. There, `m1` was an object in the

@@ -7,6 +7,9 @@
 ## Run it again and jstats asks before replacing a file it wrote earlier:
 ## answer y for the two Word files (close them in Word first), and n for
 ## myblue.jstyle, to keep the changes your assistant made.
+## It assumes your output folder is set, as on Publication tables page 2,
+## with joptions(output.dir = "Tables"). If it isn't set, the Word files
+## go in your working directory instead.
 
 
 ## ---- 1. Load jstats and the data --------------------------------------
