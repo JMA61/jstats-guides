@@ -34,9 +34,9 @@ print(t1)  # base R
 
 ## ---- 3. A copy of report to change ------------------------------------
 
-## Keep this page's styles in a styles folder inside the project. jstats
+## Keep this page's styles in a Styles folder inside the project. jstats
 ## makes the folder; the setting lasts until R restarts
-joptions(style.dir = "styles")
+joptions(style.dir = "Styles")
 
 ## Save a complete copy of report as mystyle, every setting written out
 ## with a note. open = TRUE opens the copy in a tab beside your script

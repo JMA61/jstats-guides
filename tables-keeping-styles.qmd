@@ -57,7 +57,7 @@ suppressPackageStartupMessages(library(jstats))
 *The page before this one is
 [1. Making your own style](tables-own-style.qmd).*
 
-Page 1 kept its style in a folder named `styles` inside the project. That suits
+Page 1 kept its style in a folder named `Styles` inside the project. That suits
 a style that belongs to one project, such as one journal's style for one paper,
 but the folder is deleted when the project is: copy such a style somewhere else
 before you delete the project. This page shows where to keep the styles you mean
@@ -67,7 +67,7 @@ just a line for your project's `.Rprofile`, and a few habits.
 ## One folder for every project
 
 - **Choose a folder you can see, and that is backed up.** jstats suggests one:
-  a folder named `jstats styles` in your Documents folder.
+  a folder named `Styles` in your Documents folder.
 - **Get the line that sets it.** The line is `joptions(style.dir = "...")`, with
   the folder's full path between the quotes. You don't have to type the path.
   With no style folder set, `jstyle()` ends its list of styles with the line,
@@ -119,13 +119,13 @@ just a line for your project's `.Rprofile`, and a few habits.
 
   ```r
   # Explained on the Keeping your styles page
-  joptions(style.dir = "<your Documents folder>/jstats styles")
+  joptions(style.dir = "<your Documents folder>/Styles")
   ```
 
   An `.Rprofile` belongs to one project, so add the line in each project where
   you make tables. Every project then finds the same styles. jstats creates the
   folder the first time the line runs, if it isn't there.
-- **Move a style in.** A style made in a project's own `styles` folder, as on
+- **Move a style in.** A style made in a project's own `Styles` folder, as on
   page 1, can be copied into this folder like any file. With the line above in
   place, jstats looks in this folder first, so the copy here is the one it uses.
 
@@ -178,13 +178,13 @@ stopifnot(startsWith(.np(.jf), .np(.td)))   # the temporary one, never the real 
   any(vapply(unique(c(gsub("\\\\", "/", path), .np(path))),
              function(f) grepl(f, text, fixed = TRUE), logical(1)))
 }
-# the quoted lines: the line jstyle() ends on sets Documents/jstats styles, by
+# the quoted lines: the line jstyle() ends on sets Documents/Styles, by
 # its full path, and runs as printed (two spaces in, the path whole)
-.line_want <- paste0('  joptions(style.dir = "', .ks_docs, '/jstats styles")')
+.line_want <- paste0('  joptions(style.dir = "', .ks_docs, '/Styles")')
 
 # joptions() creates a style folder that is not there (a full path here,
 # standing in for the line's Documents folder, which is the render machine's)
-.newdir <- file.path(.td, "jstats styles")
+.newdir <- file.path(.td, "Styles")
 .m_new <- .msgs(joptions(style.dir = .newdir))
 .made <- dir.exists(.newdir)
 # the style folder comes first: a style of the same name in the jstats folder
@@ -207,7 +207,7 @@ invisible(utils::capture.output(joptions(style.dir = NULL)))
 
 if (is.na(.old_ud)) Sys.unsetenv("R_USER_DATA_DIR") else Sys.setenv(R_USER_DATA_DIR = .old_ud)
 stopifnot(
-  # the quotation: three lines and the line, which sets Documents/jstats styles
+  # the quotation: three lines and the line, which sets Documents/Styles
   length(.ks_end) == 4L, identical(.ks_line_real, .line_want),
   grepl("To keep them in your Documents folder instead, run:", .ks_end[3], fixed = TRUE),
   # the line's folder is created the first time it runs

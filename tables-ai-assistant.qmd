@@ -26,18 +26,18 @@ resources:
 # reader's AI assistant), so it is a plain fence.
 #
 # THE ASSISTANT'S REPLY. A render cannot ask an AI assistant, so the hidden
-# chunk "assistant-reply" (after block 5) makes, in styles/myblue.jstyle, the
+# chunk "assistant-reply" (after block 5) makes, in Styles/myblue.jstyle, the
 # four changes the page's example request asks for, as the assistants in the
 # S417-S418 test made them; the page says so in its prose.
 #
 # jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
 # startup message on first attach only. joutput()/joptions() are left alone. The
-# page WRITES files into the working directory (a styles folder, myblue.txt)
+# page WRITES files into the working directory (a Styles folder, myblue.txt)
 # and two Word files into the output folder, Tables; the clean-slate lines
 # below clear them before the blocks run (a halted render never reaches the
 # teardown chunk at the foot), and the teardown clears them after. Only the
 # Publication tables pages' files are removed (the shared list below); the
-# styles folder and the Tables folder go only when they are left empty.
+# Styles folder and the Tables folder go only when they are left empty.
 #
 # S431 (Jeff's S429 read of the Publication tables pages, okayed): the Word
 # files go in the output folder, Tables, that Publication tables page 2 sets;
@@ -64,12 +64,12 @@ options(width = 80)   # match a default 80-column console for table alignment
 options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real startup message
 
 # THE SHARED LIST (S422): every Publication tables page's files, so a render
-# halted on one page cannot leave a style file in the styles folder another
-# page creates and lists. A styles folder still holding anything else HALTS
+# halted on one page cannot leave a style file in the Styles folder another
+# page creates and lists. A Styles folder still holding anything else HALTS
 # the render: it is not this page's to remove.
-.tables_files <- c("styles/myreport.jstyle", "styles/mystyle.jstyle",
-                   "styles/myblue.jstyle", "styles/mytest.txt",
-                   "styles/mytest.jstyle", "styles/mymatch.jstyle",
+.tables_files <- c("Styles/myreport.jstyle", "Styles/mystyle.jstyle",
+                   "Styles/myblue.jstyle", "Styles/mytest.txt",
+                   "Styles/mytest.jstyle", "Styles/mymatch.jstyle",
                    "myblue.txt", "mymatch.txt",
                    file.path("Tables", c("Descriptives.docx",
                      "Regression.docx", "Tables.docx", "Tables_v2.docx",
@@ -79,17 +79,17 @@ options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real start
 .ai_clean <- function() {
   f <- .tables_files[file.exists(.tables_files)]
   if (length(f)) file.remove(f)
-  if (dir.exists("styles") &&
-      !length(list.files("styles", all.files = TRUE, no.. = TRUE)))
-    unlink("styles", recursive = TRUE)
+  if (dir.exists("Styles") &&
+      !length(list.files("Styles", all.files = TRUE, no.. = TRUE)))
+    unlink("Styles", recursive = TRUE)
   if (dir.exists("Tables") &&
       !length(list.files("Tables", all.files = TRUE, no.. = TRUE)))
     unlink("Tables", recursive = TRUE)
   invisible(NULL)
 }
 .ai_clean()
-if (dir.exists("styles"))
-  stop("The project's styles folder holds files no Publication tables page ",
+if (dir.exists("Styles"))
+  stop("The project's Styles folder holds files no Publication tables page ",
        "wrote. Move them out and render again.", call. = FALSE)
 
 source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color on
@@ -218,7 +218,7 @@ which this page shows as `~/your-working-directory`.
 jstats looks for a style file in a *style folder*, if you've set one, then in
 your working directory, then in your *jstats folder*, a folder jstats keeps for
 you. For
-this page, the style folder is a folder named `styles` inside your project. A
+this page, the style folder is a folder named `Styles` inside your project. A
 style you mean to keep belongs somewhere safer: page 2,
 [Keeping your styles](tables-keeping-styles.qmd), says where.
 
@@ -229,9 +229,9 @@ style you mean to keep belongs somewhere safer: page 2,
 #| results: asis
 .obx$show_console(r"---(## ---- 3. A folder for your styles, and a copy of report ----------------
 
-## Keep this page's styles in a styles folder inside the project. jstats
+## Keep this page's styles in a Styles folder inside the project. jstats
 ## makes the folder; the setting lasts until R restarts
-joptions(style.dir = "styles")
+joptions(style.dir = "Styles")
 
 ## Save a complete copy of report as myblue, every setting written out
 ## with a note. Run this line once: run again, it asks before replacing
@@ -244,7 +244,7 @@ jstyle("report", save.as = "myblue", open = TRUE))---", fence = TRUE)
 #| include: false
 # The style file's head, quoted below from the file block 3 wrote, so the
 # quotation cannot drift from what the package writes.
-.head <- readLines("styles/myblue.jstyle", encoding = "UTF-8")
+.head <- readLines("Styles/myblue.jstyle", encoding = "UTF-8")
 .ai_from <- grep("^# To an AI assistant", .head)
 .ai_to   <- grep("^# Then say what the request asks for", .head)
 stopifnot(length(.ai_from) == 1L, length(.ai_to) == 1L, .ai_to > .ai_from,
@@ -252,7 +252,7 @@ stopifnot(length(.ai_from) == 1L, length(.ai_to) == 1L, .ai_to > .ai_from,
 .n_lines <- length(.head)
 ```
 
-jstats made the `styles` folder and wrote the copy, `myblue.jstyle`, into it.
+jstats made the `Styles` folder and wrote the copy, `myblue.jstyle`, into it.
 With `open = TRUE` the file opens in a tab beside your script. It is plain text,
 about `r format(round(.n_lines, -2))` lines: every setting jstats has, each
 after a note saying what it does and what values it takes. Near the top are
@@ -303,7 +303,7 @@ outside the style folder, which should hold only `.jstyle` files.
 
 ## file.copy() is base R: it copies a file. overwrite = TRUE replaces an
 ## older copy, so run this line again before each upload
-file.copy("styles/myblue.jstyle", "myblue.txt", overwrite = TRUE)  # base R)---",
+file.copy("Styles/myblue.jstyle", "myblue.txt", overwrite = TRUE)  # base R)---",
   fence = TRUE)
 ```
 
@@ -321,7 +321,7 @@ comments, a note in your script of what you did.
 ## ---- 5. Ask your assistant (outside R) --------------------------------
 
 ## Upload myblue.txt with the request on the guide page, and save the file
-## that comes back as myblue.jstyle in the styles folder, replacing the
+## that comes back as myblue.jstyle in the Styles folder, replacing the
 ## copy there
 ```
 
@@ -340,10 +340,10 @@ the settings cannot do.
 Then:
 
 1. **Download the file the assistant gives you**, and move it into the
-   `styles` folder of your project, replacing the `myblue.jstyle` there. To
+   `Styles` folder of your project, replacing the `myblue.jstyle` there. To
    find the folder outside RStudio, click **More** (the gear) in the **Files**
    tab of the lower-right pane, then **Show Folder in New Window**.
-2. **Check the name in RStudio's Files tab.** Open the `styles` folder there:
+2. **Check the name in RStudio's Files tab.** Open the `Styles` folder there:
    it should hold `myblue.jstyle`, and no `myblue.txt` or
    `myblue.jstyle.txt`. The Files tab always shows a file's whole name, while
    Windows' File Explorer hides the endings it knows, so `myblue.jstyle.txt`
@@ -372,7 +372,7 @@ should work the same way, but haven't been tried yet.
 # THE ASSISTANT'S REPLY, made here because a render cannot ask an assistant:
 # the four changes the example request asks for, as the assistants in the
 # S417-S418 test made them (T1 font and size; T2 the header's fill and text).
-.rp <- readLines("styles/myblue.jstyle", encoding = "UTF-8")
+.rp <- readLines("Styles/myblue.jstyle", encoding = "UTF-8")
 .set1 <- function(x, from, to) {
   i <- which(x == from)
   stopifnot(length(i) >= 1L)
@@ -385,7 +385,7 @@ should work the same way, but haven't been tried yet.
 .rp <- .set1(.rp, "header.text = 000000", "header.text = FFFFFF")
 stopifnot(which(.rp == "font = Calibri") < grep("^\\[descriptives\\]", .rp),
           which(.rp == "size = 11") < grep("^\\[descriptives\\]", .rp))
-writeLines(.rp, "styles/myblue.jstyle", useBytes = TRUE)
+writeLines(.rp, "Styles/myblue.jstyle", useBytes = TRUE)
 ```
 
 The rest of this page uses a file with the four changes the example asks for,
@@ -415,7 +415,7 @@ jstyle("myblue"))---", chrome = TRUE)
 # The two messages quoted below, built by running jstyle() on two broken
 # copies of the file block 6 read, so the quotations are the package's own.
 .td <- tempfile("ai-msgs-"); dir.create(.td)
-.cp <- readLines("styles/myblue.jstyle", encoding = "UTF-8")
+.cp <- readLines("Styles/myblue.jstyle", encoding = "UTF-8")
 .broken <- function(lines) {
   f <- file.path(.td, "myblue.jstyle"); writeLines(lines, f, useBytes = TRUE); f
 }
@@ -463,7 +463,7 @@ again.
   reads `size - 1`, so the caption is now 11 points and the note 10, though
   neither line changed.
 - **If the list still shows Arial and 10**, jstats read a different file
-  from the one you saved. Look in the `styles` folder for a `myblue.txt` or
+  from the one you saved. Look in the `Styles` folder for a `myblue.txt` or
   `myblue.jstyle.txt` beside `myblue.jstyle`, and see block 8.
 :::
 
@@ -532,7 +532,7 @@ whose name ends in `.jstyle`. To see what jstats does with a file that ends in
 .obx$show_console(r"---(## ---- 8. If the file comes back as .txt --------------------------------
 
 ## Make a style file that ends in .txt, from the upload copy
-file.copy("myblue.txt", "styles/mytest.txt", overwrite = TRUE)  # base R
+file.copy("myblue.txt", "Styles/mytest.txt", overwrite = TRUE)  # base R
 
 ## jstats reads a style only from a file ending in .jstyle, so this stops
 ## (on purpose) and gives the line that renames the file
@@ -554,7 +554,7 @@ it from there, not from this page.
 
 ## file.rename() is base R. The line jstyle() gave does the same, with
 ## the full paths
-file.rename("styles/mytest.txt", "styles/mytest.jstyle")  # base R
+file.rename("Styles/mytest.txt", "Styles/mytest.jstyle")  # base R
 
 ## The style is found now: jtable() builds the table in it
 t3 <- jtable(d1, style = "mytest"))---", fence = TRUE)
@@ -590,7 +590,7 @@ without stopping. With no `file =`, `jtable()` writes no Word file, and says so.
   your assistant an example: page 6,
   [Matching the look of a published table](tables-matching.qmd), uses this
   page's route with an example attached.
-- **Keeping your styles.** The `styles` folder this page used is inside the
+- **Keeping your styles.** The `Styles` folder this page used is inside the
   project, so it is deleted when the project is. Page 2,
   [Keeping your styles](tables-keeping-styles.qmd), says where to keep a
   style you mean to keep, and how every project can find it.
@@ -611,7 +611,7 @@ without stopping. With no `file =`, `jtable()` writes no Word file, and says so.
   res
 }
 .pr  <- function(x) utils::capture.output(print(x))
-.cp  <- readLines("styles/myblue.jstyle", encoding = "UTF-8")
+.cp  <- readLines("Styles/myblue.jstyle", encoding = "UTF-8")
 .var <- function(lines, extra, after) {      # a variant of the style, by path
   f <- tempfile("ai-var-", tmpdir = .td, fileext = ".jstyle")
   writeLines(append(lines, extra, after = after), f, useBytes = TRUE); f
@@ -664,7 +664,7 @@ stopifnot(
   # block 7: a chart as a figure in the style
   file.exists(file.path(.td, "Figure1_myblue.docx")),
   # block 9: renamed, and found
-  file.exists("styles/mytest.jstyle"), !file.exists("styles/mytest.txt"),
+  file.exists("Styles/mytest.jstyle"), !file.exists("Styles/mytest.txt"),
   # one kind of table: the regression table changes, descriptives do not
   !identical(.reg_a, .reg_b), identical(.des_a, .des_b),
   # paper under a heading stops

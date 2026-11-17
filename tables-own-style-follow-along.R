@@ -19,9 +19,9 @@ juse(community)
 
 ## ---- 2. A style folder, and a copy in it ------------------------------
 
-## Keep this page's styles in a styles folder inside the project. jstats
+## Keep this page's styles in a Styles folder inside the project. jstats
 ## makes the folder; the setting lasts until R restarts
-joptions(style.dir = "styles")
+joptions(style.dir = "Styles")
 
 ## Save a complete copy of report as myreport.jstyle in the style folder
 jstyle("report", save.as = "myreport")

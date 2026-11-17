@@ -24,8 +24,8 @@ juse(community)
 
 ## ---- 2. A copy of report, and a copy to upload ------------------------
 
-## Keep this page's styles in a styles folder inside the project
-joptions(style.dir = "styles")
+## Keep this page's styles in a Styles folder inside the project
+joptions(style.dir = "Styles")
 
 ## Save a complete copy of report as mymatch, every setting written out
 ## with a note
@@ -33,13 +33,13 @@ jstyle("report", save.as = "mymatch")
 
 ## file.copy() is base R: it copies a file. The copy, ending in .txt, is
 ## the one to upload
-file.copy("styles/mymatch.jstyle", "mymatch.txt", overwrite = TRUE)  # base R
+file.copy("Styles/mymatch.jstyle", "mymatch.txt", overwrite = TRUE)  # base R
 
 
 ## ---- 3. Ask your assistant (outside R) --------------------------------
 
 ## Upload mymatch.txt and the example with the request on the guide page,
-## and save the file that comes back as mymatch.jstyle in the styles
+## and save the file that comes back as mymatch.jstyle in the Styles
 ## folder, replacing the copy there
 
 

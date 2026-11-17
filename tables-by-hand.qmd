@@ -25,7 +25,7 @@ resources:
 # editor), so it is a plain fence.
 #
 # THE READER'S EDIT. A render cannot type into the editor, so the hidden chunk
-# "the-edit" (after block 4) makes, in styles/mystyle.jstyle, the two changes
+# "the-edit" (after block 4) makes, in Styles/mystyle.jstyle, the two changes
 # block 4 asks for; the page says so in its prose.
 #
 # YOUR OWN TABLE STYLES, PAGE 3 (S422 review; was Publication tables page
@@ -35,10 +35,10 @@ resources:
 #
 # jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
 # startup message on first attach only. joutput()/joptions() are left alone. The
-# page WRITES a styles folder into the working directory and a Word file into
+# page WRITES a Styles folder into the working directory and a Word file into
 # the output folder, Tables; the clean-slate lines below clear them before the
 # blocks run, and the teardown clears them after. Only the Publication tables
-# pages' files are removed (the shared list below); the styles folder and the
+# pages' files are removed (the shared list below); the Styles folder and the
 # Tables folder go only when they are left empty.
 #
 # S431 (Jeff's S429 read of the Publication tables pages, okayed): the Word
@@ -60,12 +60,12 @@ options(width = 80)   # match a default 80-column console for table alignment
 options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real startup message
 
 # THE SHARED LIST (S422): every Publication tables page's files, so a render
-# halted on one page cannot leave a style file in the styles folder another
-# page creates and lists. A styles folder still holding anything else HALTS
+# halted on one page cannot leave a style file in the Styles folder another
+# page creates and lists. A Styles folder still holding anything else HALTS
 # the render: it is not this page's to remove.
-.tables_files <- c("styles/myreport.jstyle", "styles/mystyle.jstyle",
-                   "styles/myblue.jstyle", "styles/mytest.txt",
-                   "styles/mytest.jstyle", "styles/mymatch.jstyle",
+.tables_files <- c("Styles/myreport.jstyle", "Styles/mystyle.jstyle",
+                   "Styles/myblue.jstyle", "Styles/mytest.txt",
+                   "Styles/mytest.jstyle", "Styles/mymatch.jstyle",
                    "myblue.txt", "mymatch.txt",
                    file.path("Tables", c("Descriptives.docx",
                      "Regression.docx", "Tables.docx", "Tables_v2.docx",
@@ -75,17 +75,17 @@ options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real start
 .bh_clean <- function() {
   f <- .tables_files[file.exists(.tables_files)]
   if (length(f)) file.remove(f)
-  if (dir.exists("styles") &&
-      !length(list.files("styles", all.files = TRUE, no.. = TRUE)))
-    unlink("styles", recursive = TRUE)
+  if (dir.exists("Styles") &&
+      !length(list.files("Styles", all.files = TRUE, no.. = TRUE)))
+    unlink("Styles", recursive = TRUE)
   if (dir.exists("Tables") &&
       !length(list.files("Tables", all.files = TRUE, no.. = TRUE)))
     unlink("Tables", recursive = TRUE)
   invisible(NULL)
 }
 .bh_clean()
-if (dir.exists("styles"))
-  stop("The project's styles folder holds files no Publication tables page ",
+if (dir.exists("Styles"))
+  stop("The project's Styles folder holds files no Publication tables page ",
        "wrote. Move them out and render again.", call. = FALSE)
 
 source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color on
@@ -187,7 +187,7 @@ Word file, and says so.
 
 The built-in styles have no file of their own to change. `jstyle()` with
 `save.as =` writes a copy of one as a style file. The copy goes into the style
-folder, which this block sets, as page 1 did, to a folder named `styles` inside
+folder, which this block sets, as page 1 did, to a folder named `Styles` inside
 your project.
 
 ```{r}
@@ -195,9 +195,9 @@ your project.
 #| results: asis
 .obx$show_console(r"---(## ---- 3. A copy of report to change ------------------------------------
 
-## Keep this page's styles in a styles folder inside the project. jstats
+## Keep this page's styles in a Styles folder inside the project. jstats
 ## makes the folder; the setting lasts until R restarts
-joptions(style.dir = "styles")
+joptions(style.dir = "Styles")
 
 ## Save a complete copy of report as mystyle, every setting written out
 ## with a note. open = TRUE opens the copy in a tab beside your script
@@ -207,11 +207,11 @@ jstyle("report", save.as = "mystyle", open = TRUE))---", fence = TRUE)
 ```{r}
 #| label: copy-lines
 #| include: false
-.bh_copy <- readLines("styles/mystyle.jstyle", encoding = "UTF-8")
+.bh_copy <- readLines("Styles/mystyle.jstyle", encoding = "UTF-8")
 .bh_n_lines <- length(.bh_copy)
 ```
 
-jstats wrote the copy, `mystyle.jstyle`, into the `styles` folder, and with
+jstats wrote the copy, `mystyle.jstyle`, into the `Styles` folder, and with
 `open = TRUE` the file opens in a tab beside your script. On your screen the
 copy's path starts with your own working directory (your project's folder),
 which this page shows as `~/your-working-directory`. The file is about
@@ -270,7 +270,7 @@ In the `mystyle.jstyle` tab:
 stopifnot(which(.ed == "font = Times New Roman") < grep("^\\[descriptives\\]", .ed),
           which(.ed == "decimals = 1") < grep("^\\[descriptives\\]", .ed),
           sum(.ed == "font = Arial") == 1L)   # the [plot] line, left as it was
-writeLines(.ed, "styles/mystyle.jstyle", useBytes = TRUE)
+writeLines(.ed, "Styles/mystyle.jstyle", useBytes = TRUE)
 ```
 
 ### 5. Check the file
@@ -303,7 +303,7 @@ further down the general settings.
   then each kind of table's section under its name in square brackets, then
   `[plot]`, for charts.
 - **If the list still shows Arial**, the change wasn't saved, or jstats
-  read a different file. Save the tab, and check that the `styles` folder holds
+  read a different file. Save the tab, and check that the `Styles` folder holds
   `mystyle.jstyle`.
 :::
 

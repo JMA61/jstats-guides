@@ -288,7 +288,7 @@ invisible(utils::capture.output(joptions(style = "apa")))
 # the last paragraph: a built-in style can't itself be changed -- a copy under
 # its name is refused (run under a temporary style folder, so nothing can reach
 # the render machine's own folders)
-.sd <- file.path(.td, "styles")
+.sd <- file.path(.td, "Styles")
 invisible(utils::capture.output(joptions(style.dir = .sd)))
 .e_builtin <- tryCatch({ jstyle("report", save.as = "report"); NA_character_ },
                        error = function(e) conditionMessage(e))

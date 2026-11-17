@@ -40,9 +40,9 @@ resources:
 #
 # jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
 # startup message on first attach only. joutput()/joptions() are left alone. The
-# page WRITES a styles folder and one style file into the working directory;
+# page WRITES a Styles folder and one style file into the working directory;
 # the clean-slate lines below clear them before the blocks run, and the
-# teardown clears them after. The styles folder goes only when left empty;
+# teardown clears them after. The Styles folder goes only when left empty;
 # the shared list below names every Publication tables page's files.
 #
 # HOW-TO LAYOUT (S344). No top boxes: the shared material lives once on
@@ -53,12 +53,12 @@ options(width = 80)   # match a default 80-column console for table alignment
 options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real startup message
 
 # THE SHARED LIST (S422): every Publication tables page's files, so a render
-# halted on one page cannot leave a style file in the styles folder another
-# page creates and lists. A styles folder still holding anything else HALTS
+# halted on one page cannot leave a style file in the Styles folder another
+# page creates and lists. A Styles folder still holding anything else HALTS
 # the render: it is not this page's to remove.
-.tables_files <- c("styles/myreport.jstyle", "styles/mystyle.jstyle",
-                   "styles/myblue.jstyle", "styles/mytest.txt",
-                   "styles/mytest.jstyle", "styles/mymatch.jstyle",
+.tables_files <- c("Styles/myreport.jstyle", "Styles/mystyle.jstyle",
+                   "Styles/myblue.jstyle", "Styles/mytest.txt",
+                   "Styles/mytest.jstyle", "Styles/mymatch.jstyle",
                    "myblue.txt", "mymatch.txt",
                    file.path("Tables", c("Descriptives.docx",
                      "Regression.docx", "Tables.docx", "Tables_v2.docx",
@@ -68,17 +68,17 @@ options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real start
 .sf_clean <- function() {
   f <- .tables_files[file.exists(.tables_files)]
   if (length(f)) file.remove(f)
-  if (dir.exists("styles") &&
-      !length(list.files("styles", all.files = TRUE, no.. = TRUE)))
-    unlink("styles", recursive = TRUE)
+  if (dir.exists("Styles") &&
+      !length(list.files("Styles", all.files = TRUE, no.. = TRUE)))
+    unlink("Styles", recursive = TRUE)
   if (dir.exists("Tables") &&
       !length(list.files("Tables", all.files = TRUE, no.. = TRUE)))
     unlink("Tables", recursive = TRUE)
   invisible(NULL)
 }
 .sf_clean()
-if (dir.exists("styles"))
-  stop("The project's styles folder holds files no Publication tables page ",
+if (dir.exists("Styles"))
+  stop("The project's Styles folder holds files no Publication tables page ",
        "wrote. Move them out and render again.", call. = FALSE)
 
 source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color on
@@ -133,7 +133,7 @@ juse(community))---", fence = TRUE,
 
 A *style folder* is the folder you choose for your style files.
 `joptions(style.dir = )` sets it. On this page the style folder is a folder
-named `styles` inside your project, and `jstyle()` with `save.as =` writes a
+named `Styles` inside your project, and `jstyle()` with `save.as =` writes a
 copy of `report` into that folder, under the name `myreport`.
 
 ```{r}
@@ -141,17 +141,22 @@ copy of `report` into that folder, under the name `myreport`.
 #| results: asis
 .obx$show_console(r"---(## ---- 2. A style folder, and a copy in it ------------------------------
 
-## Keep this page's styles in a styles folder inside the project. jstats
+## Keep this page's styles in a Styles folder inside the project. jstats
 ## makes the folder; the setting lasts until R restarts
-joptions(style.dir = "styles")
+joptions(style.dir = "Styles")
 
 ## Save a complete copy of report as myreport.jstyle in the style folder
 jstyle("report", save.as = "myreport"))---", fence = TRUE)
 ```
 
-`joptions()` confirms the style folder and, since there was no `styles` folder
+`joptions()` confirms the style folder and, since there was no `Styles` folder
 yet, creates it. `jstyle()` then reports the copy it wrote, `myreport.jstyle`:
 a style file's name ends in `.jstyle`.
+
+If your project already has a folder named `styles`, with a small s, from an
+earlier version of these pages, jstats adds a note that it will use that
+folder: on Windows and on a Mac the two names are the same folder, and the
+styles in it work as before.
 
 ### 3. Where jstats looks
 
@@ -227,7 +232,7 @@ style. With no `file =`, `jtable()` writes no Word file, and says so.
 
 `myreport` is still a copy of `report`, setting for setting. Page 2,
 [Keeping your styles](tables-keeping-styles.qmd), shows where to keep a style
-you mean to keep: the `styles` folder here is inside the project, and is
+you mean to keep: the `Styles` folder here is inside the project, and is
 deleted when the project is. Pages 3 to 5 then show three ways to change a copy
 like this one: pick one. Page 3, [Changing a style by hand](tables-by-hand.qmd),
 is the first.
@@ -261,28 +266,28 @@ is the first.
 # from the style folder's copy by its font, is read only when no style folder
 # is set
 .td <- tempfile("sf-"); dir.create(.td)
-.wd_copy <- readLines("styles/myreport.jstyle", encoding = "UTF-8")
+.wd_copy <- readLines("Styles/myreport.jstyle", encoding = "UTF-8")
 .wd_copy[which(.wd_copy == "font = Arial")[1]] <- "font = Courier New"
 writeLines(.wd_copy, "myreport.jstyle", useBytes = TRUE)
 .font_set   <- grep("^font ", utils::capture.output(jstyle("myreport")), value = TRUE)[1]
 invisible(utils::capture.output(joptions(style.dir = NULL)))
 .font_unset <- grep("^font ", utils::capture.output(jstyle("myreport")), value = TRUE)[1]
-invisible(utils::capture.output(joptions(style.dir = "styles")))
+invisible(utils::capture.output(joptions(style.dir = "Styles")))
 file.remove("myreport.jstyle")
 # joptions() creates a style folder that is not there: block 2's
 .m_rel <- local({                 # block 2's call, in a fresh folder
   .old <- setwd(.td); on.exit(setwd(.old))
-  .msgs(joptions(style.dir = "styles"))
+  .msgs(joptions(style.dir = "Styles"))
 })
-.rel_made <- dir.exists(file.path(.td, "styles"))
-invisible(utils::capture.output(joptions(style.dir = "styles")))
+.rel_made <- dir.exists(file.path(.td, "Styles"))
+invisible(utils::capture.output(joptions(style.dir = "Styles")))
 # block 4: found in the style folder; no file asked for
 .m4 <- .msgs(jtable(d1, style = "myreport"))
 
 stopifnot(
   # block 2: the copy written; a missing folder is created by joptions()
-  file.exists("styles/myreport.jstyle"),
-  grepl("Created 'styles' folder in working directory.", .m_rel, fixed = TRUE), .rel_made,
+  file.exists("Styles/myreport.jstyle"),
+  grepl("Created 'Styles' folder in working directory.", .m_rel, fixed = TRUE), .rel_made,
   # block 3: myreport listed, and only the styles a new reader has (none of
   # the render machine's own); the three folders, in order
   grepl("myreport", .lst, fixed = TRUE),

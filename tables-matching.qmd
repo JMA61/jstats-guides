@@ -33,10 +33,10 @@ resources:
 #
 # jstats is NOT pre-loaded: block 1 teaches library(jstats), and R prints the
 # startup message on first attach only. joutput()/joptions() are left alone. The
-# page WRITES a styles folder, a style file and its upload copy into the
+# page WRITES a Styles folder, a style file and its upload copy into the
 # working directory, and a Word file into the output folder, Tables; the
 # clean-slate lines below clear them before the blocks run, and the teardown
-# clears them after. The styles folder and the Tables folder go only when left
+# clears them after. The Styles folder and the Tables folder go only when left
 # empty; the shared list below names every page's files.
 #
 # S431 (Jeff's S429 read of the Publication tables pages, okayed): the Word
@@ -58,12 +58,12 @@ options(width = 80)   # match a default 80-column console for table alignment
 options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real startup message
 
 # THE SHARED LIST (S422): every Publication tables page's files, so a render
-# halted on one page cannot leave a style file in the styles folder another
-# page creates and lists. A styles folder still holding anything else HALTS
+# halted on one page cannot leave a style file in the Styles folder another
+# page creates and lists. A Styles folder still holding anything else HALTS
 # the render: it is not this page's to remove.
-.tables_files <- c("styles/myreport.jstyle", "styles/mystyle.jstyle",
-                   "styles/myblue.jstyle", "styles/mytest.txt",
-                   "styles/mytest.jstyle", "styles/mymatch.jstyle",
+.tables_files <- c("Styles/myreport.jstyle", "Styles/mystyle.jstyle",
+                   "Styles/myblue.jstyle", "Styles/mytest.txt",
+                   "Styles/mytest.jstyle", "Styles/mymatch.jstyle",
                    "myblue.txt", "mymatch.txt",
                    file.path("Tables", c("Descriptives.docx",
                      "Regression.docx", "Tables.docx", "Tables_v2.docx",
@@ -73,17 +73,17 @@ options(jstats.attach.noninteractive = TRUE)   # let block 1 show the real start
 .mt_clean <- function() {
   f <- .tables_files[file.exists(.tables_files)]
   if (length(f)) file.remove(f)
-  if (dir.exists("styles") &&
-      !length(list.files("styles", all.files = TRUE, no.. = TRUE)))
-    unlink("styles", recursive = TRUE)
+  if (dir.exists("Styles") &&
+      !length(list.files("Styles", all.files = TRUE, no.. = TRUE)))
+    unlink("Styles", recursive = TRUE)
   if (dir.exists("Tables") &&
       !length(list.files("Tables", all.files = TRUE, no.. = TRUE)))
     unlink("Tables", recursive = TRUE)
   invisible(NULL)
 }
 .mt_clean()
-if (dir.exists("styles"))
-  stop("The project's styles folder holds files no Publication tables page ",
+if (dir.exists("Styles"))
+  stop("The project's Styles folder holds files no Publication tables page ",
        "wrote. Move them out and render again.", call. = FALSE)
 
 source("pane_facsimile.R")   # defines .obx (dot-named); turns the output color on
@@ -156,8 +156,8 @@ upload.
 #| results: asis
 .obx$show_console(r"---(## ---- 2. A copy of report, and a copy to upload ------------------------
 
-## Keep this page's styles in a styles folder inside the project
-joptions(style.dir = "styles")
+## Keep this page's styles in a Styles folder inside the project
+joptions(style.dir = "Styles")
 
 ## Save a complete copy of report as mymatch, every setting written out
 ## with a note
@@ -165,11 +165,11 @@ jstyle("report", save.as = "mymatch")
 
 ## file.copy() is base R: it copies a file. The copy, ending in .txt, is
 ## the one to upload
-file.copy("styles/mymatch.jstyle", "mymatch.txt", overwrite = TRUE)  # base R)---",
+file.copy("Styles/mymatch.jstyle", "mymatch.txt", overwrite = TRUE)  # base R)---",
   fence = TRUE)
 ```
 
-jstats wrote the copy, `mymatch.jstyle`, into the `styles` folder, and
+jstats wrote the copy, `mymatch.jstyle`, into the `Styles` folder, and
 `file.copy()` answered `TRUE`: `mymatch.txt` is ready to upload.
 
 ### 3. Ask your assistant (outside R)
@@ -181,7 +181,7 @@ comments, a note in your script of what you did.
 ## ---- 3. Ask your assistant (outside R) --------------------------------
 
 ## Upload mymatch.txt and the example with the request on the guide page,
-## and save the file that comes back as mymatch.jstyle in the styles
+## and save the file that comes back as mymatch.jstyle in the Styles
 ## folder, replacing the copy there
 ```
 
@@ -199,7 +199,7 @@ changed file as a download named mymatch.jstyle. Then list each value you
 changed, old and new, and anything the settings cannot reproduce.
 ```
 
-Save the file that comes back as `mymatch.jstyle` in the `styles` folder,
+Save the file that comes back as `mymatch.jstyle` in the `Styles` folder,
 replacing the copy there, as page 4 describes, and keep the assistant's reply.
 
 Four things matter more here than with a request in words.
@@ -303,7 +303,7 @@ produces that layout.
 # PROSE GATES -- hidden. Each stopifnot() below is one statement the prose
 # makes about what the package does; a false one HALTS the render.
 # ---------------------------------------------------------------------------
-.cp <- readLines("styles/mymatch.jstyle", encoding = "UTF-8")
+.cp <- readLines("Styles/mymatch.jstyle", encoding = "UTF-8")
 .sections <- sub("^\\[(.*)\\]$", "\\1", grep("^\\[[a-z]+\\]$", .cp, value = TRUE))
 .td <- tempfile("mt-"); dir.create(.td)
 .err <- function(expr) tryCatch({ expr; NA_character_ },
@@ -313,7 +313,7 @@ produces that layout.
 .e_two <- .err(jtable(list(m1, .m_other)))
 stopifnot(
   # block 2: the copy, and the upload copy
-  file.exists("styles/mymatch.jstyle"), file.exists("mymatch.txt"),
+  file.exists("Styles/mymatch.jstyle"), file.exists("mymatch.txt"),
   identical(readLines("mymatch.txt"), .cp),
   # the request names three kinds of table, each a section of the file
   all(c("descriptives", "regression", "crosstab") %in% .sections),

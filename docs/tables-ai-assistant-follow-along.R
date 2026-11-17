@@ -37,9 +37,9 @@ print(t1)  # base R
 
 ## ---- 3. A folder for your styles, and a copy of report ----------------
 
-## Keep this page's styles in a styles folder inside the project. jstats
+## Keep this page's styles in a Styles folder inside the project. jstats
 ## makes the folder; the setting lasts until R restarts
-joptions(style.dir = "styles")
+joptions(style.dir = "Styles")
 
 ## Save a complete copy of report as myblue, every setting written out
 ## with a note. Run this line once: run again, it asks before replacing
@@ -51,13 +51,13 @@ jstyle("report", save.as = "myblue", open = TRUE)
 
 ## file.copy() is base R: it copies a file. overwrite = TRUE replaces an
 ## older copy, so run this line again before each upload
-file.copy("styles/myblue.jstyle", "myblue.txt", overwrite = TRUE)  # base R
+file.copy("Styles/myblue.jstyle", "myblue.txt", overwrite = TRUE)  # base R
 
 
 ## ---- 5. Ask your assistant (outside R) --------------------------------
 
 ## Upload myblue.txt with the request on the guide page, and save the file
-## that comes back as myblue.jstyle in the styles folder, replacing the
+## that comes back as myblue.jstyle in the Styles folder, replacing the
 ## copy there
 
 
@@ -78,7 +78,7 @@ t2 <- jtable(d1, style = "myblue", file = "Table1_myblue.docx", open = TRUE)
 ## ---- 8. If the file comes back as .txt --------------------------------
 
 ## Make a style file that ends in .txt, from the upload copy
-file.copy("myblue.txt", "styles/mytest.txt", overwrite = TRUE)  # base R
+file.copy("myblue.txt", "Styles/mytest.txt", overwrite = TRUE)  # base R
 
 ## jstats reads a style only from a file ending in .jstyle, so this stops
 ## (on purpose) and gives the line that renames the file
@@ -91,7 +91,7 @@ file.copy("myblue.txt", "styles/mytest.txt", overwrite = TRUE)  # base R
 
 ## file.rename() is base R. The line jstyle() gave does the same, with
 ## the full paths
-file.rename("styles/mytest.txt", "styles/mytest.jstyle")  # base R
+file.rename("Styles/mytest.txt", "Styles/mytest.jstyle")  # base R
 
 ## The style is found now: jtable() builds the table in it
 t3 <- jtable(d1, style = "mytest")
